@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Profile - VP of Operations / COO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gold: #fbbf24;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-gold: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --gradient-hero: linear-gradient(135deg, #1e3a5f 0%, #0f172a 50%, #1a1a2e 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-hero);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .hero-content { text-align: center; z-index: 1; padding: 2rem; max-width: 900px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle { font-size: 1.5rem; color: var(--gray-light); margin-bottom: 0.75rem; font-weight: 300; }
+        .hero-tagline { font-size: 1.125rem; color: var(--accent); margin-bottom: 2rem; font-weight: 500; }
+
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 3rem; }
+        .hero-stat { text-align: center; }
+        .hero-stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-stat-label { font-size: 0.875rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .section { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            padding: 0.375rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1rem; }
+        .section-subtitle { color: var(--gray-light); font-size: 1.125rem; max-width: 600px; margin: 0 auto; }
+
+        .coo-definition {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .coo-definition h3 { color: var(--gold); font-size: 1.25rem; margin-bottom: 1.5rem; text-align: center; }
+        .coo-checklist { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .coo-check-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+        .coo-check-icon { color: var(--success); font-size: 1.25rem; flex-shrink: 0; }
+        .coo-check-text { font-size: 0.9375rem; }
+        .coo-check-text strong { color: var(--light); }
+        .coo-check-text span { color: var(--gray-light); }
+
+        .competency-section { background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%); }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .comparison-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .comparison-card h3 { font-size: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+        .comparison-card h3 .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+
+        .skill-bar { margin-bottom: 1.25rem; }
+        .skill-bar-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .skill-name { font-size: 0.875rem; color: var(--light); }
+        .skill-value { font-size: 0.875rem; font-weight: 600; color: var(--primary-light); }
+        .skill-track { height: 8px; background: rgba(99, 102, 241, 0.1); border-radius: 4px; overflow: hidden; }
+        .skill-fill { height: 100%; border-radius: 4px; transition: width 1s ease-out; }
+        .skill-fill.gradient-1 { background: var(--gradient-1); }
+        .skill-fill.gradient-2 { background: var(--gradient-2); }
+        .skill-fill.gradient-3 { background: var(--gradient-3); }
+        .skill-fill.gradient-4 { background: var(--gradient-4); }
+        .skill-fill.gradient-gold { background: var(--gradient-gold); }
+
+        .typical-card .icon { background: rgba(100, 116, 139, 0.2); }
+        .you-card .icon { background: rgba(251, 191, 36, 0.2); }
+        .you-card { border-color: rgba(251, 191, 36, 0.3); }
+        .comparison-footer { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9375rem; color: var(--gold); font-weight: 500; }
+
+        .flow-section { background: var(--dark); }
+        .flow-comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
+        .flow-card { background: rgba(30, 41, 59, 0.3); border-radius: 1.5rem; padding: 2.5rem; position: relative; overflow: hidden; }
+        .flow-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .flow-card.typical::before { background: var(--gradient-2); }
+        .flow-card.you::before { background: var(--gradient-gold); }
+        .flow-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .flow-card .flow-subtitle { color: var(--gray-light); font-size: 0.875rem; margin-bottom: 2rem; }
+        .flow-steps { display: flex; flex-direction: column; gap: 1rem; }
+        .flow-step { display: flex; align-items: center; gap: 1rem; }
+        .step-number { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; flex-shrink: 0; }
+        .typical .step-number { background: rgba(245, 87, 108, 0.2); color: #f5576c; }
+        .you .step-number { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .step-content { flex: 1; }
+        .step-title { font-weight: 600; font-size: 0.9375rem; }
+        .step-desc { font-size: 0.8125rem; color: var(--gray-light); }
+        .flow-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .metric { text-align: center; }
+        .metric-value { font-size: 1.25rem; font-weight: 700; }
+        .typical .metric-value { color: #f5576c; }
+        .you .metric-value { color: #fbbf24; }
+        .metric-label { font-size: 0.75rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.05em; }
+        .flow-footer { margin-top: 1.5rem; text-align: center; font-weight: 600; color: var(--gold); }
+
+        .accomplishments-section { background: linear-gradient(180deg, var(--dark-light) 0%, var(--dark) 100%); }
+        .accomplishment-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .accomplishment-card { background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 1.5rem; padding: 2rem; position: relative; overflow: hidden; }
+        .accomplishment-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, transparent 50%); pointer-events: none; }
+        .accomplishment-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin-bottom: 1.5rem; }
+        .accomplishment-card:nth-child(1) .accomplishment-icon { background: rgba(99, 102, 241, 0.15); }
+        .accomplishment-card:nth-child(2) .accomplishment-icon { background: rgba(6, 182, 212, 0.15); }
+        .accomplishment-card:nth-child(3) .accomplishment-icon { background: rgba(16, 185, 129, 0.15); }
+        .accomplishment-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .accomplishment-metrics { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+        .acc-metric { flex: 1; }
+        .acc-metric-label { font-size: 0.75rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .acc-metric-value { font-size: 1.125rem; font-weight: 600; }
+        .acc-metric-value.before { color: var(--gray); text-decoration: line-through; }
+        .acc-metric-value.after { color: var(--success); }
+        .savings-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--success); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; }
+
+        .portfolio-section { background: var(--dark); }
+        .portfolio-diagram { max-width: 900px; margin: 0 auto; }
+        .portfolio-header { text-align: center; margin-bottom: 2rem; padding: 1rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 1rem; }
+        .portfolio-header p { color: var(--gold); font-weight: 500; }
+        .portfolio-layer { margin-bottom: 2rem; }
+        .layer-label { text-align: center; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-light); margin-bottom: 1rem; }
+        .tools-row { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+        .tool-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 1rem; padding: 1.5rem 2rem; text-align: center; min-width: 160px; transition: all 0.3s ease; }
+        .tool-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2); }
+        .tool-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .tool-name { font-weight: 600; font-size: 0.9375rem; }
+        .tool-desc { font-size: 0.75rem; color: var(--gray-light); margin-top: 0.25rem; }
+        .connector { display: flex; justify-content: center; padding: 1rem 0; }
+        .connector-line { width: 2px; height: 40px; background: linear-gradient(to bottom, var(--primary), var(--accent)); position: relative; }
+        .connector-line::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--accent); }
+        .data-layer { background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 1rem; padding: 1.5rem; text-align: center; }
+        .data-layer h4 { font-size: 1rem; margin-bottom: 0.75rem; color: var(--primary-light); }
+        .tech-tags { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+        .tech-tag { background: rgba(99, 102, 241, 0.2); padding: 0.375rem 0.875rem; border-radius: 50px; font-size: 0.8125rem; font-family: 'JetBrains Mono', monospace; }
+        .outputs-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .output-item { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.75rem 1.25rem; border-radius: 0.75rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
+        .output-item::before { content: ''; width: 8px; height: 8px; background: var(--success); border-radius: 50%; }
+
+        .skills-section { background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%); }
+        .skill-pyramid { max-width: 800px; margin: 0 auto; }
+        .pyramid-level { margin-bottom: 1rem; }
+        .pyramid-level-1 { display: flex; justify-content: center; }
+        .pyramid-level-2 { display: flex; justify-content: center; gap: 1rem; }
+        .pyramid-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 1rem; padding: 1.5rem; text-align: center; }
+        .pyramid-card.executive { background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%); border-color: rgba(251, 191, 36, 0.3); min-width: 300px; }
+        .pyramid-card.ops { border-color: rgba(245, 158, 11, 0.3); }
+        .pyramid-card.financial { border-color: rgba(6, 182, 212, 0.3); }
+        .pyramid-card.technical { border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%); }
+        .pyramid-card h4 { font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .pyramid-skills { display: flex; flex-direction: column; gap: 0.5rem; }
+        .pyramid-skill { font-size: 0.875rem; color: var(--gray-light); }
+        .coo-badge { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: var(--dark); padding: 1.25rem 2rem; border-radius: 1rem; text-align: center; margin-top: 2rem; font-weight: 700; font-size: 1.125rem; }
+        .coo-badge span { display: block; font-size: 0.875rem; font-weight: 500; opacity: 0.9; margin-top: 0.25rem; }
+
+        .market-section { background: var(--dark); }
+        .position-visual { max-width: 900px; margin: 0 auto; }
+        .spectrum { margin-bottom: 3rem; }
+        .spectrum-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gray-light); margin-bottom: 1.5rem; text-align: center; }
+        .spectrum-track { height: 80px; background: linear-gradient(90deg, rgba(100, 116, 139, 0.2) 0%, rgba(99, 102, 241, 0.2) 50%, rgba(251, 191, 36, 0.25) 100%); border-radius: 40px; position: relative; display: flex; align-items: center; padding: 0 2rem; }
+        .spectrum-markers { display: flex; justify-content: space-between; width: 100%; }
+        .marker { text-align: center; }
+        .marker-dot { width: 12px; height: 12px; background: var(--gray); border-radius: 50%; margin: 0 auto 0.5rem; }
+        .marker-label { font-size: 0.75rem; color: var(--gray-light); }
+        .marker-sublabel { font-size: 0.625rem; color: var(--gray); }
+        .you-marker { position: absolute; right: 8%; top: -80px; text-align: center; }
+        .you-marker-arrow { width: 2px; height: 50px; background: var(--gold); margin: 0 auto; }
+        .you-marker-dot { width: 24px; height: 24px; background: var(--gold); border-radius: 50%; margin: 0 auto; box-shadow: 0 0 30px rgba(251, 191, 36, 0.6); }
+        .you-marker-label { font-weight: 800; color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
+        .title-gap { background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 1rem; padding: 1.5rem 2rem; margin-top: 2rem; display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .title-box { text-align: center; }
+        .title-box-label { font-size: 0.75rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .title-box-value { font-size: 1.25rem; font-weight: 700; }
+        .title-box-value.current { color: var(--gray); }
+        .title-box-value.actual { color: var(--gold); }
+        .title-arrow { font-size: 2rem; color: var(--gold); }
+
+        .title-section { background: linear-gradient(180deg, var(--dark-light) 0%, var(--dark) 100%); }
+        .title-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .title-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 1.5rem; padding: 2rem; position: relative; overflow: hidden; }
+        .title-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .title-card.coo::before { background: var(--gradient-gold); }
+        .title-card.vp::before { background: var(--gradient-3); }
+        .title-card.coo { border-color: rgba(251, 191, 36, 0.3); }
+        .title-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .title-card.coo h3 { color: var(--gold); }
+        .title-card.vp h3 { color: var(--accent); }
+        .title-card .subtitle { color: var(--gray-light); font-size: 0.875rem; margin-bottom: 1.5rem; }
+        .title-points { list-style: none; }
+        .title-points li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.9375rem; }
+        .title-points li::before { content: '✓'; color: var(--success); font-weight: bold; flex-shrink: 0; }
+        .title-verdict { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); font-weight: 600; text-align: center; }
+        .title-card.coo .title-verdict { color: var(--gold); }
+        .title-card.vp .title-verdict { color: var(--accent); }
+
+        .salary-section { background: var(--dark); }
+        .salary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .salary-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 1.5rem; padding: 2rem; }
+        .salary-card.highlight { border-color: var(--gold); background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%); }
+        .salary-card h3 { font-size: 1.125rem; margin-bottom: 1.5rem; color: var(--light); }
+        .salary-card.highlight h3 { color: var(--gold); }
+        .salary-range { margin-bottom: 1rem; }
+        .salary-range-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .salary-range-label { font-size: 0.875rem; color: var(--gray-light); }
+        .salary-range-value { font-size: 0.875rem; font-weight: 600; color: var(--light); }
+        .salary-bar { height: 8px; background: rgba(99, 102, 241, 0.1); border-radius: 4px; overflow: hidden; }
+        .salary-fill { height: 100%; background: var(--gradient-1); border-radius: 4px; }
+        .highlight .salary-fill { background: var(--gradient-gold); }
+
+        .paths-section { background: linear-gradient(180deg, var(--dark) 0%, var(--dark-light) 100%); }
+        .paths-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .path-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 1.5rem; padding: 2rem; position: relative; overflow: hidden; }
+        .path-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+        .path-card:nth-child(1)::before { background: var(--gradient-gold); }
+        .path-card:nth-child(2)::before { background: var(--gradient-3); }
+        .path-card:nth-child(3)::before { background: var(--gradient-4); }
+        .path-letter { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+        .path-card:nth-child(1) .path-letter { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
+        .path-card:nth-child(2) .path-letter { background: rgba(6, 182, 212, 0.2); color: var(--accent); }
+        .path-card:nth-child(3) .path-letter { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .path-card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .path-points { list-style: none; }
+        .path-points li { font-size: 0.9375rem; color: var(--gray-light); padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .path-points li::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+
+        .cta-section { padding: 8rem 2rem; text-align: center; background: linear-gradient(180deg, var(--dark-light) 0%, var(--dark) 50%, var(--dark-light) 100%); position: relative; }
+        .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%); pointer-events: none; }
+        .cta-box { max-width: 800px; margin: 0 auto; background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%); border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 2rem; padding: 3rem; position: relative; z-index: 1; }
+        .cta-box h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 1.5rem; line-height: 1.3; }
+        .cta-correction { background: var(--gold); color: var(--dark); padding: 0.25rem 0.75rem; border-radius: 4px; font-weight: 700; }
+        .cta-text { font-size: 1.125rem; color: var(--gray-light); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .superpower { display: inline-flex; align-items: center; gap: 0.75rem; background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%); border: 1px solid rgba(251, 191, 36, 0.4); padding: 1rem 2rem; border-radius: 1rem; font-size: 1.25rem; font-weight: 600; color: var(--gold); }
+        .superpower-icon { font-size: 1.5rem; }
+        .cta-footer { margin-top: 2rem; font-size: 1rem; color: var(--light); font-weight: 500; }
+
+        footer { text-align: center; padding: 2rem; color: var(--gray); font-size: 0.875rem; }
+
+        @media (max-width: 768px) {
+            .hero-stats { gap: 2rem; }
+            .flow-comparison { grid-template-columns: 1fr; }
+            .flow-metrics { grid-template-columns: 1fr; gap: 1rem; }
+            .pyramid-level-2 { flex-direction: column; align-items: center; }
+            .title-gap { flex-direction: column; gap: 1rem; }
+            .title-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Second-in-Command | #2 at BCE</div>
+            <h1>VP of Operations / COO</h1>
+            <p class="hero-subtitle">Current Title: Director of Operations</p>
+            <p class="hero-tagline">The title doesn't match the role. This is a correction, not a promotion.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">90%</div>
+                    <div class="hero-stat-label">Automation Building</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">500+</div>
+                    <div class="hero-stat-label">Classification Rules</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">130+</div>
+                    <div class="hero-stat-label">Hours Saved/Year</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="coo-definition">
+            <h3>What a COO Does vs. What You Do</h3>
+            <div class="coo-checklist">
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Owns all daily operations</strong> <span>— You run it</span></div></div>
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Implements CEO's vision</strong> <span>— You build the systems</span></div></div>
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Oversees finance operations</strong> <span>— You built the P&L system</span></div></div>
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Drives process optimization</strong> <span>— You automate everything</span></div></div>
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Reports directly to CEO</strong> <span>— That's your structure</span></div></div>
+                <div class="coo-check-item"><span class="coo-check-icon">✓</span><div class="coo-check-text"><strong>Second-in-command</strong> <span>— That's your position</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section competency-section">
+        <div class="section-header">
+            <div class="section-tag">Skills Analysis</div>
+            <h2 class="section-title">Competency Comparison</h2>
+            <p class="section-subtitle">Where typical Directors end, COO-level capabilities begin</p>
+        </div>
+        <div class="comparison-grid">
+            <div class="comparison-card typical-card">
+                <h3><span class="icon">📊</span> Typical Director</h3>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Strategic Planning</span><span class="skill-value">80%</span></div><div class="skill-track"><div class="skill-fill gradient-1" style="width: 80%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Team Management</span><span class="skill-value">80%</span></div><div class="skill-track"><div class="skill-fill gradient-1" style="width: 80%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Process Design</span><span class="skill-value">70%</span></div><div class="skill-track"><div class="skill-fill gradient-1" style="width: 70%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Data Modeling</span><span class="skill-value">20%</span></div><div class="skill-track"><div class="skill-fill gradient-2" style="width: 20%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Automation Building</span><span class="skill-value">10%</span></div><div class="skill-track"><div class="skill-fill gradient-2" style="width: 10%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Programming</span><span class="skill-value">0%</span></div><div class="skill-track"><div class="skill-fill gradient-2" style="width: 0%"></div></div></div>
+            </div>
+            <div class="comparison-card you-card">
+                <h3><span class="icon">⚡</span> Your Profile (COO-Level)</h3>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Strategic Planning</span><span class="skill-value">80%</span></div><div class="skill-track"><div class="skill-fill gradient-gold" style="width: 80%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Team Management</span><span class="skill-value">80%</span></div><div class="skill-track"><div class="skill-fill gradient-gold" style="width: 80%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Process Design</span><span class="skill-value">90%</span></div><div class="skill-track"><div class="skill-fill gradient-4" style="width: 90%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Data Modeling</span><span class="skill-value">90%</span></div><div class="skill-track"><div class="skill-fill gradient-4" style="width: 90%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Automation Building</span><span class="skill-value">90%</span></div><div class="skill-track"><div class="skill-fill gradient-4" style="width: 90%"></div></div></div>
+                <div class="skill-bar"><div class="skill-bar-header"><span class="skill-name">Programming / AI-ML</span><span class="skill-value">80%</span></div><div class="skill-track"><div class="skill-fill gradient-4" style="width: 80%"></div></div></div>
+                <div class="comparison-footer">Most Directors manage. You manage AND build.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section flow-section">
+        <div class="section-header">
+            <div class="section-tag">Approach</div>
+            <h2 class="section-title">Problem-Solving Methodology</h2>
+            <p class="section-subtitle">Executive-level ownership: You don't escalate — you solve</p>
+        </div>
+        <div class="flow-comparison">
+            <div class="flow-card typical">
+                <h3>Typical Director</h3>
+                <p class="flow-subtitle">Manage external resources</p>
+                <div class="flow-steps">
+                    <div class="flow-step"><div class="step-number">1</div><div class="step-content"><div class="step-title">Identify Problem</div><div class="step-desc">Recognize operational gap</div></div></div>
+                    <div class="flow-step"><div class="step-number">2</div><div class="step-content"><div class="step-title">Scope & Budget</div><div class="step-desc">Define requirements, get approval</div></div></div>
+                    <div class="flow-step"><div class="step-number">3</div><div class="step-content"><div class="step-title">Hire Vendor</div><div class="step-desc">RFP, evaluate, negotiate</div></div></div>
+                    <div class="flow-step"><div class="step-number">4</div><div class="step-content"><div class="step-title">Oversee & Maintain</div><div class="step-desc">Manage contract, relationship</div></div></div>
+                </div>
+                <div class="flow-metrics">
+                    <div class="metric"><div class="metric-value">3-6 mo</div><div class="metric-label">Timeline</div></div>
+                    <div class="metric"><div class="metric-value">$50-200K</div><div class="metric-label">Cost</div></div>
+                    <div class="metric"><div class="metric-value">High</div><div class="metric-label">Dependencies</div></div>
+                </div>
+            </div>
+            <div class="flow-card you">
+                <h3>Your Approach (COO Mindset)</h3>
+                <p class="flow-subtitle">Build it yourself</p>
+                <div class="flow-steps">
+                    <div class="flow-step"><div class="step-number">1</div><div class="step-content"><div class="step-title">Identify Problem</div><div class="step-desc">Recognize operational gap</div></div></div>
+                    <div class="flow-step"><div class="step-number">2</div><div class="step-content"><div class="step-title">Design Solution</div><div class="step-desc">Architect the system</div></div></div>
+                    <div class="flow-step"><div class="step-number">3</div><div class="step-content"><div class="step-title">Build It Yourself</div><div class="step-desc">Write code, create tools</div></div></div>
+                    <div class="flow-step"><div class="step-number">4</div><div class="step-content"><div class="step-title">Deploy & Iterate</div><div class="step-desc">Test, improve, scale</div></div></div>
+                </div>
+                <div class="flow-metrics">
+                    <div class="metric"><div class="metric-value">Days</div><div class="metric-label">Timeline</div></div>
+                    <div class="metric"><div class="metric-value">$0</div><div class="metric-label">Cost</div></div>
+                    <div class="metric"><div class="metric-value">None</div><div class="metric-label">Dependencies</div></div>
+                </div>
+                <div class="flow-footer">This is COO behavior, not Director behavior.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section accomplishments-section">
+        <div class="section-header">
+            <div class="section-tag">Impact</div>
+            <h2 class="section-title">Accomplishment Inventory</h2>
+            <p class="section-subtitle">Measurable value created through technical solutions</p>
+        </div>
+        <div class="accomplishment-cards">
+            <div class="accomplishment-card">
+                <div class="accomplishment-icon">🤖</div>
+                <h3>CRM Scraping Tool</h3>
+                <div class="accomplishment-metrics"><div class="acc-metric"><div class="acc-metric-label">Before</div><div class="acc-metric-value before">30 min/day</div></div><div class="acc-metric"><div class="acc-metric-label">After</div><div class="acc-metric-value after">Automated</div></div></div>
+                <div class="savings-badge"><span>💰</span> $3,250+ saved/year</div>
+            </div>
+            <div class="accomplishment-card">
+                <div class="accomplishment-icon">📊</div>
+                <h3>Financial Ingestion System</h3>
+                <div class="accomplishment-metrics"><div class="acc-metric"><div class="acc-metric-label">Before</div><div class="acc-metric-value before">45-60 min/update</div></div><div class="acc-metric"><div class="acc-metric-label">After</div><div class="acc-metric-value after">5-10 min</div></div></div>
+                <div class="savings-badge"><span>⚡</span> 85% faster processing</div>
+            </div>
+            <div class="accomplishment-card">
+                <div class="accomplishment-icon">🧠</div>
+                <h3>Transaction Classification</h3>
+                <div class="accomplishment-metrics"><div class="acc-metric"><div class="acc-metric-label">Rules Learned</div><div class="acc-metric-value after">500+</div></div><div class="acc-metric"><div class="acc-metric-label">Categories</div><div class="acc-metric-value after">Auto-sorted</div></div></div>
+                <div class="savings-badge"><span>💰</span> $500-2,000/mo saved</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section portfolio-section">
+        <div class="section-header">
+            <div class="section-tag">Architecture</div>
+            <h2 class="section-title">Operational Infrastructure Built</h2>
+            <p class="section-subtitle">COO-level systems designed and built from scratch</p>
+        </div>
+        <div class="portfolio-diagram">
+            <div class="portfolio-header"><p>Building company-wide operational infrastructure is COO work, not Director work.</p></div>
+            <div class="portfolio-layer">
+                <div class="layer-label">Application Layer</div>
+                <div class="tools-row">
+                    <div class="tool-card"><div class="tool-icon">💻</div><div class="tool-name">BCE Assistant</div><div class="tool-desc">CLI Tool</div></div>
+                    <div class="tool-card"><div class="tool-icon">🤖</div><div class="tool-name">Custom GPT</div><div class="tool-desc">OpenAI</div></div>
+                    <div class="tool-card"><div class="tool-icon">🔄</div><div class="tool-name">CRM Scraper</div><div class="tool-desc">Automation</div></div>
+                </div>
+            </div>
+            <div class="connector"><div class="connector-line"></div></div>
+            <div class="portfolio-layer">
+                <div class="layer-label">Integrated Data Layer</div>
+                <div class="data-layer"><h4>Data Infrastructure</h4><div class="tech-tags"><span class="tech-tag">SQLite</span><span class="tech-tag">Excel Models</span><span class="tech-tag">Power Query</span><span class="tech-tag">DAX</span><span class="tech-tag">Python</span></div></div>
+            </div>
+            <div class="connector"><div class="connector-line"></div></div>
+            <div class="portfolio-layer">
+                <div class="layer-label">Business Outputs</div>
+                <div class="outputs-row"><div class="output-item">P&L Reports</div><div class="output-item">Payroll Analysis</div><div class="output-item">Task Management</div><div class="output-item">Policy System</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section skills-section">
+        <div class="section-header">
+            <div class="section-tag">Capabilities</div>
+            <h2 class="section-title">Skill Stack</h2>
+            <p class="section-subtitle">Operations + Finance + Technical = COO</p>
+        </div>
+        <div class="skill-pyramid">
+            <div class="pyramid-level pyramid-level-1">
+                <div class="pyramid-card executive"><h4>👔 Executive Layer</h4><div class="pyramid-skills"><span class="pyramid-skill">Vision & Strategy</span><span class="pyramid-skill">CEO Partnership</span><span class="pyramid-skill">Company-wide Ownership</span></div></div>
+            </div>
+            <div class="pyramid-level pyramid-level-2">
+                <div class="pyramid-card ops"><h4>⚙️ Operations</h4><div class="pyramid-skills"><span class="pyramid-skill">Process Design</span><span class="pyramid-skill">Team Management</span><span class="pyramid-skill">Project Delivery</span><span class="pyramid-skill">SOPs</span></div></div>
+                <div class="pyramid-card financial"><h4>💵 Financial</h4><div class="pyramid-skills"><span class="pyramid-skill">P&L Design</span><span class="pyramid-skill">Cash Flow</span><span class="pyramid-skill">Forecasting</span><span class="pyramid-skill">Analysis</span></div></div>
+                <div class="pyramid-card technical"><h4>💻 Technical</h4><div class="pyramid-skills"><span class="pyramid-skill">Python</span><span class="pyramid-skill">SQL / SQLite</span><span class="pyramid-skill">DAX / Power Query</span><span class="pyramid-skill">APIs & AI/GPT</span></div></div>
+            </div>
+            <div class="coo-badge">COO-LEVEL RANGE<span>Top 5% of Operations professionals have this combination</span></div>
+        </div>
+    </section>
+
+    <section class="section market-section">
+        <div class="section-header">
+            <div class="section-tag">Positioning</div>
+            <h2 class="section-title">Market Position</h2>
+            <p class="section-subtitle">Current title vs. actual function</p>
+        </div>
+        <div class="position-visual">
+            <div class="spectrum">
+                <div class="spectrum-label">Operations Professionals Spectrum</div>
+                <div class="spectrum-track">
+                    <div class="you-marker"><div class="you-marker-label">★ YOU ★</div><div class="you-marker-arrow"></div><div class="you-marker-dot"></div></div>
+                    <div class="spectrum-markers">
+                        <div class="marker"><div class="marker-dot"></div><div class="marker-label">Junior Ops</div><div class="marker-sublabel">Executes tasks</div></div>
+                        <div class="marker"><div class="marker-dot"></div><div class="marker-label">Ops Manager</div><div class="marker-sublabel">Manages processes</div></div>
+                        <div class="marker"><div class="marker-dot"></div><div class="marker-label">Director</div><div class="marker-sublabel">Current title</div></div>
+                        <div class="marker"><div class="marker-dot" style="background: var(--gold);"></div><div class="marker-label">VP / COO</div><div class="marker-sublabel">Actual function</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="title-gap">
+                <div class="title-box"><div class="title-box-label">Current Title</div><div class="title-box-value current">Director of Operations</div></div>
+                <div class="title-arrow">→</div>
+                <div class="title-box"><div class="title-box-label">Actual Role</div><div class="title-box-value actual">VP of Operations / COO</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section title-section">
+        <div class="section-header">
+            <div class="section-tag">Title Alignment</div>
+            <h2 class="section-title">The Case for Title Correction</h2>
+            <p class="section-subtitle">Two paths to accurate positioning</p>
+        </div>
+        <div class="title-cards">
+            <div class="title-card coo">
+                <h3>COO (Chief Operating Officer)</h3>
+                <p class="subtitle">The executive responsible for daily operations</p>
+                <ul class="title-points">
+                    <li>Daily operations ownership — you have it</li>
+                    <li>Report directly to CEO/Owner — that's your structure</li>
+                    <li>Second-in-command position — that's your role</li>
+                    <li>Build company infrastructure — you code it</li>
+                    <li>Financial operations oversight — you built the P&L</li>
+                </ul>
+                <div class="title-verdict">COO isn't a stretch — it's a correction.</div>
+            </div>
+            <div class="title-card vp">
+                <h3>VP of Operations</h3>
+                <p class="subtitle">Senior executive overseeing operational strategy</p>
+                <ul class="title-points">
+                    <li>Natural progression: Director → VP</li>
+                    <li>Industry-standard next step</li>
+                    <li>Clearly signals seniority upgrade</li>
+                    <li>Lower resistance from leadership</li>
+                    <li>Path to COO as company grows</li>
+                </ul>
+                <div class="title-verdict">Strategic stepping stone to COO.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section salary-section">
+        <div class="section-header">
+            <div class="section-tag">Compensation</div>
+            <h2 class="section-title">Market Value (2024-2025)</h2>
+            <p class="section-subtitle">What your skill combination commands</p>
+        </div>
+        <div class="salary-cards">
+            <div class="salary-card">
+                <h3>Typical Director of Ops</h3>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Small Company</span><span class="salary-range-value">$80K - $110K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 35%"></div></div></div>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Mid-size</span><span class="salary-range-value">$100K - $140K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 50%"></div></div></div>
+            </div>
+            <div class="salary-card">
+                <h3>VP of Operations</h3>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Small Company</span><span class="salary-range-value">$110K - $150K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 55%"></div></div></div>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Mid-size</span><span class="salary-range-value">$140K - $190K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 70%"></div></div></div>
+            </div>
+            <div class="salary-card highlight">
+                <h3>Your Profile (VP/COO + Technical)</h3>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Conservative (Floor)</span><span class="salary-range-value">$130K - $170K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 60%"></div></div></div>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">Properly Positioned</span><span class="salary-range-value">$160K - $220K</span></div><div class="salary-bar"><div class="salary-fill" style="width: 85%"></div></div></div>
+                <div class="salary-range"><div class="salary-range-header"><span class="salary-range-label">With Equity</span><span class="salary-range-value">$140K + equity</span></div><div class="salary-bar"><div class="salary-fill" style="width: 65%"></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section paths-section">
+        <div class="section-header">
+            <div class="section-tag">Future</div>
+            <h2 class="section-title">Career Trajectory Options</h2>
+            <p class="section-subtitle">Three distinct paths forward</p>
+        </div>
+        <div class="paths-grid">
+            <div class="path-card"><div class="path-letter">A</div><h3>Formalize @ BCE</h3><ul class="path-points"><li>VP Ops or COO title correction</li><li>Equity stake negotiation</li><li>Continue building BCE systems</li><li>Full P&L ownership</li></ul></div>
+            <div class="path-card"><div class="path-letter">B</div><h3>Larger Company</h3><ul class="path-points"><li>VP Ops at growth company</li><li>Lead larger team (10+)</li><li>$160K - $220K salary</li><li>Scale your impact</li></ul></div>
+            <div class="path-card"><div class="path-letter">C</div><h3>Fractional COO</h3><ul class="path-points"><li>COO for 2-3 companies</li><li>$150 - $300/hour</li><li>Maximum flexibility</li><li>Portfolio career</li></ul></div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2>You are NOT a Director of Operations.</h2>
+            <p class="cta-text">You are a <span class="cta-correction">COO</span> who has been operating under a Director title. You are the #2, you run everything, and you BUILD the systems that make the company function.</p>
+            <div class="superpower"><span class="superpower-icon">⚡</span>You don't just identify problems — you BUILD the solutions.</div>
+            <p class="cta-footer">This isn't a promotion request — it's a title correction.</p>
+        </div>
+    </section>
+
+    <footer><p>Professional Profile Analysis • Generated December 2025</p></footer>
+</body>
+</html>

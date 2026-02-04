@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Architect | From Spreadsheets to Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Calendly -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <style>
+        :root {
+            --bg-deep: #050508;
+            --bg-dark: #0a0a0f;
+            --bg-card: #0f0f18;
+            --bg-elevated: #151520;
+            --border: rgba(255, 193, 59, 0.08);
+            --border-hover: rgba(255, 193, 59, 0.2);
+            --gold: #ffc13b;
+            --gold-dim: #b8933a;
+            --gold-glow: rgba(255, 193, 59, 0.4);
+            --cyan: #00e5ff;
+            --cyan-dim: #00a8b8;
+            --green: #00ff88;
+            --red: #ff4757;
+            --text: #ffffff;
+            --text-dim: #8888a0;
+            --text-muted: #555566;
+            --gradient-gold: linear-gradient(135deg, #ffc13b 0%, #ff8f00 100%);
+            --gradient-cyber: linear-gradient(135deg, #00e5ff 0%, #00ff88 100%);
+            --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--noise);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        /* Animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 193, 59, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 193, 59, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 193, 59, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -7s;
+        }
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        nav.scrolled {
+            padding: 1rem 3rem;
+            background: rgba(5, 5, 8, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .nav-logo::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 0.75rem 1.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-gold);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+        .nav-cta:hover {
+            color: var(--bg-deep);
+            border-color: transparent;
+        }
+        .nav-cta:hover::before {
+            left: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+        }
+        .hero-content {
+            text-align: center;
+            max-width: 1000px;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 193, 59, 0.08);
+            border: 1px solid rgba(255, 193, 59, 0.2);
+            padding: 0.625rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+        .hero-title .highlight {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--cyan);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+        .hero-tagline::before,
+        .hero-tagline::after {
+            content: '//';
+            color: var(--text-muted);
+            margin: 0 0.75rem;
+        }
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+        .btn {
+            padding: 1.125rem 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--bg-deep);
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 193, 59, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border-hover);
+        }
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 193, 59, 0.05);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 6rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border);
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-cyber);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 0.5rem;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-hover);
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.0625rem;
+            color: var(--text-dim);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 50%, var(--bg-deep) 100%);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+        .about-content {
+            padding-top: 1rem;
+        }
+        .about-content h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--gold);
+        }
+        .about-content p {
+            color: var(--text-dim);
+            font-size: 1.0625rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        .about-highlight {
+            margin-top: 2.5rem;
+            padding: 1.75rem;
+            background: rgba(255, 193, 59, 0.03);
+            border-left: 2px solid var(--gold);
+        }
+        .about-highlight p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+            color: var(--gold);
+            margin: 0;
+            font-style: italic;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold), var(--cyan), var(--green));
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+            padding-left: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.375rem;
+            width: 10px;
+            height: 10px;
+            background: var(--bg-deep);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .timeline-item:hover::before {
+            background: var(--gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .timeline-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .timeline-company {
+            font-size: 0.9375rem;
+            color: var(--cyan);
+            margin-bottom: 0.75rem;
+        }
+        .timeline-desc {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background: var(--bg-dark);
+            padding-top: 0;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .comparison-card {
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            transition: all 0.4s;
+        }
+        .comparison-card:hover {
+            border-color: var(--border-hover);
+        }
+        .comparison-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .comparison-card h3 .icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            border: 1px solid var(--border);
+        }
+        .typical-card .icon {
+            border-color: var(--text-muted);
+        }
+        .you-card {
+            border-color: rgba(255, 193, 59, 0.3);
+            background: linear-gradient(135deg, rgba(255, 193, 59, 0.03) 0%, var(--bg-card) 100%);
+        }
+        .you-card .icon {
+            border-color: var(--gold);
+            background: rgba(255, 193, 59, 0.1);
+        }
+        .comparison-list {
+            list-style: none;
+        }
+        .comparison-list li {
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            font-size: 0.9375rem;
+            color: var(--text-dim);
+        }
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+        .comparison-list .icon-bad {
+            color: var(--red);
+            font-weight: 600;
+        }
+        .comparison-list .icon-good {
+            color: var(--green);
+            font-weight: 600;
+        }
+        .comparison-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--gold);
+        }
+
+        /* Reality Section */
+        .reality-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .reality-intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .reality-intro p {
+            color: var(--text-dim);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .reality-intro .highlight-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .time-math {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            margin-bottom: 4rem;
+        }
+        .math-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .math-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid rgba(255, 193, 59, 0.3);
+        }
+        .math-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .math-item {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .math-person {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .math-task {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+        .math-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .math-totals {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .math-total {
+            text-align: center;
+        }
+        .math-total .total-value {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .math-total .total-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .math-total.highlight .total-value {
+            font-size: 2.25rem;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .math-arrow {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+        .math-insight {
+            text-align: center;
+            font-size: 1.0625rem;
+            color: var(--text-dim);
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .math-insight .accent {
+            color: var(--red);
+            font-weight: 600;
+        }
+        .reality-conclusion {
+            text-align: center;
+        }
+        .reality-conclusion p {
+            color: var(--text-dim);
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .conclusion-statement {
+            margin: 3rem 0;
+        }
+        .conclusion-line {
+            display: block;
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        .conclusion-contrast {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+        }
+        .conclusion-contrast .dim {
+            color: var(--text-muted);
+        }
+        .conclusion-contrast .bright {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .reality-conclusion .closing {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        @media (max-width: 640px) {
+            .math-grid {
+                grid-template-columns: 1fr;
+            }
+            .math-totals {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .math-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Vault Section */
+        .vault-section {
+            background: var(--bg-deep);
+        }
+        .vault-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .vault-trigger {
+            width: 100%;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .vault-trigger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 59, 0.1), transparent);
+            transition: left 0.6s;
+        }
+        .vault-trigger:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 193, 59, 0.2);
+        }
+        .vault-trigger:hover::before {
+            left: 100%;
+        }
+        .vault-trigger.unlocked {
+            display: none;
+        }
+        .vault-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .vault-trigger:hover .vault-icon {
+            transform: scale(1.2);
+        }
+        .vault-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.15em;
+        }
+        .vault-hint {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            position: absolute;
+            bottom: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+        .vault-content {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--green);
+            animation: vaultOpen 0.5s ease-out;
+        }
+        .vault-content.open {
+            display: block;
+        }
+        @keyframes vaultOpen {
+            0% {
+                opacity: 0;
+                transform: scaleY(0.8);
+                transform-origin: top;
+            }
+            100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+        .vault-header {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(0, 255, 136, 0.03);
+        }
+        .vault-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--green);
+            letter-spacing: 0.2em;
+            animation: flicker 2s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .vault-accordion {
+            padding: 1rem;
+        }
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        .accordion-trigger {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            width: 100%;
+            background: none;
+            border-right: none;
+            border-top: none;
+            border-bottom: none;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            text-align: left;
+        }
+        .accordion-trigger:hover {
+            background: rgba(0, 229, 255, 0.05);
+            border-left-color: var(--cyan);
+        }
+        .accordion-item.active .accordion-trigger {
+            background: rgba(255, 193, 59, 0.08);
+            border-left-color: var(--gold);
+        }
+        .accordion-arrow {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .accordion-item.active .accordion-arrow {
+            transform: rotate(180deg);
+            color: var(--gold);
+        }
+        .accordion-content {
+            display: none;
+            padding: 0 1rem 1.5rem 2.5rem;
+            animation: accordionSlide 0.3s ease-out;
+        }
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+        @keyframes accordionSlide {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .accordion-content p {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .vault-prefix {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--green);
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        .vault-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text);
+            flex: 1;
+        }
+        .vault-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .detail-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .detail-tech span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            color: var(--cyan);
+        }
+        .vault-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .vault-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+        }
+        .vault-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+        }
+        .vault-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.1em;
+        }
+        .vault-close:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        .vault-header {
+            position: relative;
+        }
+        .detail-macros {
+            list-style: none;
+            margin: 1rem 0 1.25rem;
+            padding: 0;
+        }
+        .detail-macros li {
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border);
+        }
+        .detail-macros li:last-child {
+            border-bottom: none;
+        }
+        .detail-macros strong {
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+        }
+        @media (max-width: 640px) {
+            .accordion-trigger {
+                flex-wrap: wrap;
+            }
+            .vault-type {
+                width: 100%;
+                margin-left: 2rem;
+                margin-top: 0.25rem;
+            }
+            .accordion-arrow {
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
+            .accordion-trigger {
+                position: relative;
+                padding-right: 2.5rem;
+            }
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 100%);
+        }
+        .project-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+        .project-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .project-card:nth-child(even) {
+            direction: rtl;
+        }
+        .project-card:nth-child(even) > * {
+            direction: ltr;
+        }
+        .project-image {
+            min-height: 400px;
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(45deg, transparent 48%, var(--border) 49%, var(--border) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, var(--border) 49%, var(--border) 51%, transparent 52%);
+            background-size: 30px 30px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .project-image:has(img)::before,
+        .project-image:has(video)::before {
+            display: none;
+        }
+        .project-image-placeholder {
+            font-size: 5rem;
+            opacity: 0.3;
+            position: relative;
+            z-index: 1;
+        }
+        .project-image img,
+        .project-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+        .project-image video {
+            object-fit: contain;
+            background: var(--bg-deep);
+        }
+        .project-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--bg-card);
+        }
+        .project-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.375rem 0.875rem;
+            border: 1px solid rgba(255, 193, 59, 0.3);
+            margin-bottom: 1.25rem;
+            width: fit-content;
+        }
+        .project-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .project-content p {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .project-metrics {
+            display: flex;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .project-metric {
+            text-align: left;
+        }
+        .project-metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+        .project-metric-label {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+        .project-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            color: var(--cyan);
+        }
+        .project-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        /* Quick Wins Section */
+        .quick-wins-section {
+            background: var(--bg-deep);
+        }
+        .quick-wins-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        .quick-wins-intro p {
+            color: var(--text-dim);
+            font-size: 1.0625rem;
+        }
+        .quick-wins-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .quick-win-card {
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .quick-win-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+        }
+        .quick-win-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 1px solid var(--border-hover);
+            margin-bottom: 1.25rem;
+        }
+        .quick-win-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .quick-win-card p {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+        .quick-win-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--green);
+            letter-spacing: 0.05em;
+        }
+        .quick-win-time::before {
+            content: '↑';
+        }
+
+        /* Services Section */
+        .services-section {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .service-card {
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .service-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            border: 1px solid var(--border-hover);
+            transition: all 0.3s;
+        }
+        .service-card:hover .service-icon {
+            border-color: var(--gold);
+            background: rgba(255, 193, 59, 0.1);
+        }
+        .service-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .service-card p {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Free Resources Section */
+        .resources-section {
+            padding: 8rem 2rem;
+            background: var(--bg-deep);
+        }
+        .resources-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .resources-header h2 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .resources-header h2 span {
+            color: var(--green);
+        }
+        .resources-header p {
+            color: var(--text-dim);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .resource-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .resource-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-cyber);
+        }
+        .resource-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.375rem 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .resource-badge.advanced { color: var(--gold); border-color: rgba(255, 193, 59, 0.3); }
+        .resource-badge.intermediate { color: var(--cyan); border-color: rgba(0, 229, 255, 0.3); }
+        .resource-badge.beginner { color: var(--green); border-color: rgba(0, 255, 136, 0.3); }
+        .resource-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .resource-card p {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+        .resource-link:hover {
+            gap: 0.75rem;
+        }
+        .resource-link::after {
+            content: '→';
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 10rem 2rem;
+            text-align: center;
+            position: relative;
+            background: var(--bg-dark);
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 193, 59, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cta-box {
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .cta-box h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .cta-box p {
+            color: var(--text-dim);
+            font-size: 1.125rem;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-deep);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        footer p {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .comparison-grid,
+            .project-card {
+                grid-template-columns: 1fr;
+            }
+            .project-card:nth-child(even) {
+                direction: ltr;
+            }
+            .quick-wins-grid,
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nav-links {
+                display: none;
+            }
+            nav {
+                padding: 1rem 1.5rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .stats-bar {
+                gap: 2rem;
+            }
+            .quick-wins-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .section {
+                padding: 5rem 1.5rem;
+            }
+            .project-metrics {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-logo">Ops_Architect</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#resources">Free Guides</a></li>
+            </ul>
+            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="nav-cta">Book a Call</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Available for Projects</div>
+            <h1 class="hero-title">
+                Operations<br><span class="highlight">Architect</span>
+            </h1>
+            <p class="hero-tagline">From Spreadsheets to Systems</p>
+            <p class="hero-subtitle">I build what others outsource — from 30-minute Excel fixes to full AI automation pipelines. If you're doing something manually more than twice, it can probably be automated.</p>
+            <div class="hero-cta">
+                <a href="#projects" class="btn btn-primary">See My Work</a>
+                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="btn btn-secondary">Tell Me Your Problem</a>
+            </div>
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-value">9+</div>
+                    <div class="stat-label">Years in Ops</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Systems Built</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">500+</div>
+                    <div class="stat-label">Automation Rules</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">91%</div>
+                    <div class="stat-label">Video Production Savings</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="about-grid">
+            <div class="about-content reveal">
+                <div class="section-tag">About</div>
+                <h3>I've Been in the Trenches</h3>
+                <p>Most operations people identify problems and document them. I identify problems and build the solutions myself.</p>
+                <p>That's the difference between waiting 3-6 months for a vendor — and having something working by next week.</p>
+                <p>I've spent 6 years in operations roles, from managing $1.1M portfolios to building complete financial systems from scratch. I know the pain of manual processes because I've lived it.</p>
+                <div class="about-highlight">
+                    <p>"Most Directors manage. I manage AND build."</p>
+                </div>
+            </div>
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 — 2025</div>
+                    <div class="timeline-title">Director of Operations</div>
+                    <div class="timeline-company">Best Clean Ever</div>
+                    <div class="timeline-desc">Built AI-powered operations assistant, financial ingestion system with 500+ classification rules, CRM automation eliminating 130+ hrs/year manual entry. Left with systems still running.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2021 — 2025</div>
+                    <div class="timeline-title">Director of Operations</div>
+                    <div class="timeline-company">LTC Technologies</div>
+                    <div class="timeline-desc">Led SOP creation and execution, implemented ZOHO Desk & CRM systems, built scalable customer database. Managed service delivery for senior living facilities.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 — 2021</div>
+                    <div class="timeline-title">Elite Representative</div>
+                    <div class="timeline-company">Windstream</div>
+                    <div class="timeline-desc">Managed $1.1M MRR portfolio. Ranked #1 for 8 months. Created SQL guides, training materials, and streamlined onboarding with structured knowledge base.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Reality Section -->
+    <section class="section comparison-section">
+        <div class="section-header reveal">
+            <div class="section-tag">The Reality</div>
+            <h2 class="section-title">You're Losing More Time Than You Think</h2>
+            <p class="section-subtitle">It's not that you chose manual work. You just don't know there's another way.</p>
+        </div>
+        <div class="reality-content reveal">
+            <div class="reality-intro">
+                <p>You're not doing things manually because you chose to. You're doing them because you think custom solutions are only for companies with engineering teams and big budgets.</p>
+                <p class="highlight-text">They're not.</p>
+                <p>That report you rebuild every Monday? That data you copy-paste between systems? That thing you "just do" because it's always been that way? It adds up faster than you realize.</p>
+            </div>
+            <div class="time-math">
+                <div class="math-header">
+                    <span class="math-label">The Math</span>
+                </div>
+                <div class="math-grid">
+                    <div class="math-item">
+                        <div class="math-person">Employee A</div>
+                        <div class="math-task">Recurring task</div>
+                        <div class="math-time">10 min/day</div>
+                    </div>
+                    <div class="math-item">
+                        <div class="math-person">Employee B</div>
+                        <div class="math-task">Reformatting data</div>
+                        <div class="math-time">15 min/day</div>
+                    </div>
+                    <div class="math-item">
+                        <div class="math-person">Employee C</div>
+                        <div class="math-task">Manual entry</div>
+                        <div class="math-time">30 min/day</div>
+                    </div>
+                </div>
+                <div class="math-totals">
+                    <div class="math-total">
+                        <span class="total-value">~5 hrs</span>
+                        <span class="total-label">per week</span>
+                    </div>
+                    <div class="math-arrow">→</div>
+                    <div class="math-total">
+                        <span class="total-value">20 hrs</span>
+                        <span class="total-label">per month</span>
+                    </div>
+                    <div class="math-arrow">→</div>
+                    <div class="math-total highlight">
+                        <span class="total-value">240 hrs</span>
+                        <span class="total-label">per year</span>
+                    </div>
+                </div>
+                <div class="math-insight">
+                    That's <span class="accent">six full work weeks</span> gone to tasks that could run themselves.
+                </div>
+            </div>
+            <div class="reality-conclusion">
+                <p>Now multiply that across your whole team. Connect those fixes so systems talk to each other. Suddenly you're not saving minutes — you're getting back entire workdays.</p>
+                <div class="conclusion-statement">
+                    <span class="conclusion-line">That's the difference between</span>
+                    <span class="conclusion-contrast"><span class="dim">managing operations</span> and <span class="bright">architecting them</span></span>
+                </div>
+                <p class="closing">I've been in your seat. I know which problems are worth a 30-minute script and which ones need full systems. Most need less than you think.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects-section" id="projects">
+        <div class="section-header reveal">
+            <div class="section-tag">Featured Work</div>
+            <h2 class="section-title">Projects That Ship</h2>
+            <p class="section-subtitle">Real systems solving real problems</p>
+        </div>
+
+        <!-- Project 1: BCE Ecosystem -->
+        <div class="project-card reveal">
+            <div class="project-image">
+                <img src="assets/screenshots/BCE Owner DashBoard.png" alt="BCE Operations Dashboard">
+            </div>
+            <div class="project-content">
+                <div class="project-tag">Business Operations</div>
+                <h3>BCE Operations Ecosystem</h3>
+                <p>Complete operational infrastructure for a cleaning company: AI assistant, financial dashboards, CRM automation, SOP management, and owner reporting — all built from scratch.</p>
+                <div class="project-metrics">
+                    <div class="project-metric">
+                        <div class="project-metric-value">500+</div>
+                        <div class="project-metric-label">Classification Rules</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">85%</div>
+                        <div class="project-metric-label">Faster Processing</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">130+</div>
+                        <div class="project-metric-label">Hours Saved/Year</div>
+                    </div>
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">SQLite</span>
+                    <span class="tech-tag">OpenAI</span>
+                    <span class="tech-tag">Power Query</span>
+                    <span class="tech-tag">DAX</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2: Content Factory -->
+        <div class="project-card reveal">
+            <div class="project-image">
+                <img src="assets/screenshots/Tiktok Channel posts + views.png" alt="TikTok Content Factory Output">
+            </div>
+            <div class="project-content">
+                <div class="project-tag">Content Automation</div>
+                <h3>Video Content Factory</h3>
+                <p>Automated pipeline that generates TikTok/Reels videos from topic to publish: script generation, AI voiceover, image creation, and video assembly. Content memory prevents duplicates.</p>
+                <div class="project-metrics">
+                    <div class="project-metric">
+                        <div class="project-metric-value">$0.09–$0.52</div>
+                        <div class="project-metric-label">Per Video*</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">Local</div>
+                        <div class="project-metric-label">Render Option</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">Minutes</div>
+                        <div class="project-metric-label">Per Video</div>
+                    </div>
+                </div>
+                <p class="project-note">*Cost varies by image API and render method. Local rendering with free stock = $0.09. Cloud rendering with AI images = $0.52.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Claude API</span>
+                    <span class="tech-tag">OpenAI TTS</span>
+                    <span class="tech-tag">Gemini</span>
+                    <span class="tech-tag">Creatomate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3: OneKey Writer -->
+        <div class="project-card reveal">
+            <div class="project-image">
+                <video autoplay loop muted playsinline controls>
+                    <source src="assets/TextHelperDemo.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="project-content">
+                <div class="project-tag">Desktop Tool</div>
+                <h3>OneKey Writer</h3>
+                <p>Windows system tray app that improves any text instantly. Select text anywhere, press hotkey, choose transformation — done. Works across all applications.</p>
+                <div class="project-metrics">
+                    <div class="project-metric">
+                        <div class="project-metric-value">10+</div>
+                        <div class="project-metric-label">AI Templates</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">Any App</div>
+                        <div class="project-metric-label">System-Wide</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">1 Click</div>
+                        <div class="project-metric-label">To Transform</div>
+                    </div>
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PyAutoGUI</span>
+                    <span class="tech-tag">Claude API</span>
+                    <span class="tech-tag">System Tray</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 4: ShowRoomInvoice -->
+        <div class="project-card reveal">
+            <div class="project-image">
+                <video autoplay loop muted playsinline controls>
+                    <source src="assets/TeleGramImagetoDB.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="project-content">
+                <div class="project-tag">Telegram Bot</div>
+                <h3>Receipt Capture Bot</h3>
+                <p>Telegram bot for architects to capture expense receipts: photograph receipt, select project, OCR extracts data, confirms with user, syncs to Google Sheets. Daily summaries to manager.</p>
+                <div class="project-metrics">
+                    <div class="project-metric">
+                        <div class="project-metric-value">5</div>
+                        <div class="project-metric-label">Team Members</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">Auto</div>
+                        <div class="project-metric-label">OCR Extraction</div>
+                    </div>
+                    <div class="project-metric">
+                        <div class="project-metric-value">Daily</div>
+                        <div class="project-metric-label">Summaries</div>
+                    </div>
+                </div>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Telegram API</span>
+                    <span class="tech-tag">OpenAI Vision</span>
+                    <span class="tech-tag">Google Sheets</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Vault Section -->
+    <section class="section vault-section">
+        <div class="section-header reveal">
+            <div class="section-tag">The Vault</div>
+            <h2 class="section-title">Everything I've Built</h2>
+            <p class="section-subtitle">See more projects below</p>
+        </div>
+        <div class="vault-container reveal">
+            <button class="vault-trigger" id="vaultTrigger">
+                <span class="vault-icon">🔒</span>
+                <span class="vault-text">ACCESS FULL PROJECT INDEX</span>
+                <span class="vault-hint">click to unlock</span>
+            </button>
+            <div class="vault-content" id="vaultContent">
+                <div class="vault-header">
+                    <span class="vault-status">░░░░░░░░ VAULT UNLOCKED ░░░░░░░░</span>
+                    <button class="vault-close" id="vaultClose">✕ COLLAPSE</button>
+                </div>
+                <div class="vault-accordion">
+                    <!-- Business Ecosystem -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Business Ecosystem</span>
+                            <span class="vault-type">Business Ops</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Complete operational infrastructure adaptable to any service business. AI-powered assistant, financial dashboards with 500+ classification rules, CRM automation saving 130+ hrs/year.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>SQLite</span><span>OpenAI</span><span>Power Query</span><span>DAX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Video Content Factory -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Video Content Factory</span>
+                            <span class="vault-type">Content Automation</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Automated TikTok/Reels generation pipeline. Topic → Script (Claude) → Voiceover (OpenAI TTS) → Images (Gemini) → Final video. Content memory prevents duplicates.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>Claude API</span><span>OpenAI TTS</span><span>Gemini</span><span>Creatomate</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- OneKey Writer -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">OneKey Writer</span>
+                            <span class="vault-type">Desktop Tool</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Windows system tray app for instant text transformation. Select text anywhere, press hotkey, pick a template (professional, friendly, fix grammar, etc.) — done.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>PyAutoGUI</span><span>Claude API</span><span>PyInstaller</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Receipt Capture Bot -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Receipt Capture Bot</span>
+                            <span class="vault-type">Telegram Bot</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Telegram bot for expense tracking. Photograph receipt → OCR extracts data → Select project → Syncs to Google Sheets. Daily summaries to manager.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>Telegram API</span><span>OpenAI Vision</span><span>Google Sheets</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- JulieVideo -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">JulieVideo</span>
+                            <span class="vault-type">Cost-Optimized Pipeline</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Cost-optimized version of Content Factory. Uses free Pexels stock video instead of AI-generated images, local MoviePy rendering instead of cloud. 91% cost reduction ($1.00 → $0.09).</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>Pexels API</span><span>MoviePy</span><span>Local Render</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ineffable -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Ineffable</span>
+                            <span class="vault-type">Content Framework</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Modular content automation framework for a consciousness teachings channel. Script generation, TTS, video assembly, multi-platform output. TypeScript orchestrator with OpenAI Assistants.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>TypeScript</span><span>OpenAI Assistants</span><span>TTS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Teams Capture -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">TeamsScrollCapture</span>
+                            <span class="vault-type">OCR Utility</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Desktop utility that captures Microsoft Teams chat history. Auto-scrolls through conversation, takes screenshots, OCR extracts text. For when you need to export what Teams won't let you.</p>
+                            <div class="detail-tech">
+                                <span>Python</span><span>Tesseract OCR</span><span>PyAutoGUI</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sacred Geo -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Sacred Geometry</span>
+                            <span class="vault-type">3D Visualization</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Interactive 3D visualization playground built with React and Three.js. Explore geometric patterns, sacred geometry forms, and mathematical relationships in real-time 3D.</p>
+                            <div class="detail-tech">
+                                <span>React 19</span><span>TypeScript</span><span>Three.js</span><span>React Three Fiber</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Excel Automation Suite -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">Excel Automation Suite</span>
+                            <span class="vault-type">VBA Macros</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>VBA macro collection for Power Pivot executive dashboards. Built for non-technical users to operate complex workbooks with one-click actions.</p>
+                            <ul class="detail-macros">
+                                <li><strong>RefreshEverything</strong> — One-click refresh: Data Model + PivotTables + formulas</li>
+                                <li><strong>JobIngest</strong> — Smart data transfer with automatic column matching between sheets</li>
+                                <li><strong>Sheet Navigator</strong> — Dropdown to jump to any sheet, auto-unhides if hidden</li>
+                                <li><strong>Visibility Manager</strong> — Hide/show data sheets to keep dashboards clean for end users</li>
+                            </ul>
+                            <div class="detail-tech">
+                                <span>VBA</span><span>Power Pivot</span><span>Power Query</span><span>DAX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AI CLI Orchestration -->
+                    <div class="accordion-item">
+                        <div class="accordion-trigger">
+                            <span class="vault-prefix">&gt;</span>
+                            <span class="vault-name">AI CLI Orchestration</span>
+                            <span class="vault-type">Claude Code Framework</span>
+                            <span class="accordion-arrow">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Custom framework built on Claude Code for managing AI-assisted development at scale. Project scaffolding, multi-agent pipelines, session management, and MCP server integrations.</p>
+                            <ul class="detail-macros">
+                                <li><strong>Project Factory</strong> — Automated scaffolding with templates, state files, and orchestration pipelines</li>
+                                <li><strong>Portfolio Indexer</strong> — Tracks all projects, auto-updates on changes, powers /recall searches</li>
+                                <li><strong>Multi-Agent Pipelines</strong> — Parallel task execution, dependency tracking, work queues</li>
+                                <li><strong>MCP Integrations</strong> — Browser automation, Greptile code search, custom tool servers</li>
+                                <li><strong>Session Persistence</strong> — Context preservation across conversations with CLAUDE.md docs</li>
+                            </ul>
+                            <div class="detail-tech">
+                                <span>Claude Code</span><span>Python</span><span>MCP Servers</span><span>TypeScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vault-footer">
+                    <span class="vault-count">10 projects indexed</span>
+                    <span class="vault-note">// click any project to expand</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Wins Section -->
+    <section class="section quick-wins-section">
+        <div class="section-header reveal">
+            <div class="section-tag">Quick Wins</div>
+            <h2 class="section-title">Not Everything Needs to Be Complex</h2>
+        </div>
+        <div class="quick-wins-intro reveal">
+            <p>Sometimes the best solution is a 20-line Excel macro or a Python script wrapped in a CMD file that non-technical people can double-click like an app.</p>
+        </div>
+        <div class="quick-wins-grid">
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">📊</div>
+                <h4>Excel Report Automation</h4>
+                <p>Macro that pulls data from multiple sheets, formats it, and generates the weekly report your team spends 2 hours building manually.</p>
+                <div class="quick-win-time">Saves 30+ min/day</div>
+            </div>
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">📁</div>
+                <h4>File Organization Scripts</h4>
+                <p>Python script that sorts downloads, renames files by date, moves to correct folders. Double-click and done.</p>
+                <div class="quick-win-time">Saves 15 min/day</div>
+            </div>
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">📧</div>
+                <h4>Email Template Generator</h4>
+                <p>Script that pulls customer data and generates personalized emails ready to send. No more copy-paste errors.</p>
+                <div class="quick-win-time">Saves 20 min/day</div>
+            </div>
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">🔄</div>
+                <h4>Data Entry Automation</h4>
+                <p>Takes exports from one system and formats them for import into another. Eliminates the manual reformatting dance.</p>
+                <div class="quick-win-time">Saves 45 min/task</div>
+            </div>
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">📋</div>
+                <h4>Clipboard Transformers</h4>
+                <p>Hotkey scripts that transform clipboard content — format phone numbers, clean up text, convert formats instantly.</p>
+                <div class="quick-win-time">Saves 5 sec × 100/day</div>
+            </div>
+            <div class="quick-win-card reveal">
+                <div class="quick-win-icon">📈</div>
+                <h4>Dashboard Refreshers</h4>
+                <p>One-click script that pulls latest data, updates pivot tables, refreshes charts, and saves the file. Ready for the morning meeting.</p>
+                <div class="quick-win-time">Saves 25 min/day</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services-section" id="services">
+        <div class="section-header reveal">
+            <div class="section-tag">What I Build</div>
+            <h2 class="section-title">Services</h2>
+            <p class="section-subtitle">From quick fixes to complete systems</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">⚡</div>
+                <h3>Workflow Automation</h3>
+                <p>Excel macros, Python scripts, CMD tools — whatever eliminates your repetitive tasks fastest.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">🤖</div>
+                <h3>AI Integrations</h3>
+                <p>Connect ChatGPT, Claude, or other AI to your workflows. Custom assistants for your specific needs.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">📊</div>
+                <h3>Dashboards & Reporting</h3>
+                <p>Financial dashboards, KPI tracking, automated reports. Know your numbers without the manual work.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">🎬</div>
+                <h3>Content Automation</h3>
+                <p>Video factories, social media pipelines, content generation systems at scale.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">🌐</div>
+                <h3>Web Design</h3>
+                <p>Modern, responsive websites. Landing pages, portfolios, business sites that convert.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">💬</div>
+                <h3>Bots & Integrations</h3>
+                <p>Telegram, Slack, Discord bots. Connect your tools together automatically.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Resources Section -->
+    <section class="resources-section" id="resources">
+        <div class="resources-header">
+            <h2>Free <span>Resources</span></h2>
+            <p>Guides and templates from my actual workflow. No email required — just download and use.</p>
+        </div>
+        <div class="resources-grid">
+            <div class="resource-card reveal">
+                <span class="resource-badge advanced">Advanced</span>
+                <h3>The AI Project Orchestrator Blueprint</h3>
+                <p>Stop prompt engineering messages. Start prompt engineering your entire workflow. Includes the complete template bundle I use on every project.</p>
+                <a href="freebies/01-ai-orchestrator-blueprint.html" class="resource-link">Read the Guide</a>
+            </div>
+            <div class="resource-card reveal">
+                <span class="resource-badge intermediate">Intermediate</span>
+                <h3>Build Tools, Not Rent Them</h3>
+                <p>Why I use AI to create one-time tools instead of monthly subscriptions. Real examples and the mindset shift that saves thousands.</p>
+                <a href="freebies/02-build-tools-not-rent.html" class="resource-link">Read the Guide</a>
+            </div>
+            <div class="resource-card reveal">
+                <span class="resource-badge beginner">Beginner</span>
+                <h3>DIY Automation Starter Kit</h3>
+                <p>10 ready-to-use prompts that work with any AI. Turn repetitive tasks into reusable automations in minutes, not months.</p>
+                <a href="freebies/03-diy-automation-starter-kit.html" class="resource-link">Read the Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-box reveal">
+            <h2>Tell Me Your Repetitive Task</h2>
+            <p>If you're doing something manually more than twice, let's talk about automating it. From 30-minute fixes to complete systems.</p>
+            <div class="cta-buttons">
+                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="btn btn-primary">Book a Call</a>
+                <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" class="btn btn-secondary" target="_blank">Connect on LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" target="_blank">LinkedIn</a>
+            <a href="#resources">Free Guides</a>
+            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;">Book a Call</a>
+        </div>
+        <p>Operations Architect // From Spreadsheets to Systems</p>
+    </footer>
+
+    <script>
+        // Scroll-triggered nav styling
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (top < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Vault functionality
+        const vaultTrigger = document.getElementById('vaultTrigger');
+        const vaultContent = document.getElementById('vaultContent');
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        vaultTrigger.addEventListener('click', () => {
+            vaultTrigger.classList.add('unlocked');
+            vaultContent.classList.add('open');
+        });
+
+        // Accordion functionality - only one open at a time
+        accordionItems.forEach(item => {
+            const trigger = item.querySelector('.accordion-trigger');
+            trigger.addEventListener('click', () => {
+                // Close all other items first
+                accordionItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                    }
+                });
+                // Toggle this item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Vault collapse functionality
+        const vaultClose = document.getElementById('vaultClose');
+        vaultClose.addEventListener('click', () => {
+            vaultContent.classList.remove('open');
+            vaultTrigger.classList.remove('unlocked');
+            // Clear any active accordion items
+            accordionItems.forEach(i => i.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
