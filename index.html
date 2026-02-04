@@ -4,12 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Operations Architect | From Spreadsheets to Systems</title>
+
+    <!-- SEO & Social Meta -->
+    <meta name="description" content="Operations Architect specializing in AI-powered automation systems. Transform manual processes into intelligent workflows. From spreadsheets to systems.">
+    <meta name="keywords" content="automation, operations, AI, systems architect, workflow automation, business processes">
+    <meta name="author" content="Luis Aviles">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Operations Architect | From Spreadsheets to Systems">
+    <meta property="og:description" content="Transform manual processes into intelligent automation systems. AI-powered operations architecture.">
+    <meta property="og:url" content="https://999ineff.netlify.app">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Performance: Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.calendly.com">
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Calendly -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+    <!-- Calendly: Lazy loaded on demand for faster page load -->
     <style>
         :root {
             --bg-deep: #050508;
@@ -226,6 +249,11 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            animation: subtlePulse 3s ease-in-out infinite;
+        }
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 59, 0); }
+            50% { box-shadow: 0 0 20px 2px rgba(255, 193, 59, 0.3); }
         }
         .nav-cta::before {
             content: '';
@@ -241,6 +269,7 @@
         .nav-cta:hover {
             color: var(--bg-deep);
             border-color: transparent;
+            animation: none;
         }
         .nav-cta:hover::before {
             left: 0;
@@ -346,6 +375,24 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+        }
+        /* Shine effect on buttons */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:active {
+            transform: scale(0.98);
         }
         .btn-primary {
             background: var(--gradient-gold);
@@ -356,6 +403,9 @@
             transform: translateY(-3px);
             box-shadow: 0 20px 40px rgba(255, 193, 59, 0.3);
         }
+        .btn-primary:active {
+            transform: translateY(-1px) scale(0.98);
+        }
         .btn-secondary {
             background: transparent;
             color: var(--text);
@@ -365,6 +415,10 @@
             border-color: var(--gold);
             color: var(--gold);
             background: rgba(255, 193, 59, 0.05);
+        }
+        .btn-secondary:active {
+            transform: scale(0.98);
+            background: rgba(255, 193, 59, 0.1);
         }
 
         /* Stats Bar */
@@ -1574,7 +1628,7 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#resources">Free Guides</a></li>
             </ul>
-            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="nav-cta">Book a Call</a>
+            <a href="" onclick="openCalendly(this);return false;" class="nav-cta">Book a Call</a>
         </div>
     </nav>
 
@@ -1589,7 +1643,7 @@
             <p class="hero-subtitle">I build what others outsource — from 30-minute Excel fixes to full AI automation pipelines. If you're doing something manually more than twice, it can probably be automated.</p>
             <div class="hero-cta">
                 <a href="#projects" class="btn btn-primary">See My Work</a>
-                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="btn btn-secondary">Tell Me Your Problem</a>
+                <a href="" onclick="openCalendly(this);return false;" class="btn btn-secondary">Tell Me Your Problem</a>
             </div>
             <div class="stats-bar">
                 <div class="stat">
@@ -1724,7 +1778,7 @@
         <!-- Project 1: Owner Operations Dashboard -->
         <div class="project-card reveal">
             <div class="project-image">
-                <img src="assets/screenshots/BCE Owner DashBoard.png" alt="Owner Operations Dashboard">
+                <img src="assets/screenshots/BCE Owner DashBoard.png" alt="Owner Operations Dashboard" loading="lazy">
             </div>
             <div class="project-content">
                 <div class="project-tag">Business Operations</div>
@@ -1757,7 +1811,7 @@
         <!-- Project 2: Content Factory -->
         <div class="project-card reveal">
             <div class="project-image">
-                <img src="assets/screenshots/Tiktok Channel posts + views.png" alt="TikTok Content Factory Output">
+                <img src="assets/screenshots/Tiktok Channel posts + views.png" alt="TikTok Content Factory Output" loading="lazy">
             </div>
             <div class="project-content">
                 <div class="project-tag">Content Automation</div>
@@ -1791,7 +1845,7 @@
         <!-- Project 3: OneKey Writer -->
         <div class="project-card reveal">
             <div class="project-image">
-<iframe width="100%" height="300" src="https://www.youtube.com/embed/W442lFjPt_A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="300" src="https://www.youtube.com/embed/W442lFjPt_A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="project-content">
                 <div class="project-tag">Desktop Tool</div>
@@ -1823,7 +1877,7 @@
         <!-- Project 4: ShowRoomInvoice -->
         <div class="project-card reveal">
             <div class="project-image">
-<iframe width="100%" height="300" src="https://www.youtube.com/embed/7ejI_nq4-tc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="300" src="https://www.youtube.com/embed/7ejI_nq4-tc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="project-content">
                 <div class="project-tag">Telegram Bot</div>
@@ -2168,8 +2222,8 @@
             <h2>Tell Me Your Repetitive Task</h2>
             <p>If you're doing something manually more than twice, let's talk about automating it. From 30-minute fixes to complete systems.</p>
             <div class="cta-buttons">
-                <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;" class="btn btn-primary">Book a Call</a>
-                <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" class="btn btn-secondary" target="_blank">Connect on LinkedIn</a>
+                <a href="" onclick="openCalendly(this);return false;" class="btn btn-primary">Book a Call</a>
+                <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
             </div>
         </div>
     </section>
@@ -2177,9 +2231,9 @@
     <!-- Footer -->
     <footer>
         <div class="footer-links">
-            <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" target="_blank">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="#resources">Free Guides</a>
-            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});return false;">Book a Call</a>
+            <a href="" onclick="openCalendly(this);return false;">Book a Call</a>
         </div>
         <p>Operations Architect // From Spreadsheets to Systems</p>
     </footer>
@@ -2253,6 +2307,43 @@
             // Clear any active accordion items
             accordionItems.forEach(i => i.classList.remove('active'));
         });
+
+        // Lazy-load Calendly for faster page load
+        let calendlyLoaded = false;
+        function openCalendly(btn) {
+            const originalText = btn.textContent;
+
+            if (calendlyLoaded) {
+                Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});
+                return;
+            }
+
+            // Show loading state
+            btn.textContent = 'Loading...';
+            btn.style.pointerEvents = 'none';
+
+            // Load Calendly CSS
+            const css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = 'https://assets.calendly.com/assets/external/widget.css';
+            document.head.appendChild(css);
+
+            // Load Calendly JS
+            const script = document.createElement('script');
+            script.src = 'https://assets.calendly.com/assets/external/widget.js';
+            script.onload = () => {
+                calendlyLoaded = true;
+                btn.textContent = originalText;
+                btn.style.pointerEvents = 'auto';
+                Calendly.initPopupWidget({url: 'https://calendly.com/luis-aviles-khn'});
+            };
+            script.onerror = () => {
+                btn.textContent = originalText;
+                btn.style.pointerEvents = 'auto';
+                window.open('https://calendly.com/luis-aviles-khn', '_blank');
+            };
+            document.body.appendChild(script);
+        }
     </script>
 </body>
 </html>
