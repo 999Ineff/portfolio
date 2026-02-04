@@ -1097,7 +1097,8 @@
             pointer-events: none;
         }
         .project-image:has(img)::before,
-        .project-image:has(video)::before {
+        .project-image:has(video)::before,
+        .project-image:has(iframe)::before {
             display: none;
         }
         .project-image-placeholder {
@@ -1116,6 +1117,14 @@
         }
         .project-image video {
             object-fit: contain;
+            background: var(--bg-deep);
+        }
+        .project-image iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: relative;
+            z-index: 1;
             background: var(--bg-deep);
         }
         .project-content {
@@ -1712,14 +1721,14 @@
             <p class="section-subtitle">Real systems solving real problems</p>
         </div>
 
-        <!-- Project 1: BCE Ecosystem -->
+        <!-- Project 1: Owner Operations Dashboard -->
         <div class="project-card reveal">
             <div class="project-image">
-                <img src="assets/screenshots/BCE Owner DashBoard.png" alt="BCE Operations Dashboard">
+                <img src="assets/screenshots/BCE Owner DashBoard.png" alt="Owner Operations Dashboard">
             </div>
             <div class="project-content">
                 <div class="project-tag">Business Operations</div>
-                <h3>BCE Operations Ecosystem</h3>
+                <h3>Owner Operations Dashboard</h3>
                 <p>Complete operational infrastructure for a cleaning company: AI assistant, financial dashboards, CRM automation, SOP management, and owner reporting — all built from scratch.</p>
                 <div class="project-metrics">
                     <div class="project-metric">
@@ -1782,9 +1791,7 @@
         <!-- Project 3: OneKey Writer -->
         <div class="project-card reveal">
             <div class="project-image">
-                <video autoplay loop muted playsinline controls>
-                    <source src="assets/TextHelperDemo.mp4" type="video/mp4">
-                </video>
+<iframe width="100%" height="300" src="https://www.youtube.com/embed/W442lFjPt_A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-content">
                 <div class="project-tag">Desktop Tool</div>
@@ -1816,9 +1823,7 @@
         <!-- Project 4: ShowRoomInvoice -->
         <div class="project-card reveal">
             <div class="project-image">
-                <video autoplay loop muted playsinline controls>
-                    <source src="assets/TeleGramImagetoDB.mp4" type="video/mp4">
-                </video>
+<iframe width="100%" height="300" src="https://www.youtube.com/embed/7ejI_nq4-tc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-content">
                 <div class="project-tag">Telegram Bot</div>
