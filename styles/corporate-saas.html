@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudFlow — Corporate SaaS Style Demo</title>
+    <meta name="description" content="Corporate SaaS design preset demo — CloudFlow BPO & Managed Services. Deep teal, electric cyan accents, GSAP full stack animations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+    <script src="https://unpkg.com/lenis@latest/dist/lenis.min.js"></script>
+    <style>
+        :root {
+            --teal: #0D4F4F;
+            --teal-dark: #093B3B;
+            --cyan: #00E5C7;
+            --cyan-dim: #00B89E;
+            --cyan-glow: rgba(0, 229, 199, 0.4);
+            --navy: #0A1628;
+            --navy-deep: #070E1A;
+            --off-white: #F8F6F3;
+            --white: #FFFFFF;
+            --text-dark: #1A1A2E;
+            --text-body: #4A4A5A;
+            --text-light: #E8E8F0;
+            --text-dim: #94A3B8;
+            --text-muted: #64748B;
+            --border-light: rgba(0, 229, 199, 0.15);
+            --border-dark: rgba(0, 229, 199, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: auto; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--teal));
+            z-index: 10002;
+            pointer-events: none;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+        .cursor-ring {
+            width: 44px; height: 44px;
+            border: 1.5px solid var(--teal);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+        }
+        .cursor-ring.hover {
+            width: 80px; height: 80px;
+            background: rgba(0, 229, 199, 0.05);
+            border-color: var(--cyan);
+        }
+
+        /* Dot Grid Overlay for dark sections */
+        .dot-grid {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(0,229,199,0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+        }
+        .top-bar.scrolled {
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 0.875rem 3rem;
+        }
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-mark {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--teal), var(--cyan));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: var(--white);
+            font-weight: 800;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--cyan); }
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--cyan); }
+        .nav-cta {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--navy);
+            background: var(--cyan);
+            padding: 0.625rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(0,229,199,0.2);
+        }
+        .nav-cta:hover {
+            box-shadow: 0 0 30px rgba(0,229,199,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Content wrapper */
+        .content { position: relative; z-index: 2; }
+
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 3rem 6rem;
+            position: relative;
+            background: linear-gradient(135deg, rgba(13,79,79,0.88) 0%, rgba(10,22,40,0.92) 100%), url('images/corporate-saas/hero-office.png') center/cover no-repeat;
+            overflow: hidden;
+        }
+        .hero .dot-grid { opacity: 0.5; }
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+        .hero-sub {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        /* Floating Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .trust-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--cyan);
+            background: rgba(0, 229, 199, 0.08);
+            border: 1px solid rgba(0, 229, 199, 0.2);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            letter-spacing: 0.05em;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            padding: 1rem 2.25rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-cyan {
+            background: var(--cyan);
+            color: var(--navy);
+            box-shadow: 0 4px 24px rgba(0, 229, 199, 0.25);
+        }
+        .btn-cyan:hover {
+            box-shadow: 0 8px 40px rgba(0, 229, 199, 0.4);
+            transform: translateY(-3px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-outline:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(0, 229, 199, 0.05);
+        }
+        .btn-outline-dark {
+            background: transparent;
+            color: var(--teal);
+            border: 1px solid var(--teal);
+        }
+        .btn-outline-dark:hover {
+            background: var(--teal);
+            color: var(--white);
+        }
+
+        /* ============ SERVICES GRID ============ */
+        .services-section {
+            background: var(--off-white);
+            padding: 7rem 3rem;
+            position: relative;
+        }
+        .services-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--teal);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--teal);
+        }
+        .section-label.light { color: var(--cyan); }
+        .section-label.light::before { background: var(--cyan); }
+        .section-label.center { justify-content: center; }
+        .section-label.center::before { display: none; }
+        .section-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+            color: var(--text-dark);
+        }
+        .section-heading.light { color: var(--white); }
+        .section-sub {
+            color: var(--text-body);
+            font-size: 1.0625rem;
+            max-width: 520px;
+            margin-bottom: 3.5rem;
+            line-height: 1.7;
+        }
+        .section-sub.light { color: var(--text-dim); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .service-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.25rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--teal), var(--cyan));
+            border-radius: 12px 12px 0 0;
+        }
+        .service-card:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+        .service-icon {
+            width: 52px; height: 52px;
+            background: rgba(13, 79, 79, 0.06);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .service-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+        .service-card p {
+            color: var(--text-body);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .service-link {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .service-link:hover { color: var(--cyan-dim); }
+
+        /* ============ HOW IT WORKS ============ */
+        .how-section {
+            background: var(--navy);
+            padding: 7rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .how-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .steps-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+        .step-connector {
+            flex: 1;
+            max-width: 120px;
+            height: 2px;
+            background: rgba(0, 229, 199, 0.2);
+            margin-top: 32px;
+            position: relative;
+        }
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--cyan);
+            transition: width 0.6s ease;
+        }
+        .step-connector.active::after { width: 100%; }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 220px;
+        }
+        .step-number {
+            width: 64px; height: 64px;
+            border: 2px solid var(--cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--cyan);
+            margin-bottom: 1.5rem;
+            background: var(--navy);
+            position: relative;
+            z-index: 2;
+        }
+        .step h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+        .step p {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* ============ STATS BAR ============ */
+        .stats-section {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            padding: 5rem 3rem;
+            position: relative;
+        }
+        .stats-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-block {
+            padding: 1rem;
+        }
+        .counter-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1;
+        }
+        .counter-suffix {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            font-weight: 700;
+            color: var(--white);
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.75rem;
+            letter-spacing: 0.03em;
+        }
+
+        /* ============ PRICING ============ */
+        .pricing-section {
+            background: var(--off-white);
+            padding: 7rem 3rem;
+            position: relative;
+        }
+        .pricing-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+            align-items: start;
+        }
+        .pricing-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            text-align: left;
+            transition: all 0.4s;
+            position: relative;
+        }
+        .pricing-card.popular {
+            border: 2px solid var(--cyan);
+            margin-top: -1rem;
+            box-shadow: 0 20px 60px rgba(0, 229, 199, 0.12);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--navy);
+            background: var(--cyan);
+            padding: 0.25rem 1rem;
+            border-radius: 100px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        }
+        .pricing-card.popular:hover {
+            box-shadow: 0 24px 64px rgba(0, 229, 199, 0.18);
+        }
+        .pricing-tier {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-body);
+            margin-bottom: 0.5rem;
+        }
+        .pricing-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        .pricing-period {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1.75rem;
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        .pricing-features li {
+            padding: 0.5rem 0;
+            font-size: 0.9375rem;
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pricing-features li::before {
+            content: '\2713';
+            color: #22C55E;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .pricing-btn.primary {
+            background: var(--teal);
+            color: var(--white);
+        }
+        .pricing-btn.primary:hover {
+            background: var(--teal-dark);
+            transform: translateY(-2px);
+        }
+        .shimmer-btn {
+            background: var(--cyan);
+            color: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.5s;
+        }
+        .shimmer-btn:hover::after { left: 100%; }
+        .shimmer-btn:hover {
+            box-shadow: 0 8px 30px rgba(0, 229, 199, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ============ TESTIMONIAL ============ */
+        .testimonial-section {
+            background: var(--navy);
+            padding: 7rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .quote-mark {
+            font-size: 6rem;
+            color: var(--cyan);
+            opacity: 0.3;
+            font-family: 'Georgia', serif;
+            line-height: 0.5;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        .testimonial-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        .testimonial-author {
+            color: var(--text-dim);
+            font-size: 0.9375rem;
+        }
+        .testimonial-author strong {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        /* ============ CTA SECTION ============ */
+        .cta-section {
+            background: var(--navy-deep);
+            padding: 7rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-inner {
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .cta-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+        .cta-sub {
+            color: var(--text-dim);
+            font-size: 1.0625rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        .cta-form {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .cta-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.875rem 1.25rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9375rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .cta-input::placeholder { color: var(--text-muted); }
+        .cta-input:focus { border-color: var(--cyan); }
+        .cta-submit {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            padding: 0.875rem 2rem;
+            background: var(--cyan);
+            color: var(--navy);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cta-submit:hover {
+            box-shadow: 0 8px 30px rgba(0, 229, 199, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ============ FOOTER ============ */
+        .site-footer {
+            background: var(--navy-deep);
+            padding: 4rem 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+        }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+        .footer-col h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+        }
+        .footer-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--cyan); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+
+        /* Preset Badge */
+        .preset-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--cyan);
+            background: var(--navy-deep);
+            border: 1px solid var(--border-dark);
+            padding: 0.625rem 1.25rem;
+            border-radius: 4px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .preset-badge:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 199, 0.15);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+        @media (max-width: 768px) {
+            .services-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+            .pricing-card.popular { margin-top: 0; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .steps-row { flex-direction: column; align-items: center; gap: 2rem; }
+            .step-connector { display: none; }
+            .nav-links { display: none; }
+            .cursor-dot, .cursor-ring { display: none; }
+            body { cursor: auto; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .services-section, .how-section, .stats-section,
+            .pricing-section, .testimonial-section, .cta-section { padding: 5rem 1.5rem; }
+            .top-bar { padding: 1rem 1.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .trust-badges { flex-direction: column; align-items: center; }
+            .cta-form { flex-direction: column; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .scroll-progress { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="content">
+
+        <!-- NAV -->
+        <header class="top-bar" id="topBar">
+            <a href="./" class="logo">
+                <div class="logo-mark">CF</div>
+                CloudFlow
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#how">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-right">
+                <a href="./" class="back-link">&larr; Gallery</a>
+                <a href="#contact" class="nav-cta">Get Started</a>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="dot-grid"></div>
+            <div class="hero-inner">
+                <div class="trust-badges">
+                    <span class="trust-badge">150+ Clients</span>
+                    <span class="trust-badge">75% Cost Savings</span>
+                    <span class="trust-badge">$2M+ Saved Monthly</span>
+                </div>
+                <h1 class="hero-title" id="heroTitle">Your Business, Amplified.</h1>
+                <p class="hero-sub">Reduce costs by 75% with our managed BPO solutions. 150+ companies trust CloudFlow to scale their operations.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-cyan magnetic-btn"><span>Start Saving Today</span></a>
+                    <a href="#how" class="btn btn-outline magnetic-btn"><span>See How It Works</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="services-section" id="services">
+            <div class="services-inner">
+                <div class="section-label">What We Do</div>
+                <h2 class="section-heading">Managed Services<br>That Scale With You</h2>
+                <p class="section-sub">From customer support to finance, CloudFlow handles the operational heavy lifting so your team focuses on growth.</p>
+                <div class="services-grid">
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F3A7;</div>
+                        <h3>Customer Support</h3>
+                        <p>24/7 multichannel support with trained agents. Phone, chat, email, and social — covered.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F4C1;</div>
+                        <h3>Data Processing</h3>
+                        <p>High-volume data entry, verification, and transformation with 99.9% accuracy guarantees.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F4BB;</div>
+                        <h3>IT Helpdesk</h3>
+                        <p>Tier 1-3 technical support for your internal teams and end users. ITIL-aligned processes.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F465;</div>
+                        <h3>HR & Recruitment</h3>
+                        <p>End-to-end recruitment, onboarding, and HR administration. Scale your team without the overhead.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F4B0;</div>
+                        <h3>Accounting & Finance</h3>
+                        <p>Bookkeeping, AP/AR, payroll processing, and financial reporting by certified professionals.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                    <div class="service-card" data-tilt>
+                        <div class="service-icon">&#x1F916;</div>
+                        <h3>Virtual Assistants</h3>
+                        <p>Dedicated executive assistants for scheduling, research, travel, and administrative tasks.</p>
+                        <a href="#" class="service-link">Learn more &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section" id="how">
+            <div class="dot-grid"></div>
+            <div class="how-inner">
+                <div class="section-label light center">The Process</div>
+                <h2 class="section-heading light" style="text-align:center;">Simple. Fast. Effective.</h2>
+                <p class="section-sub light" style="text-align:center;margin-left:auto;margin-right:auto;">Go from first call to fully operational in as little as two weeks.</p>
+                <div class="steps-row">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Consult</h3>
+                        <p>We audit your operations and identify the highest-impact areas for cost savings.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Onboard</h3>
+                        <p>Our team integrates with your workflows, tools, and systems. Full training included.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Scale</h3>
+                        <p>Ramp up or down on demand. Pay only for what you use with transparent monthly billing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="stats-section">
+            <div class="stats-inner">
+                <div class="stats-row">
+                    <div class="stat-block">
+                        <div><span class="counter-value" data-target="150">0</span><span class="counter-suffix">+</span></div>
+                        <div class="stat-label">Active Clients</div>
+                    </div>
+                    <div class="stat-block">
+                        <div><span class="counter-value" data-target="75">0</span><span class="counter-suffix">%</span></div>
+                        <div class="stat-label">Cost Reduction</div>
+                    </div>
+                    <div class="stat-block">
+                        <div><span class="counter-value" data-target="99.8">0</span><span class="counter-suffix">%</span></div>
+                        <div class="stat-label">SLA Uptime</div>
+                    </div>
+                    <div class="stat-block">
+                        <div><span class="counter-value" data-target="24" data-static="true">24</span><span class="counter-suffix">/7</span></div>
+                        <div class="stat-label">Support Hours</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section class="pricing-section" id="pricing">
+            <div class="pricing-inner">
+                <div class="section-label center">Pricing</div>
+                <h2 class="section-heading" style="text-align:center;">Transparent Pricing,<br>No Surprises</h2>
+                <p class="section-sub" style="text-align:center;margin-left:auto;margin-right:auto;">All plans include onboarding, training, quality assurance, and a dedicated account manager.</p>
+                <div class="pricing-grid">
+                    <!-- Part-Time -->
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Part-Time</div>
+                        <div class="pricing-price">$999</div>
+                        <div class="pricing-period">per agent / month</div>
+                        <ul class="pricing-features">
+                            <li>4 hours daily coverage</li>
+                            <li>Single channel support</li>
+                            <li>Weekly performance reports</li>
+                            <li>Email & chat support</li>
+                            <li>Basic QA monitoring</li>
+                        </ul>
+                        <a href="#contact" class="pricing-btn primary">Get Started</a>
+                    </div>
+                    <!-- Half-Time (Popular) -->
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Popular</div>
+                        <div class="pricing-tier">Half-Time</div>
+                        <div class="pricing-price">$1,899</div>
+                        <div class="pricing-period">per agent / month</div>
+                        <ul class="pricing-features">
+                            <li>8 hours daily coverage</li>
+                            <li>Multi-channel support</li>
+                            <li>Daily performance reports</li>
+                            <li>Phone, chat & email</li>
+                            <li>Advanced QA & coaching</li>
+                            <li>Dedicated team lead</li>
+                        </ul>
+                        <a href="#contact" class="pricing-btn shimmer-btn">Start Saving</a>
+                    </div>
+                    <!-- Full-Time -->
+                    <div class="pricing-card">
+                        <div class="pricing-tier">Full-Time</div>
+                        <div class="pricing-price">$3,499</div>
+                        <div class="pricing-period">per agent / month</div>
+                        <ul class="pricing-features">
+                            <li>24/7 coverage available</li>
+                            <li>Omnichannel support</li>
+                            <li>Real-time dashboards</li>
+                            <li>All channels + social</li>
+                            <li>Premium QA & analytics</li>
+                            <li>Custom integrations</li>
+                        </ul>
+                        <a href="#contact" class="pricing-btn primary">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL -->
+        <section class="testimonial-section">
+            <div class="dot-grid"></div>
+            <div class="testimonial-inner">
+                <div class="quote-mark" id="quoteMark">&ldquo;</div>
+                <p class="testimonial-text">CloudFlow transformed our operations. We reduced overhead by 68% while actually improving our service quality.</p>
+                <p class="testimonial-author"><strong>Michael Torres</strong> &mdash; COO at Apex Solutions</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section" id="contact">
+            <div class="cta-inner">
+                <h2 class="cta-heading">Ready to Scale?</h2>
+                <p class="cta-sub">Get a free consultation and see how much CloudFlow can save your business.</p>
+                <div class="cta-form">
+                    <input type="email" class="cta-input" placeholder="Enter your work email" aria-label="Email address">
+                    <button class="cta-submit magnetic-btn"><span>Get Started</span></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="./" class="logo">
+                            <div class="logo-mark">CF</div>
+                            CloudFlow
+                        </a>
+                        <p>CloudFlow &mdash; This is a design demo by Ops_Architect</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <a href="#">About</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Press</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <a href="#">Customer Support</a>
+                        <a href="#">Data Processing</a>
+                        <a href="#">IT Helpdesk</a>
+                        <a href="#">Virtual Assistants</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <a href="#">Case Studies</a>
+                        <a href="#">Documentation</a>
+                        <a href="#">ROI Calculator</a>
+                        <a href="#">FAQs</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <a href="#">hello@cloudflow.io</a>
+                        <a href="#">+1 (555) 234-5678</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 CloudFlow. All rights reserved.</p>
+                    <p><a href="./" style="color:var(--text-muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#00E5C7'" onmouseout="this.style.color='var(--text-muted)'">&larr; Back to Style Gallery</a></p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Preset Badge -->
+    <a href="./" class="preset-badge">Corporate SaaS Preset</a>
+
+    <script>
+        // ===== LENIS SMOOTH SCROLL =====
+        const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // ===== REGISTER PLUGINS =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== SCROLL PROGRESS BAR =====
+        gsap.to('.scroll-progress', {
+            width: '100%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: document.body,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.3
+            }
+        });
+
+        // ===== CUSTOM CURSOR =====
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+        if (dot && ring && window.innerWidth > 768) {
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', (e) => {
+                mx = e.clientX; my = e.clientY;
+                dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            });
+            function ringLoop() {
+                rx += (mx - rx) * 0.12;
+                ry += (my - ry) * 0.12;
+                ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+                requestAnimationFrame(ringLoop);
+            }
+            ringLoop();
+            document.querySelectorAll('a, button, .service-card, .pricing-card, .stat-block').forEach(el => {
+                el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+                el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+            });
+        }
+
+        // ===== MAGNETIC BUTTONS =====
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: 'power2.out' });
+                const inner = btn.querySelector('span');
+                if (inner) gsap.to(inner, { x: x * 0.15, y: y * 0.15, duration: 0.4, ease: 'power2.out' });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+                const inner = btn.querySelector('span');
+                if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+            });
+        });
+
+        // ===== NAV SCROLL =====
+        const topBar = document.getElementById('topBar');
+        ScrollTrigger.create({
+            start: 50,
+            onUpdate: (self) => {
+                topBar.classList.toggle('scrolled', self.scroll() > 50);
+            }
+        });
+
+        // ===== HERO ANIMATIONS =====
+        // Trust badges — float in + continuous bob
+        gsap.from('.trust-badge', {
+            opacity: 0, y: 20,
+            duration: 0.6, ease: 'power3.out',
+            stagger: 0.1, delay: 0.2
+        });
+        // Continuous gentle bob on trust badges
+        document.querySelectorAll('.trust-badge').forEach((badge, i) => {
+            gsap.to(badge, {
+                y: -6,
+                duration: 1.8 + (i * 0.3),
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: i * 0.4
+            });
+        });
+
+        // Hero title — SplitText word reveal
+        if (typeof SplitText !== 'undefined') {
+            const heroSplit = new SplitText('#heroTitle', { type: 'words' });
+            gsap.from(heroSplit.words, {
+                y: 60, opacity: 0,
+                duration: 0.8, ease: 'power3.out',
+                stagger: 0.05, delay: 0.4
+            });
+        } else {
+            gsap.from('#heroTitle', { opacity: 0, y: 40, duration: 0.8, ease: 'power3.out', delay: 0.4 });
+        }
+
+        // Hero subtitle + actions
+        gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out', delay: 0.7 });
+        gsap.from('.hero-actions', { opacity: 0, y: 30, duration: 0.7, ease: 'power3.out', delay: 0.9 });
+
+        // ===== 3D TILT ON SERVICE CARDS =====
+        document.querySelectorAll('[data-tilt]').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                gsap.to(card, {
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    y: -8,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                    transformPerspective: 1000,
+                    transformOrigin: 'center center'
+                });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power3.out'
+                });
+            });
+        });
+
+        // ===== SCROLL-TRIGGERED SECTIONS =====
+
+        // Section labels
+        document.querySelectorAll('.section-label').forEach(label => {
+            gsap.from(label, {
+                scrollTrigger: { trigger: label, start: 'top 85%' },
+                opacity: 0, x: -30, duration: 0.6, ease: 'power3.out'
+            });
+        });
+
+        // Section headings
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            if (typeof SplitText !== 'undefined') {
+                const split = new SplitText(heading, { type: 'lines', mask: 'lines' });
+                gsap.from(split.lines, {
+                    scrollTrigger: { trigger: heading, start: 'top 85%' },
+                    yPercent: 100, opacity: 0,
+                    duration: 0.8, ease: 'power3.out',
+                    stagger: 0.08
+                });
+            } else {
+                gsap.from(heading, {
+                    scrollTrigger: { trigger: heading, start: 'top 85%' },
+                    opacity: 0, y: 30, duration: 0.8, ease: 'power3.out'
+                });
+            }
+        });
+
+        // Service cards — stagger fade up
+        gsap.from('.service-card', {
+            scrollTrigger: { trigger: '.services-grid', start: 'top 90%' },
+            opacity: 0, y: 40, scale: 0.95,
+            duration: 0.6, ease: 'power3.out',
+            stagger: { each: 0.08, from: 'start' }
+        });
+
+        // Steps — fade up stagger
+        gsap.from('.step', {
+            scrollTrigger: { trigger: '.steps-row', start: 'top 90%' },
+            opacity: 0, y: 40,
+            duration: 0.7, ease: 'power3.out',
+            stagger: 0.15
+        });
+        // Animate step connectors
+        gsap.utils.toArray('.step-connector').forEach((conn, i) => {
+            ScrollTrigger.create({
+                trigger: conn,
+                start: 'top 90%',
+                onEnter: () => {
+                    setTimeout(() => conn.classList.add('active'), i * 200);
+                }
+            });
+        });
+
+        // ===== COUNTER COUNT-UP + GLOW PULSE =====
+        const counters = document.querySelectorAll('.counter-value:not([data-static])');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const isFloat = target % 1 !== 0;
+            const obj = { val: 0 };
+            gsap.to(obj, {
+                val: target,
+                duration: 2,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '.stats-section',
+                    start: 'top 90%',
+                    once: true
+                },
+                onUpdate: function() {
+                    counter.textContent = isFloat ? obj.val.toFixed(1) : Math.floor(obj.val);
+                },
+                onComplete: function() {
+                    counter.textContent = isFloat ? target.toFixed(1) : target;
+                    // Glow pulse after count completes
+                    gsap.to(counter, {
+                        textShadow: '0 0 20px rgba(0,229,199,0.6), 0 0 40px rgba(0,229,199,0.3)',
+                        duration: 0.5,
+                        yoyo: true,
+                        repeat: 2,
+                        ease: 'sine.inOut'
+                    });
+                }
+            });
+        });
+
+        // Pricing cards
+        gsap.from('.pricing-card', {
+            scrollTrigger: { trigger: '.pricing-grid', start: 'top 90%' },
+            opacity: 0, y: 40,
+            duration: 0.7, ease: 'power3.out',
+            stagger: 0.1
+        });
+
+        // Testimonial quote mark — scale + rotate
+        gsap.from('#quoteMark', {
+            scrollTrigger: { trigger: '.testimonial-section', start: 'top 75%' },
+            scale: 0.3, rotate: -15, opacity: 0,
+            duration: 0.8, ease: 'back.out(1.7)'
+        });
+        gsap.from('.testimonial-text', {
+            scrollTrigger: { trigger: '.testimonial-section', start: 'top 75%' },
+            opacity: 0, y: 30, duration: 0.8, ease: 'power3.out', delay: 0.2
+        });
+        gsap.from('.testimonial-author', {
+            scrollTrigger: { trigger: '.testimonial-section', start: 'top 70%' },
+            opacity: 0, y: 20, duration: 0.6, ease: 'power3.out', delay: 0.4
+        });
+
+        // CTA — fade up big
+        gsap.from('.cta-inner', {
+            scrollTrigger: { trigger: '.cta-section', start: 'top 90%' },
+            opacity: 0, y: 60,
+            duration: 0.8, ease: 'power3.out'
+        });
+
+        // Fallback: force all elements visible after 3 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.service-card, .step, .pricing-card, .testimonial-text, .testimonial-author, .cta-inner, .section-heading, #quoteMark').forEach(el => {
+                const computed = window.getComputedStyle(el);
+                if (computed.opacity === '0' || computed.visibility === 'hidden') {
+                    el.style.opacity = '1';
+                    el.style.visibility = 'visible';
+                    el.style.transform = 'none';
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

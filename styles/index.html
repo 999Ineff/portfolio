@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Style Gallery | Ops_Architect Web Design</title>
-    <meta name="description" content="Browse 7 premium web design styles. Each built with Awwwards-quality animations, custom cursors, and scroll-driven effects. Pick your style.">
+    <meta name="description" content="Browse 9 premium web design styles. Each built with Awwwards-quality animations, custom cursors, and scroll-driven effects. Pick your style.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -421,6 +421,34 @@
             color: #2D5016;
             font-weight: 300;
         }
+        .preview-corporate-saas {
+            background: linear-gradient(135deg, #0D4F4F 0%, #0A1628 100%);
+            background-image:
+                radial-gradient(circle at 30% 50%, rgba(0,229,199,0.15) 0%, transparent 50%),
+                linear-gradient(135deg, #0D4F4F 0%, #0A1628 100%);
+        }
+        .preview-corporate-saas .card-preview-text {
+            font-family: 'Outfit', sans-serif;
+            color: #00E5C7;
+            font-weight: 600;
+        }
+        .preview-tierra {
+            background: linear-gradient(135deg, #1A365D 0%, #0F1F3D 100%);
+        }
+        .preview-tierra::after {
+            content: '';
+            position: absolute;
+            bottom: 30%;
+            left: 10%;
+            right: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, #D4A574, transparent);
+        }
+        .preview-tierra .card-preview-text {
+            font-family: 'Outfit', sans-serif;
+            color: #D4A574;
+            font-weight: 700;
+        }
 
         /* Footer */
         .gallery-footer {
@@ -480,7 +508,7 @@
         <div class="gallery-hero-content">
             <div class="gallery-tag reveal">Web Design Styles</div>
             <h1 class="gallery-title reveal">Choose Your <span class="highlight">Style</span></h1>
-            <p class="gallery-subtitle reveal">7 premium design presets. Each built with custom animations, scroll-driven effects, and Awwwards-level quality. Click any card to see the full demo.</p>
+            <p class="gallery-subtitle reveal">9 premium design presets. Each built with custom animations, scroll-driven effects, and Awwwards-level quality. Click any card to see the full demo.</p>
         </div>
     </section>
 
@@ -650,6 +678,54 @@
                         <span class="card-tag">Bakeries</span>
                         <span class="card-tag">Yoga Studios</span>
                         <span class="card-tag">Wellness</span>
+                    </div>
+                    <div class="card-cta">View Demo <span class="arrow">→</span></div>
+                </div>
+            </a>
+
+            <!-- 8. Corporate SaaS -->
+            <a href="corporate-saas.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #0D4F4F, #00E5C7);">
+                <div class="card-preview preview-corporate-saas">
+                    <div class="card-preview-text">CloudFlow</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-preset-name">Corporate SaaS</div>
+                    <h3 class="card-title">CloudFlow</h3>
+                    <p class="card-description">Teal, cyan, fast confident animations. Conversion-focused B2B.</p>
+                    <div class="card-palette">
+                        <div class="palette-dot" style="background:#0D4F4F;"></div>
+                        <div class="palette-dot" style="background:#00E5C7;"></div>
+                        <div class="palette-dot" style="background:#0A1628;"></div>
+                        <div class="palette-dot" style="background:#F8F6F3;"></div>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">BPO</span>
+                        <span class="card-tag">SaaS</span>
+                        <span class="card-tag">Staffing</span>
+                    </div>
+                    <div class="card-cta">View Demo <span class="arrow">→</span></div>
+                </div>
+            </a>
+
+            <!-- 9. Tierra Developer -->
+            <a href="tierra-developer.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #1A365D, #D4A574);">
+                <div class="card-preview preview-tierra">
+                    <div class="card-preview-text">Terranova</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-preset-name">Tierra Developer</div>
+                    <h3 class="card-title">Terranova Lotes</h3>
+                    <p class="card-description">Billboard-style hero, lot maps, WhatsApp-driven conversion machine.</p>
+                    <div class="card-palette">
+                        <div class="palette-dot" style="background:#1A365D;"></div>
+                        <div class="palette-dot" style="background:#D4A574;"></div>
+                        <div class="palette-dot" style="background:#FAF5EF;"></div>
+                        <div class="palette-dot" style="background:#16A34A;"></div>
+                    </div>
+                    <div class="card-tags">
+                        <span class="card-tag">Land Sales</span>
+                        <span class="card-tag">Real Estate</span>
+                        <span class="card-tag">Property</span>
                     </div>
                     <div class="card-cta">View Demo <span class="arrow">→</span></div>
                 </div>

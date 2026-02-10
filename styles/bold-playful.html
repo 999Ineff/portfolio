@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRIND Athletics — Bold & Playful Style Demo</title>
+    <meta name="description" content="Bold & Playful design preset demo — GRIND Athletics gym/fitness. Hot pink, electric yellow, elastic animations, chaotic energy.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --pink: #FF2D7B;
+            --yellow: #FFE600;
+            --black: #000000;
+            --white: #FFFFFF;
+            --pink-dim: rgba(255, 45, 123, 0.15);
+            --pink-glow: rgba(255, 45, 123, 0.4);
+            --yellow-glow: rgba(255, 230, 0, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Halftone dot pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, rgba(255,45,123,0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 24px;
+            height: 24px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, background 0.3s ease;
+            background: var(--pink);
+            border-radius: 50%;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.cursor-square {
+            border-radius: 0;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: var(--yellow);
+        }
+        .custom-cursor.cursor-triangle {
+            width: 0;
+            height: 0;
+            background: transparent;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 22px solid var(--pink);
+            border-radius: 0;
+        }
+        .custom-cursor.cursor-hover {
+            width: 48px;
+            height: 48px;
+            background: var(--yellow);
+            mix-blend-mode: screen;
+        }
+
+        /* Content wrapper */
+        .content { position: relative; z-index: 2; }
+
+        /* Navigation */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+        }
+        .top-bar.scrolled {
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--pink);
+            padding: 0.875rem 3rem;
+        }
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--pink);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--pink); }
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--yellow); }
+        .nav-cta-btn {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 800;
+            color: var(--black);
+            background: var(--pink);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            transform: rotate(1deg);
+            display: inline-block;
+            box-shadow: 3px 3px 0 var(--yellow);
+        }
+        .nav-cta-btn:hover {
+            transform: rotate(-1deg) scale(1.05);
+            box-shadow: 5px 5px 0 var(--yellow);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 3rem 6rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.75)), url('images/bold-playful/gym.png') center/cover no-repeat;
+        }
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(5rem, 15vw, 18rem);
+            font-weight: 800;
+            color: var(--pink);
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            transform: rotate(-3deg);
+            margin-bottom: 1.5rem;
+            text-shadow: 4px 4px 0 rgba(255,230,0,0.3);
+        }
+        .hero-subtitle {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.75rem);
+            font-weight: 800;
+            color: var(--yellow);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            transform: rotate(-3deg);
+        }
+        .hero-cta {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 800;
+            color: var(--black);
+            background: var(--pink);
+            padding: 1.25rem 3rem;
+            border: none;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: inline-block;
+            box-shadow: 6px 6px 0 var(--yellow);
+            transition: box-shadow 0.3s;
+            position: relative;
+            z-index: 5;
+        }
+        .hero-cta:hover {
+            box-shadow: 8px 8px 0 var(--yellow);
+        }
+
+        /* Geometric shapes */
+        .geo-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .geo-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--pink);
+            opacity: 0.25;
+            top: 15%;
+            left: 8%;
+        }
+        .geo-triangle {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid var(--yellow);
+            opacity: 0.2;
+            bottom: 20%;
+            right: 10%;
+        }
+        .geo-square {
+            width: 80px;
+            height: 80px;
+            background: var(--yellow);
+            opacity: 0.15;
+            top: 25%;
+            right: 15%;
+            transform: rotate(15deg);
+        }
+        .geo-ring {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 8px solid var(--pink);
+            opacity: 0.12;
+            bottom: 10%;
+            left: 15%;
+        }
+
+        /* ========== MARQUEE TICKER ========== */
+        .marquee {
+            background: var(--black);
+            border-top: 3px solid var(--yellow);
+            border-bottom: 3px solid var(--yellow);
+            padding: 1rem 0;
+            transform: rotate(2deg);
+            margin: -1rem -2rem;
+            overflow: hidden;
+            position: relative;
+            z-index: 3;
+        }
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marqueeScroll 20s linear infinite;
+        }
+        .marquee-text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--yellow);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 0 1rem;
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ========== PROGRAMS ========== */
+        .programs {
+            padding: 8rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 800;
+            color: var(--pink);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .section-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 4rem;
+            line-height: 1;
+        }
+        .section-heading .accent-pink { color: var(--pink); }
+        .section-heading .accent-yellow { color: var(--yellow); }
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .program-card {
+            background: var(--black);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: all 0.4s;
+            overflow: hidden;
+        }
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        .program-card.accent-pink::before { background: var(--pink); }
+        .program-card.accent-yellow::before { background: var(--yellow); }
+        .program-card.accent-pink { box-shadow: 4px 4px 0 var(--pink); }
+        .program-card.accent-yellow { box-shadow: 4px 4px 0 var(--yellow); }
+        .program-card:hover {
+            transform: rotate(0deg) translateY(-8px) !important;
+            border-color: var(--white);
+        }
+        .program-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+        .program-card.accent-pink h3 { color: var(--pink); }
+        .program-card.accent-yellow h3 { color: var(--yellow); }
+        .program-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .program-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1rem;
+        }
+        .program-schedule {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .program-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        /* ========== TRAINER SPOTLIGHT ========== */
+        .trainer {
+            padding: 8rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .trainer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .trainer-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: url('images/bold-playful/trainer.png') center/cover no-repeat;
+            clip-path: polygon(0 0, 100% 5%, 95% 100%, 5% 95%);
+            position: relative;
+        }
+        .trainer-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 4px,
+                rgba(0,0,0,0.3) 4px,
+                rgba(0,0,0,0.3) 5px
+            );
+        }
+        .trainer-info h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+        .trainer-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        .trainer-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+        }
+        .trainer-stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--pink);
+        }
+        .trainer-stat-label {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ========== PRICING ========== */
+        .pricing {
+            padding: 8rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .pricing-posters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 2px solid rgba(255,255,255,0.15);
+        }
+        .pricing-poster {
+            padding: 3.5rem 2.5rem;
+            border-right: 2px solid rgba(255,255,255,0.15);
+            position: relative;
+            transition: all 0.4s;
+        }
+        .pricing-poster:last-child { border-right: none; }
+        .pricing-poster:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        .pricing-poster.popular {
+            background: rgba(255,45,123,0.05);
+        }
+        .popular-stamp {
+            position: absolute;
+            top: 1.5rem;
+            right: -0.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 800;
+            color: var(--black);
+            background: var(--yellow);
+            padding: 0.375rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: rotate(-15deg);
+            box-shadow: 2px 2px 0 var(--pink);
+            z-index: 2;
+        }
+        .pricing-tier {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .pricing-amount {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        .pricing-poster:nth-child(1) .pricing-amount { color: var(--white); }
+        .pricing-poster:nth-child(2) .pricing-amount { color: var(--pink); }
+        .pricing-poster:nth-child(3) .pricing-amount { color: var(--yellow); }
+        .pricing-period {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 2rem;
+        }
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+        .pricing-features li {
+            padding: 0.625rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.65);
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pricing-features li::before {
+            content: '+';
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            color: var(--pink);
+            font-size: 1rem;
+        }
+        .pricing-cta {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 800;
+            padding: 1rem 2rem;
+            border: 2px solid var(--white);
+            background: transparent;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+        }
+        .pricing-cta:hover {
+            background: var(--pink);
+            border-color: var(--pink);
+            color: var(--black);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+        .pricing-poster.popular .pricing-cta {
+            background: var(--pink);
+            border-color: var(--pink);
+            color: var(--black);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+        .pricing-poster.popular .pricing-cta:hover {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            box-shadow: 4px 4px 0 var(--pink);
+        }
+
+        /* ========== JOIN CTA ========== */
+        .join-cta {
+            padding: 10rem 3rem;
+            text-align: center;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+        .join-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,45,123,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .join-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            font-weight: 800;
+            color: var(--yellow);
+            line-height: 1;
+            letter-spacing: -0.03em;
+            transform: rotate(-2deg);
+            margin-bottom: 3rem;
+            text-shadow: 3px 3px 0 rgba(255,45,123,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .join-btn {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--black);
+            background: var(--pink);
+            padding: 1.5rem 4rem;
+            border: none;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: inline-block;
+            box-shadow: 6px 6px 0 var(--yellow);
+            transition: box-shadow 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+        .join-btn:hover {
+            box-shadow: 8px 8px 0 var(--yellow);
+        }
+
+        /* ========== FOOTER ========== */
+        .site-footer {
+            padding: 3rem;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-left {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8125rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--pink); }
+        .footer-socials {
+            display: flex;
+            gap: 1.25rem;
+        }
+        .footer-socials a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            font-size: 1.125rem;
+            transition: color 0.3s;
+        }
+        .footer-socials a:hover { color: var(--pink); }
+
+        /* ========== PRESET BADGE ========== */
+        .preset-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 800;
+            color: var(--pink);
+            background: var(--black);
+            border: 2px solid var(--pink);
+            padding: 0.625rem 1.25rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 3px 3px 0 var(--yellow);
+        }
+        .preset-badge:hover {
+            background: var(--pink);
+            color: var(--black);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .programs-grid { grid-template-columns: repeat(2, 1fr); }
+            .trainer-grid { grid-template-columns: 1fr; }
+            .trainer-image { max-width: 500px; margin: 0 auto; }
+        }
+        @media (max-width: 768px) {
+            .programs-grid { grid-template-columns: 1fr; }
+            .pricing-posters {
+                grid-template-columns: 1fr;
+                border: none;
+            }
+            .pricing-poster {
+                border-right: none;
+                border-bottom: 2px solid rgba(255,255,255,0.15);
+                margin-bottom: 1rem;
+            }
+            .pricing-poster:last-child { border-bottom: none; }
+            .nav-links { display: none; }
+            .custom-cursor { display: none; }
+            body { cursor: auto; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .hero-title { transform: rotate(-1deg); }
+            .hero-subtitle { transform: rotate(-1deg); }
+            .programs, .trainer, .pricing, .join-cta { padding: 5rem 1.5rem; }
+            .top-bar { padding: 1rem 1.5rem; }
+            .site-footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .program-card { transform: rotate(0deg) !important; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: clamp(4rem, 20vw, 8rem); }
+            .trainer-stats { gap: 1rem; }
+            .trainer-stat-value { font-size: 1.5rem; }
+            .footer-links { flex-direction: column; gap: 0.5rem; align-items: center; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .marquee-track { animation: none !important; }
+            .hero-title, .hero-subtitle { transform: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <div class="content">
+
+        <!-- NAV -->
+        <header class="top-bar" id="topBar">
+            <a href="./" class="logo">GRIND</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#trainer">Trainers</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </nav>
+            <div class="nav-right">
+                <a href="./" class="back-link">&#8592; Gallery</a>
+                <a href="#join" class="nav-cta-btn magnetic-btn"><span>Join Now</span></a>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero" id="hero" data-cursor="circle">
+            <div class="geo-shape geo-circle" id="geoCircle"></div>
+            <div class="geo-shape geo-triangle" id="geoTriangle"></div>
+            <div class="geo-shape geo-square" id="geoSquare"></div>
+            <div class="geo-shape geo-ring" id="geoRing"></div>
+            <div class="hero-inner">
+                <h1 class="hero-title">GRIND</h1>
+                <p class="hero-subtitle">NO EXCUSES. JUST RESULTS.</p>
+                <a href="#pricing" class="hero-cta magnetic-btn"><span>START YOUR TRIAL</span></a>
+            </div>
+        </section>
+
+        <!-- MARQUEE TICKER -->
+        <div class="marquee">
+            <div class="marquee-track">
+                <span class="marquee-text">NO EXCUSES &bull; PUSH HARDER &bull; EVERY REP COUNTS &bull; GRIND DAILY &bull; NO EXCUSES &bull; PUSH HARDER &bull; EVERY REP COUNTS &bull; GRIND DAILY &bull; </span>
+                <span class="marquee-text">NO EXCUSES &bull; PUSH HARDER &bull; EVERY REP COUNTS &bull; GRIND DAILY &bull; NO EXCUSES &bull; PUSH HARDER &bull; EVERY REP COUNTS &bull; GRIND DAILY &bull; </span>
+            </div>
+        </div>
+
+        <!-- PROGRAMS -->
+        <section class="programs" id="programs" data-cursor="square">
+            <div class="section-label">Programs</div>
+            <h2 class="section-heading">FIND YOUR <span class="accent-pink">FIRE</span></h2>
+            <div class="programs-grid">
+                <div class="program-card accent-pink" style="transform: rotate(1deg);">
+                    <h3>HIIT Burn</h3>
+                    <p>High-intensity intervals that torch calories and build explosive endurance. Not for the faint-hearted.</p>
+                    <div class="program-meta">
+                        <span class="program-schedule">3x / week</span>
+                        <span class="program-price">$49/mo</span>
+                    </div>
+                </div>
+                <div class="program-card accent-yellow" style="transform: rotate(-2deg);">
+                    <h3>Power Lift</h3>
+                    <p>Serious strength training. Deadlifts, squats, bench — progressive overload that builds real power.</p>
+                    <div class="program-meta">
+                        <span class="program-schedule">3x / week</span>
+                        <span class="program-price">$49/mo</span>
+                    </div>
+                </div>
+                <div class="program-card accent-pink" style="transform: rotate(1.5deg);">
+                    <h3>Box & Flow</h3>
+                    <p>Boxing combos meet yoga flows. Build agility, relieve stress, and move like water.</p>
+                    <div class="program-meta">
+                        <span class="program-schedule">3x / week</span>
+                        <span class="program-price">$49/mo</span>
+                    </div>
+                </div>
+                <div class="program-card accent-yellow" style="transform: rotate(-1deg);">
+                    <h3>Strength 360</h3>
+                    <p>Total-body functional training. Kettlebells, rings, ropes — every muscle, every session.</p>
+                    <div class="program-meta">
+                        <span class="program-schedule">3x / week</span>
+                        <span class="program-price">$49/mo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAINER SPOTLIGHT -->
+        <section class="trainer" id="trainer" data-cursor="circle">
+            <div class="section-label">Trainer Spotlight</div>
+            <div class="trainer-grid">
+                <div class="trainer-image"></div>
+                <div class="trainer-info">
+                    <h2>COACH<br><span style="color: var(--pink);">ALEX</span><br>TORRES</h2>
+                    <div class="trainer-stats">
+                        <div class="trainer-stat">
+                            <span class="trainer-stat-value">12+</span>
+                            <span class="trainer-stat-label">Years Coaching</span>
+                        </div>
+                        <div class="trainer-stat">
+                            <span class="trainer-stat-value">500+</span>
+                            <span class="trainer-stat-label">Athletes Trained</span>
+                        </div>
+                        <div class="trainer-stat">
+                            <span class="trainer-stat-value">3x</span>
+                            <span class="trainer-stat-label">CrossFit Regional</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section class="pricing" id="pricing" data-cursor="triangle">
+            <div class="section-label">Membership</div>
+            <h2 class="section-heading">PICK YOUR <span class="accent-yellow">LEVEL</span></h2>
+            <div class="pricing-posters">
+                <div class="pricing-poster">
+                    <div class="pricing-tier">Starter</div>
+                    <div class="pricing-amount">$29</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>Gym floor access</li>
+                        <li>2 group classes / week</li>
+                        <li>Locker room access</li>
+                        <li>Basic fitness assessment</li>
+                    </ul>
+                    <a href="#join" class="pricing-cta magnetic-btn"><span>Get Started</span></a>
+                </div>
+                <div class="pricing-poster popular">
+                    <div class="popular-stamp">Most Popular</div>
+                    <div class="pricing-tier">Grinder</div>
+                    <div class="pricing-amount">$49</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited gym access</li>
+                        <li>All group classes</li>
+                        <li>1 PT session / month</li>
+                        <li>Nutrition guide</li>
+                        <li>Recovery zone access</li>
+                    </ul>
+                    <a href="#join" class="pricing-cta magnetic-btn"><span>Start Grinding</span></a>
+                </div>
+                <div class="pricing-poster">
+                    <div class="pricing-tier">Elite</div>
+                    <div class="pricing-amount">$89</div>
+                    <div class="pricing-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Grinder</li>
+                        <li>4 PT sessions / month</li>
+                        <li>Custom meal plan</li>
+                        <li>Priority class booking</li>
+                        <li>Guest passes (2/mo)</li>
+                    </ul>
+                    <a href="#join" class="pricing-cta magnetic-btn"><span>Go Elite</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN CTA -->
+        <section class="join-cta" id="join">
+            <h2 class="join-title">STOP SCROLLING.<br>START GRINDING.</h2>
+            <a href="#" class="join-btn magnetic-btn"><span>JOIN NOW</span></a>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-left">GRIND Athletics &mdash; This is a design demo by Ops_Architect</div>
+            <div class="footer-socials">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="TikTok">TK</a>
+                <a href="#" aria-label="YouTube">YT</a>
+            </div>
+            <nav>
+                <ul class="footer-links">
+                    <li><a href="./">&#8592; Back to Style Gallery</a></li>
+                </ul>
+            </nav>
+        </footer>
+
+    </div>
+
+    <!-- Preset Badge -->
+    <a href="./" class="preset-badge">Bold &amp; Playful Preset</a>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== CUSTOM CURSOR =====
+        const cursor = document.getElementById('customCursor');
+        if (cursor && window.innerWidth > 768) {
+            let cx = 0, cy = 0, tx = 0, ty = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                tx = e.clientX;
+                ty = e.clientY;
+            });
+
+            function cursorLoop() {
+                cx += (tx - cx) * 0.15;
+                cy += (ty - cy) * 0.15;
+                cursor.style.left = cx + 'px';
+                cursor.style.top = cy + 'px';
+                requestAnimationFrame(cursorLoop);
+            }
+            cursorLoop();
+
+            // Section-based cursor shapes
+            const sections = document.querySelectorAll('[data-cursor]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const shape = entry.target.dataset.cursor;
+                        cursor.className = 'custom-cursor';
+                        if (shape === 'square') cursor.classList.add('cursor-square');
+                        else if (shape === 'triangle') cursor.classList.add('cursor-triangle');
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            sections.forEach(s => observer.observe(s));
+
+            // Hover state
+            document.querySelectorAll('a, button, .program-card, .pricing-poster').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+            });
+        }
+
+        // ===== MAGNETIC BUTTONS =====
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.5, y: y * 0.5, duration: 0.4, ease: "power2.out" });
+                const inner = btn.querySelector('span');
+                if (inner) gsap.to(inner, { x: x * 0.25, y: y * 0.25, duration: 0.4, ease: "power2.out" });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
+                const inner = btn.querySelector('span');
+                if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // ===== NAV SCROLL =====
+        const topBar = document.getElementById('topBar');
+        ScrollTrigger.create({
+            start: 50,
+            onUpdate: (self) => {
+                topBar.classList.toggle('scrolled', self.scroll() > 50);
+            }
+        });
+
+        // ===== HERO ANIMATIONS =====
+        // Title — massive bounce in
+        gsap.from('.hero-title', {
+            scale: 3,
+            opacity: 0,
+            rotation: 10,
+            duration: 1.4,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.2
+        });
+
+        // Subtitle
+        gsap.from('.hero-subtitle', {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+            ease: "back.out(1.7)",
+            delay: 0.6
+        });
+
+        // CTA
+        gsap.from('.hero-cta', {
+            y: 80,
+            opacity: 0,
+            scale: 0.5,
+            duration: 1,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.9
+        });
+
+        // Geometric shapes — bouncy random entrances
+        gsap.from('#geoCircle', {
+            x: -200,
+            y: -200,
+            scale: 0,
+            opacity: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.4
+        });
+        gsap.from('#geoTriangle', {
+            x: 200,
+            y: 200,
+            scale: 0,
+            rotation: 180,
+            opacity: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.6
+        });
+        gsap.from('#geoSquare', {
+            scale: 0,
+            rotation: -90,
+            opacity: 0,
+            duration: 1.2,
+            ease: "back.out(1.7)",
+            delay: 0.8
+        });
+        gsap.from('#geoRing', {
+            scale: 0,
+            opacity: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.3)",
+            delay: 1
+        });
+
+        // Float geometric shapes continuously
+        gsap.to('#geoCircle', { y: -30, x: 15, duration: 4, ease: "sine.inOut", yoyo: true, repeat: -1 });
+        gsap.to('#geoTriangle', { y: 25, x: -10, rotation: 10, duration: 5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+        gsap.to('#geoSquare', { y: -20, rotation: 30, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+        gsap.to('#geoRing', { y: 20, x: -15, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+
+        // ===== MARQUEE =====
+        gsap.from('.marquee', {
+            scrollTrigger: { trigger: '.marquee', start: 'top 95%' },
+            scaleX: 0,
+            duration: 1,
+            ease: "back.out(1.7)"
+        });
+
+        // ===== PROGRAM CARDS — random stagger in =====
+        gsap.from('.program-card', {
+            scrollTrigger: { trigger: '.programs-grid', start: 'top 80%' },
+            opacity: 0,
+            y: 80,
+            rotation: () => gsap.utils.random(-15, 15),
+            scale: 0.7,
+            duration: 1,
+            ease: "back.out(1.7)",
+            stagger: { each: 0.15, from: "random" }
+        });
+
+        // ===== SECTION HEADINGS =====
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: { trigger: heading, start: 'top 85%' },
+                opacity: 0,
+                x: -80,
+                rotation: -5,
+                duration: 1,
+                ease: "elastic.out(1, 0.3)"
+            });
+        });
+
+        document.querySelectorAll('.section-label').forEach(label => {
+            gsap.from(label, {
+                scrollTrigger: { trigger: label, start: 'top 85%' },
+                opacity: 0,
+                x: -40,
+                duration: 0.8,
+                ease: "back.out(1.7)"
+            });
+        });
+
+        // ===== TRAINER =====
+        gsap.from('.trainer-image', {
+            scrollTrigger: { trigger: '.trainer-grid', start: 'top 75%' },
+            x: -120,
+            opacity: 0,
+            rotation: -8,
+            scale: 0.8,
+            duration: 1.2,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.from('.trainer-info h2', {
+            scrollTrigger: { trigger: '.trainer-info', start: 'top 80%' },
+            opacity: 0,
+            x: 60,
+            duration: 1,
+            ease: "back.out(1.7)"
+        });
+
+        gsap.from('.trainer-stat', {
+            scrollTrigger: { trigger: '.trainer-stats', start: 'top 85%' },
+            opacity: 0,
+            x: 80,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.3)",
+            stagger: { each: 0.15, from: "random" }
+        });
+
+        // ===== PRICING POSTERS =====
+        gsap.from('.pricing-poster', {
+            scrollTrigger: { trigger: '.pricing-posters', start: 'top 95%' },
+            opacity: 0,
+            y: 100,
+            scale: 0.8,
+            rotation: () => gsap.utils.random(-8, 8),
+            duration: 1,
+            ease: "elastic.out(1, 0.3)",
+            stagger: { each: 0.2, from: "random" }
+        });
+
+        gsap.from('.popular-stamp', {
+            scrollTrigger: { trigger: '.popular-stamp', start: 'top 85%' },
+            scale: 0,
+            rotation: -180,
+            duration: 1,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.5
+        });
+
+        // ===== JOIN CTA =====
+        gsap.from('.join-title', {
+            scrollTrigger: { trigger: '.join-cta', start: 'top 75%' },
+            opacity: 0,
+            scale: 0.3,
+            rotation: 8,
+            duration: 1.4,
+            ease: "elastic.out(1, 0.3)"
+        });
+
+        gsap.from('.join-btn', {
+            scrollTrigger: { trigger: '.join-cta', start: 'top 70%' },
+            opacity: 0,
+            y: 60,
+            scale: 0.5,
+            duration: 1,
+            ease: "back.out(1.7)",
+            delay: 0.3
+        });
+
+        // ===== FOOTER =====
+        gsap.from('.site-footer', {
+            scrollTrigger: { trigger: '.site-footer', start: 'top 95%' },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: "back.out(1.7)"
+        });
+
+        // Fallback: force all elements visible after 3 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.program-card, .pricing-poster, .trainer-image, .trainer-info, .trainer-stat, .join-text, .section-heading, .section-label').forEach(el => {
+                const s = window.getComputedStyle(el);
+                if (s.opacity === '0' || s.visibility === 'hidden') {
+                    el.style.opacity = '1';
+                    el.style.visibility = 'visible';
+                    el.style.transform = 'none';
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

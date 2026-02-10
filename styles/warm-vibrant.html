@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariscos Del Puerto — Warm & Vibrant Style Demo</title>
+    <meta name="description" content="Warm & Vibrant design preset demo — Mariscos Del Puerto Mexican Seafood Restaurant. Warm colors, cultural texture, wave dividers.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ocean: #1B4965;
+            --ocean-deep: #0d2d3f;
+            --ocean-light: #23607f;
+            --sunset: #F28C28;
+            --sunset-hover: #e07a18;
+            --sunset-glow: rgba(242, 140, 40, 0.35);
+            --sand: #FFF8F0;
+            --sand-dark: #f5eadb;
+            --lime: #7CB518;
+            --lime-light: #8ec42a;
+            --gold: #D4A84B;
+            --gold-border: #c49a3d;
+            --charcoal: #1e1e1e;
+            --text-dark: #2a2a2a;
+            --text-body: #4a4a4a;
+            --text-light: #f5f0e8;
+            --text-muted: #8a8070;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--sand);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            cursor: auto;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        .top-bar.scrolled {
+            background: rgba(27, 73, 101, 0.96);
+            backdrop-filter: blur(12px);
+            padding: 0.875rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-accent { color: var(--sunset); }
+        .nav-links {
+            display: flex;
+            gap: 2.25rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--sunset); }
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--sunset); }
+        .nav-cta {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            background: var(--sunset);
+            padding: 0.625rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--sunset-glow);
+        }
+        .nav-cta:hover {
+            background: var(--sunset-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px var(--sunset-glow);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            background:
+                linear-gradient(rgba(30,30,30,0.7), rgba(30,30,30,0.75)),
+                url('images/warm-vibrant/hero.png');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(242,140,40,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(124,181,24,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        .heritage-badge {
+            display: inline-block;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--sunset);
+            border: 1.5px solid var(--sunset);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.05;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 520px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .hero-cta {
+            display: inline-block;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            background: var(--sunset);
+            padding: 1rem 2.75rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px var(--sunset-glow);
+        }
+        .hero-cta:hover {
+            background: var(--sunset-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--sunset-glow);
+        }
+
+        /* ===== AWARD BANNER ===== */
+        .award-banner {
+            background: var(--sand);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .award-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2.5rem;
+            border: 2px solid var(--gold);
+            border-radius: 6px;
+            background: var(--sand);
+            box-shadow: 0 4px 20px rgba(212,168,75,0.12);
+        }
+        .award-star {
+            color: var(--gold);
+            font-size: 1.25rem;
+        }
+        .award-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== WAVE DIVIDERS ===== */
+        .wave-divider {
+            display: block;
+            width: 100%;
+            height: auto;
+            line-height: 0;
+        }
+        .wave-divider svg {
+            display: block;
+            width: 100%;
+            height: 80px;
+        }
+        @keyframes waveShift1 {
+            0%, 100% { d: path("M0,60 Q360,120 720,60 T1440,60 L1440,120 L0,120 Z"); }
+            50% { d: path("M0,50 Q360,100 720,70 T1440,50 L1440,120 L0,120 Z"); }
+        }
+        @keyframes waveShift2 {
+            0%, 100% { d: path("M0,60 Q360,0 720,60 T1440,60 L1440,0 L0,0 Z"); }
+            50% { d: path("M0,70 Q360,10 720,50 T1440,70 L1440,0 L0,0 Z"); }
+        }
+        .wave-path-1 { animation: waveShift1 8s ease-in-out infinite; }
+        .wave-path-2 { animation: waveShift2 8s ease-in-out infinite; }
+
+        /* ===== MENU HIGHLIGHTS ===== */
+        .menu-section {
+            background: var(--ocean);
+            padding: 5rem 2rem;
+        }
+        .menu-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .menu-section .section-label {
+            color: var(--sunset);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .menu-section .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Tab system */
+        .tab-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            padding: 0.875rem 2rem;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0; right: 0;
+            height: 3px;
+            background: var(--sunset);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .tab-btn:hover { color: rgba(255,255,255,0.8); }
+        .tab-btn.active { color: var(--white); }
+        .tab-btn.active::after { transform: scaleX(1); }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: baseline;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--white);
+            white-space: nowrap;
+        }
+        .menu-item-tag {
+            display: inline-block;
+            font-size: 0.625rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            margin-left: 0.625rem;
+            vertical-align: middle;
+        }
+        .tag-nuevo { background: var(--lime); color: var(--charcoal); }
+        .tag-picante { background: #e04040; color: var(--white); }
+        .menu-item-dots {
+            flex: 1;
+            border-bottom: 2px dotted rgba(255,255,255,0.15);
+            margin: 0 0.75rem;
+            min-width: 30px;
+            align-self: center;
+            transform: translateY(-4px);
+        }
+        .menu-item-price {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--sunset);
+            white-space: nowrap;
+        }
+
+        /* ===== LOCATIONS GRID ===== */
+        .locations-section {
+            background: var(--sand);
+            padding: 5rem 2rem;
+        }
+        .locations-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .locations-section .section-label {
+            color: var(--ocean);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .locations-section .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+        .location-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .location-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 50px rgba(0,0,0,0.12);
+        }
+        .location-header {
+            background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+            padding: 0;
+            position: relative;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .location-header img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .location-header .location-name,
+        .location-header .location-rating {
+            position: relative;
+            z-index: 2;
+            padding: 0 1.5rem;
+        }
+        .location-header .location-name { padding-top: 1.5rem; }
+        .location-header .location-rating { padding-bottom: 1rem; }
+        .location-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 20%, rgba(27,73,101,0.85) 100%);
+            z-index: 1;
+        }
+        .location-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .location-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+        }
+        .location-rating .star { color: var(--gold); font-size: 0.875rem; }
+        .location-rating .rating-num {
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+        .location-body {
+            padding: 1.5rem;
+        }
+        .location-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+        .location-detail .icon {
+            flex-shrink: 0;
+            width: 18px;
+            text-align: center;
+            color: var(--ocean);
+            font-size: 0.875rem;
+            margin-top: 0.125rem;
+        }
+        .location-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .btn-location {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-order {
+            background: var(--sunset);
+            color: var(--charcoal);
+        }
+        .btn-order:hover {
+            background: var(--sunset-hover);
+            transform: translateY(-2px);
+        }
+        .btn-directions {
+            background: transparent;
+            color: var(--ocean);
+            border: 1.5px solid var(--ocean);
+        }
+        .btn-directions:hover {
+            background: var(--ocean);
+            color: var(--white);
+        }
+
+        /* ===== WEEKLY SPECIALS ===== */
+        .specials-section {
+            background: var(--ocean-deep);
+            padding: 5rem 2rem;
+            position: relative;
+        }
+        .specials-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .specials-section .section-label {
+            color: var(--sunset);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .specials-section .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .specials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .special-card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        .special-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            border-color: rgba(242,140,40,0.3);
+        }
+        .special-day {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sunset);
+            margin-bottom: 0.75rem;
+        }
+        .special-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .special-detail {
+            font-size: 0.9375rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.5;
+        }
+        .special-price {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--lime);
+            margin-top: 0.75rem;
+        }
+
+        /* ===== RESERVATION CTA ===== */
+        .reservation-section {
+            background: var(--sand);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .reservation-inner {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .reservation-section .section-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .reservation-sub {
+            font-size: 1.0625rem;
+            color: var(--text-body);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .reservation-cta {
+            display: inline-block;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            background: var(--sunset);
+            padding: 1rem 2.75rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px var(--sunset-glow);
+            margin-bottom: 1.5rem;
+        }
+        .reservation-cta:hover {
+            background: var(--sunset-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px var(--sunset-glow);
+        }
+        .reservation-phone {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.375rem;
+            color: var(--ocean);
+            font-weight: 600;
+        }
+        .reservation-phone a {
+            color: var(--ocean);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .reservation-phone a:hover { color: var(--sunset); }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: var(--ocean);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        .footer-brand .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+        .footer-brand p {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+            max-width: 280px;
+        }
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-col a {
+            color: rgba(255,255,255,0.55);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--sunset); }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .social-link {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            border-color: var(--sunset);
+            color: var(--sunset);
+            background: rgba(242,140,40,0.1);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.4);
+        }
+        .footer-bottom a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-bottom a:hover { color: var(--sunset); }
+
+        /* ===== PRESET BADGE ===== */
+        .preset-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--sunset);
+            background: var(--white);
+            border: 1.5px solid var(--sunset);
+            padding: 0.625rem 1.25rem;
+            border-radius: 50px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .preset-badge:hover {
+            background: var(--sunset);
+            color: var(--white);
+            box-shadow: 0 6px 25px var(--sunset-glow);
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .locations-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+            .specials-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+            .nav-links { display: none; }
+            .top-bar { padding: 1rem 1.5rem; }
+            .top-bar.scrolled { padding: 0.75rem 1.5rem; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .menu-section, .locations-section, .specials-section, .reservation-section { padding: 3.5rem 1.5rem; }
+            .tab-btn { padding: 0.75rem 1.25rem; font-size: 0.8125rem; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { max-width: 100%; }
+            .footer-social { justify-content: center; }
+            .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+        }
+        @media (max-width: 375px) {
+            .hero-title { font-size: 2.5rem; }
+            .award-box { flex-direction: column; gap: 0.5rem; padding: 1rem 1.5rem; }
+            .location-actions { flex-direction: column; }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <header class="top-bar" id="topBar">
+        <a href="./" class="logo">Mariscos <span class="logo-accent">Del Puerto</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#locations">Locations</a></li>
+                <li><a href="#specials">Specials</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <a href="./" class="back-link">&larr; Gallery</a>
+            <a href="#reserve" class="nav-cta">Reserve a Table</a>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="heritage-badge">Desde 1998</div>
+            <h1 class="hero-title">Mariscos<br>Del Puerto</h1>
+            <p class="hero-subtitle">The Freshest Seafood in Dallas Since 1998</p>
+            <a href="#reserve" class="hero-cta">Reserve Your Table</a>
+        </div>
+    </section>
+
+    <!-- AWARD BANNER -->
+    <section class="award-banner reveal">
+        <div class="award-box">
+            <span class="award-star">&#9733;</span>
+            <span class="award-text">D Magazine Best Seafood 2024</span>
+            <span class="award-star">&#9733;</span>
+        </div>
+    </section>
+
+    <!-- WAVE: Sand to Ocean -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-path-1" d="M0,60 Q360,120 720,60 T1440,60 L1440,120 L0,120 Z" fill="#1B4965"/>
+        </svg>
+    </div>
+
+    <!-- MENU HIGHLIGHTS -->
+    <section class="menu-section" id="menu">
+        <div class="menu-inner">
+            <div class="section-label reveal">Nuestro Men&uacute;</div>
+            <h2 class="section-heading reveal">Sabores del Mar</h2>
+            <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:1rem;margin-bottom:2rem;" class="reveal">Fresh catches &amp; traditional recipes at every location</p>
+
+            <div class="tab-bar reveal">
+                <button class="tab-btn active" data-tab="oakcliff">&#x1F4CD; Oak Cliff Specials</button>
+                <button class="tab-btn" data-tab="grandprairie">&#x1F4CD; Grand Prairie Specials</button>
+                <button class="tab-btn" data-tab="irving">&#x1F4CD; Irving Specials</button>
+            </div>
+
+            <div class="tab-content active" id="tab-oakcliff">
+                <div class="menu-item">
+                    <span class="menu-item-name">Coctel de Camar&oacute;n <span class="menu-item-tag tag-nuevo">Nuevo</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$16.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Aguachile Rojo <span class="menu-item-tag tag-picante">Picante</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$18.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Torre de Mariscos</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$45.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Mojarra Frita</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$22.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Tacos de Pescado (3)</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$14.99</span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-grandprairie">
+                <div class="menu-item">
+                    <span class="menu-item-name">Camarones a la Diabla <span class="menu-item-tag tag-picante">Picante</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$19.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Ceviche Mixto <span class="menu-item-tag tag-nuevo">Nuevo</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$15.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Filete Empanizado</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$20.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Pulpo al Ajillo</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$24.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Tostadas de Ceviche (3)</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$13.99</span>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-irving">
+                <div class="menu-item">
+                    <span class="menu-item-name">Campechana Especial <span class="menu-item-tag tag-nuevo">Nuevo</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$17.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Camarones al Mojo de Ajo</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$21.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Aguachile Verde <span class="menu-item-tag tag-picante">Picante</span></span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$18.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Charola Familiar</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$52.99</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-item-name">Empanadas de Jaiba (4)</span>
+                    <span class="menu-item-dots"></span>
+                    <span class="menu-item-price">$15.99</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAVE: Ocean to Sand -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-path-2" d="M0,60 Q360,0 720,60 T1440,60 L1440,0 L0,0 Z" fill="#1B4965"/>
+        </svg>
+    </div>
+
+    <!-- LOCATIONS -->
+    <section class="locations-section" id="locations">
+        <div class="locations-inner">
+            <div class="section-label reveal">Visit Us</div>
+            <h2 class="section-heading reveal">Three Locations, One Family</h2>
+
+            <div class="locations-grid">
+                <!-- Oak Cliff -->
+                <div class="location-card reveal">
+                    <div class="location-header">
+                        <img src="images/warm-vibrant/location-1.png" alt="Oak Cliff Location" loading="lazy">
+                        <div class="location-name">Oak Cliff</div>
+                        <div class="location-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="rating-num">4.8</span>
+                        </div>
+                    </div>
+                    <div class="location-body">
+                        <div class="location-detail">
+                            <span class="icon">&#9906;</span>
+                            <span>331 W Jefferson Blvd<br>Dallas, TX 75208</span>
+                        </div>
+                        <div class="location-detail">
+                            <span class="icon">&#9716;</span>
+                            <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
+                        </div>
+                        <div class="location-actions">
+                            <a href="#" class="btn-location btn-order">Order Online</a>
+                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grand Prairie -->
+                <div class="location-card reveal">
+                    <div class="location-header">
+                        <img src="images/warm-vibrant/location-2.png" alt="Grand Prairie Location" loading="lazy">
+                        <div class="location-name">Grand Prairie</div>
+                        <div class="location-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="rating-num">4.8</span>
+                        </div>
+                    </div>
+                    <div class="location-body">
+                        <div class="location-detail">
+                            <span class="icon">&#9906;</span>
+                            <span>2101 W Pioneer Pkwy<br>Grand Prairie, TX 75051</span>
+                        </div>
+                        <div class="location-detail">
+                            <span class="icon">&#9716;</span>
+                            <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
+                        </div>
+                        <div class="location-actions">
+                            <a href="#" class="btn-location btn-order">Order Online</a>
+                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Irving -->
+                <div class="location-card reveal">
+                    <div class="location-header">
+                        <img src="images/warm-vibrant/location-3.png" alt="Irving Location" loading="lazy">
+                        <div class="location-name">Irving</div>
+                        <div class="location-rating">
+                            <span class="star">&#9733;</span>
+                            <span class="rating-num">4.8</span>
+                        </div>
+                    </div>
+                    <div class="location-body">
+                        <div class="location-detail">
+                            <span class="icon">&#9906;</span>
+                            <span>1234 N Belt Line Rd<br>Irving, TX 75061</span>
+                        </div>
+                        <div class="location-detail">
+                            <span class="icon">&#9716;</span>
+                            <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
+                        </div>
+                        <div class="location-actions">
+                            <a href="#" class="btn-location btn-order">Order Online</a>
+                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAVE: Sand to Ocean Deep -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-path-1" d="M0,60 Q360,120 720,60 T1440,60 L1440,120 L0,120 Z" fill="#0d2d3f"/>
+        </svg>
+    </div>
+
+    <!-- WEEKLY SPECIALS -->
+    <section class="specials-section" id="specials">
+        <div class="specials-inner">
+            <div class="section-label reveal">This Week</div>
+            <h2 class="section-heading reveal">Weekly Specials</h2>
+
+            <div class="specials-grid">
+                <div class="special-card reveal">
+                    <div class="special-day">Monday</div>
+                    <div class="special-name">Margarita Monday</div>
+                    <div class="special-detail">House margaritas all day</div>
+                    <div class="special-price">$5</div>
+                </div>
+                <div class="special-card reveal">
+                    <div class="special-day">Tuesday</div>
+                    <div class="special-name">Taco Tuesday</div>
+                    <div class="special-detail">Fish, shrimp, or carne asada</div>
+                    <div class="special-price">3 for $8</div>
+                </div>
+                <div class="special-card reveal">
+                    <div class="special-day">Wednesday</div>
+                    <div class="special-name">Wing Wednesday</div>
+                    <div class="special-detail">Mango habanero or garlic lime</div>
+                    <div class="special-price">$0.75 ea</div>
+                </div>
+                <div class="special-card reveal">
+                    <div class="special-day">Thursday</div>
+                    <div class="special-name">Ceviche Thursday</div>
+                    <div class="special-detail">Classic or tropical style</div>
+                    <div class="special-price">Buy 1 Get 1</div>
+                </div>
+                <div class="special-card reveal">
+                    <div class="special-day">Friday</div>
+                    <div class="special-name">Family Friday</div>
+                    <div class="special-detail">With any adult entr&eacute;e</div>
+                    <div class="special-price">Kids Eat Free</div>
+                </div>
+                <div class="special-card reveal">
+                    <div class="special-day">Sat &ndash; Sun</div>
+                    <div class="special-name">Weekend Brunch</div>
+                    <div class="special-detail">Chilaquiles, huevos, micheladas</div>
+                    <div class="special-price">10am Start</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAVE: Ocean Deep to Sand -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="wave-path-2" d="M0,60 Q360,0 720,60 T1440,60 L1440,0 L0,0 Z" fill="#0d2d3f"/>
+        </svg>
+    </div>
+
+    <!-- RESERVATION CTA -->
+    <section class="reservation-section" id="reserve">
+        <div class="reservation-inner reveal">
+            <h2 class="section-heading">Reserve Your Table</h2>
+            <p class="reservation-sub">Join us for fresh-caught seafood, handmade cocktails, and the warmth of family. Walk-ins welcome, reservations recommended for weekends.</p>
+            <a href="#" class="reservation-cta">Make a Reservation</a>
+            <div class="reservation-phone"><a href="tel:2145550347">(214) 555-0347</a></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">Mariscos Del Puerto</div>
+                    <p>Bringing the flavors of the Mexican coast to Dallas since 1998. Three locations, one family, countless memories.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Oak Cliff</h4>
+                    <ul>
+                        <li><a href="#">331 W Jefferson Blvd</a></li>
+                        <li><a href="#">Dallas, TX 75208</a></li>
+                        <li><a href="tel:2145550347">(214) 555-0347</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Grand Prairie</h4>
+                    <ul>
+                        <li><a href="#">2101 W Pioneer Pkwy</a></li>
+                        <li><a href="#">Grand Prairie, TX 75051</a></li>
+                        <li><a href="tel:9725550198">(972) 555-0198</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Catering</a></li>
+                    </ul>
+                    <div class="footer-social">
+                        <a href="#" class="social-link" aria-label="Facebook">f</a>
+                        <a href="#" class="social-link" aria-label="Instagram">ig</a>
+                        <a href="#" class="social-link" aria-label="TikTok">tk</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>Mariscos Del Puerto &mdash; This is a design demo by Ops_Architect</span>
+                <a href="./">&larr; Back to Style Gallery</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRESET BADGE -->
+    <a href="./" class="preset-badge">Warm &amp; Vibrant Preset</a>
+
+    <script>
+        // ===== NAV SCROLL =====
+        const topBar = document.getElementById('topBar');
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            topBar.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
+
+        // ===== TAB SYSTEM =====
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.getAttribute('data-tab');
+
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                tabContents.forEach(tc => {
+                    tc.classList.remove('active');
+                    if (tc.id === 'tab-' + target) {
+                        tc.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // ===== SCROLL REVEAL (IntersectionObserver) =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>

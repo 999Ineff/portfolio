@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom & Root — Warm Organic Style Demo</title>
+    <meta name="description" content="Warm Organic design preset demo — Bloom & Root artisan bakery & cafe. Earth tones, hand-drawn SVGs, organic shapes, gentle animations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --brown: #8B6914;
+            --brown-dark: #6B5010;
+            --green: #2D5016;
+            --green-light: #3a6a1e;
+            --cream: #FDF6EC;
+            --cream-dark: #f5eadb;
+            --terracotta: #C67B5C;
+            --terracotta-light: #d99a82;
+            --text-body: #4a3f2f;
+            --text-light: #7a6f5f;
+            --shadow-soft: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.12);
+            --radius-xl: 2rem;
+            --radius-pill: 50px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== BREATHING ANIMATION ===== */
+        .breathe {
+            animation: breathe 3s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* ===== FLOATING BLOB ANIMATION ===== */
+        @keyframes floatBlob {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -20px) rotate(5deg); }
+            50% { transform: translate(-10px, -35px) rotate(-3deg); }
+            75% { transform: translate(20px, -15px) rotate(4deg); }
+        }
+        @keyframes floatBlobAlt {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -15px) rotate(-5deg); }
+            50% { transform: translate(15px, -30px) rotate(3deg); }
+            75% { transform: translate(-10px, -20px) rotate(-4deg); }
+        }
+
+        /* ===== BLOB DECORATIONS ===== */
+        .blob-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--brown);
+        }
+
+        .caveat {
+            font-family: 'Caveat', cursive;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        .top-bar.scrolled {
+            background: rgba(253, 246, 236, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            padding: 0.875rem 3rem;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--brown);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            color: var(--green);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .nav-links a:hover { color: var(--green); }
+        .back-link {
+            color: var(--green);
+            text-decoration: none;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--brown); }
+
+        /* ===== CONTENT WRAPPER ===== */
+        .content { position: relative; z-index: 2; }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(139,105,20,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(45,80,22,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(198,123,92,0.05) 0%, transparent 50%),
+                linear-gradient(rgba(253,246,236,0.85), rgba(253,246,236,0.8)),
+                url('images/warm-organic/pastries.png');
+            background-size: auto, auto, auto, auto, cover;
+            background-position: center;
+        }
+        .hero-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .hero-blob {
+            position: absolute;
+            opacity: 0.08;
+        }
+        .hero-blob-1 {
+            width: 500px; height: 500px;
+            top: -100px; right: -100px;
+            color: var(--brown);
+            animation: floatBlob 15s ease-in-out infinite;
+        }
+        .hero-blob-2 {
+            width: 400px; height: 400px;
+            bottom: -80px; left: -80px;
+            color: var(--green);
+            animation: floatBlobAlt 18s ease-in-out infinite;
+        }
+        .hero-blob-3 {
+            width: 300px; height: 300px;
+            top: 30%; left: 10%;
+            color: var(--terracotta);
+            animation: floatBlob 20s ease-in-out infinite;
+            animation-delay: -5s;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            color: var(--brown);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--green);
+            font-weight: 500;
+            margin-bottom: 3rem;
+            line-height: 1.4;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius-pill);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .btn-green {
+            background: var(--green);
+            color: var(--cream);
+            border-color: var(--green);
+        }
+        .btn-green:hover {
+            background: var(--green-light);
+            border-color: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45,80,22,0.25);
+        }
+        .btn-terracotta-outline {
+            background: transparent;
+            color: var(--terracotta);
+            border-color: var(--terracotta);
+        }
+        .btn-terracotta-outline:hover {
+            background: var(--terracotta);
+            color: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(198,123,92,0.25);
+        }
+
+        /* ===== MENU SECTION ===== */
+        .menu-section {
+            padding: 6rem 2rem 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-heading {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 1.35rem;
+            color: var(--green);
+            margin-bottom: 4rem;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .menu-card {
+            background: #fff;
+            border-radius: var(--radius-xl);
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .menu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .menu-card-label {
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: var(--terracotta);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .menu-card-svg {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .draw-svg {
+            width: 100px;
+            height: 100px;
+        }
+        .draw-svg path {
+            fill: none;
+            stroke: var(--brown);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--brown);
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.625rem 0;
+            border-bottom: 1px dashed rgba(139,105,20,0.15);
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-name {
+            font-size: 0.9375rem;
+            color: var(--text-body);
+        }
+        .menu-item-price {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--green);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        /* ===== OUR STORY ===== */
+        .story-section {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 10% 40%, rgba(45,80,22,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 70%, rgba(139,105,20,0.04) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 20%, rgba(198,123,92,0.03) 0%, transparent 45%),
+                radial-gradient(ellipse at 30% 80%, rgba(45,80,22,0.05) 0%, transparent 35%),
+                var(--cream);
+        }
+        .story-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .story-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+        .story-text p {
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            color: var(--text-body);
+            margin-bottom: 1.25rem;
+        }
+        .story-text .signature {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--terracotta);
+            margin-top: 1.5rem;
+        }
+        .story-image {
+            border-radius: var(--radius-xl);
+            aspect-ratio: 4/5;
+            background: url('images/warm-organic/cafe.png') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        .story-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(139,105,20,0.1);
+        }
+
+        /* ===== DAILY SPECIALS ===== */
+        .specials-section {
+            padding: 6rem 2rem 8rem;
+            background: var(--green);
+            position: relative;
+            overflow: hidden;
+        }
+        .specials-section .blob-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .specials-section .blob-bg svg {
+            position: absolute;
+            opacity: 0.05;
+            color: var(--cream);
+        }
+        .specials-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .specials-section .section-heading {
+            color: var(--cream);
+            margin-bottom: 0.75rem;
+        }
+        .specials-section .section-subtitle {
+            color: var(--cream-dark);
+            opacity: 0.8;
+            margin-bottom: 3.5rem;
+        }
+        .specials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .special-card {
+            background: rgba(253,246,236,0.08);
+            border: 1px solid rgba(253,246,236,0.1);
+            border-radius: var(--radius-xl);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .special-card:hover {
+            background: rgba(253,246,236,0.12);
+            transform: translateY(-4px);
+        }
+        .special-day {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--terracotta-light);
+            margin-bottom: 0.75rem;
+        }
+        .special-name {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--cream);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .special-desc {
+            font-size: 0.875rem;
+            color: rgba(253,246,236,0.6);
+            line-height: 1.5;
+        }
+        .special-price {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--cream);
+            margin-top: 0.75rem;
+            display: block;
+        }
+
+        /* ===== VISIT US ===== */
+        .visit-section {
+            padding: 8rem 2rem;
+            background: var(--cream);
+        }
+        .visit-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .visit-info h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+        }
+        .visit-hours {
+            font-family: 'Caveat', cursive;
+            font-size: 1.35rem;
+            color: var(--green);
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+        }
+        .visit-address {
+            font-size: 1rem;
+            color: var(--text-body);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        .visit-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .visit-map {
+            border-radius: var(--radius-xl);
+            aspect-ratio: 4/3;
+            background: linear-gradient(160deg, var(--cream-dark) 0%, rgba(45,80,22,0.08) 50%, rgba(139,105,20,0.06) 100%);
+            position: relative;
+            box-shadow: var(--shadow-soft);
+        }
+        .visit-map::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(139,105,20,0.1);
+        }
+        .visit-map-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Caveat', cursive;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            padding: 4rem 2rem 3rem;
+            background: var(--cream);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .footer-blobs svg {
+            position: absolute;
+            opacity: 0.04;
+        }
+        .footer-signoff {
+            font-family: 'Caveat', cursive;
+            font-size: 2.25rem;
+            color: var(--green);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        .footer-credit {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            position: relative;
+            z-index: 2;
+        }
+        .footer-divider {
+            width: 80px;
+            height: 2px;
+            background: rgba(139,105,20,0.15);
+            border-radius: 1px;
+            margin: 1.5rem auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== PRESET BADGE ===== */
+        .preset-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            font-family: 'Caveat', cursive;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--green);
+            background: var(--cream);
+            border: 1px solid rgba(45,80,22,0.15);
+            padding: 0.625rem 1.5rem;
+            border-radius: var(--radius-pill);
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .preset-badge:hover {
+            border-color: var(--green);
+            box-shadow: 0 6px 25px rgba(45,80,22,0.12);
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .story-inner {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .story-image {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .visit-inner {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .visit-map {
+                max-width: 500px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+            .specials-grid {
+                grid-template-columns: 1fr;
+                max-width: 360px;
+                margin: 0 auto;
+            }
+            .nav-links { display: none; }
+            .top-bar { padding: 1rem 1.5rem; }
+            .top-bar.scrolled { padding: 0.75rem 1.5rem; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            .menu-section, .story-section, .specials-section, .visit-section {
+                padding: 5rem 1.5rem;
+            }
+            .hero-title { margin-bottom: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .hero-actions { flex-direction: column; align-items: center; }
+            .btn-pill { width: 100%; justify-content: center; max-width: 280px; }
+            .visit-actions { flex-direction: column; align-items: flex-start; }
+            .specials-grid { max-width: 100%; }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .hero-blob { animation: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+
+        <!-- NAV -->
+        <header class="top-bar" id="topBar">
+            <a href="./" class="logo">
+                <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 28c0 0-10-6-10-16C6 7 10 4 16 4s10 3 10 8c0 10-10 16-10 16z"/>
+                    <path d="M16 4v24"/>
+                    <path d="M10 14c3-1 6 1 6 1s3-2 6-1"/>
+                </svg>
+                Bloom &amp; Root
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#story">Our Story</a></li>
+                    <li><a href="#specials">Specials</a></li>
+                    <li><a href="#visit">Visit</a></li>
+                </ul>
+            </nav>
+            <a href="./" class="back-link">&larr; Gallery</a>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="hero-blobs">
+                <svg class="hero-blob hero-blob-1" viewBox="0 0 200 200">
+                    <path d="M45,-55C57,-42,65,-25,66,-7C67,11,61,31,49,45C37,59,19,67,-1,68C-21,69,-43,63,-56,49C-69,35,-73,13,-68,-6C-63,-25,-49,-41,-35,-54C-21,-67,-7,-77,6,-77C19,-77,33,-68,45,-55Z" transform="translate(100,100)" fill="currentColor"/>
+                </svg>
+                <svg class="hero-blob hero-blob-2" viewBox="0 0 200 200">
+                    <path d="M39,-48C50,-36,59,-22,60,-7C61,8,55,25,44,38C33,51,17,60,-2,62C-21,64,-43,59,-55,46C-67,33,-69,12,-64,-6C-59,-24,-47,-39,-34,-52C-21,-65,-7,-76,5,-77C17,-78,28,-60,39,-48Z" transform="translate(100,100)" fill="currentColor"/>
+                </svg>
+                <svg class="hero-blob hero-blob-3" viewBox="0 0 200 200">
+                    <path d="M42,-50C54,-38,63,-23,64,-7C65,9,58,27,47,40C36,53,21,62,3,63C-15,64,-36,57,-49,43C-62,29,-67,8,-63,-10C-59,-28,-46,-43,-32,-55C-18,-67,-4,-76,8,-76C20,-76,30,-62,42,-50Z" transform="translate(100,100)" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">Bloom &amp; Root</h1>
+                <p class="hero-subtitle">baked with love, rooted in community</p>
+                <div class="hero-actions">
+                    <a href="#menu" class="btn-pill btn-green">View Menu</a>
+                    <a href="#visit" class="btn-pill btn-terracotta-outline">Visit Us</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU -->
+        <section class="menu-section" id="menu">
+            <h2 class="section-heading">Our Menu</h2>
+            <p class="section-subtitle">fresh from the oven, made by hand</p>
+            <div class="menu-grid">
+
+                <!-- Artisan Breads -->
+                <div class="menu-card">
+                    <span class="menu-card-label">from the oven</span>
+                    <div class="menu-card-svg">
+                        <svg class="draw-svg" viewBox="0 0 100 100">
+                            <path d="M20,60 Q30,20 50,25 Q70,30 80,60 Q85,75 50,80 Q15,75 20,60 Z"/>
+                            <path d="M35,35 Q40,28 50,30"/>
+                            <path d="M50,30 Q60,28 65,35"/>
+                        </svg>
+                    </div>
+                    <h3>Artisan Breads</h3>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Sourdough Boule</span>
+                        <span class="menu-item-price">$8</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Whole Wheat Batard</span>
+                        <span class="menu-item-price">$7</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Olive Focaccia</span>
+                        <span class="menu-item-price">$9</span>
+                    </div>
+                </div>
+
+                <!-- Pastries -->
+                <div class="menu-card">
+                    <span class="menu-card-label">sweet & flaky</span>
+                    <div class="menu-card-svg">
+                        <svg class="draw-svg" viewBox="0 0 100 100">
+                            <path d="M15,50 Q25,20 50,15 Q75,20 85,50 Q80,65 65,55 Q50,45 35,55 Q20,65 15,50 Z"/>
+                            <path d="M30,50 Q40,40 50,42 Q60,40 70,50"/>
+                        </svg>
+                    </div>
+                    <h3>Pastries</h3>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Butter Croissant</span>
+                        <span class="menu-item-price">$4.50</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Pain au Chocolat</span>
+                        <span class="menu-item-price">$5</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Almond Danish</span>
+                        <span class="menu-item-price">$5.50</span>
+                    </div>
+                </div>
+
+                <!-- Coffee & Drinks -->
+                <div class="menu-card">
+                    <span class="menu-card-label">warm & cozy</span>
+                    <div class="menu-card-svg">
+                        <svg class="draw-svg" viewBox="0 0 100 100">
+                            <path d="M25,30 L25,70 Q25,85 40,85 L60,85 Q75,85 75,70 L75,30 Z"/>
+                            <path d="M20,30 L80,30"/>
+                            <path d="M35,20 Q40,10 50,15 Q60,10 65,20"/>
+                            <path d="M75,45 Q90,45 90,55 Q90,65 75,65"/>
+                        </svg>
+                    </div>
+                    <h3>Coffee &amp; Drinks</h3>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Pour Over</span>
+                        <span class="menu-item-price">$5</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Oat Latte</span>
+                        <span class="menu-item-price">$6</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="menu-item-name">Matcha Latte</span>
+                        <span class="menu-item-price">$6.50</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR STORY -->
+        <section class="story-section" id="story">
+            <div class="story-inner">
+                <div class="story-text">
+                    <h2>Our Story</h2>
+                    <p>In 2018, we opened our doors with a simple belief: bread should taste like it was made by someone who cares. Every morning at 4am, our bakers begin the day's work.</p>
+                    <p>We source our flour from local Texas farms, our honey from a beekeeper down the road, and our coffee from roasters who share our obsession with quality. No shortcuts, no preservatives, just real food made with patience.</p>
+                    <p class="signature">~ Maya &amp; James, Founders</p>
+                </div>
+                <div class="story-image breathe">
+                    <svg class="blob-decoration" style="width:120px;height:120px;top:-30px;right:-20px;color:var(--terracotta);opacity:0.12;" viewBox="0 0 200 200">
+                        <path d="M45,-55C57,-42,65,-25,66,-7C67,11,61,31,49,45C37,59,19,67,-1,68C-21,69,-43,63,-56,49C-69,35,-73,13,-68,-6C-63,-25,-49,-41,-35,-54C-21,-67,-7,-77,6,-77C19,-77,33,-68,45,-55Z" transform="translate(100,100)" fill="currentColor"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- DAILY SPECIALS -->
+        <section class="specials-section" id="specials">
+            <div class="blob-bg">
+                <svg style="width:400px;height:400px;top:-100px;right:-100px;" viewBox="0 0 200 200">
+                    <path d="M39,-48C50,-36,59,-22,60,-7C61,8,55,25,44,38C33,51,17,60,-2,62C-21,64,-43,59,-55,46C-67,33,-69,12,-64,-6C-59,-24,-47,-39,-34,-52C-21,-65,-7,-76,5,-77C17,-78,28,-60,39,-48Z" transform="translate(100,100)" fill="currentColor"/>
+                </svg>
+                <svg style="width:300px;height:300px;bottom:-80px;left:-60px;" viewBox="0 0 200 200">
+                    <path d="M42,-50C54,-38,63,-23,64,-7C65,9,58,27,47,40C36,53,21,62,3,63C-15,64,-36,57,-49,43C-62,29,-67,8,-63,-10C-59,-28,-46,-43,-32,-55C-18,-67,-4,-76,8,-76C20,-76,30,-62,42,-50Z" transform="translate(100,100)" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="specials-inner">
+                <h2 class="section-heading">Daily Specials</h2>
+                <p class="section-subtitle">something wonderful, every day of the week</p>
+                <div class="specials-grid">
+                    <div class="special-card">
+                        <div class="special-day">Monday</div>
+                        <div class="special-name">Baker's Surprise</div>
+                        <div class="special-desc">A mystery pastry fresh from the oven</div>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-day">Tuesday</div>
+                        <div class="special-name">Soup &amp; Bread</div>
+                        <div class="special-desc">Seasonal soup with a fresh-baked roll</div>
+                        <span class="special-price">$12</span>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-day">Wednesday</div>
+                        <div class="special-name">Kids Bake Free</div>
+                        <div class="special-desc">Little ones shape and bake their own bread</div>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-day">Thursday</div>
+                        <div class="special-name">Coffee Flight</div>
+                        <div class="special-desc">Three single-origin pour overs to explore</div>
+                        <span class="special-price">$8</span>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-day">Friday</div>
+                        <div class="special-name">Focaccia Friday</div>
+                        <div class="special-desc">Rotating seasonal toppings each week</div>
+                    </div>
+                    <div class="special-card">
+                        <div class="special-day">Weekend</div>
+                        <div class="special-name">Brunch Menu</div>
+                        <div class="special-desc">Waffles, eggs benny, and more</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISIT US -->
+        <section class="visit-section" id="visit">
+            <div class="visit-inner">
+                <div class="visit-info">
+                    <h2>Visit Us</h2>
+                    <div class="visit-hours">
+                        Mon&ndash;Fri 6am&ndash;6pm<br>
+                        Sat&ndash;Sun 7am&ndash;4pm
+                    </div>
+                    <p class="visit-address">
+                        2847 Oak Street<br>
+                        Dallas, TX 75201
+                    </p>
+                    <div class="visit-actions">
+                        <a href="#" class="btn-pill btn-green">Get Directions</a>
+                        <a href="#" class="btn-pill btn-terracotta-outline">Call Us</a>
+                    </div>
+                </div>
+                <div class="visit-map">
+                    <span class="visit-map-label">Map placeholder</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-blobs">
+                <svg style="width:200px;height:200px;bottom:-60px;left:10%;" viewBox="0 0 200 200">
+                    <path d="M45,-55C57,-42,65,-25,66,-7C67,11,61,31,49,45C37,59,19,67,-1,68C-21,69,-43,63,-56,49C-69,35,-73,13,-68,-6C-63,-25,-49,-41,-35,-54C-21,-67,-7,-77,6,-77C19,-77,33,-68,45,-55Z" transform="translate(100,100)" fill="var(--green)"/>
+                </svg>
+                <svg style="width:150px;height:150px;top:-40px;right:15%;" viewBox="0 0 200 200">
+                    <path d="M39,-48C50,-36,59,-22,60,-7C61,8,55,25,44,38C33,51,17,60,-2,62C-21,64,-43,59,-55,46C-67,33,-69,12,-64,-6C-59,-24,-47,-39,-34,-52C-21,-65,-7,-76,5,-77C17,-78,28,-60,39,-48Z" transform="translate(100,100)" fill="var(--brown)"/>
+                </svg>
+            </div>
+            <div class="footer-signoff">see you soon!</div>
+            <div class="footer-divider"></div>
+            <p class="footer-credit">Bloom &amp; Root &mdash; This is a design demo by Ops_Architect</p>
+        </footer>
+
+    </div>
+
+    <!-- Preset Badge -->
+    <a href="./" class="preset-badge">Warm Organic Preset</a>
+
+    <script>
+        // ===== REGISTER GSAP =====
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== NAV SCROLL STATE =====
+        const topBar = document.getElementById('topBar');
+        ScrollTrigger.create({
+            start: 50,
+            onUpdate: (self) => {
+                topBar.classList.toggle('scrolled', self.scroll() > 50);
+            }
+        });
+
+        // ===== HERO ANIMATIONS =====
+        gsap.from('.hero-title', {
+            opacity: 0, y: 40,
+            duration: 1.2, ease: "power4.out", delay: 0.3
+        });
+        gsap.from('.hero-subtitle', {
+            opacity: 0, y: 30,
+            duration: 1, ease: "power4.out", delay: 0.6
+        });
+        gsap.from('.hero-actions', {
+            opacity: 0, y: 25,
+            duration: 1, ease: "power4.out", delay: 0.9
+        });
+
+        // ===== SVG LINE-DRAW ANIMATION =====
+        document.querySelectorAll('.draw-svg path').forEach(path => {
+            const length = path.getTotalLength();
+            path.style.strokeDasharray = length;
+            path.style.strokeDashoffset = length;
+
+            gsap.to(path, {
+                strokeDashoffset: 0,
+                duration: 2,
+                ease: "power2.inOut",
+                scrollTrigger: {
+                    trigger: path.closest('.menu-card'),
+                    start: "top 80%",
+                    end: "top 40%",
+                    scrub: 1
+                }
+            });
+        });
+
+        // ===== MENU CARDS REVEAL =====
+        gsap.from('.menu-card', {
+            scrollTrigger: { trigger: '.menu-grid', start: 'top 95%' },
+            opacity: 0, y: 40,
+            duration: 0.8, ease: "power3.out",
+            stagger: 0.15
+        });
+
+        // ===== SECTION HEADINGS =====
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: { trigger: heading, start: 'top 85%' },
+                opacity: 0, y: 30,
+                duration: 1, ease: "power4.out"
+            });
+        });
+
+        document.querySelectorAll('.section-subtitle').forEach(sub => {
+            gsap.from(sub, {
+                scrollTrigger: { trigger: sub, start: 'top 85%' },
+                opacity: 0, y: 20,
+                duration: 0.8, ease: "power3.out", delay: 0.15
+            });
+        });
+
+        // ===== STORY SECTION =====
+        gsap.from('.story-text', {
+            scrollTrigger: { trigger: '.story-inner', start: 'top 75%' },
+            opacity: 0, x: -40,
+            duration: 1, ease: "power4.out"
+        });
+        gsap.from('.story-image', {
+            scrollTrigger: { trigger: '.story-inner', start: 'top 75%' },
+            opacity: 0, x: 40,
+            duration: 1, ease: "power4.out", delay: 0.2
+        });
+
+        // ===== SPECIALS CARDS =====
+        gsap.from('.special-card', {
+            scrollTrigger: { trigger: '.specials-grid', start: 'top 95%' },
+            opacity: 0, y: 30, scale: 0.95,
+            duration: 0.7, ease: "power3.out",
+            stagger: { each: 0.08, from: "start" }
+        });
+
+        // ===== VISIT SECTION =====
+        gsap.from('.visit-info', {
+            scrollTrigger: { trigger: '.visit-inner', start: 'top 75%' },
+            opacity: 0, x: -30,
+            duration: 1, ease: "power4.out"
+        });
+        gsap.from('.visit-map', {
+            scrollTrigger: { trigger: '.visit-inner', start: 'top 75%' },
+            opacity: 0, x: 30,
+            duration: 1, ease: "power4.out", delay: 0.15
+        });
+
+        // ===== FOOTER =====
+        gsap.from('.footer-signoff', {
+            scrollTrigger: { trigger: '.site-footer', start: 'top 90%' },
+            opacity: 0, y: 20,
+            duration: 0.8, ease: "power3.out"
+        });
+
+        // ===== GENTLE PARALLAX ON MENU CARDS =====
+        document.querySelectorAll('.menu-card').forEach(card => {
+            gsap.to(card, {
+                yPercent: -3,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1.5
+                }
+            });
+        });
+
+        // Fallback: force all elements visible after 3 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.menu-card, .special-card, .section-heading, .section-subtitle, .story-text, .story-image, .visit-info, .visit-map, .footer-signoff').forEach(el => {
+                const s = window.getComputedStyle(el);
+                if (s.opacity === '0' || s.visibility === 'hidden') {
+                    el.style.opacity = '1';
+                    el.style.visibility = 'visible';
+                    el.style.transform = 'none';
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>
