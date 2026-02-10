@@ -20,12 +20,18 @@
             --warm-white: #FAFAF8;
             --text: #FAFAF8;
             --text-dim: #B8C4D8;
-            --text-muted: #6B7A94;
+            --text-muted: #8B9AB4; /* FIX #2: improved contrast on #0F1A2E */
             --border: rgba(212, 168, 67, 0.12);
             --border-hover: rgba(212, 168, 67, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* FIX #1: Focus styles for keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--gold, #D4A574);
+            outline-offset: 2px;
+        }
 
         html { scroll-behavior: smooth; }
 
@@ -34,6 +40,26 @@
             background: var(--navy-deep);
             color: var(--text);
             overflow-x: hidden;
+        }
+
+        /* FIX #9: Skip-to-content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 200;
+            padding: 0.75rem 1.5rem;
+            background: var(--gold);
+            color: var(--navy-deep);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border-radius: 0 0 4px 4px;
+            transition: top 0.2s;
+        }
+
+        .skip-link:focus {
+            top: 0;
         }
 
         /* ===== CSS KEYFRAMES ===== */
@@ -67,15 +93,15 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* Stagger delays */
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-        .delay-600 { animation-delay: 0.6s; }
-        .delay-700 { animation-delay: 0.7s; }
-        .delay-800 { animation-delay: 0.8s; }
+        /* FIX #3: Stagger delays — use transition-delay (reveal system uses transitions, not animations) */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-700 { transition-delay: 0.7s; }
+        .delay-800 { transition-delay: 0.8s; }
 
         /* Scroll-triggered reveal base */
         .reveal {
@@ -174,15 +200,19 @@
             align-items: center;
         }
 
+        /* FIX #6: Touch target for back-link */
         .back-link {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.8125rem;
             transition: color 0.3s;
+            padding: 0.75rem 0;
+            display: inline-block;
         }
 
         .back-link:hover { color: var(--gold); }
 
+        /* FIX #6: Touch target for nav-cta-btn */
         .nav-cta-btn {
             font-family: 'DM Sans', sans-serif;
             font-size: 0.75rem;
@@ -196,12 +226,98 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             transition: all 0.3s;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
         }
 
         .nav-cta-btn:hover {
             background: #E0B64E;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px var(--gold-glow);
+        }
+
+        /* FIX #5: Hamburger button (hidden on desktop) */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-hover);
+            border-radius: 2px;
+            padding: 0.5rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--warm-white);
+            transition: all 0.3s;
+            border-radius: 1px;
+        }
+
+        .hamburger-btn[aria-expanded="true"] span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-btn[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn[aria-expanded="true"] span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* FIX #5: Mobile nav overlay */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 99;
+            background: rgba(15, 26, 46, 0.98);
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--warm-white);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-nav .mobile-nav-cta {
+            margin-top: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            background: var(--gold);
+            color: var(--navy-deep);
+            border-radius: 2px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         /* ===== HERO ===== */
@@ -493,7 +609,8 @@
 
         /* ===== TRACK RECORD / STATS ===== */
         .track-record {
-            padding: 6rem 3rem;
+            /* FIX #13: Consistent 8rem padding like other sections */
+            padding: 8rem 3rem;
             background: linear-gradient(180deg, transparent 0%, rgba(27, 42, 74, 0.4) 50%, transparent 100%);
         }
 
@@ -557,7 +674,8 @@
             font-style: italic;
             line-height: 1.6;
             color: var(--warm-white);
-            margin-bottom: 2.5rem;
+            /* FIX #16: Increase margin-bottom to prevent quote mark overlap */
+            margin-bottom: 3.5rem;
             position: relative;
             padding: 0 1rem;
         }
@@ -565,7 +683,8 @@
         .testimonial-quote::before,
         .testimonial-quote::after {
             font-family: 'Playfair Display', serif;
-            font-size: 5rem;
+            /* FIX #16: Reduce from 5rem to 4rem to lessen overlap */
+            font-size: 4rem;
             color: var(--gold);
             opacity: 0.4;
             position: absolute;
@@ -580,7 +699,7 @@
 
         .testimonial-quote::after {
             content: '\201D';
-            bottom: -2.5rem;
+            bottom: -2rem;
             right: -0.5rem;
         }
 
@@ -640,9 +759,13 @@
         }
 
         /* ===== FOOTER ===== */
+        /* FIX #14: Full-width border wrapper instead of on max-width footer */
+        .footer-wrapper {
+            border-top: 1px solid var(--border);
+        }
+
         .site-footer {
             padding: 3rem;
-            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -656,11 +779,14 @@
             font-weight: 300;
         }
 
+        /* FIX #6: Touch target for footer links */
         .footer-right a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.8125rem;
             transition: color 0.3s;
+            padding: 0.5rem 0;
+            display: inline-block;
         }
 
         .footer-right a:hover { color: var(--gold); }
@@ -681,6 +807,7 @@
         .footer-links a:hover { color: var(--gold); }
 
         /* ===== PRESET BADGE ===== */
+        /* FIX #6: Touch target for preset badge */
         .preset-badge {
             position: fixed;
             bottom: 2rem;
@@ -699,6 +826,9 @@
             transition: all 0.3s;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             font-weight: 600;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .preset-badge:hover {
@@ -707,56 +837,97 @@
         }
 
         /* ===== RESPONSIVE ===== */
+
+        /* FIX #11: Intermediate breakpoint at 1024px */
         @media (max-width: 1024px) {
             .practice-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .top-bar { padding: 1.25rem 2rem; }
+            .top-bar.scrolled { padding: 0.875rem 2rem; }
+            .practice-areas,
+            .testimonial,
+            .contact-cta { padding: 6rem 2rem; }
+            .track-record { padding: 6rem 2rem; }
         }
 
         @media (max-width: 768px) {
             .practice-grid { grid-template-columns: 1fr; }
             .stats-row { grid-template-columns: repeat(2, 1fr); }
             .nav-links { display: none; }
+            /* FIX #5: Show hamburger on mobile */
+            .hamburger-btn { display: flex; }
+            .back-link { display: none; }
             .hero { padding: 7rem 1.5rem 5rem; }
             .practice-areas,
             .testimonial,
             .contact-cta { padding: 5rem 1.5rem; }
-            .track-record { padding: 4rem 1.5rem; }
+            .track-record { padding: 5rem 1.5rem; }
             .top-bar { padding: 1rem 1.5rem; }
+            /* FIX #4: Scrolled nav mobile override */
+            .top-bar.scrolled { padding: 1rem 1.5rem; }
             .trust-badges { gap: 1.25rem; }
             .trust-badge { font-size: 0.6875rem; }
             .btn-outline { margin-left: 0; margin-top: 0.75rem; }
             .hero-cta { display: flex; flex-direction: column; align-items: center; }
+            /* FIX #10: Reposition preset badge on mobile */
+            .preset-badge {
+                bottom: 1rem;
+                right: 1rem;
+                font-size: 0.5625rem;
+                padding: 0.5rem 0.75rem;
+                min-height: 36px;
+            }
         }
 
         @media (max-width: 480px) {
             .stats-row { grid-template-columns: 1fr; }
             .site-footer { flex-direction: column; gap: 1rem; text-align: center; }
             .trust-badges { flex-direction: column; align-items: center; gap: 0.75rem; }
+            /* FIX #10: Hide preset badge on very small screens */
+            .preset-badge { display: none; }
         }
 
         /* ===== REDUCED MOTION ===== */
+        /* FIX #15: Comprehensive prefers-reduced-motion support */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+                transition-delay: 0s !important;
             }
+            html { scroll-behavior: auto; }
             .reveal, .reveal-left, .reveal-scale {
                 opacity: 1;
                 transform: none;
+                transition: none;
+            }
+            .scroll-arrow {
+                animation: none;
+            }
+            .practice-card {
+                transform: none;
+            }
+            .practice-card:hover {
+                transform: translateY(-4px);
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- FIX #9: Skip-to-content link -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <div class="content">
 
         <!-- NAV -->
+        <!-- FIX #9: aria-label on nav -->
         <header class="top-bar" id="topBar">
             <a href="./" class="logo">
-                Sterling <span class="logo-ampersand">&</span> Associates
+                Sterling <span class="logo-ampersand">&amp;</span> Associates
             </a>
-            <nav>
+            <nav aria-label="Main">
                 <ul class="nav-links">
                     <li><a href="#practice">Practice Areas</a></li>
                     <li><a href="#results">Results</a></li>
@@ -766,8 +937,25 @@
             <div class="nav-right">
                 <a href="./" class="back-link">&larr; Gallery</a>
                 <a href="#contact" class="nav-cta-btn">Consultation</a>
+                <!-- FIX #5: Hamburger button for mobile -->
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </header>
+
+        <!-- FIX #5: Mobile nav overlay -->
+        <div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile">
+            <a href="#practice" class="mobile-nav-link">Practice Areas</a>
+            <a href="#results" class="mobile-nav-link">Results</a>
+            <a href="#testimonial" class="mobile-nav-link">Testimonials</a>
+            <a href="#contact" class="mobile-nav-cta mobile-nav-link">Schedule Consultation</a>
+        </div>
+
+        <!-- FIX #9: Main landmark -->
+        <main id="main-content">
 
         <!-- HERO -->
         <section class="hero">
@@ -778,13 +966,15 @@
                         <span>5-Star Rated</span>
                     </div>
                     <div class="trust-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="var(--gold)" stroke="none"/>
                         </svg>
-                        <span>Licensed & Insured</span>
+                        <span>Licensed &amp; Insured</span>
                     </div>
                     <div class="trust-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <circle cx="12" cy="12" r="10" fill="none" stroke="var(--gold)"/>
                             <path d="M12 6v6l4 2" stroke="var(--gold)" fill="none"/>
                         </svg>
@@ -798,7 +988,7 @@
                 </h1>
 
                 <p class="hero-sub">
-                    For over three decades, Sterling & Associates has provided distinguished legal
+                    For over three decades, Sterling &amp; Associates has provided distinguished legal
                     representation to individuals and businesses across Texas. Your case deserves
                     nothing less than excellence.
                 </p>
@@ -824,7 +1014,8 @@
             <div class="practice-grid">
                 <div class="practice-card reveal delay-100">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="var(--gold)"/>
                             <path d="M14 2v6h6" stroke="var(--gold)"/>
                             <path d="M16 13H8M16 17H8M10 9H8" stroke="var(--gold)"/>
@@ -836,7 +1027,8 @@
 
                 <div class="practice-card reveal delay-200">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
                         </svg>
@@ -847,7 +1039,8 @@
 
                 <div class="practice-card reveal delay-300">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                             <polyline points="9 22 9 12 15 12 15 22"/>
                         </svg>
@@ -858,7 +1051,8 @@
 
                 <div class="practice-card reveal delay-400">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -871,7 +1065,8 @@
 
                 <div class="practice-card reveal delay-500">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 8v8M8 12h8"/>
                         </svg>
@@ -882,7 +1077,8 @@
 
                 <div class="practice-card reveal delay-600">
                     <div class="practice-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- FIX #8: aria-hidden on decorative SVG -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="8.5" cy="7" r="4"/>
                             <line x1="20" y1="8" x2="20" y2="14"/>
@@ -926,7 +1122,7 @@
         <section class="testimonial" id="testimonial">
             <div class="section-label reveal-left" style="justify-content: center;">Client Testimonial</div>
             <blockquote class="testimonial-quote reveal">
-                Sterling & Associates turned what seemed like an impossible situation into
+                Sterling &amp; Associates turned what seemed like an impossible situation into
                 a favorable outcome. Their expertise and dedication were unmatched.
             </blockquote>
             <p class="testimonial-author reveal delay-200"><strong>Margaret Thornton</strong> &mdash; Dallas, TX</p>
@@ -939,19 +1135,25 @@
                 <h2 class="reveal">Your Case Deserves<br>Exceptional Counsel</h2>
                 <p class="reveal delay-100">Schedule a confidential consultation with our team. We listen first, then we act — with the full weight of three decades of legal excellence behind every strategy.</p>
                 <div class="reveal delay-200">
-                    <a href="#" class="btn-gold">Schedule Consultation</a>
+                    <!-- FIX #7: Changed href="#" to href="#contact" (anchor to this section / Calendly integration point) -->
+                    <a href="#contact" class="btn-gold">Schedule Consultation</a>
                 </div>
                 <a href="tel:2145550182" class="contact-phone reveal delay-300">(214) 555-0182</a>
             </div>
         </section>
 
+        </main><!-- end FIX #9: Main landmark -->
+
         <!-- FOOTER -->
-        <footer class="site-footer">
-            <div class="footer-left">Sterling & Associates &mdash; This is a design demo by Ops_Architect</div>
-            <div class="footer-right">
-                <a href="./">&larr; Back to Style Gallery</a>
-            </div>
-        </footer>
+        <!-- FIX #14: Full-width border wrapper -->
+        <div class="footer-wrapper">
+            <footer class="site-footer">
+                <div class="footer-left">Sterling &amp; Associates &mdash; This is a design demo by Ops_Architect</div>
+                <div class="footer-right">
+                    <a href="./">&larr; Back to Style Gallery</a>
+                </div>
+            </footer>
+        </div>
 
     </div>
 
@@ -961,10 +1163,21 @@
     <script>
         // ===== INTERSECTION OBSERVER FOR SCROLL REVEALS =====
         (function() {
-            const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
+            // FIX #15: Check reduced-motion preference in JS
+            var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            var revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
+
+            if (prefersReducedMotion.matches) {
+                // If user prefers reduced motion, show everything immediately
+                revealElements.forEach(function(el) {
+                    el.classList.add('visible');
+                });
+                return;
+            }
 
             if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
+                var observer = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
@@ -988,23 +1201,58 @@
         })();
 
         // ===== GLASSMORPHISM CARD MOUSE TILT =====
+        // FIX #12: Properly detect touch devices with matchMedia and respond to resize
         (function() {
-            if (window.innerWidth <= 768) return;
+            var cards = document.querySelectorAll('.practice-card');
+            var tiltHandlers = [];
 
-            document.querySelectorAll('.practice-card').forEach(function(card) {
-                card.addEventListener('mousemove', function(e) {
-                    var rect = card.getBoundingClientRect();
-                    var x = (e.clientX - rect.left) / rect.width - 0.5;
-                    var y = (e.clientY - rect.top) / rect.height - 0.5;
-                    card.style.setProperty('--mouse-x', x);
-                    card.style.setProperty('--mouse-y', y);
-                });
+            function isTouchDevice() {
+                return window.matchMedia('(hover: none)').matches;
+            }
 
-                card.addEventListener('mouseleave', function() {
-                    card.style.setProperty('--mouse-x', 0);
-                    card.style.setProperty('--mouse-y', 0);
+            function enableTilt() {
+                cards.forEach(function(card, index) {
+                    var moveHandler = function(e) {
+                        var rect = card.getBoundingClientRect();
+                        var x = (e.clientX - rect.left) / rect.width - 0.5;
+                        var y = (e.clientY - rect.top) / rect.height - 0.5;
+                        card.style.setProperty('--mouse-x', x);
+                        card.style.setProperty('--mouse-y', y);
+                    };
+
+                    var leaveHandler = function() {
+                        card.style.setProperty('--mouse-x', 0);
+                        card.style.setProperty('--mouse-y', 0);
+                    };
+
+                    card.addEventListener('mousemove', moveHandler);
+                    card.addEventListener('mouseleave', leaveHandler);
+
+                    tiltHandlers.push({ card: card, move: moveHandler, leave: leaveHandler });
                 });
-            });
+            }
+
+            function disableTilt() {
+                tiltHandlers.forEach(function(h) {
+                    h.card.removeEventListener('mousemove', h.move);
+                    h.card.removeEventListener('mouseleave', h.leave);
+                    h.card.style.setProperty('--mouse-x', 0);
+                    h.card.style.setProperty('--mouse-y', 0);
+                });
+                tiltHandlers = [];
+            }
+
+            function updateTilt() {
+                disableTilt();
+                if (!isTouchDevice()) {
+                    enableTilt();
+                }
+            }
+
+            updateTilt();
+
+            // Re-check on resize (e.g. connecting/disconnecting external mouse, orientation change)
+            window.matchMedia('(hover: none)').addEventListener('change', updateTilt);
         })();
 
         // ===== NAV SCROLL STATE =====
@@ -1021,6 +1269,41 @@
                 }
                 lastScroll = scrollY;
             }, { passive: true });
+        })();
+
+        // ===== FIX #5: HAMBURGER MENU TOGGLE =====
+        (function() {
+            var hamburgerBtn = document.getElementById('hamburgerBtn');
+            var mobileNav = document.getElementById('mobileNav');
+            if (!hamburgerBtn || !mobileNav) return;
+
+            var mobileLinks = mobileNav.querySelectorAll('a');
+
+            function toggleMenu() {
+                var isOpen = mobileNav.classList.toggle('open');
+                hamburgerBtn.setAttribute('aria-expanded', isOpen);
+                hamburgerBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+
+            hamburgerBtn.addEventListener('click', toggleMenu);
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (mobileNav.classList.contains('open')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Close menu on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+                    toggleMenu();
+                    hamburgerBtn.focus();
+                }
+            });
         })();
     </script>
 </body>

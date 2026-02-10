@@ -23,11 +23,33 @@
             box-sizing: border-box;
         }
 
+        /* Fix 1: Focus styles */
+        *:focus-visible {
+            outline: 2px solid var(--gold, #ffc13b);
+            outline-offset: 2px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
+        }
+
+        /* Fix 5: Skip-to-content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--gold);
+            color: var(--bg);
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            z-index: 200;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            top: 0;
         }
 
         /* Navigation */
@@ -82,16 +104,27 @@
             text-transform: uppercase;
             transition: color 0.3s;
         }
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a:focus {
             color: var(--text);
         }
-        @media (max-width: 600px) {
-            .nav-links {
-                display: none;
-            }
-            nav {
-                padding: 1rem;
-            }
+
+        /* Fix 3: Hamburger menu */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+            transition: transform 0.3s, opacity 0.3s;
         }
 
         .container {
@@ -100,10 +133,11 @@
             padding: 100px 30px 60px;
         }
 
+        /* Fix 8: Badge font size from 0.7rem to 0.75rem */
         .badge {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--cyan);
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -130,8 +164,11 @@
             margin-bottom: 3rem;
         }
 
+        /* Fix 9: aspect-ratio to prevent CLS */
         .cover-image {
             width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
             border: 1px solid var(--border);
             margin-bottom: 3rem;
         }
@@ -188,7 +225,7 @@
         }
 
         .whats-inside li::before {
-            content: '→';
+            content: '\2192';
             color: var(--gold);
         }
 
@@ -265,90 +302,150 @@
             font-size: 0.875rem;
         }
 
+        /* Fix 7: Footer link focus/hover states */
         .footer a {
             color: var(--cyan);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover,
+        .footer a:focus {
+            color: var(--gold);
         }
 
+        /* Fix 2: Mobile content padding + Fix 3: Hamburger + Fix 10: Nested padding */
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.875rem;
             }
             .container {
-                padding: 40px 20px;
+                padding: 80px 20px 40px;
             }
             .comparison {
                 grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 15, 0.98);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+            .nav-toggle {
+                display: flex;
+            }
+            nav {
+                padding: 1rem;
+            }
+            .whats-inside, .cta-section { padding: 1.5rem 1rem; }
+        }
+
+        /* Fix 12: Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <!-- Fix 5: Skip-to-content link -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Fix 6: aria-label on nav -->
+    <nav aria-label="Main navigation">
         <div class="nav-content">
             <a href="../../index.html" class="nav-logo">Ops_Architect</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../../index.html#about">About</a></li>
                 <li><a href="../../index.html#projects">Projects</a></li>
                 <li><a href="../../index.html#resources">Free Guides</a></li>
             </ul>
+            <!-- Fix 3: Hamburger menu button -->
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="document.getElementById('nav-links').classList.toggle('active'); this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="badge">Intermediate Guide</div>
+    <!-- Fix 5: main landmark -->
+    <main id="main-content">
+        <div class="container">
+            <div class="badge">Intermediate Guide</div>
 
-        <h1>Build Tools,<br><span>Not Rent Them</span></h1>
+            <h1>Build Tools,<br><span>Not Rent Them</span></h1>
 
-        <p class="subtitle">Why I use AI to create permanent tools instead of paying monthly subscriptions forever.</p>
+            <p class="subtitle">Why I use AI to create permanent tools instead of paying monthly subscriptions forever.</p>
 
-        <img src="../images/02-cover.png" alt="Build Tools Don't Rent Capability" class="cover-image">
+            <!-- Fix 9: width and height attributes -->
+            <img src="../images/02-cover.png" alt="Build Tools Don't Rent Capability" class="cover-image" width="700" height="394">
 
-        <div class="preview-section">
-            <h2>The Subscription Trap</h2>
+            <div class="preview-section">
+                <h2>The Subscription Trap</h2>
 
-            <p>There's an app for everything now. Scheduling? $15/month. Automation? $30/month. Analytics? $50/month.</p>
+                <p>There's an app for everything now. Scheduling? $15/month. Automation? $30/month. Analytics? $50/month.</p>
 
-            <p>Before you know it, you're spending <span class="highlight">$200+/month on tools</span> that each do one specific thing.</p>
+                <p>Before you know it, you're spending <span class="highlight">$200+/month on tools</span> that each do one specific thing.</p>
 
-            <div class="comparison">
-                <div class="comparison-box rent">
-                    <h4>The Renting Mindset</h4>
-                    <p>Pay monthly forever. Locked into their features. Data lives on their servers.</p>
+                <div class="comparison">
+                    <div class="comparison-box rent">
+                        <h4>The Renting Mindset</h4>
+                        <p>Pay monthly forever. Locked into their features. Data lives on their servers.</p>
+                    </div>
+                    <div class="comparison-box build">
+                        <h4>The Building Mindset</h4>
+                        <p>Build once, own forever. Exactly what you need. Your data, your control.</p>
+                    </div>
                 </div>
-                <div class="comparison-box build">
-                    <h4>The Building Mindset</h4>
-                    <p>Build once, own forever. Exactly what you need. Your data, your control.</p>
+
+                <p>AI changed this equation. Now you can build custom tools in hours instead of months.</p>
+            </div>
+
+            <div class="whats-inside">
+                <h3>What's Inside the Full Guide</h3>
+                <ul>
+                    <li>The "Build vs Rent" decision framework</li>
+                    <li>5 real tools I built instead of subscribed to</li>
+                    <li>Cost breakdown: subscriptions vs one-time builds</li>
+                    <li>How to prompt AI to build tools (not just answer questions)</li>
+                    <li>The "tool-first" mindset shift</li>
+                    <li>When renting actually makes sense</li>
+                </ul>
+            </div>
+
+            <div class="cta-section">
+                <h2>Get the Full Guide Free</h2>
+                <p>Learn the mindset that's saved me thousands in subscriptions.</p>
+
+                <div class="form-container">
+                    <script async data-uid="17853e4ea4" src="https://ineffable-automations.kit.com/17853e4ea4/index.js"></script>
+                    <!-- Fix 4: noscript fallback -->
+                    <noscript><p style="color: #ccc; text-align: center;">Please enable JavaScript to use the signup form, or email directly at luis.aviles@example.com</p></noscript>
                 </div>
             </div>
 
-            <p>AI changed this equation. Now you can build custom tools in hours instead of months.</p>
-        </div>
-
-        <div class="whats-inside">
-            <h3>What's Inside the Full Guide</h3>
-            <ul>
-                <li>The "Build vs Rent" decision framework</li>
-                <li>5 real tools I built instead of subscribed to</li>
-                <li>Cost breakdown: subscriptions vs one-time builds</li>
-                <li>How to prompt AI to build tools (not just answer questions)</li>
-                <li>The "tool-first" mindset shift</li>
-                <li>When renting actually makes sense</li>
-            </ul>
-        </div>
-
-        <div class="cta-section">
-            <h2>Get the Full Guide Free</h2>
-            <p>Learn the mindset that's saved me thousands in subscriptions.</p>
-
-            <div class="form-container">
-                <script async data-uid="17853e4ea4" src="https://ineffable-automations.kit.com/17853e4ea4/index.js"></script>
+            <div class="footer">
+                <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
             </div>
         </div>
-
-        <div class="footer">
-            <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
-        </div>
-    </div>
+    </main>
 </body>
 </html>

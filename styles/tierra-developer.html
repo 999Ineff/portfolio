@@ -24,11 +24,35 @@
             --whatsapp: #25D366;
             --text-dark: #1A365D;
             --text-body: #3D4F6F;
-            --text-light: #8899AA;
+            --text-light: #5C6B7A;
+            --gold-dark: #B8845A;
             --white: #FFFFFF;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        *:focus-visible {
+            outline: 2px solid var(--gold, #D4A574);
+            outline-offset: 2px;
+        }
         html { scroll-behavior: smooth; }
+
+        /* ===== SKIP LINK ===== */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 200;
+            background: var(--navy);
+            color: var(--gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0 0 8px 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--sand);
@@ -49,6 +73,7 @@
         }
         .top-bar.scrolled {
             background: rgba(15, 31, 61, 0.96);
+            -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
             padding: 0.875rem 3rem;
             box-shadow: 0 4px 30px rgba(0,0,0,0.2);
@@ -94,12 +119,72 @@
             align-items: center;
         }
         .back-link {
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.75);
             text-decoration: none;
             font-size: 0.8125rem;
             transition: color 0.3s;
+            padding: 0.75rem 0;
+            display: inline-block;
         }
         .back-link:hover { color: var(--gold); }
+
+        /* ===== HAMBURGER ===== */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem;
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger-line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 31, 61, 0.98);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            z-index: 99;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .mobile-nav-overlay.open {
+            display: flex;
+        }
+        .mobile-nav-overlay a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: color 0.3s;
+        }
+        .mobile-nav-overlay a:hover { color: var(--gold); }
         .nav-wa-btn {
             font-family: 'DM Sans', sans-serif;
             font-size: 0.8125rem;
@@ -232,7 +317,7 @@
         .hero-trust-item {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8125rem;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.75);
             letter-spacing: 0.02em;
         }
         .hero-trust-item strong {
@@ -257,7 +342,7 @@
             font-family: 'Outfit', sans-serif;
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--gold);
+            color: var(--gold-dark);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 0.75rem;
@@ -302,8 +387,8 @@
         }
         .section-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6875rem;
-            color: var(--gold);
+            font-size: max(0.75rem, 12px);
+            color: var(--gold-dark);
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: 0.75rem;
@@ -448,7 +533,7 @@
             letter-spacing: 0.03em;
         }
         .lot-status {
-            font-size: 0.6875rem;
+            font-size: max(0.75rem, 12px);
             font-weight: 700;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
@@ -483,7 +568,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.0625rem;
             font-weight: 600;
-            color: var(--gold);
+            color: var(--gold-dark);
             margin-bottom: 0.375rem;
         }
         .lot-location {
@@ -498,7 +583,8 @@
             font-family: 'DM Sans', sans-serif;
             font-size: 0.8125rem;
             font-weight: 700;
-            padding: 0.625rem;
+            min-height: 44px;
+            padding: 0.75rem;
             border-radius: 6px;
             text-decoration: none;
             transition: all 0.3s;
@@ -534,8 +620,9 @@
             max-width: 1300px;
             margin: 0 auto;
         }
+        .location-section .section-label { color: var(--gold); }
         .location-section .section-heading { color: var(--white); }
-        .location-section .section-sub { color: rgba(255,255,255,0.5); }
+        .location-section .section-sub { color: rgba(255,255,255,0.75); }
         .poi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -573,7 +660,7 @@
             font-size: 0.8125rem;
             color: var(--gold-light);
         }
-        .poi-time { color: rgba(255,255,255,0.4); }
+        .poi-time { color: rgba(255,255,255,0.7); }
 
         /* ===== PAYMENT ===== */
         .payment-section {
@@ -790,7 +877,7 @@
         .footer-wa:hover { text-decoration: underline; }
         .footer-credit {
             font-size: 0.8125rem;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.65);
         }
         .footer-right {
             display: flex;
@@ -802,15 +889,21 @@
             gap: 1rem;
         }
         .footer-social a {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.7);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s;
+            padding: 0.75rem;
+            min-width: 44px;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .footer-social a:hover { color: var(--gold); }
         .footer-lang {
             font-size: 0.8125rem;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.65);
             font-family: 'JetBrains Mono', monospace;
         }
 
@@ -849,7 +942,7 @@
             right: 2rem;
             z-index: 97;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6875rem;
+            font-size: max(0.75rem, 12px);
             color: var(--gold);
             background: var(--navy);
             border: 1px solid rgba(212,165,116,0.3);
@@ -876,9 +969,18 @@
             .hero-card { flex: 1; max-width: 420px; }
             .lots-grid { grid-template-columns: repeat(3, 1fr); }
         }
+        @media (max-width: 1024px) {
+            .poi-grid { grid-template-columns: repeat(2, 1fr); }
+            .payment-layout { flex-direction: column; }
+            .payment-info { flex: 1; width: 100%; }
+            .payment-card-wrap { flex: 1; width: 100%; }
+            .lot-map-container { height: 350px; }
+        }
         @media (max-width: 768px) {
             .top-bar { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-right .back-link { display: none; }
             .hero { padding: 6rem 1.5rem 4rem; }
             .lots-grid { grid-template-columns: repeat(2, 1fr); }
             .poi-grid { grid-template-columns: repeat(2, 1fr); }
@@ -886,6 +988,7 @@
             .payment-info, .payment-card-wrap { flex: 1; width: 100%; }
             .map-wrapper { flex-direction: column; }
             .map-legend { flex: auto; }
+            .lot-map-container { height: 280px; }
             .lot-map-section, .lots-section, .location-section, .payment-section { padding: 4rem 1.5rem; }
             .cta-options { flex-direction: column; align-items: center; }
             .hero-trust { gap: 1rem; }
@@ -896,21 +999,35 @@
             .hero-trust { flex-direction: column; gap: 0.75rem; }
             .footer-inner { flex-direction: column; text-align: center; }
             .footer-right { flex-direction: column; gap: 1rem; }
+            .lot-map-container { height: 220px; }
         }
 
-        /* Reduced motion */
+        /* ===== REDUCED MOTION ===== */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
+            html { scroll-behavior: auto; }
             .wa-float { animation: none; }
             .hero-wa-btn { animation: none; }
+        }
+
+        /* ===== NO-JS BANK ACCOUNTS ===== */
+        .account-number::after {
+            content: attr(data-account);
+        }
+        .js-loaded .account-number::after {
+            content: none;
         }
     </style>
 </head>
 <body>
+
+    <!-- SKIP LINK -->
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
     <!-- NAV -->
     <header class="top-bar" id="topBar">
@@ -918,7 +1035,7 @@
             <div class="logo-icon">T</div>
             Terranova
         </a>
-        <nav>
+        <nav aria-label="Navegacion principal">
             <ul class="nav-links">
                 <li><a href="#mapa">Mapa</a></li>
                 <li><a href="#lotes">Lotes</a></li>
@@ -929,11 +1046,27 @@
         <div class="nav-right">
             <a href="./" class="back-link">&larr; Galeria</a>
             <a href="https://wa.me/50499999999" class="nav-wa-btn">
-                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                 WhatsApp
             </a>
+            <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Abrir menu de navegacion" aria-expanded="false" aria-controls="mobileNav">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </header>
+
+    <!-- MOBILE NAV OVERLAY -->
+    <div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-label="Menu de navegacion">
+        <a href="#mapa" class="mobile-nav-link">Mapa</a>
+        <a href="#lotes" class="mobile-nav-link">Lotes</a>
+        <a href="#ubicacion" class="mobile-nav-link">Ubicacion</a>
+        <a href="#pagos" class="mobile-nav-link">Pagos</a>
+        <a href="https://wa.me/50499999999" class="mobile-nav-link">WhatsApp</a>
+    </div>
+
+    <main id="main-content">
 
     <!-- HERO -->
     <section class="hero">
@@ -945,7 +1078,7 @@
                 </h1>
                 <p class="hero-sub">La mejor inversion para tu familia. Lotes desde 200 varas cuadradas con financiamiento directo. Sin banco, sin fiador.</p>
                 <a href="https://wa.me/50499999999" class="hero-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                     Consultar Disponibilidad
                 </a>
                 <div class="hero-trust">
@@ -963,7 +1096,7 @@
                     <div class="pricing-card-detail">Plazo hasta 7 anios</div>
                     <div class="pricing-card-detail">Sin intereses 6 meses</div>
                     <a href="https://wa.me/50499999999" class="hero-wa-btn" style="animation-delay:1s;">
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                         Reservar Ahora
                     </a>
                 </div>
@@ -979,7 +1112,7 @@
             <p class="section-sub">Pasa el cursor sobre el mapa para explorar cada zona del proyecto Terranova.</p>
             <div class="map-wrapper">
                 <div class="lot-map-container">
-                    <img src="images/tierra/lot-map.png" alt="Mapa de Lotes Terranova" class="lot-map-image" id="lotMapImage" style="width: 100%; height: auto; display: block;">
+                    <img src="images/tierra/lot-map.png" alt="Mapa de Lotes Terranova" class="lot-map-image" id="lotMapImage" loading="lazy" style="width: 100%; height: auto; display: block;">
                 </div>
                 <div class="map-legend">
                     <h4>Estado de Lotes</h4>
@@ -1020,7 +1153,7 @@
                     <div class="lot-size">250 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 350,000</div>
                     <div class="lot-location">Etapa 1 &middot; Esquina</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote A-01">Reservar</button>
                 </div>
                 <!-- Lot 2 -->
                 <div class="lot-card">
@@ -1031,7 +1164,7 @@
                     <div class="lot-size">200 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 280,000</div>
                     <div class="lot-location">Etapa 1 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote A-02">Reservar</button>
                 </div>
                 <!-- Lot 3 -->
                 <div class="lot-card">
@@ -1042,7 +1175,7 @@
                     <div class="lot-size">300 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 420,000</div>
                     <div class="lot-location">Etapa 1 &middot; Esquina</div>
-                    <button class="lot-btn reserved-btn">Reservado</button>
+                    <button type="button" class="lot-btn reserved-btn" aria-label="Lote A-03 reservado" aria-disabled="true">Reservado</button>
                 </div>
                 <!-- Lot 4 -->
                 <div class="lot-card">
@@ -1053,7 +1186,7 @@
                     <div class="lot-size">225 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 315,000</div>
                     <div class="lot-location">Etapa 2 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote B-01">Reservar</button>
                 </div>
                 <!-- Lot 5 -->
                 <div class="lot-card">
@@ -1064,7 +1197,7 @@
                     <div class="lot-size">275 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 385,000</div>
                     <div class="lot-location">Etapa 2 &middot; Esquina</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote B-02">Reservar</button>
                 </div>
                 <!-- Lot 6 -->
                 <div class="lot-card">
@@ -1075,7 +1208,7 @@
                     <div class="lot-size">210 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 294,000</div>
                     <div class="lot-location">Etapa 2 &middot; Intermedio</div>
-                    <button class="lot-btn reserved-btn">Reservado</button>
+                    <button type="button" class="lot-btn reserved-btn" aria-label="Lote B-03 reservado" aria-disabled="true">Reservado</button>
                 </div>
                 <!-- Lot 7 -->
                 <div class="lot-card">
@@ -1086,7 +1219,7 @@
                     <div class="lot-size">240 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 336,000</div>
                     <div class="lot-location">Etapa 3 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote C-01">Reservar</button>
                 </div>
                 <!-- Lot 8 -->
                 <div class="lot-card">
@@ -1097,7 +1230,7 @@
                     <div class="lot-size">320 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 448,000</div>
                     <div class="lot-location">Etapa 3 &middot; Esquina Doble</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote C-02">Reservar</button>
                 </div>
                 <!-- Lot 9 -->
                 <div class="lot-card">
@@ -1108,7 +1241,7 @@
                     <div class="lot-size">200 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 280,000</div>
                     <div class="lot-location">Etapa 3 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote C-03">Reservar</button>
                 </div>
                 <!-- Lot 10 -->
                 <div class="lot-card">
@@ -1119,7 +1252,7 @@
                     <div class="lot-size">260 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 364,000</div>
                     <div class="lot-location">Etapa 4 &middot; Esquina</div>
-                    <button class="lot-btn reserved-btn">Reservado</button>
+                    <button type="button" class="lot-btn reserved-btn" aria-label="Lote D-01 reservado" aria-disabled="true">Reservado</button>
                 </div>
                 <!-- Lot 11 -->
                 <div class="lot-card">
@@ -1130,7 +1263,7 @@
                     <div class="lot-size">230 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 322,000</div>
                     <div class="lot-location">Etapa 4 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote D-02">Reservar</button>
                 </div>
                 <!-- Lot 12 -->
                 <div class="lot-card">
@@ -1141,7 +1274,7 @@
                     <div class="lot-size">215 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 301,000</div>
                     <div class="lot-location">Etapa 4 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote D-03">Reservar</button>
                 </div>
                 <!-- Lot 13 -->
                 <div class="lot-card">
@@ -1152,7 +1285,7 @@
                     <div class="lot-size">280 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 392,000</div>
                     <div class="lot-location">Etapa 5 &middot; Premium</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote E-01">Reservar</button>
                 </div>
                 <!-- Lot 14 -->
                 <div class="lot-card">
@@ -1163,7 +1296,7 @@
                     <div class="lot-size">350 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 490,000</div>
                     <div class="lot-location">Etapa 5 &middot; Esquina Premium</div>
-                    <button class="lot-btn sold-btn">Vendido</button>
+                    <button type="button" class="lot-btn sold-btn" aria-label="Lote E-02 vendido" aria-disabled="true">Vendido</button>
                 </div>
                 <!-- Lot 15 -->
                 <div class="lot-card">
@@ -1174,7 +1307,7 @@
                     <div class="lot-size">245 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 343,000</div>
                     <div class="lot-location">Etapa 5 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote E-03">Reservar</button>
                 </div>
                 <!-- Lot 16 -->
                 <div class="lot-card">
@@ -1185,7 +1318,7 @@
                     <div class="lot-size">200 <span>v&sup2;</span></div>
                     <div class="lot-price">L. 280,000</div>
                     <div class="lot-location">Etapa 5 &middot; Intermedio</div>
-                    <button class="lot-btn available-btn">Reservar</button>
+                    <button type="button" class="lot-btn available-btn" aria-label="Reservar lote E-04">Reservar</button>
                 </div>
             </div>
         </div>
@@ -1199,7 +1332,7 @@
             <p class="section-sub">Acceso rapido a las principales ciudades y servicios del Valle de Sula.</p>
             <div class="poi-grid">
                 <div class="poi-card">
-                    <div class="poi-icon">&#127961;</div>
+                    <div class="poi-icon" aria-hidden="true">&#127961;</div>
                     <div class="poi-name">San Pedro Sula</div>
                     <div class="poi-detail">
                         <span class="poi-distance">15 km</span>
@@ -1207,7 +1340,7 @@
                     </div>
                 </div>
                 <div class="poi-card">
-                    <div class="poi-icon">&#127963;</div>
+                    <div class="poi-icon" aria-hidden="true">&#127963;</div>
                     <div class="poi-name">La Lima</div>
                     <div class="poi-detail">
                         <span class="poi-distance">8 km</span>
@@ -1215,7 +1348,7 @@
                     </div>
                 </div>
                 <div class="poi-card">
-                    <div class="poi-icon">&#9992;&#65039;</div>
+                    <div class="poi-icon" aria-hidden="true">&#9992;&#65039;</div>
                     <div class="poi-name">Aeropuerto Ramon Villeda</div>
                     <div class="poi-detail">
                         <span class="poi-distance">25 km</span>
@@ -1223,7 +1356,7 @@
                     </div>
                 </div>
                 <div class="poi-card">
-                    <div class="poi-icon">&#127754;</div>
+                    <div class="poi-icon" aria-hidden="true">&#127754;</div>
                     <div class="poi-name">Lago de Yojoa</div>
                     <div class="poi-detail">
                         <span class="poi-distance">60 km</span>
@@ -1244,27 +1377,27 @@
                 <div class="payment-info">
                     <ul class="payment-detail-list">
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Financiamiento directo — sin banco, sin fiador
                         </li>
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Enganche desde el 5% del precio total
                         </li>
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Cuotas mensuales desde L. 5,000
                         </li>
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Plazo de hasta 7 anios para pagar
                         </li>
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Sin intereses los primeros 6 meses
                         </li>
                         <li>
-                            <span class="check">&#10003;</span>
+                            <span class="check" aria-hidden="true">&#10003;</span>
                             Escritura publica al completar pago
                         </li>
                     </ul>
@@ -1311,7 +1444,7 @@
             <h2>&iquest;Listo para invertir<br>en tu <span class="gold">futuro</span>?</h2>
             <div class="cta-options">
                 <a href="https://wa.me/50499999999" class="cta-wa-btn">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
                     Escribir por WhatsApp
                 </a>
                 <a href="tel:+50499999999" class="cta-phone">&#128222; (504) 9999-9999</a>
@@ -1319,6 +1452,8 @@
             </div>
         </div>
     </section>
+
+    </main><!-- /main-content -->
 
     <!-- FOOTER -->
     <footer class="site-footer">
@@ -1329,8 +1464,8 @@
             </div>
             <div class="footer-right">
                 <div class="footer-social">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
+                    <a href="#" aria-label="Visitar pagina de Facebook de Terranova (enlace pendiente)">Facebook</a>
+                    <a href="#" aria-label="Visitar pagina de Instagram de Terranova (enlace pendiente)">Instagram</a>
                 </div>
                 <span class="footer-lang">ES | EN</span>
             </div>
@@ -1339,14 +1474,56 @@
 
     <!-- FLOATING WHATSAPP -->
     <a href="https://wa.me/50499999999" class="wa-float" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
     </a>
 
     <!-- PRESET BADGE -->
     <a href="./" class="preset-badge">Tierra Developer Preset</a>
 
     <script>
+        // ===== JS-LOADED FLAG (for no-JS bank account fallback) =====
+        document.documentElement.classList.add('js-loaded');
+
+        // ===== PREFERS REDUCED MOTION CHECK =====
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         gsap.registerPlugin(ScrollTrigger);
+
+        // If user prefers reduced motion, disable all GSAP animations globally
+        if (prefersReducedMotion) {
+            gsap.globalTimeline.timeScale(1000);
+            gsap.defaults({ duration: 0, delay: 0 });
+            ScrollTrigger.defaults({ animation: null });
+        }
+
+        // ===== HAMBURGER MENU =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (hamburgerBtn && mobileNav) {
+            hamburgerBtn.addEventListener('click', function() {
+                const isOpen = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isOpen);
+                mobileNav.classList.toggle('open', !isOpen);
+                document.body.style.overflow = !isOpen ? 'hidden' : '';
+            });
+            // Close mobile nav when a link is clicked
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    mobileNav.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+            // Close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    mobileNav.classList.remove('open');
+                    document.body.style.overflow = '';
+                    hamburgerBtn.focus();
+                }
+            });
+        }
 
         // ===== NAV SCROLL =====
         const topBar = document.getElementById('topBar');
@@ -1357,76 +1534,97 @@
             }
         });
 
-        // ===== HERO ANIMATIONS =====
-        gsap.from('.hero-label', { opacity: 0, x: -30, duration: 0.7, ease: "power3.out", delay: 0.2 });
-        gsap.from('.hero-title', { opacity: 0, y: 40, duration: 0.8, ease: "power3.out", delay: 0.4 });
-        gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.7, ease: "power3.out", delay: 0.6 });
-        gsap.from('.hero-content .hero-wa-btn', { opacity: 0, y: 20, duration: 0.6, ease: "power3.out", delay: 0.8 });
-        gsap.from('.hero-trust > div', { opacity: 0, y: 15, duration: 0.5, stagger: 0.08, ease: "power3.out", delay: 1.0 });
+        if (!prefersReducedMotion) {
+            // ===== HERO ANIMATIONS =====
+            gsap.from('.hero-label', { opacity: 0, x: -30, duration: 0.7, ease: "power3.out", delay: 0.2 });
+            gsap.from('.hero-title', { opacity: 0, y: 40, duration: 0.8, ease: "power3.out", delay: 0.4 });
+            gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.7, ease: "power3.out", delay: 0.6 });
+            gsap.from('.hero-content .hero-wa-btn', { opacity: 0, y: 20, duration: 0.6, ease: "power3.out", delay: 0.8 });
+            gsap.from('.hero-trust > div', { opacity: 0, y: 15, duration: 0.5, stagger: 0.08, ease: "power3.out", delay: 1.0 });
 
-        // Pricing card scale-in
-        gsap.from('#pricingCard', {
-            opacity: 0, scale: 0.9, y: 30,
-            duration: 0.8, ease: "back.out(1.5)", delay: 0.6
-        });
-
-        // ===== MAP HOVER ZOOM =====
-        const mapContainer = document.querySelector('.lot-map-container');
-        const mapImage = document.querySelector('.lot-map-image');
-        if (mapContainer && mapImage) {
-            mapContainer.addEventListener('mousemove', (e) => {
-                const rect = mapContainer.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                mapImage.style.transformOrigin = x + '% ' + y + '%';
-                mapImage.style.transform = 'scale(1.5)';
-            });
-            mapContainer.addEventListener('mouseleave', () => {
-                mapImage.style.transform = 'scale(1)';
+            // Pricing card scale-in
+            gsap.from('#pricingCard', {
+                opacity: 0, scale: 0.9, y: 30,
+                duration: 0.8, ease: "back.out(1.5)", delay: 0.6
             });
         }
 
-        // Map section reveal
-        gsap.from('.lot-map-container', {
-            scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
-            opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
-        });
-        gsap.from('.map-legend', {
-            scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
-            opacity: 0, x: 30, duration: 0.7, ease: "power3.out", delay: 0.2
-        });
+        // ===== MAP HOVER + TOUCH ZOOM =====
+        const mapContainer = document.querySelector('.lot-map-container');
+        const mapImage = document.querySelector('.lot-map-image');
+        if (mapContainer && mapImage) {
+            function handleMapZoom(clientX, clientY) {
+                const rect = mapContainer.getBoundingClientRect();
+                const x = ((clientX - rect.left) / rect.width) * 100;
+                const y = ((clientY - rect.top) / rect.height) * 100;
+                mapImage.style.transformOrigin = x + '% ' + y + '%';
+                mapImage.style.transform = 'scale(1.5)';
+            }
+            function resetMapZoom() {
+                mapImage.style.transform = 'scale(1)';
+            }
+            mapContainer.addEventListener('mousemove', (e) => {
+                handleMapZoom(e.clientX, e.clientY);
+            });
+            mapContainer.addEventListener('mouseleave', resetMapZoom);
+            // Touch support
+            mapContainer.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    handleMapZoom(touch.clientX, touch.clientY);
+                }
+            }, { passive: true });
+            mapContainer.addEventListener('touchend', resetMapZoom);
+        }
 
-        // ===== LOT CARDS BATCH STAGGER =====
-        ScrollTrigger.batch('.lot-card', {
-            onEnter: batch => gsap.from(batch, {
+        if (!prefersReducedMotion) {
+            // Map section reveal
+            gsap.from('.lot-map-container', {
+                scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
+                opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
+            });
+            gsap.from('.map-legend', {
+                scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
+                opacity: 0, x: 30, duration: 0.7, ease: "power3.out", delay: 0.2
+            });
+
+            // ===== LOT CARDS BATCH STAGGER =====
+            ScrollTrigger.batch('.lot-card', {
+                onEnter: batch => gsap.from(batch, {
+                    opacity: 0, y: 30, scale: 0.95,
+                    stagger: 0.04, duration: 0.6, ease: "power3.out"
+                }),
+                start: "top 90%"
+            });
+
+            // ===== POI CARDS STAGGER =====
+            gsap.from('.poi-card', {
+                scrollTrigger: { trigger: '.poi-grid', start: 'top 85%' },
+                opacity: 0, y: 30,
+                stagger: 0.1, duration: 0.6, ease: "power3.out"
+            });
+
+            // ===== PAYMENT SECTION =====
+            gsap.from('.payment-detail-list li', {
+                scrollTrigger: { trigger: '.payment-detail-list', start: 'top 85%' },
+                opacity: 0, x: -20,
+                stagger: 0.08, duration: 0.5, ease: "power3.out"
+            });
+            gsap.from('.payment-card', {
+                scrollTrigger: { trigger: '.payment-card-wrap', start: 'top 85%' },
                 opacity: 0, y: 30, scale: 0.95,
-                stagger: 0.04, duration: 0.6, ease: "power3.out"
-            }),
-            start: "top 90%"
-        });
-
-        // ===== POI CARDS STAGGER =====
-        gsap.from('.poi-card', {
-            scrollTrigger: { trigger: '.poi-grid', start: 'top 85%' },
-            opacity: 0, y: 30,
-            stagger: 0.1, duration: 0.6, ease: "power3.out"
-        });
-
-        // ===== PAYMENT SECTION =====
-        gsap.from('.payment-detail-list li', {
-            scrollTrigger: { trigger: '.payment-detail-list', start: 'top 85%' },
-            opacity: 0, x: -20,
-            stagger: 0.08, duration: 0.5, ease: "power3.out"
-        });
-        gsap.from('.payment-card', {
-            scrollTrigger: { trigger: '.payment-card-wrap', start: 'top 85%' },
-            opacity: 0, y: 30, scale: 0.95,
-            duration: 0.7, ease: "power3.out"
-        });
+                duration: 0.7, ease: "power3.out"
+            });
+        }
 
         // ===== BANK ACCOUNT TYPING ANIMATION =====
         document.querySelectorAll('.account-number').forEach(el => {
             const text = el.getAttribute('data-account');
+            if (prefersReducedMotion) {
+                // Show immediately without animation
+                el.textContent = text;
+                return;
+            }
             el.textContent = '';
             gsap.to(el, {
                 duration: text.length * 0.08,
@@ -1440,30 +1638,32 @@
             });
         });
 
-        // ===== SECTION HEADINGS =====
-        document.querySelectorAll('.section-heading').forEach(heading => {
-            gsap.from(heading, {
-                scrollTrigger: { trigger: heading, start: 'top 85%' },
-                opacity: 0, y: 25, duration: 0.7, ease: "power3.out"
+        if (!prefersReducedMotion) {
+            // ===== SECTION HEADINGS =====
+            document.querySelectorAll('.section-heading').forEach(heading => {
+                gsap.from(heading, {
+                    scrollTrigger: { trigger: heading, start: 'top 85%' },
+                    opacity: 0, y: 25, duration: 0.7, ease: "power3.out"
+                });
             });
-        });
-        document.querySelectorAll('.section-label').forEach(label => {
-            gsap.from(label, {
-                scrollTrigger: { trigger: label, start: 'top 85%' },
-                opacity: 0, x: -20, duration: 0.6, ease: "power3.out"
+            document.querySelectorAll('.section-label').forEach(label => {
+                gsap.from(label, {
+                    scrollTrigger: { trigger: label, start: 'top 85%' },
+                    opacity: 0, x: -20, duration: 0.6, ease: "power3.out"
+                });
             });
-        });
 
-        // ===== FINAL CTA =====
-        gsap.from('.final-cta h2', {
-            scrollTrigger: { trigger: '.final-cta', start: 'top 80%' },
-            opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
-        });
-        gsap.from('.cta-options > *', {
-            scrollTrigger: { trigger: '.cta-options', start: 'top 85%' },
-            opacity: 0, y: 20,
-            stagger: 0.1, duration: 0.6, ease: "power3.out"
-        });
+            // ===== FINAL CTA =====
+            gsap.from('.final-cta h2', {
+                scrollTrigger: { trigger: '.final-cta', start: 'top 80%' },
+                opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
+            });
+            gsap.from('.cta-options > *', {
+                scrollTrigger: { trigger: '.cta-options', start: 'top 85%' },
+                opacity: 0, y: 20,
+                stagger: 0.1, duration: 0.6, ease: "power3.out"
+            });
+        }
     </script>
 </body>
 </html>

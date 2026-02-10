@@ -23,11 +23,33 @@
             box-sizing: border-box;
         }
 
+        /* Fix 1: Focus styles */
+        *:focus-visible {
+            outline: 2px solid var(--gold, #ffc13b);
+            outline-offset: 2px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
+        }
+
+        /* Fix 5: Skip-to-content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--gold);
+            color: var(--bg);
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            z-index: 200;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            top: 0;
         }
 
         /* Navigation */
@@ -82,16 +104,27 @@
             text-transform: uppercase;
             transition: color 0.3s;
         }
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a:focus {
             color: var(--text);
         }
-        @media (max-width: 600px) {
-            .nav-links {
-                display: none;
-            }
-            nav {
-                padding: 1rem;
-            }
+
+        /* Fix 3: Hamburger menu */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+            transition: transform 0.3s, opacity 0.3s;
         }
 
         .container {
@@ -100,10 +133,11 @@
             padding: 100px 30px 60px;
         }
 
+        /* Fix 8: Badge font size from 0.7rem to 0.75rem */
         .badge {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--gold);
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -130,8 +164,11 @@
             margin-bottom: 3rem;
         }
 
+        /* Fix 9: aspect-ratio to prevent CLS */
         .cover-image {
             width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
             border: 1px solid var(--border);
             margin-bottom: 3rem;
         }
@@ -188,7 +225,7 @@
         }
 
         .whats-inside li::before {
-            content: '→';
+            content: '\2192';
             color: var(--cyan);
         }
 
@@ -243,82 +280,143 @@
             font-size: 0.875rem;
         }
 
+        /* Fix 7: Footer link focus/hover states */
         .footer a {
             color: var(--gold);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover,
+        .footer a:focus {
+            color: var(--cyan);
         }
 
+        /* Fix 2: Mobile content padding + Fix 3: Hamburger + Fix 10: Nested padding */
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.875rem;
             }
             .container {
-                padding: 40px 20px;
+                padding: 80px 20px 40px;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 15, 0.98);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+            .nav-toggle {
+                display: flex;
+            }
+            nav {
+                padding: 1rem;
+            }
+            .whats-inside, .cta-section { padding: 1.5rem 1rem; }
+            .quote { padding: 1rem; }
+        }
+
+        /* Fix 12: Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <!-- Fix 5: Skip-to-content link -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Fix 6: aria-label on nav -->
+    <nav aria-label="Main navigation">
         <div class="nav-content">
             <a href="../../index.html" class="nav-logo">Ops_Architect</a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="../../index.html#about">About</a></li>
                 <li><a href="../../index.html#projects">Projects</a></li>
                 <li><a href="../../index.html#resources">Free Guides</a></li>
             </ul>
+            <!-- Fix 3: Hamburger menu button -->
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="document.getElementById('nav-links').classList.toggle('active'); this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'false' ? 'true' : 'false');">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="badge">Advanced Guide</div>
+    <!-- Fix 5: main landmark -->
+    <main id="main-content">
+        <div class="container">
+            <div class="badge">Advanced Guide</div>
 
-        <h1>The AI Project<br><span>Orchestrator Blueprint</span></h1>
+            <h1>The AI Project<br><span>Orchestrator Blueprint</span></h1>
 
-        <p class="subtitle">Stop prompt engineering messages. Start prompt engineering your entire workflow.</p>
+            <p class="subtitle">Stop prompt engineering messages. Start prompt engineering your entire workflow.</p>
 
-        <img src="../images/01-cover.png" alt="AI Orchestration Command Center" class="cover-image">
+            <!-- Fix 9: width and height attributes -->
+            <img src="../images/01-cover.png" alt="AI Orchestration Command Center" class="cover-image" width="700" height="394">
 
-        <div class="preview-section">
-            <h2>The Problem With Prompt Engineering</h2>
+            <div class="preview-section">
+                <h2>The Problem With Prompt Engineering</h2>
 
-            <p>Everyone's obsessed with prompt engineering.</p>
+                <p>Everyone's obsessed with prompt engineering.</p>
 
-            <p>"Write better prompts." "Use chain-of-thought." "Add system instructions."</p>
+                <p>"Write better prompts." "Use chain-of-thought." "Add system instructions."</p>
 
-            <p>Great. That helps with your first message. <span class="highlight">What about the next 100?</span></p>
+                <p>Great. That helps with your first message. <span class="highlight">What about the next 100?</span></p>
 
-            <p>Real projects aren't one-shot. They're hundreds of back-and-forths across multiple sessions. Multiple agents. Multiple days.</p>
+                <p>Real projects aren't one-shot. They're hundreds of back-and-forths across multiple sessions. Multiple agents. Multiple days.</p>
 
-            <div class="quote">
-                "I stopped prompt engineering my messages. I started prompt engineering my workflow. The instructions. The stages. The checkpoints. Baked into the system."
+                <div class="quote">
+                    "I stopped prompt engineering my messages. I started prompt engineering my workflow. The instructions. The stages. The checkpoints. Baked into the system."
+                </div>
+            </div>
+
+            <div class="whats-inside">
+                <h3>What's Inside the Full Guide</h3>
+                <ul>
+                    <li>The CLAUDE.md file structure — your project's operational memory</li>
+                    <li>The 9-stage pipeline that every task runs through</li>
+                    <li>When to use Python vs AI (the hybrid approach)</li>
+                    <li>Session persistence — never start fresh again</li>
+                    <li>Complete template bundle (CLAUDE.md, state files, Python tools)</li>
+                    <li>Ready to copy into any project</li>
+                </ul>
+            </div>
+
+            <div class="cta-section">
+                <h2>Get the Full Guide Free</h2>
+                <p>Plus the complete orchestrator template bundle I use on every project.</p>
+
+                <div class="form-container">
+                    <script async data-uid="ebaf768973" src="https://ineffable-automations.kit.com/ebaf768973/index.js"></script>
+                    <!-- Fix 4: noscript fallback -->
+                    <noscript><p style="color: #ccc; text-align: center;">Please enable JavaScript to use the signup form, or email directly at luis.aviles@example.com</p></noscript>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
             </div>
         </div>
-
-        <div class="whats-inside">
-            <h3>What's Inside the Full Guide</h3>
-            <ul>
-                <li>The CLAUDE.md file structure — your project's operational memory</li>
-                <li>The 9-stage pipeline that every task runs through</li>
-                <li>When to use Python vs AI (the hybrid approach)</li>
-                <li>Session persistence — never start fresh again</li>
-                <li>Complete template bundle (CLAUDE.md, state files, Python tools)</li>
-                <li>Ready to copy into any project</li>
-            </ul>
-        </div>
-
-        <div class="cta-section">
-            <h2>Get the Full Guide Free</h2>
-            <p>Plus the complete orchestrator template bundle I use on every project.</p>
-
-            <div class="form-container">
-                <script async data-uid="ebaf768973" src="https://ineffable-automations.kit.com/ebaf768973/index.js"></script>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
-        </div>
-    </div>
+    </main>
 </body>
 </html>

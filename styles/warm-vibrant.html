@@ -30,6 +30,13 @@
             --white: #ffffff;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* [Fix 1] Focus-visible styles */
+        *:focus-visible {
+            outline: 2px solid #FF6B35;
+            outline-offset: 2px;
+        }
+
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Open Sans', sans-serif;
@@ -37,6 +44,26 @@
             color: var(--text-dark);
             overflow-x: hidden;
             cursor: auto;
+            line-height: 1.6; /* [Fix 15] Body line-height */
+        }
+
+        /* [Fix 11] Skip-to-content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 200;
+            padding: 0.75rem 1.5rem;
+            background: var(--sunset);
+            color: var(--charcoal);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border-radius: 0 0 8px 8px;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
         }
 
         /* ===== NAVIGATION ===== */
@@ -86,7 +113,7 @@
             align-items: center;
         }
         .back-link {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.85); /* [Fix 2] Contrast: was 0.6 */
             text-decoration: none;
             font-size: 0.8125rem;
             transition: color 0.3s;
@@ -110,6 +137,60 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 25px var(--sunset-glow);
         }
+
+        /* [Fix 4] Hamburger navigation */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 110;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(27, 73, 101, 0.98);
+            z-index: 105;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .mobile-nav.open {
+            display: flex;
+        }
+        .mobile-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover { color: var(--sunset); }
 
         /* ===== HERO ===== */
         .hero {
@@ -268,6 +349,14 @@
             margin-bottom: 2.5rem;
         }
 
+        /* [Fix 16] Menu description — moved from inline style to CSS class */
+        .menu-desc {
+            text-align: center;
+            color: rgba(255,255,255,0.8); /* [Fix 2] Contrast: was 0.6 inline */
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
         /* Tab system */
         .tab-bar {
             display: flex;
@@ -282,11 +371,12 @@
             font-family: 'Open Sans', sans-serif;
             font-size: 0.9375rem;
             font-weight: 600;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.75); /* [Fix 2] Contrast: was 0.5 */
             padding: 0.875rem 2rem;
             cursor: pointer;
             position: relative;
             transition: color 0.3s;
+            white-space: nowrap; /* Prevent tab text wrapping in scroll mode */
         }
         .tab-btn::after {
             content: '';
@@ -324,11 +414,13 @@
             font-size: 1.125rem;
             font-weight: 600;
             color: var(--white);
-            white-space: nowrap;
+            /* [Fix 13] Removed white-space: nowrap; added overflow handling */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .menu-item-tag {
             display: inline-block;
-            font-size: 0.625rem;
+            font-size: 0.75rem; /* [Fix 7] Was 0.625rem */
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -483,6 +575,10 @@
             border-radius: 50px;
             text-decoration: none;
             transition: all 0.3s;
+            min-height: 44px; /* [Fix 6] Touch target */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-order {
             background: var(--sunset);
@@ -658,7 +754,7 @@
         }
         .footer-brand p {
             font-size: 0.875rem;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.75); /* [Fix 2] Contrast: was 0.55 */
             line-height: 1.6;
             max-width: 280px;
         }
@@ -676,7 +772,7 @@
             margin-bottom: 0.5rem;
         }
         .footer-col a {
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.75); /* [Fix 2] Contrast: was 0.55 */
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s;
@@ -688,7 +784,7 @@
             margin-top: 0.5rem;
         }
         .social-link {
-            width: 38px; height: 38px;
+            width: 44px; height: 44px; /* [Fix 5] Touch target: was 38px */
             border-radius: 50%;
             border: 1.5px solid rgba(255,255,255,0.2);
             display: flex;
@@ -712,10 +808,10 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.8125rem;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.7); /* [Fix 2] Contrast: was 0.4 */
         }
         .footer-bottom a {
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.7); /* [Fix 2] Contrast: was 0.4 */
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -759,32 +855,68 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        /* [Fix 14] Intermediate breakpoint at 1024px */
         @media (max-width: 1024px) {
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .specials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
+
         @media (max-width: 768px) {
             .locations-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
             .specials-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
             .nav-links { display: none; }
+            /* [Fix 4] Show hamburger on mobile */
+            .hamburger { display: block; }
             .top-bar { padding: 1rem 1.5rem; }
             .top-bar.scrolled { padding: 0.75rem 1.5rem; }
             .hero { padding: 7rem 1.5rem 4rem; }
             .menu-section, .locations-section, .specials-section, .reservation-section { padding: 3.5rem 1.5rem; }
+            /* [Fix 12] Tab overflow on mobile */
+            .tab-bar {
+                overflow-x: auto;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+            }
             .tab-btn { padding: 0.75rem 1.25rem; font-size: 0.8125rem; }
             .footer-grid { grid-template-columns: 1fr; text-align: center; }
             .footer-brand p { max-width: 100%; }
             .footer-social { justify-content: center; }
             .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+            /* [Fix 18] Nav-right on mobile — prevent logo/CTA overlap */
+            .nav-right {
+                gap: 0.75rem;
+            }
+            .back-link { display: none; }
+            .nav-cta {
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+            }
         }
+
+        /* [Fix 14] Intermediate breakpoint at 480px */
+        @media (max-width: 480px) {
+            .locations-grid { max-width: 100%; }
+            .specials-grid { max-width: 100%; }
+            .special-card { padding: 1.5rem 1rem; }
+            .location-actions { flex-direction: column; }
+            .tab-bar { margin-bottom: 1.5rem; }
+        }
+
         @media (max-width: 375px) {
             .hero-title { font-size: 2.5rem; }
             .award-box { flex-direction: column; gap: 0.5rem; padding: 1rem 1.5rem; }
-            .location-actions { flex-direction: column; }
         }
 
         /* ===== REDUCED MOTION ===== */
+        /* [Fix 17] prefers-reduced-motion support */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -796,15 +928,27 @@
                 opacity: 1;
                 transform: none;
             }
+            .location-card:hover,
+            .special-card:hover,
+            .hero-cta:hover,
+            .reservation-cta:hover,
+            .nav-cta:hover,
+            .btn-order:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- [Fix 11] Skip-to-content link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- NAV -->
     <header class="top-bar" id="topBar">
         <a href="./" class="logo">Mariscos <span class="logo-accent">Del Puerto</span></a>
-        <nav>
+        <!-- [Fix 11] aria-label on nav -->
+        <nav aria-label="Main navigation">
             <ul class="nav-links">
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#locations">Locations</a></li>
@@ -815,7 +959,25 @@
             <a href="./" class="back-link">&larr; Gallery</a>
             <a href="#reserve" class="nav-cta">Reserve a Table</a>
         </div>
+        <!-- [Fix 4] Hamburger button -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- [Fix 4] Mobile navigation overlay -->
+    <div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
+        <a href="#menu">Menu</a>
+        <a href="#locations">Locations</a>
+        <a href="#specials">Specials</a>
+        <a href="#reserve">Reserve a Table</a>
+        <a href="./">&larr; Back to Gallery</a>
+    </div>
+
+    <!-- [Fix 11] Main landmark -->
+    <main id="main-content">
 
     <!-- HERO -->
     <section class="hero">
@@ -848,15 +1010,18 @@
         <div class="menu-inner">
             <div class="section-label reveal">Nuestro Men&uacute;</div>
             <h2 class="section-heading reveal">Sabores del Mar</h2>
-            <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:1rem;margin-bottom:2rem;" class="reveal">Fresh catches &amp; traditional recipes at every location</p>
+            <!-- [Fix 16] Removed inline style, using .menu-desc class -->
+            <p class="menu-desc reveal">Fresh catches &amp; traditional recipes at every location</p>
 
-            <div class="tab-bar reveal">
-                <button class="tab-btn active" data-tab="oakcliff">&#x1F4CD; Oak Cliff Specials</button>
-                <button class="tab-btn" data-tab="grandprairie">&#x1F4CD; Grand Prairie Specials</button>
-                <button class="tab-btn" data-tab="irving">&#x1F4CD; Irving Specials</button>
+            <!-- [Fix 3] ARIA tab attributes: role="tablist", role="tab", aria-selected, aria-controls -->
+            <div class="tab-bar reveal" role="tablist" aria-label="Location menu tabs">
+                <button class="tab-btn active" data-tab="oakcliff" role="tab" id="tab-btn-oakcliff" aria-selected="true" aria-controls="tab-oakcliff">&#x1F4CD; Oak Cliff Specials</button>
+                <button class="tab-btn" data-tab="grandprairie" role="tab" id="tab-btn-grandprairie" aria-selected="false" aria-controls="tab-grandprairie">&#x1F4CD; Grand Prairie Specials</button>
+                <button class="tab-btn" data-tab="irving" role="tab" id="tab-btn-irving" aria-selected="false" aria-controls="tab-irving">&#x1F4CD; Irving Specials</button>
             </div>
 
-            <div class="tab-content active" id="tab-oakcliff">
+            <!-- [Fix 3] role="tabpanel" and aria-labelledby on tab panels -->
+            <div class="tab-content active" id="tab-oakcliff" role="tabpanel" aria-labelledby="tab-btn-oakcliff">
                 <div class="menu-item">
                     <span class="menu-item-name">Coctel de Camar&oacute;n <span class="menu-item-tag tag-nuevo">Nuevo</span></span>
                     <span class="menu-item-dots"></span>
@@ -884,7 +1049,7 @@
                 </div>
             </div>
 
-            <div class="tab-content" id="tab-grandprairie">
+            <div class="tab-content" id="tab-grandprairie" role="tabpanel" aria-labelledby="tab-btn-grandprairie">
                 <div class="menu-item">
                     <span class="menu-item-name">Camarones a la Diabla <span class="menu-item-tag tag-picante">Picante</span></span>
                     <span class="menu-item-dots"></span>
@@ -912,7 +1077,7 @@
                 </div>
             </div>
 
-            <div class="tab-content" id="tab-irving">
+            <div class="tab-content" id="tab-irving" role="tabpanel" aria-labelledby="tab-btn-irving">
                 <div class="menu-item">
                     <span class="menu-item-name">Campechana Especial <span class="menu-item-tag tag-nuevo">Nuevo</span></span>
                     <span class="menu-item-dots"></span>
@@ -959,7 +1124,8 @@
                 <!-- Oak Cliff -->
                 <div class="location-card reveal">
                     <div class="location-header">
-                        <img src="images/warm-vibrant/location-1.png" alt="Oak Cliff Location" loading="lazy">
+                        <!-- [Fix 8] width and height attributes on images -->
+                        <img src="images/warm-vibrant/location-1.png" alt="Oak Cliff Location" loading="lazy" width="400" height="180">
                         <div class="location-name">Oak Cliff</div>
                         <div class="location-rating">
                             <span class="star">&#9733;</span>
@@ -976,8 +1142,9 @@
                             <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
                         </div>
                         <div class="location-actions">
-                            <a href="#" class="btn-location btn-order">Order Online</a>
-                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                            <!-- [Fix 9] Placeholder links with aria-labels / real URLs -->
+                            <a href="#" class="btn-location btn-order" aria-label="Order online from Oak Cliff location">Order Online</a>
+                            <a href="https://maps.google.com/?q=331+W+Jefferson+Blvd+Dallas+TX+75208" class="btn-location btn-directions" aria-label="Get directions to Oak Cliff location">Get Directions</a>
                         </div>
                     </div>
                 </div>
@@ -985,7 +1152,7 @@
                 <!-- Grand Prairie -->
                 <div class="location-card reveal">
                     <div class="location-header">
-                        <img src="images/warm-vibrant/location-2.png" alt="Grand Prairie Location" loading="lazy">
+                        <img src="images/warm-vibrant/location-2.png" alt="Grand Prairie Location" loading="lazy" width="400" height="180">
                         <div class="location-name">Grand Prairie</div>
                         <div class="location-rating">
                             <span class="star">&#9733;</span>
@@ -1002,8 +1169,8 @@
                             <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
                         </div>
                         <div class="location-actions">
-                            <a href="#" class="btn-location btn-order">Order Online</a>
-                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                            <a href="#" class="btn-location btn-order" aria-label="Order online from Grand Prairie location">Order Online</a>
+                            <a href="https://maps.google.com/?q=2101+W+Pioneer+Pkwy+Grand+Prairie+TX+75051" class="btn-location btn-directions" aria-label="Get directions to Grand Prairie location">Get Directions</a>
                         </div>
                     </div>
                 </div>
@@ -1011,7 +1178,7 @@
                 <!-- Irving -->
                 <div class="location-card reveal">
                     <div class="location-header">
-                        <img src="images/warm-vibrant/location-3.png" alt="Irving Location" loading="lazy">
+                        <img src="images/warm-vibrant/location-3.png" alt="Irving Location" loading="lazy" width="400" height="180">
                         <div class="location-name">Irving</div>
                         <div class="location-rating">
                             <span class="star">&#9733;</span>
@@ -1028,8 +1195,8 @@
                             <span>Mon-Thu 11am &ndash; 9pm<br>Fri-Sun 11am &ndash; 10pm</span>
                         </div>
                         <div class="location-actions">
-                            <a href="#" class="btn-location btn-order">Order Online</a>
-                            <a href="#" class="btn-location btn-directions">Get Directions</a>
+                            <a href="#" class="btn-location btn-order" aria-label="Order online from Irving location">Order Online</a>
+                            <a href="https://maps.google.com/?q=1234+N+Belt+Line+Rd+Irving+TX+75061" class="btn-location btn-directions" aria-label="Get directions to Irving location">Get Directions</a>
                         </div>
                     </div>
                 </div>
@@ -1103,10 +1270,13 @@
         <div class="reservation-inner reveal">
             <h2 class="section-heading">Reserve Your Table</h2>
             <p class="reservation-sub">Join us for fresh-caught seafood, handmade cocktails, and the warmth of family. Walk-ins welcome, reservations recommended for weekends.</p>
-            <a href="#" class="reservation-cta">Make a Reservation</a>
+            <!-- [Fix 9] Placeholder link with aria-label -->
+            <a href="#" class="reservation-cta" aria-label="Make a reservation at Mariscos Del Puerto">Make a Reservation</a>
             <div class="reservation-phone"><a href="tel:2145550347">(214) 555-0347</a></div>
         </div>
     </section>
+
+    </main><!-- end [Fix 11] main landmark -->
 
     <!-- FOOTER -->
     <footer class="site-footer">
@@ -1119,29 +1289,31 @@
                 <div class="footer-col">
                     <h4>Oak Cliff</h4>
                     <ul>
-                        <li><a href="#">331 W Jefferson Blvd</a></li>
-                        <li><a href="#">Dallas, TX 75208</a></li>
+                        <!-- [Fix 9] Footer address links changed to Google Maps URLs -->
+                        <li><a href="https://maps.google.com/?q=331+W+Jefferson+Blvd+Dallas+TX+75208" aria-label="View Oak Cliff address on map">331 W Jefferson Blvd</a></li>
+                        <li><a href="https://maps.google.com/?q=331+W+Jefferson+Blvd+Dallas+TX+75208" aria-label="View Oak Cliff location on map">Dallas, TX 75208</a></li>
                         <li><a href="tel:2145550347">(214) 555-0347</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Grand Prairie</h4>
                     <ul>
-                        <li><a href="#">2101 W Pioneer Pkwy</a></li>
-                        <li><a href="#">Grand Prairie, TX 75051</a></li>
+                        <li><a href="https://maps.google.com/?q=2101+W+Pioneer+Pkwy+Grand+Prairie+TX+75051" aria-label="View Grand Prairie address on map">2101 W Pioneer Pkwy</a></li>
+                        <li><a href="https://maps.google.com/?q=2101+W+Pioneer+Pkwy+Grand+Prairie+TX+75051" aria-label="View Grand Prairie location on map">Grand Prairie, TX 75051</a></li>
                         <li><a href="tel:9725550198">(972) 555-0198</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Catering</a></li>
+                        <!-- [Fix 9] Placeholder links with aria-labels -->
+                        <li><a href="#" aria-label="View careers at Mariscos Del Puerto">Careers</a></li>
+                        <li><a href="#" aria-label="Learn about catering services">Catering</a></li>
                     </ul>
                     <div class="footer-social">
-                        <a href="#" class="social-link" aria-label="Facebook">f</a>
-                        <a href="#" class="social-link" aria-label="Instagram">ig</a>
-                        <a href="#" class="social-link" aria-label="TikTok">tk</a>
+                        <a href="#" class="social-link" aria-label="Visit our Facebook page">f</a>
+                        <a href="#" class="social-link" aria-label="Visit our Instagram page">ig</a>
+                        <a href="#" class="social-link" aria-label="Visit our TikTok page">tk</a>
                     </div>
                 </div>
             </div>
@@ -1158,10 +1330,31 @@
     <script>
         // ===== NAV SCROLL =====
         const topBar = document.getElementById('topBar');
-        let lastScroll = 0;
+        // [Fix 10] Removed unused lastScroll variable
         window.addEventListener('scroll', () => {
             topBar.classList.toggle('scrolled', window.scrollY > 60);
         }, { passive: true });
+
+        // ===== [Fix 4] HAMBURGER TOGGLE =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        hamburgerBtn.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.toggle('open');
+            hamburgerBtn.classList.toggle('active');
+            hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // Close mobile nav when a link is clicked
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                hamburgerBtn.classList.remove('active');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
 
         // ===== TAB SYSTEM =====
         const tabBtns = document.querySelectorAll('.tab-btn');
@@ -1171,8 +1364,13 @@
             btn.addEventListener('click', () => {
                 const target = btn.getAttribute('data-tab');
 
-                tabBtns.forEach(b => b.classList.remove('active'));
+                // [Fix 3] Toggle aria-selected on tab buttons
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
                 btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
 
                 tabContents.forEach(tc => {
                     tc.classList.remove('active');
@@ -1184,20 +1382,27 @@
         });
 
         // ===== SCROLL REVEAL (IntersectionObserver) =====
+        // [Fix 17] Check prefers-reduced-motion in JS
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -40px 0px'
-        });
 
-        revealElements.forEach(el => revealObserver.observe(el));
+        if (prefersReducedMotion) {
+            revealElements.forEach(el => el.classList.add('visible'));
+        } else {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        }
     </script>
 </body>
 </html>
