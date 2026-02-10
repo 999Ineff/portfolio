@@ -337,6 +337,29 @@
             opacity: 1;
             visibility: visible;
         }
+        .mobile-menu-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .mobile-menu-close:hover,
+        .mobile-menu-close:focus-visible {
+            background: rgba(255,193,59,0.1);
+            border-color: var(--gold);
+        }
         .mobile-menu a {
             font-family: 'Outfit', sans-serif;
             font-size: 1.5rem;
@@ -1791,6 +1814,7 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
         <a href="#about" class="mobile-link">About</a>
         <a href="#projects" class="mobile-link">Projects</a>
         <a href="#services" class="mobile-link">Services</a>
@@ -2485,7 +2509,15 @@
         // Mobile Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
         const mobileLinks = document.querySelectorAll('.mobile-link, .mobile-cta');
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
 
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
@@ -2495,14 +2527,22 @@
             hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
 
+        // X button closes menu
+        mobileMenuClose.addEventListener('click', closeMenu);
+
+        // Click outside menu links closes menu (click on dark overlay background)
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) closeMenu();
+        });
+
+        // Escape key closes menu
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) closeMenu();
+        });
+
         // Close menu when link clicked
         mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-                hamburger.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', closeMenu);
         });
 
         // Calendly: Preload after page loads for instant popups
