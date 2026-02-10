@@ -27,11 +27,15 @@
             --text-body: #4A4A5A;
             --text-light: #E8E8F0;
             --text-dim: #94A3B8;
-            --text-muted: #64748B;
+            --text-muted: #8494A7;
             --border-light: rgba(0, 229, 199, 0.15);
             --border-dark: rgba(0, 229, 199, 0.08);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        *:focus-visible {
+            outline: 2px solid var(--blue-primary, #2563EB);
+            outline-offset: 2px;
+        }
         html { scroll-behavior: auto; }
         body {
             font-family: 'Inter', sans-serif;
@@ -132,6 +136,7 @@
             display: flex;
             gap: 2.5rem;
             list-style: none;
+            flex-wrap: wrap;
         }
         .nav-links a {
             color: var(--text-dim);
@@ -345,7 +350,6 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(0, 0, 0, 0.05);
             transform-style: preserve-3d;
-            will-change: transform;
         }
         .service-card::before {
             content: '';
@@ -356,6 +360,7 @@
             border-radius: 12px 12px 0 0;
         }
         .service-card:hover {
+            will-change: transform;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         }
         .service-icon {
@@ -777,11 +782,13 @@
             margin-bottom: 1.25rem;
         }
         .footer-col a {
-            display: block;
+            display: inline-block;
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.875rem;
-            padding: 0.3rem 0;
+            padding: 0.4rem 0;
+            min-height: 44px;
+            line-height: 44px;
             transition: color 0.3s;
         }
         .footer-col a:hover { color: var(--cyan); }
@@ -795,6 +802,100 @@
         .footer-bottom p {
             color: var(--text-muted);
             font-size: 0.8125rem;
+        }
+
+        /* Skip to Content */
+        .skip-to-content {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 10003;
+            background: var(--cyan);
+            color: var(--navy);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: top 0.2s;
+        }
+        .skip-to-content:focus {
+            top: 0;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 201;
+            position: relative;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            margin: 5px 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.97);
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .mobile-menu-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .mobile-menu-overlay a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .mobile-menu-overlay a:hover {
+            color: var(--cyan);
+        }
+
+        /* Back Gallery Link (footer) */
+        .back-gallery-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-gallery-link:hover {
+            color: #00E5C7;
+        }
+
+        /* JS-loaded visibility pattern */
+        .js-animate {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
         }
 
         /* Preset Badge */
@@ -823,6 +924,12 @@
 
         /* ============ RESPONSIVE ============ */
         @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 2rem;
@@ -837,6 +944,9 @@
             .steps-row { flex-direction: column; align-items: center; gap: 2rem; }
             .step-connector { display: none; }
             .nav-links { display: none; }
+            .hamburger-btn { display: block; }
+            .nav-right { display: none; }
+            .preset-badge { position: static; display: block; margin: 1rem auto; text-align: center; width: fit-content; }
             .cursor-dot, .cursor-ring { display: none; }
             body { cursor: auto; }
             .hero { padding: 7rem 1.5rem 4rem; }
@@ -857,12 +967,17 @@
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
             .scroll-progress { display: none; }
+            html { scroll-behavior: auto !important; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Skip to Content -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -879,7 +994,7 @@
                 <div class="logo-mark">CF</div>
                 CloudFlow
             </a>
-            <nav>
+            <nav aria-label="Main navigation">
                 <ul class="nav-links">
                     <li><a href="#services">Services</a></li>
                     <li><a href="#how">How It Works</a></li>
@@ -891,7 +1006,23 @@
                 <a href="./" class="back-link">&larr; Gallery</a>
                 <a href="#contact" class="nav-cta">Get Started</a>
             </div>
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </header>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+            <a href="#services" class="mobile-menu-link">Services</a>
+            <a href="#how" class="mobile-menu-link">How It Works</a>
+            <a href="#pricing" class="mobile-menu-link">Pricing</a>
+            <a href="#contact" class="mobile-menu-link">Contact</a>
+            <a href="./" class="mobile-menu-link">&larr; Gallery</a>
+        </div>
+
+        <main id="main-content">
 
         <!-- HERO -->
         <section class="hero">
@@ -919,37 +1050,37 @@
                 <p class="section-sub">From customer support to finance, CloudFlow handles the operational heavy lifting so your team focuses on growth.</p>
                 <div class="services-grid">
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F3A7;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F3A7;</div>
                         <h3>Customer Support</h3>
                         <p>24/7 multichannel support with trained agents. Phone, chat, email, and social — covered.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
                     </div>
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F4C1;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F4C1;</div>
                         <h3>Data Processing</h3>
                         <p>High-volume data entry, verification, and transformation with 99.9% accuracy guarantees.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
                     </div>
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F4BB;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F4BB;</div>
                         <h3>IT Helpdesk</h3>
                         <p>Tier 1-3 technical support for your internal teams and end users. ITIL-aligned processes.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
                     </div>
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F465;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F465;</div>
                         <h3>HR & Recruitment</h3>
                         <p>End-to-end recruitment, onboarding, and HR administration. Scale your team without the overhead.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
                     </div>
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F4B0;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F4B0;</div>
                         <h3>Accounting & Finance</h3>
                         <p>Bookkeeping, AP/AR, payroll processing, and financial reporting by certified professionals.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
                     </div>
                     <div class="service-card" data-tilt>
-                        <div class="service-icon">&#x1F916;</div>
+                        <div class="service-icon" aria-hidden="true">&#x1F916;</div>
                         <h3>Virtual Assistants</h3>
                         <p>Dedicated executive assistants for scheduling, research, travel, and administrative tasks.</p>
                         <a href="#" class="service-link">Learn more &rarr;</a>
@@ -988,7 +1119,7 @@
         </section>
 
         <!-- STATS BAR -->
-        <section class="stats-section">
+        <section class="stats-section" aria-label="Company statistics">
             <div class="stats-inner">
                 <div class="stats-row">
                     <div class="stat-block">
@@ -1068,10 +1199,10 @@
         </section>
 
         <!-- TESTIMONIAL -->
-        <section class="testimonial-section">
+        <section class="testimonial-section" aria-label="Client testimonial">
             <div class="dot-grid"></div>
             <div class="testimonial-inner">
-                <div class="quote-mark" id="quoteMark">&ldquo;</div>
+                <div class="quote-mark" id="quoteMark" aria-hidden="true">&ldquo;</div>
                 <p class="testimonial-text">CloudFlow transformed our operations. We reduced overhead by 68% while actually improving our service quality.</p>
                 <p class="testimonial-author"><strong>Michael Torres</strong> &mdash; COO at Apex Solutions</p>
             </div>
@@ -1082,12 +1213,14 @@
             <div class="cta-inner">
                 <h2 class="cta-heading">Ready to Scale?</h2>
                 <p class="cta-sub">Get a free consultation and see how much CloudFlow can save your business.</p>
-                <div class="cta-form">
-                    <input type="email" class="cta-input" placeholder="Enter your work email" aria-label="Email address">
-                    <button class="cta-submit magnetic-btn"><span>Get Started</span></button>
-                </div>
+                <form class="cta-form" action="#contact" method="POST" aria-label="Get started form">
+                    <input type="email" class="cta-input" placeholder="Enter your work email" aria-label="Email address" required>
+                    <button type="submit" class="cta-submit magnetic-btn"><span>Get Started</span></button>
+                </form>
             </div>
         </section>
+
+        </main>
 
         <!-- FOOTER -->
         <footer class="site-footer">
@@ -1131,7 +1264,7 @@
                 </div>
                 <div class="footer-bottom">
                     <p>&copy; 2026 CloudFlow. All rights reserved.</p>
-                    <p><a href="./" style="color:var(--text-muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#00E5C7'" onmouseout="this.style.color='var(--text-muted)'">&larr; Back to Style Gallery</a></p>
+                    <p><a href="./" class="back-gallery-link">&larr; Back to Style Gallery</a></p>
                 </div>
             </div>
         </footer>
@@ -1142,14 +1275,39 @@
     <a href="./" class="preset-badge">Corporate SaaS Preset</a>
 
     <script>
+        // ===== REDUCED MOTION CHECK =====
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // ===== LENIS SMOOTH SCROLL =====
-        const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-        gsap.ticker.lagSmoothing(0);
+        if (!prefersReducedMotion) {
+            const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+            gsap.ticker.lagSmoothing(0);
+        }
 
         // ===== REGISTER PLUGINS =====
         gsap.registerPlugin(ScrollTrigger);
+
+        // ===== HAMBURGER MENU TOGGLE =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                const isActive = hamburgerBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                hamburgerBtn.setAttribute('aria-expanded', isActive);
+                document.body.style.overflow = isActive ? 'hidden' : '';
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
 
         // ===== SCROLL PROGRESS BAR =====
         gsap.to('.scroll-progress', {
@@ -1393,17 +1551,20 @@
             duration: 0.8, ease: 'power3.out'
         });
 
-        // Fallback: force all elements visible after 3 seconds
+        // Mark page as JS-loaded so animations can run; fallback ensures visibility
+        document.body.classList.add('js-loaded');
+
+        // Fallback: force all animated elements visible after 1 second
         setTimeout(() => {
-            document.querySelectorAll('.service-card, .step, .pricing-card, .testimonial-text, .testimonial-author, .cta-inner, .section-heading, #quoteMark').forEach(el => {
+            document.querySelectorAll('.service-card, .step, .pricing-card, .testimonial-text, .testimonial-author, .cta-inner, .section-heading, .section-label, #quoteMark, .trust-badge, .hero-sub, .hero-actions').forEach(el => {
                 const computed = window.getComputedStyle(el);
-                if (computed.opacity === '0' || computed.visibility === 'hidden') {
+                if (parseFloat(computed.opacity) < 0.1 || computed.visibility === 'hidden') {
                     el.style.opacity = '1';
                     el.style.visibility = 'visible';
                     el.style.transform = 'none';
                 }
             });
-        }, 3000);
+        }, 1000);
     </script>
 </body>
 </html>

@@ -18,6 +18,12 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* Fix #1: Focus styles */
+        *:focus-visible {
+            outline: 2px solid #000;
+            outline-offset: 2px;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -31,6 +37,25 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Fix #5: Skip-to-content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            z-index: 200;
+            padding: 1rem 1.5rem;
+            background: var(--charcoal);
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
         /* ===== NAVIGATION ===== */
         .nav {
             position: fixed;
@@ -42,18 +67,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background 0.4s ease;
+        }
+
+        /* Fix #10: Nav background on scroll */
+        .nav.scrolled {
+            background: rgba(245,240,235,0.95);
+            backdrop-filter: blur(10px);
         }
 
         .nav-links {
             display: flex;
             gap: 3rem;
             list-style: none;
-            opacity: 0.15;
+            /* Fix #2: Changed from 0.15 to 0.6 for readability */
+            opacity: 0.6;
             transition: opacity 1s ease;
         }
 
         .nav:hover .nav-links {
-            opacity: 0.6;
+            opacity: 1;
         }
 
         .nav-links a {
@@ -65,6 +98,9 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             transition: opacity 0.6s ease;
+            /* Fix #7: Touch target padding */
+            padding: 0.75rem 0.5rem;
+            display: inline-block;
         }
 
         .nav-links a:hover {
@@ -78,16 +114,86 @@
             color: var(--charcoal);
             text-decoration: none;
             letter-spacing: 0.1em;
-            opacity: 0;
+            /* Fix #2: Changed from 0 to 0.6 for readability */
+            opacity: 0.6;
             transition: opacity 1s ease;
+            /* Fix #7: Touch target padding */
+            padding: 0.75rem 0;
+            display: inline-block;
         }
 
         .nav:hover .back-link {
-            opacity: 0.4;
+            opacity: 0.8;
         }
 
         .back-link:hover {
-            opacity: 0.8 !important;
+            opacity: 1 !important;
+        }
+
+        /* Fix #8: Hamburger menu button */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem 0.5rem;
+            z-index: 110;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 5px 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 105;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            opacity: 1;
         }
 
         /* ===== HERO ===== */
@@ -107,12 +213,12 @@
             color: var(--charcoal);
             letter-spacing: -0.02em;
             line-height: 0.85;
-            user-select: none;
+            /* Fix #16: Removed user-select: none */
         }
 
         .hero-subtitle {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            font-size: clamp(0.75rem, 1.2vw, 0.9rem);
             font-weight: 300;
             letter-spacing: 0.35em;
             text-transform: uppercase;
@@ -133,6 +239,7 @@
             padding: 10rem 0 8rem;
             position: relative;
         }
+
         .scroll-arrow {
             position: absolute;
             right: 2rem;
@@ -146,11 +253,16 @@
             cursor: pointer;
             opacity: 0.4;
             transition: opacity 0.5s ease;
+            /* Fix #3: Reset button styles */
+            background: none;
+            border: none;
+            padding: 0.75rem;
         }
         .scroll-arrow:hover { opacity: 0.8; }
         .scroll-arrow span {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.6rem;
+            /* Fix #9: Changed from 0.6rem to 0.75rem */
+            font-size: 0.75rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             writing-mode: vertical-rl;
@@ -170,14 +282,17 @@
         }
         .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
 
+        /* Fix #6: works-label styled as h2 but keeping visual appearance */
         .works-label {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.7rem;
+            /* Fix #9: Changed from 0.7rem to 0.75rem */
+            font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--charcoal);
-            opacity: 0.3;
+            /* Fix #2: Changed from 0.3 to 0.6 */
+            opacity: 0.6;
             padding: 0 3rem;
             margin-bottom: 3rem;
         }
@@ -186,7 +301,7 @@
             display: flex;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
+            /* Fix #15: Removed deprecated -webkit-overflow-scrolling: touch */
             scrollbar-width: none;
             gap: 2rem;
             padding: 0 3rem;
@@ -205,6 +320,12 @@
             padding: 3rem;
             clip-path: inset(0 0 0 0);
             transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Fix #11: Work cards display-only with pointer cursor hint */
+            cursor: pointer;
+        }
+
+        .work-card:hover {
+            filter: brightness(1.05);
         }
 
         .work-card.animate-in {
@@ -217,7 +338,8 @@
 
         .work-card-label {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.7rem;
+            /* Fix #9: Changed from 0.7rem to 0.75rem */
+            font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -346,7 +468,7 @@
             letter-spacing: -0.01em;
             opacity: 0;
             transform: translateY(15px);
-            transition: opacity 1.5s ease 0.3s, transform 2s ease 0.3s;
+            transition: opacity 1.5s ease 0.3s, transform 2s ease 0.3s, color 0.6s ease, text-decoration-color 0.6s ease;
         }
 
         .contact-email.visible {
@@ -354,18 +476,22 @@
             transform: translateY(0);
         }
 
+        /* Fix #12: Contact email hover - add underline */
         .contact-email:hover {
             color: var(--sage);
-            transition: color 0.6s ease;
+            text-decoration: underline;
+            text-underline-offset: 0.15em;
         }
 
         .contact-copy {
             font-family: 'Outfit', sans-serif;
-            font-size: 0.7rem;
+            /* Fix #9: Changed from 0.7rem to 0.75rem */
+            font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.15em;
             color: var(--charcoal);
-            opacity: 0.15;
+            /* Fix #2: Changed from 0.15 to 0.6 */
+            opacity: 0.6;
             margin-top: 4rem;
         }
 
@@ -376,19 +502,21 @@
             right: 2rem;
             z-index: 99;
             font-family: 'Outfit', sans-serif;
-            font-size: 0.625rem;
+            /* Fix #9 & #18: Changed from 0.625rem to 0.75rem (minimum 12px) */
+            font-size: 0.75rem;
             font-weight: 300;
             color: var(--charcoal);
             text-decoration: none;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            opacity: 0.15;
+            /* Fix #2: Changed from 0.15 to 0.6 */
+            opacity: 0.6;
             padding: 0.5rem 1rem;
             transition: opacity 1s ease;
         }
 
         .preset-badge:hover {
-            opacity: 0.5;
+            opacity: 1;
         }
 
         /* ===== FADE-OUT ON SCROLL ===== */
@@ -397,6 +525,8 @@
         }
 
         /* ===== RESPONSIVE ===== */
+
+        /* Fix #13: 768px breakpoint (enhanced) */
         @media (max-width: 768px) {
             .nav {
                 padding: 1.5rem;
@@ -404,6 +534,10 @@
 
             .nav-links {
                 gap: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: clamp(4rem, 18vw, 10rem);
             }
 
             .work-card {
@@ -435,15 +569,32 @@
                 padding: 8rem 1.5rem 4rem;
             }
 
+            .contact-email {
+                font-size: clamp(1.5rem, 6vw, 3rem);
+            }
+
             .preset-badge {
                 bottom: 1rem;
+                right: 1rem;
+            }
+
+            .scroll-arrow {
                 right: 1rem;
             }
         }
 
         @media (max-width: 480px) {
+            /* Fix #8: Hide desktop nav, show hamburger */
             .nav-links {
                 display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: clamp(3rem, 20vw, 6rem);
             }
 
             .work-card {
@@ -454,15 +605,32 @@
             .philosophy-text {
                 width: 90%;
                 margin-left: 5%;
+                font-size: 1rem;
+                line-height: 2;
+            }
+
+            .contact {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .works {
+                padding: 6rem 0 4rem;
             }
         }
 
         /* ===== REDUCED MOTION ===== */
+        /* Fix #17: Enhanced prefers-reduced-motion support */
         @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
                 animation-delay: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
 
             .hero-subtitle {
@@ -482,91 +650,170 @@
             .work-card-title {
                 opacity: 1;
             }
+
+            .scroll-arrow svg {
+                animation: none;
+            }
+
+            .nav-links,
+            .back-link {
+                transition: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Fix #5: Skip-to-content link -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <!-- NAV -->
-    <nav class="nav">
+    <nav class="nav" id="mainNav">
         <ul class="nav-links">
             <li><a href="#works">Works</a></li>
             <li><a href="#philosophy">Philosophy</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
+        <!-- Fix #8: Hamburger button for mobile -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <a href="./" class="back-link">&#8592; Gallery</a>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1 class="hero-title">AURA</h1>
-        <p class="hero-subtitle">Architecture &amp; Design</p>
-    </section>
+    <!-- Fix #8: Mobile navigation overlay -->
+    <ul class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
+        <li><a href="#works" class="mobile-nav-link">Works</a></li>
+        <li><a href="#philosophy" class="mobile-nav-link">Philosophy</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
 
-    <!-- SELECTED WORKS -->
-    <section class="works" id="works">
-        <p class="works-label">Selected Works</p>
-        <div class="scroll-arrow" id="scrollArrow" onclick="document.getElementById('worksContainer').scrollBy({left: window.innerWidth * 0.8, behavior: 'smooth'})">
-            <span>Scroll</span>
-            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-        <div class="works-container" id="worksContainer">
-            <div class="work-card work-card--meridian fade-section">
-                <div>
-                    <p class="work-card-label">Residential &mdash; 2023</p>
-                    <h2 class="work-card-title">Meridian House</h2>
-                </div>
-            </div>
-            <div class="work-card work-card--glass fade-section">
-                <div>
-                    <p class="work-card-label">Cultural &mdash; 2022</p>
-                    <h2 class="work-card-title">The Glass Pavilion</h2>
-                </div>
-            </div>
-            <div class="work-card work-card--vessel fade-section">
-                <div>
-                    <p class="work-card-label">Commercial &mdash; 2024</p>
-                    <h2 class="work-card-title">Vessel 42</h2>
-                </div>
-            </div>
-            <div class="work-card work-card--horizon fade-section">
-                <div>
-                    <p class="work-card-label">Mixed Use &mdash; 2023</p>
-                    <h2 class="work-card-title">Horizon Tower</h2>
-                </div>
-            </div>
-            <div class="work-card work-card--solace fade-section">
-                <div>
-                    <p class="work-card-label">Residential &mdash; 2024</p>
-                    <h2 class="work-card-title">Casa Solace</h2>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Fix #5: Main landmark -->
+    <main id="main-content">
 
-    <!-- PHILOSOPHY -->
-    <section class="philosophy" id="philosophy">
-        <p class="philosophy-text fade-section"><span class="drop-cap">W</span>e believe architecture should disappear into its environment. Our practice is rooted in the tension between presence and absence&thinsp;&mdash;&thinsp;creating spaces that feel inevitable, as though they&rsquo;ve always existed.</p>
-    </section>
+        <!-- HERO -->
+        <section class="hero">
+            <h1 class="hero-title">AURA</h1>
+            <p class="hero-subtitle">Architecture &amp; Design</p>
+        </section>
 
-    <!-- CONTACT -->
-    <section class="contact" id="contact">
-        <div class="contact-line"></div>
-        <a href="mailto:hello@aura-arch.com" class="contact-email">hello@aura-arch.com</a>
-        <p class="contact-copy">&copy; 2024 Aura Architecture</p>
-    </section>
+        <!-- SELECTED WORKS -->
+        <section class="works" id="works">
+            <!-- Fix #6: Changed from <p> to <h2> for heading hierarchy -->
+            <h2 class="works-label">Selected Works</h2>
+            <!-- Fix #3: Changed from <div> to <button> with proper attributes -->
+            <!-- Fix #4: Added aria-hidden="true" to SVG -->
+            <button class="scroll-arrow" id="scrollArrow" type="button" aria-label="Scroll to works section">
+                <span>Scroll</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="works-container" id="worksContainer">
+                <div class="work-card work-card--meridian fade-section" role="article">
+                    <div>
+                        <p class="work-card-label">Residential &mdash; 2023</p>
+                        <!-- Fix #6: Changed from h2 to h3 for proper hierarchy under h2 "Selected Works" -->
+                        <h3 class="work-card-title">Meridian House</h3>
+                    </div>
+                </div>
+                <div class="work-card work-card--glass fade-section" role="article">
+                    <div>
+                        <p class="work-card-label">Cultural &mdash; 2022</p>
+                        <h3 class="work-card-title">The Glass Pavilion</h3>
+                    </div>
+                </div>
+                <div class="work-card work-card--vessel fade-section" role="article">
+                    <div>
+                        <p class="work-card-label">Commercial &mdash; 2024</p>
+                        <h3 class="work-card-title">Vessel 42</h3>
+                    </div>
+                </div>
+                <div class="work-card work-card--horizon fade-section" role="article">
+                    <div>
+                        <p class="work-card-label">Mixed Use &mdash; 2023</p>
+                        <h3 class="work-card-title">Horizon Tower</h3>
+                    </div>
+                </div>
+                <div class="work-card work-card--solace fade-section" role="article">
+                    <div>
+                        <p class="work-card-label">Residential &mdash; 2024</p>
+                        <h3 class="work-card-title">Casa Solace</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHY -->
+        <section class="philosophy" id="philosophy">
+            <p class="philosophy-text fade-section"><span class="drop-cap">W</span>e believe architecture should disappear into its environment. Our practice is rooted in the tension between presence and absence&thinsp;&mdash;&thinsp;creating spaces that feel inevitable, as though they&rsquo;ve always existed.</p>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact" id="contact">
+            <div class="contact-line"></div>
+            <a href="mailto:hello@aura-arch.com" class="contact-email">hello@aura-arch.com</a>
+            <!-- Fix #14: Changed copyright year from 2024 to 2026 -->
+            <p class="contact-copy">&copy; 2026 Aura Architecture</p>
+        </section>
+
+    </main>
 
     <!-- PRESET BADGE -->
     <a href="./" class="preset-badge">Minimal Clean Preset</a>
 
     <script>
+        // ===== Fix #3: SCROLL ARROW CLICK HANDLER (moved from inline onclick) =====
+        const scrollArrowBtn = document.getElementById('scrollArrow');
+        if (scrollArrowBtn) {
+            scrollArrowBtn.addEventListener('click', function() {
+                var container = document.getElementById('worksContainer');
+                if (container) {
+                    container.scrollBy({ left: window.innerWidth * 0.8, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // ===== Fix #10: NAV BACKGROUND ON SCROLL =====
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', function() {
+            if (mainNav) {
+                mainNav.classList.toggle('scrolled', window.scrollY > 50);
+            }
+        }, { passive: true });
+
+        // ===== Fix #8: HAMBURGER MENU TOGGLE =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        if (hamburgerBtn && mobileNav) {
+            hamburgerBtn.addEventListener('click', function() {
+                const isOpen = mobileNav.classList.toggle('open');
+                hamburgerBtn.classList.toggle('active', isOpen);
+                hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                hamburgerBtn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+
+            // Close mobile nav when a link is clicked
+            mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('open');
+                    hamburgerBtn.classList.remove('active');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    hamburgerBtn.setAttribute('aria-label', 'Open navigation menu');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
         // ===== INTERSECTION OBSERVER — VISIBILITY =====
-        const observerOptions = {
+        var observerOptions = {
             threshold: [0, 0.15, 0.3, 0.5, 0.7, 1]
         };
 
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
                     entry.target.classList.add('visible');
                 }
@@ -574,33 +821,35 @@
         }, { threshold: 0.15 });
 
         // Animate work cards on horizontal scroll
-        const worksContainer = document.getElementById('worksContainer');
-        const workCards = document.querySelectorAll('.work-card');
-        workCards.forEach((card, i) => {
+        var worksContainer = document.getElementById('worksContainer');
+        var workCards = document.querySelectorAll('.work-card');
+        workCards.forEach(function(card, i) {
             if (i === 0) {
                 card.classList.add('visible');
             } else {
                 card.classList.add('animate-in');
             }
         });
+
         // Reveal cards as they scroll into view horizontally
         function checkHorizontalVisibility() {
             if (!worksContainer) return;
-            const containerRect = worksContainer.getBoundingClientRect();
-            workCards.forEach(card => {
-                const cardRect = card.getBoundingClientRect();
+            var containerRect = worksContainer.getBoundingClientRect();
+            workCards.forEach(function(card) {
+                var cardRect = card.getBoundingClientRect();
                 if (cardRect.left < containerRect.right - 100) {
                     card.classList.add('visible');
                 }
             });
         }
+
         if (worksContainer) {
-            const scrollArrow = document.getElementById('scrollArrow');
-            worksContainer.addEventListener('scroll', () => {
+            var scrollArrow = document.getElementById('scrollArrow');
+            worksContainer.addEventListener('scroll', function() {
                 checkHorizontalVisibility();
                 // Hide arrow when near end
                 if (scrollArrow) {
-                    const atEnd = worksContainer.scrollLeft + worksContainer.clientWidth >= worksContainer.scrollWidth - 100;
+                    var atEnd = worksContainer.scrollLeft + worksContainer.clientWidth >= worksContainer.scrollWidth - 100;
                     scrollArrow.classList.toggle('hidden', atEnd);
                 }
             });
@@ -608,14 +857,14 @@
         }
 
         // Observe philosophy text
-        const philText = document.querySelector('.philosophy-text');
+        var philText = document.querySelector('.philosophy-text');
         if (philText) revealObserver.observe(philText);
 
         // Observe contact elements
-        const contactLine = document.querySelector('.contact-line');
-        const contactEmail = document.querySelector('.contact-email');
-        const contactObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var contactLine = document.querySelector('.contact-line');
+        var contactEmail = document.querySelector('.contact-email');
+        var contactObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
@@ -626,10 +875,10 @@
         if (contactEmail) contactObserver.observe(contactEmail);
 
         // ===== FADE-OUT ON SCROLL =====
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var fadeObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.target.classList.contains('fade-section')) {
-                    const ratio = entry.intersectionRatio;
+                    var ratio = entry.intersectionRatio;
                     if (ratio < 0.2 && !entry.isIntersecting) {
                         entry.target.style.opacity = '0.2';
                     } else {
@@ -639,7 +888,7 @@
             });
         }, { threshold: [0, 0.1, 0.2, 0.3, 0.5, 1] });
 
-        document.querySelectorAll('.fade-section').forEach(el => {
+        document.querySelectorAll('.fade-section').forEach(function(el) {
             fadeObserver.observe(el);
         });
     </script>
