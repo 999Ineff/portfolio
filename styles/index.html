@@ -22,13 +22,21 @@
             --green: #00ff88;
             --text: #ffffff;
             --text-dim: #8888a0;
-            --text-muted: #555566;
+            --text-muted: #8888a0;
             --gradient-gold: linear-gradient(135deg, #ffc13b 0%, #ff8f00 100%);
             --gradient-cyber: linear-gradient(135deg, #00e5ff 0%, #00ff88 100%);
             --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        *:focus-visible {
+            outline: 2px solid var(--accent-gold, #ffc13b);
+            outline-offset: 2px;
+        }
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,193,59,0.3) transparent;
+        }
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-deep);
@@ -78,6 +86,22 @@
             75% { transform: translate(20px,10px) scale(1.02); }
         }
 
+        /* Skip Link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            background: var(--accent-gold, #ffc13b);
+            color: #050508;
+            padding: 0.75rem 1.5rem;
+            z-index: 10000;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
         /* Custom Cursor */
         .cursor-dot {
             width: 8px; height: 8px;
@@ -109,7 +133,7 @@
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
-            z-index: 100;
+            z-index: 1001;
             padding: 1.5rem 3rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -248,7 +272,7 @@
 
         /* Card Preview Area */
         .card-preview {
-            height: 200px;
+            aspect-ratio: 16/9;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -312,7 +336,7 @@
         }
         .card-tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.625rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -463,6 +487,8 @@
         .gallery-footer a {
             color: var(--gold);
             text-decoration: none;
+            padding: 0.5rem 0;
+            display: inline-block;
         }
 
         /* Responsive */
@@ -473,7 +499,9 @@
             .styles-grid { grid-template-columns: 1fr; }
             nav { padding: 1rem 1.5rem; }
             nav.scrolled { padding: 0.75rem 1.5rem; }
-            .gallery-hero { padding: 8rem 1.5rem 3rem; }
+            .gallery-hero { padding: 6rem 1.5rem 2rem; }
+            .styles-section { padding-bottom: 4rem; }
+            .nav-logo, .nav-back { padding: 0.75rem 0; }
             .cursor-dot, .cursor-ring { display: none; }
             body { cursor: auto; }
         }
@@ -488,22 +516,34 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
+    <a href="#styles-section" class="skip-link">Skip to content</a>
+    <noscript><style>body{cursor:auto}</style></noscript>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-    <nav>
+    <nav aria-label="Main navigation">
         <div class="nav-content">
             <a href="../" class="nav-logo">Ops_Architect</a>
-            <a href="../" class="nav-back"><span>←</span> Back to Portfolio</a>
+            <a href="../" class="nav-back" aria-label="Back to portfolio"><span aria-hidden="true">←</span> Back to Portfolio</a>
         </div>
     </nav>
 
+    <main>
     <section class="gallery-hero">
         <div class="gallery-hero-content">
             <div class="gallery-tag reveal">Web Design Styles</div>
@@ -512,17 +552,17 @@
         </div>
     </section>
 
-    <section class="styles-section">
+    <section class="styles-section" id="styles-section">
         <div class="styles-grid">
 
             <!-- 1. Luxury Professional -->
-            <a href="luxury.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #D4A843, #B8902E);">
+            <a href="luxury.html" class="style-card reveal" aria-label="View Luxury Professional demo" style="--card-accent: linear-gradient(135deg, #D4A843, #B8902E);">
                 <div class="card-preview preview-luxury">
                     <div class="card-preview-text">Sterling</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Luxury Professional</div>
-                    <h3 class="card-title">Sterling & Associates</h3>
+                    <h2 class="card-title">Sterling & Associates</h2>
                     <p class="card-description">Navy, gold, glassmorphism. Measured elegance for high-end brands.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#1B2A4A;"></div>
@@ -540,13 +580,13 @@
             </a>
 
             <!-- 2. Warm & Vibrant -->
-            <a href="warm-vibrant.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #F28C28, #FF6B35);">
+            <a href="warm-vibrant.html" class="style-card reveal" aria-label="View Warm Vibrant demo" style="--card-accent: linear-gradient(135deg, #F28C28, #FF6B35);">
                 <div class="card-preview preview-warm">
                     <div class="card-preview-text">Mariscos</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Warm & Vibrant</div>
-                    <h3 class="card-title">Mariscos Del Puerto</h3>
+                    <h2 class="card-title">Mariscos Del Puerto</h2>
                     <p class="card-description">Ocean blues, sunset oranges, cultural energy with wave dividers.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#1B4965;"></div>
@@ -564,13 +604,13 @@
             </a>
 
             <!-- 3. Dark Tech -->
-            <a href="dark-tech.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #00D4FF, #00FF88);">
+            <a href="dark-tech.html" class="style-card reveal" aria-label="View Dark Tech demo" style="--card-accent: linear-gradient(135deg, #00D4FF, #00FF88);">
                 <div class="card-preview preview-dark-tech">
                     <div class="card-preview-text">Neural</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Dark Tech</div>
-                    <h3 class="card-title">NeuralStack</h3>
+                    <h2 class="card-title">NeuralStack</h2>
                     <p class="card-description">Near-black, neon accents, grid backgrounds. Built for tech & SaaS.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#0A0A0F;border-color:rgba(0,212,255,0.3);"></div>
@@ -588,13 +628,13 @@
             </a>
 
             <!-- 4. Minimal Clean -->
-            <a href="minimal.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #8B9D83, #6B7D63);">
+            <a href="minimal.html" class="style-card reveal" aria-label="View Minimal Clean demo" style="--card-accent: linear-gradient(135deg, #8B9D83, #6B7D63);">
                 <div class="card-preview preview-minimal">
                     <div class="card-preview-text">Aura</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Minimal Clean</div>
-                    <h3 class="card-title">Aura Architecture</h3>
+                    <h2 class="card-title">Aura Architecture</h2>
                     <p class="card-description">Radical whitespace, oversized type, barely-there animations. Pure restraint.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#FFFFFF;"></div>
@@ -612,13 +652,13 @@
             </a>
 
             <!-- 5. Bold & Playful -->
-            <a href="bold-playful.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #FF2D7B, #FFE600);">
+            <a href="bold-playful.html" class="style-card reveal" aria-label="View Bold Playful demo" style="--card-accent: linear-gradient(135deg, #FF2D7B, #FFE600);">
                 <div class="card-preview preview-bold">
                     <div class="card-preview-text">GRIND</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Bold & Playful</div>
-                    <h3 class="card-title">GRIND Athletics</h3>
+                    <h2 class="card-title">GRIND Athletics</h2>
                     <p class="card-description">Hot pink, electric yellow, bouncy springs. Maximum energy, broken grids.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#FF2D7B;"></div>
@@ -636,13 +676,13 @@
             </a>
 
             <!-- 6. Editorial -->
-            <a href="editorial.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #D4380D, #8B1A00);">
+            <a href="editorial.html" class="style-card reveal" aria-label="View Editorial demo" style="--card-accent: linear-gradient(135deg, #D4380D, #8B1A00);">
                 <div class="card-preview preview-editorial">
                     <div class="card-preview-text">The Narrative</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Editorial / Magazine</div>
-                    <h3 class="card-title">The Narrative</h3>
+                    <h2 class="card-title">The Narrative</h2>
                     <p class="card-description">Cream, deep black, magazine grids. Typographic-first design for thought leaders.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#F5F0EB;"></div>
@@ -660,13 +700,13 @@
             </a>
 
             <!-- 7. Warm Organic -->
-            <a href="warm-organic.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #8B6914, #2D5016);">
+            <a href="warm-organic.html" class="style-card reveal" aria-label="View Warm Organic demo" style="--card-accent: linear-gradient(135deg, #8B6914, #2D5016);">
                 <div class="card-preview preview-organic">
                     <div class="card-preview-text">Bloom & Root</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Warm Organic</div>
-                    <h3 class="card-title">Bloom & Root</h3>
+                    <h2 class="card-title">Bloom & Root</h2>
                     <p class="card-description">Earth tones, soft curves, organic shapes. Natural and gentle for wellness brands.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#8B6914;"></div>
@@ -684,13 +724,13 @@
             </a>
 
             <!-- 8. Corporate SaaS -->
-            <a href="corporate-saas.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #0D4F4F, #00E5C7);">
+            <a href="corporate-saas.html" class="style-card reveal" aria-label="View Corporate SaaS demo" style="--card-accent: linear-gradient(135deg, #0D4F4F, #00E5C7);">
                 <div class="card-preview preview-corporate-saas">
                     <div class="card-preview-text">CloudFlow</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Corporate SaaS</div>
-                    <h3 class="card-title">CloudFlow</h3>
+                    <h2 class="card-title">CloudFlow</h2>
                     <p class="card-description">Teal, cyan, fast confident animations. Conversion-focused B2B.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#0D4F4F;"></div>
@@ -708,13 +748,13 @@
             </a>
 
             <!-- 9. Tierra Developer -->
-            <a href="tierra-developer.html" class="style-card reveal" style="--card-accent: linear-gradient(135deg, #1A365D, #D4A574);">
+            <a href="tierra-developer.html" class="style-card reveal" aria-label="View Tierra Developer demo" style="--card-accent: linear-gradient(135deg, #1A365D, #D4A574);">
                 <div class="card-preview preview-tierra">
                     <div class="card-preview-text">Terranova</div>
                 </div>
                 <div class="card-body">
                     <div class="card-preset-name">Tierra Developer</div>
-                    <h3 class="card-title">Terranova Lotes</h3>
+                    <h2 class="card-title">Terranova Lotes</h2>
                     <p class="card-description">Billboard-style hero, lot maps, WhatsApp-driven conversion machine.</p>
                     <div class="card-palette">
                         <div class="palette-dot" style="background:#1A365D;"></div>
@@ -734,10 +774,11 @@
         </div>
     </section>
 
-    <div class="gallery-footer">
+    </main>
+    <footer class="gallery-footer">
         <p>Each demo is a complete landing page with GSAP animations, custom cursor, magnetic buttons, and scroll-driven effects.</p>
         <p style="margin-top:1rem;"><a href="../">← Back to Portfolio</a></p>
-    </div>
+    </footer>
 
     <script>
         // Custom Cursor

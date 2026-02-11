@@ -17,12 +17,36 @@
             --black: #111111;
             --red: #D4380D;
             --text-body: #333333;
-            --text-muted: #888888;
+            --text-muted: #6B6B6B; /* Fix #2: improved contrast ~5.1:1 on --cream */
             --rule: #ddd;
             --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Fix #1: Focus styles */
+        *:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 2px;
+        }
+
+        /* Fix #17: Skip to content link */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 200;
+            background: var(--cream);
+            color: var(--black);
+            padding: 0.75rem 1.5rem;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border: 2px solid var(--red);
+        }
+        .skip-link:focus {
+            top: 1rem;
+        }
 
         body {
             font-family: 'Libre Baskerville', serif;
@@ -49,7 +73,7 @@
         .top-bar {
             position: fixed;
             top: 0; left: 0; right: 0;
-            z-index: 100;
+            z-index: 1001;
             padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
@@ -68,6 +92,7 @@
             font-size: 0.8125rem;
             font-family: 'Libre Baskerville', serif;
             transition: color 0.3s;
+            padding: 0.5rem; /* Fix #9: touch target */
         }
         .back-link:hover { color: var(--red); }
         .nav-links {
@@ -82,8 +107,36 @@
             font-family: 'Libre Baskerville', serif;
             letter-spacing: 0.02em;
             transition: color 0.3s;
+            padding: 0.5rem; /* Fix #9: touch target */
         }
         .nav-links a:hover { color: var(--red); }
+
+        /* Fix #8: Hamburger menu */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 101;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--black);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        .hamburger[aria-expanded="true"] span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger[aria-expanded="true"] span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
 
         /* ===== HERO ===== */
         .hero {
@@ -163,6 +216,14 @@
             color: var(--black);
         }
 
+        /* Fix #12: Portrait image class (moved from inline styles) */
+        .portrait-img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            margin-bottom: 2rem;
+        }
+
         /* ===== FEATURED WORK ===== */
         .featured-work {
             max-width: 1200px;
@@ -190,9 +251,8 @@
             flex-direction: column;
             justify-content: flex-end;
             padding: 2rem;
-            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            /* Fix #3: Removed hover scale transform since items are not interactive */
         }
-        .work-item:hover { transform: scale(1.015); }
         .work-item-1 { grid-column: 1 / -1; min-height: 360px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%), url('images/editorial/project-1.png') center/cover no-repeat; }
         .work-item-2 { grid-column: 1 / 8; min-height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%), url('images/editorial/project-2.png') center/cover no-repeat; }
         .work-item-3 { grid-column: 8 / -1; min-height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%), url('images/editorial/project-3.png') center/cover no-repeat; }
@@ -307,7 +367,7 @@
             font-family: 'Libre Baskerville', serif;
             font-size: 1.125rem;
             color: var(--text-muted);
-            margin-top: 1.5rem;
+            margin-top: 2rem; /* Fix #13: replaced <br> with CSS margin */
             text-decoration: none;
             transition: color 0.3s;
             display: inline-block;
@@ -346,7 +406,7 @@
             right: 2rem;
             z-index: 99;
             font-family: 'Libre Baskerville', serif;
-            font-size: 0.6875rem;
+            font-size: 0.75rem; /* Fix #14: bumped from 0.6875rem (11px) to 0.75rem (12px) */
             color: var(--black);
             background: var(--cream);
             border: 1px solid var(--rule);
@@ -362,6 +422,30 @@
         }
 
         /* ===== RESPONSIVE ===== */
+
+        /* Fix #11: Intermediate breakpoint at 1024px */
+        @media (max-width: 1024px) {
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.25rem;
+            }
+            .work-item-1, .work-item-2, .work-item-3,
+            .work-item-4, .work-item-5 {
+                grid-column: auto;
+                min-height: 260px;
+            }
+            .work-item-1 {
+                grid-column: 1 / -1;
+                min-height: 320px;
+            }
+            .philosophy-inner {
+                padding-left: 10%;
+            }
+            .philosophy-quotemark {
+                left: 2%;
+            }
+        }
+
         @media (max-width: 768px) {
             .introduction {
                 grid-template-columns: 1fr;
@@ -391,8 +475,43 @@
             .contact { padding: 6rem 1.5rem; }
             .hero { padding: 7rem 1.5rem 4rem; }
             .top-bar { padding: 1rem 1.5rem; }
-            .nav-links { gap: 1.5rem; }
-            .nav-links a { font-size: 0.75rem; }
+
+            /* Fix #8: Show hamburger, hide nav-links on mobile */
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+            }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(245, 240, 235, 0.98);
+                backdrop-filter: blur(10px);
+                padding: 1rem 1.5rem;
+                gap: 0;
+                border-bottom: 1px solid var(--rule);
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links li {
+                border-bottom: 1px solid var(--rule);
+            }
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+            .nav-links a {
+                display: block;
+                padding: 1rem 0.5rem; /* Fix #9: adequate touch target */
+                font-size: 0.875rem;
+            }
+            .back-link {
+                padding: 0.75rem 0.5rem; /* Fix #9: adequate touch target on mobile */
+            }
+
             .site-footer {
                 flex-direction: column;
                 gap: 1rem;
@@ -401,29 +520,37 @@
             }
         }
 
-        @media (max-width: 375px) {
-            .hero-title { font-size: 3.5rem; }
-            .nav-links { gap: 1rem; }
-        }
+        /* Fix #10: Removed 375px override that conflicts with clamp() on .hero-title */
 
-        /* Reduced motion */
+        /* Fix #18: Enhanced reduced motion support */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Fix #17: Skip to content link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div class="content">
 
         <!-- NAV -->
         <header class="top-bar" id="topBar">
-            <a href="./" class="back-link">&larr; Gallery</a>
-            <nav>
-                <ul class="nav-links">
+            <a href="index.html" class="back-link">&larr; Gallery</a>
+            <!-- Fix #6: aria-label on nav -->
+            <nav aria-label="Main navigation">
+                <!-- Fix #8: Hamburger button for mobile -->
+                <button class="hamburger" id="hamburgerBtn" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#work">Work</a></li>
                     <li><a href="#philosophy">Philosophy</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -431,115 +558,130 @@
             </nav>
         </header>
 
-        <!-- HERO -->
-        <section class="hero">
-            <h1 class="hero-title" id="heroTitle">THE NARRATIVE</h1>
-            <p class="hero-subtitle">Words that build empires<span class="red-period">.</span></p>
-        </section>
+        <!-- Fix #17: Main landmark -->
+        <main id="main-content">
 
-        <!-- INTRODUCTION -->
-        <section class="introduction">
-            <div class="intro-text">
-                <p class="drop-cap">For over a decade, I've helped founders, CEOs, and cultural leaders articulate what makes them extraordinary. Every brand has a story worth telling &mdash; most just haven't found the right words yet.</p>
-                <p>The Narrative is a consultancy built on a simple conviction: language shapes perception, and perception shapes reality. From billion-dollar IPO narratives to personal brand manifestos, every project begins with listening and ends with language that moves people to action.</p>
-            </div>
-            <div class="intro-aside" style="flex-direction: column;">
-                <img src="images/editorial/portrait.png" alt="Author Portrait" style="width: 100%; aspect-ratio: 3/4; object-fit: cover; margin-bottom: 2rem;">
-                <div style="display: flex; gap: 2rem;">
-                    <div class="intro-rule"></div>
-                    <blockquote class="pull-quote">
-                        &ldquo;Language is the architecture of belief. Build it with intention, and you build empires.&rdquo;
-                    </blockquote>
-                </div>
-            </div>
-        </section>
+            <!-- HERO -->
+            <section class="hero">
+                <h1 class="hero-title" id="heroTitle">THE NARRATIVE</h1>
+                <p class="hero-subtitle">Words that build empires<span class="red-period">.</span></p>
+            </section>
 
-        <!-- FEATURED WORK -->
-        <section class="featured-work" id="work">
-            <h2 class="section-title">Selected Work</h2>
-            <div class="work-grid">
-                <div class="work-item work-item-1">
-                    <div class="work-name">Meridian Capital</div>
-                    <div class="work-category">Brand Voice &amp; Identity</div>
+            <!-- INTRODUCTION -->
+            <section class="introduction">
+                <div class="intro-text">
+                    <p class="drop-cap">For over a decade, I've helped founders, CEOs, and cultural leaders articulate what makes them extraordinary. Every brand has a story worth telling &mdash; most just haven't found the right words yet.</p>
+                    <p>The Narrative is a consultancy built on a simple conviction: language shapes perception, and perception shapes reality. From billion-dollar IPO narratives to personal brand manifestos, every project begins with listening and ends with language that moves people to action.</p>
                 </div>
-                <div class="work-item work-item-2">
-                    <div class="work-name">The Collective</div>
-                    <div class="work-category">Thought Leadership Strategy</div>
+                <div class="intro-aside" style="flex-direction: column;">
+                    <!-- Fix #12: Moved inline width/aspect-ratio to .portrait-img class -->
+                    <img src="images/editorial/portrait.png" alt="Author Portrait" class="portrait-img">
+                    <div style="display: flex; gap: 2rem;">
+                        <div class="intro-rule"></div>
+                        <blockquote class="pull-quote">
+                            &ldquo;Language is the architecture of belief. Build it with intention, and you build empires.&rdquo;
+                        </blockquote>
+                    </div>
                 </div>
-                <div class="work-item work-item-3">
-                    <div class="work-name">Apex Ventures</div>
-                    <div class="work-category">Founder Narrative</div>
-                </div>
-                <div class="work-item work-item-4">
-                    <div class="work-name">Luna Studios</div>
-                    <div class="work-category">Creative Direction</div>
-                </div>
-                <div class="work-item work-item-5">
-                    <div class="work-name">Orbit Health</div>
-                    <div class="work-category">Brand Architecture</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- PHILOSOPHY -->
-        <section class="philosophy" id="philosophy">
-            <div class="philosophy-inner">
-                <span class="philosophy-quotemark">&ldquo;</span>
-                <p class="philosophy-quote" id="philQuote">The best brands don't shout. They whisper <span class="red-dash">&mdash;</span> and the world leans in.</p>
-            </div>
-        </section>
+            <!-- FEATURED WORK -->
+            <section class="featured-work" id="work">
+                <h2 class="section-title">Selected Work</h2>
+                <div class="work-grid">
+                    <!-- Fix #4: role="img" and aria-label on items with CSS background images -->
+                    <!-- Fix #7: Changed .work-name from <div> to <h3> for heading hierarchy -->
+                    <div class="work-item work-item-1" role="img" aria-label="Meridian Capital project showcase">
+                        <h3 class="work-name">Meridian Capital</h3>
+                        <div class="work-category">Brand Voice &amp; Identity</div>
+                    </div>
+                    <div class="work-item work-item-2" role="img" aria-label="The Collective project showcase">
+                        <h3 class="work-name">The Collective</h3>
+                        <div class="work-category">Thought Leadership Strategy</div>
+                    </div>
+                    <div class="work-item work-item-3" role="img" aria-label="Apex Ventures project showcase">
+                        <h3 class="work-name">Apex Ventures</h3>
+                        <div class="work-category">Founder Narrative</div>
+                    </div>
+                    <div class="work-item work-item-4" role="img" aria-label="Luna Studios project showcase">
+                        <h3 class="work-name">Luna Studios</h3>
+                        <div class="work-category">Creative Direction</div>
+                    </div>
+                    <div class="work-item work-item-5" role="img" aria-label="Orbit Health project showcase">
+                        <h3 class="work-name">Orbit Health</h3>
+                        <div class="work-category">Brand Architecture</div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- SERVICES -->
-        <section class="services" id="services">
-            <h2 class="section-title">Services</h2>
-            <div class="service-item">
-                <h3 class="service-name">Brand Voice &amp; Messaging</h3>
-                <p class="service-desc">Defining the language, tone, and vocabulary that make your brand unmistakable in every medium.</p>
-            </div>
-            <div class="service-item">
-                <h3 class="service-name">Thought Leadership Strategy</h3>
-                <p class="service-desc">Positioning founders and executives as authoritative voices through strategic content and media presence.</p>
-            </div>
-            <div class="service-item">
-                <h3 class="service-name">Founder Narrative Development</h3>
-                <p class="service-desc">Crafting the origin story that investors, press, and audiences remember and retell.</p>
-            </div>
-            <div class="service-item">
-                <h3 class="service-name">Content Architecture</h3>
-                <p class="service-desc">Building the editorial framework that transforms one-off pieces into a cohesive brand narrative.</p>
-            </div>
-            <div class="service-item">
-                <h3 class="service-name">Keynote &amp; Speech Writing</h3>
-                <p class="service-desc">Words for the stage — crafted for rhythm, clarity, and the kind of impact that lingers.</p>
-            </div>
-        </section>
+            <!-- PHILOSOPHY -->
+            <section class="philosophy" id="philosophy">
+                <div class="philosophy-inner">
+                    <!-- Fix #5: aria-hidden on decorative quotemark -->
+                    <span class="philosophy-quotemark" aria-hidden="true">&ldquo;</span>
+                    <p class="philosophy-quote" id="philQuote">The best brands don't shout. They whisper <span class="red-dash">&mdash;</span> and the world leans in.</p>
+                </div>
+            </section>
 
-        <!-- CONTACT -->
-        <section class="contact" id="contact">
-            <h2 class="contact-heading" id="contactHeading">
-                Let's write your next chapter.
-                <span class="contact-underline" id="contactUnderline"></span>
-            </h2>
-            <br>
-            <a href="mailto:hello@thenarrative.co" class="contact-email">hello@thenarrative.co</a>
-        </section>
+            <!-- SERVICES -->
+            <section class="services" id="services">
+                <h2 class="section-title">Services</h2>
+                <div class="service-item">
+                    <h3 class="service-name">Brand Voice &amp; Messaging</h3>
+                    <p class="service-desc">Defining the language, tone, and vocabulary that make your brand unmistakable in every medium.</p>
+                </div>
+                <div class="service-item">
+                    <h3 class="service-name">Thought Leadership Strategy</h3>
+                    <p class="service-desc">Positioning founders and executives as authoritative voices through strategic content and media presence.</p>
+                </div>
+                <div class="service-item">
+                    <h3 class="service-name">Founder Narrative Development</h3>
+                    <p class="service-desc">Crafting the origin story that investors, press, and audiences remember and retell.</p>
+                </div>
+                <div class="service-item">
+                    <h3 class="service-name">Content Architecture</h3>
+                    <p class="service-desc">Building the editorial framework that transforms one-off pieces into a cohesive brand narrative.</p>
+                </div>
+                <div class="service-item">
+                    <h3 class="service-name">Keynote &amp; Speech Writing</h3>
+                    <p class="service-desc">Words for the stage — crafted for rhythm, clarity, and the kind of impact that lingers.</p>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <!-- Fix #13: Removed <br> tag, using CSS margin on .contact-email instead -->
+            <section class="contact" id="contact">
+                <h2 class="contact-heading" id="contactHeading">
+                    Let's write your next chapter.
+                    <span class="contact-underline" id="contactUnderline"></span>
+                </h2>
+                <a href="mailto:hello@thenarrative.co" class="contact-email">hello@thenarrative.co</a>
+            </section>
+
+        </main>
 
         <!-- FOOTER -->
         <footer class="site-footer">
-            <div class="footer-left">The Narrative &mdash; This is a design demo by <a href="./" style="color:var(--red);text-decoration:none;">Ops_Architect</a></div>
+            <!-- Fix #19: Added copyright year -->
+            <!-- Fix #15: Changed href="./" to href="index.html" -->
+            <div class="footer-left">&copy; 2026 The Narrative &mdash; This is a design demo by <a href="index.html" style="color:var(--red);text-decoration:none;">Ops_Architect</a></div>
             <div class="footer-right">
-                <a href="./">&larr; Back to Style Gallery</a>
+                <a href="index.html">&larr; Back to Style Gallery</a>
             </div>
         </footer>
 
     </div>
 
     <!-- Preset Badge -->
-    <a href="./" class="preset-badge">Editorial Preset</a>
+    <!-- Fix #15: Changed href="./" to href="index.html" -->
+    <a href="index.html" class="preset-badge">Editorial Preset</a>
 
     <script>
         // ===== GSAP SETUP =====
         gsap.registerPlugin(ScrollTrigger);
+
+        // Fix #18: Check for reduced motion preference and skip GSAP animations
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         // ===== NAV SCROLL =====
         const topBar = document.getElementById('topBar');
@@ -550,111 +692,135 @@
             }
         });
 
-        // ===== HERO — SplitText character-by-character reveal =====
-        const heroTitle = document.getElementById('heroTitle');
-        if (typeof SplitText !== 'undefined') {
-            const heroSplit = new SplitText(heroTitle, { type: "chars" });
-            gsap.from(heroSplit.chars, {
-                opacity: 0,
-                y: 20,
-                duration: 1.5,
-                ease: "power4.out",
-                stagger: 0.04,
-                delay: 0.3
-            });
-        } else {
-            gsap.from(heroTitle, { opacity: 0, y: 40, duration: 1.2, ease: "power4.out", delay: 0.3 });
-        }
-
-        // Hero subtitle
-        gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 1, ease: "power4.out", delay: 1.5 });
-
-        // ===== INTRODUCTION =====
-        gsap.from('.intro-text', {
-            scrollTrigger: { trigger: '.introduction', start: 'top 75%' },
-            opacity: 0, y: 40, duration: 1, ease: "power4.out"
+        // Fix #8: Hamburger menu toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        hamburgerBtn.addEventListener('click', () => {
+            const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+            hamburgerBtn.setAttribute('aria-expanded', !expanded);
+            navLinks.classList.toggle('open');
         });
-        gsap.from('.intro-aside', {
-            scrollTrigger: { trigger: '.introduction', start: 'top 70%' },
-            opacity: 0, x: 30, duration: 1, ease: "power4.out", delay: 0.3
-        });
-
-        // ===== FEATURED WORK — stagger in =====
-        gsap.from('.work-item', {
-            scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
-            opacity: 0, y: 50,
-            duration: 0.9, ease: "power3.out",
-            stagger: 0.15
-        });
-
-        // ===== PHILOSOPHY — text scaling from 2rem to 6rem =====
-        const philQuote = document.getElementById('philQuote');
-        gsap.fromTo(philQuote,
-            { fontSize: '2rem' },
-            {
-                fontSize: 'clamp(3rem, 5vw, 6rem)',
-                ease: "none",
-                scrollTrigger: {
-                    trigger: '.philosophy',
-                    start: 'top 80%',
-                    end: 'top 20%',
-                    scrub: 1
-                }
-            }
-        );
-        // Quotemark parallax
-        gsap.from('.philosophy-quotemark', {
-            scrollTrigger: { trigger: '.philosophy', start: 'top 80%' },
-            opacity: 0, y: -30, duration: 1, ease: "power3.out"
-        });
-
-        // ===== SERVICES — fade in on scroll =====
-        document.querySelectorAll('.service-item').forEach((item, i) => {
-            gsap.from(item, {
-                scrollTrigger: { trigger: item, start: 'top 85%' },
-                opacity: 0, y: 30,
-                duration: 0.8, ease: "power3.out",
-                delay: i * 0.08
+        // Close mobile menu when a nav link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                navLinks.classList.remove('open');
             });
         });
 
-        // ===== SECTION TITLES =====
-        document.querySelectorAll('.section-title').forEach(title => {
+        if (!prefersReducedMotion) {
+
+            // ===== HERO — SplitText character-by-character reveal =====
+            const heroTitle = document.getElementById('heroTitle');
             if (typeof SplitText !== 'undefined') {
-                const split = new SplitText(title, { type: "chars" });
-                gsap.from(split.chars, {
-                    scrollTrigger: { trigger: title, start: 'top 85%' },
-                    opacity: 0, y: 15,
-                    duration: 0.8, ease: "power4.out",
-                    stagger: 0.02
+                const heroSplit = new SplitText(heroTitle, { type: "chars" });
+                gsap.from(heroSplit.chars, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 1.5,
+                    ease: "power4.out",
+                    stagger: 0.04,
+                    delay: 0.3
                 });
             } else {
-                gsap.from(title, {
-                    scrollTrigger: { trigger: title, start: 'top 85%' },
-                    opacity: 0, y: 30, duration: 1, ease: "power4.out"
-                });
+                gsap.from(heroTitle, { opacity: 0, y: 40, duration: 1.2, ease: "power4.out", delay: 0.3 });
             }
-        });
 
-        // ===== CONTACT — underline animation =====
-        const contactHeading = document.getElementById('contactHeading');
-        ScrollTrigger.create({
-            trigger: contactHeading,
-            start: 'top 75%',
-            onEnter: () => { contactHeading.classList.add('visible'); }
-        });
-        gsap.from(contactHeading, {
-            scrollTrigger: { trigger: '.contact', start: 'top 80%' },
-            opacity: 0, y: 30, duration: 1, ease: "power4.out"
-        });
-        gsap.from('.contact-email', {
-            scrollTrigger: { trigger: '.contact', start: 'top 70%' },
-            opacity: 0, y: 15, duration: 0.8, ease: "power3.out", delay: 0.4
-        });
+            // Hero subtitle
+            gsap.from('.hero-subtitle', { opacity: 0, y: 20, duration: 1, ease: "power4.out", delay: 1.5 });
 
+            // ===== INTRODUCTION =====
+            gsap.from('.intro-text', {
+                scrollTrigger: { trigger: '.introduction', start: 'top 75%' },
+                opacity: 0, y: 40, duration: 1, ease: "power4.out"
+            });
+            gsap.from('.intro-aside', {
+                scrollTrigger: { trigger: '.introduction', start: 'top 70%' },
+                opacity: 0, x: 30, duration: 1, ease: "power4.out", delay: 0.3
+            });
+
+            // ===== FEATURED WORK — stagger in =====
+            gsap.from('.work-item', {
+                scrollTrigger: { trigger: '.work-grid', start: 'top 80%' },
+                opacity: 0, y: 50,
+                duration: 0.9, ease: "power3.out",
+                stagger: 0.15
+            });
+
+            // ===== PHILOSOPHY — text scaling from 2rem to 6rem =====
+            const philQuote = document.getElementById('philQuote');
+            gsap.fromTo(philQuote,
+                { fontSize: '2rem' },
+                {
+                    fontSize: 'clamp(3rem, 5vw, 6rem)',
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: '.philosophy',
+                        start: 'top 80%',
+                        end: 'top 20%',
+                        scrub: 1
+                    }
+                }
+            );
+            // Quotemark parallax
+            gsap.from('.philosophy-quotemark', {
+                scrollTrigger: { trigger: '.philosophy', start: 'top 80%' },
+                opacity: 0, y: -30, duration: 1, ease: "power3.out"
+            });
+
+            // ===== SERVICES — fade in on scroll =====
+            document.querySelectorAll('.service-item').forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: { trigger: item, start: 'top 85%' },
+                    opacity: 0, y: 30,
+                    duration: 0.8, ease: "power3.out",
+                    delay: i * 0.08
+                });
+            });
+
+            // ===== SECTION TITLES =====
+            document.querySelectorAll('.section-title').forEach(title => {
+                if (typeof SplitText !== 'undefined') {
+                    const split = new SplitText(title, { type: "chars" });
+                    gsap.from(split.chars, {
+                        scrollTrigger: { trigger: title, start: 'top 85%' },
+                        opacity: 0, y: 15,
+                        duration: 0.8, ease: "power4.out",
+                        stagger: 0.02
+                    });
+                } else {
+                    gsap.from(title, {
+                        scrollTrigger: { trigger: title, start: 'top 85%' },
+                        opacity: 0, y: 30, duration: 1, ease: "power4.out"
+                    });
+                }
+            });
+
+            // ===== CONTACT — underline animation =====
+            const contactHeading = document.getElementById('contactHeading');
+            ScrollTrigger.create({
+                trigger: contactHeading,
+                start: 'top 75%',
+                onEnter: () => { contactHeading.classList.add('visible'); }
+            });
+            gsap.from(contactHeading, {
+                scrollTrigger: { trigger: '.contact', start: 'top 80%' },
+                opacity: 0, y: 30, duration: 1, ease: "power4.out"
+            });
+            gsap.from('.contact-email', {
+                scrollTrigger: { trigger: '.contact', start: 'top 70%' },
+                opacity: 0, y: 15, duration: 0.8, ease: "power3.out", delay: 0.4
+            });
+
+        } else {
+            // When reduced motion is preferred, show contact underline immediately
+            document.getElementById('contactHeading').classList.add('visible');
+        }
+
+        // Fix #16: Removed stale .pull-quote-section and .contact-line selectors
         // Fallback: force all elements visible after 3 seconds
         setTimeout(() => {
-            document.querySelectorAll('.intro-text, .intro-aside, .work-item, .section-title, .service-item, .pull-quote-section, .contact-line, .contact-email').forEach(el => {
+            document.querySelectorAll('.intro-text, .intro-aside, .work-item, .section-title, .service-item, .contact-heading, .contact-email').forEach(el => {
                 const s = window.getComputedStyle(el);
                 if (s.opacity === '0' || s.visibility === 'hidden') {
                     el.style.opacity = '1';

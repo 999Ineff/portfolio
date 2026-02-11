@@ -23,13 +23,20 @@
             --green: #00FF88;
             --green-glow: rgba(0, 255, 136, 0.3);
             --text: #e8e8f0;
-            --text-dim: #7a7a95;
-            --text-muted: #44445a;
+            --text-dim: #9090ad;
+            --text-muted: #7a7a95;
             --border: rgba(0, 212, 255, 0.08);
             --border-hover: rgba(0, 212, 255, 0.2);
             --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        *:focus-visible {
+            outline: 2px solid var(--neon-blue, #00D4FF);
+            outline-offset: 2px;
+        }
+        html {
+            overflow-x: hidden;
+        }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--bg);
@@ -88,7 +95,7 @@
         .top-bar {
             position: fixed;
             top: 0; left: 0; right: 0;
-            z-index: 100;
+            z-index: 1001;
             padding: 1.25rem 3rem;
             display: flex;
             justify-content: space-between;
@@ -170,6 +177,7 @@
         /* HERO */
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             padding: 8rem 3rem 6rem;
@@ -595,20 +603,123 @@
             box-shadow: 0 0 20px rgba(0,212,255,0.15);
         }
 
+        /* Touch targets */
+        .back-link { padding: 0.75rem 0; display: inline-block; }
+        .footer-right a { padding: 0.5rem 0; display: inline-block; }
+        .preset-badge { min-height: 44px; display: inline-flex; align-items: center; }
+
+        /* Hamburger button */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-hover);
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            z-index: 201;
+            position: relative;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile nav overlay */
+        .mobile-nav-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 6, 9, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .mobile-nav-overlay.open {
+            display: flex;
+        }
+        .mobile-nav-overlay a {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            transition: color 0.3s;
+        }
+        .mobile-nav-overlay a:hover {
+            color: var(--accent);
+        }
+
+        /* Skip to content */
+        .skip-to-content {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            z-index: 10002;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.75rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: top 0.3s;
+        }
+        .skip-to-content:focus {
+            top: 1rem;
+        }
+
         /* Responsive */
+        @media (max-width: 1440px) {
+            .hero-terminal {
+                position: relative;
+                right: auto;
+                margin-top: 2rem;
+            }
+            .hero {
+                flex-direction: column;
+            }
+        }
         @media (max-width: 1100px) {
             .hero-terminal { display: none; }
+        }
+        @media (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             .features-grid { grid-template-columns: 1fr; }
             .metrics-row { grid-template-columns: repeat(2, 1fr); }
             .hero-stats { flex-wrap: wrap; gap: 2rem; }
             .nav-links { display: none; }
+            .hamburger-btn { display: flex; }
             .cursor-dot, .cursor-ring { display: none; }
             body { cursor: auto; }
             .hero { padding: 7rem 1.5rem 4rem; }
             .features, .metrics, .testimonial, .cta { padding: 5rem 1.5rem; }
             .top-bar { padding: 1rem 1.5rem; }
+            .cta-box { padding: 3rem 1.5rem; }
         }
         @media (max-width: 480px) {
             .metrics-row { grid-template-columns: 1fr; }
@@ -619,12 +730,22 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
             }
+            .orb { animation: none; }
+        }
+
+        /* Noscript cursor fallback */
+        .noscript-cursor-fix {
+            cursor: auto !important;
         }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <noscript><style>body { cursor: auto !important; }</style></noscript>
     <div class="grid-bg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -641,7 +762,7 @@
                 <div class="logo-icon">N</div>
                 NeuralStack
             </a>
-            <nav>
+            <nav aria-label="Main navigation">
                 <ul class="nav-links">
                     <li><a href="#features">Features</a></li>
                     <li><a href="#metrics">Metrics</a></li>
@@ -651,8 +772,23 @@
             <div style="display:flex;gap:1.5rem;align-items:center;">
                 <a href="./" class="back-link">← Gallery</a>
                 <a href="#cta" class="nav-cta-btn">Get Started</a>
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </header>
+
+        <!-- Mobile Nav Overlay -->
+        <div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-label="Mobile navigation">
+            <a href="#features" class="mobile-nav-link">Features</a>
+            <a href="#metrics" class="mobile-nav-link">Metrics</a>
+            <a href="#testimonial" class="mobile-nav-link">Reviews</a>
+            <a href="#cta" class="mobile-nav-link">Get Started</a>
+        </div>
+
+        <main id="main-content">
 
         <!-- HERO -->
         <section class="hero">
@@ -789,11 +925,13 @@
                 <h2>Ready to Build <span class="glow">Faster</span>?</h2>
                 <p>Start deploying models in minutes. No credit card required. Free tier includes 100K inferences per month.</p>
                 <div class="cta-actions">
-                    <a href="#" class="btn-main btn-accent magnetic-btn"><span>Start Building Free</span></a>
-                    <a href="#" class="btn-main btn-ghost magnetic-btn"><span>Talk to Sales</span></a>
+                    <a href="#cta" role="button" class="btn-main btn-accent magnetic-btn"><span>Start Building Free</span></a>
+                    <a href="mailto:sales@neuralstack.demo" role="button" class="btn-main btn-ghost magnetic-btn"><span>Talk to Sales</span></a>
                 </div>
             </div>
         </section>
+
+        </main>
 
         <!-- FOOTER -->
         <footer class="site-footer">
@@ -809,13 +947,180 @@
     <a href="./" class="preset-badge">Dark Tech Preset</a>
 
     <script>
-        // ===== LENIS SMOOTH SCROLL =====
-        const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-        gsap.ticker.lagSmoothing(0);
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // ===== CUSTOM CURSOR =====
+        // ===== HAMBURGER NAVIGATION =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (hamburgerBtn && mobileNav) {
+            hamburgerBtn.addEventListener('click', () => {
+                const isOpen = mobileNav.classList.toggle('open');
+                hamburgerBtn.classList.toggle('active');
+                hamburgerBtn.setAttribute('aria-expanded', isOpen);
+                hamburgerBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileNav.classList.remove('open');
+                    hamburgerBtn.classList.remove('active');
+                    hamburgerBtn.setAttribute('aria-expanded', 'false');
+                    hamburgerBtn.setAttribute('aria-label', 'Open menu');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        if (!prefersReducedMotion) {
+            // ===== LENIS SMOOTH SCROLL =====
+            const lenis = new Lenis({ lerp: 0.1, duration: 1.2, smoothWheel: true });
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+            gsap.ticker.lagSmoothing(0);
+
+            // ===== MAGNETIC BUTTONS =====
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
+                    const inner = btn.querySelector('span');
+                    if (inner) gsap.to(inner, { x: x * 0.15, y: y * 0.15, duration: 0.4, ease: "power2.out" });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+                    const inner = btn.querySelector('span');
+                    if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+
+            // ===== NAV SCROLL =====
+            const topBar = document.getElementById('topBar');
+            ScrollTrigger.create({
+                start: 50,
+                onUpdate: (self) => {
+                    topBar.classList.toggle('scrolled', self.scroll() > 50);
+                }
+            });
+
+            // ===== GSAP TEXT REVEALS =====
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero label
+            gsap.from('.hero-label', { opacity: 0, x: -30, duration: 1, ease: "power4.out", delay: 0.2 });
+
+            // Hero title — split into lines
+            if (typeof SplitText !== 'undefined') {
+                const heroSplit = new SplitText('.hero-title', { type: "lines", mask: "lines" });
+                gsap.from(heroSplit.lines, {
+                    yPercent: 100, opacity: 0,
+                    duration: 1.2, ease: "power4.out",
+                    stagger: 0.1, delay: 0.4
+                });
+            } else {
+                gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, ease: "power4.out", delay: 0.4 });
+            }
+
+            // Hero subtitle + actions
+            gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 1, ease: "power4.out", delay: 0.7 });
+            gsap.from('.hero-actions', { opacity: 0, y: 30, duration: 1, ease: "power4.out", delay: 0.9 });
+
+            // Hero stats — stagger from left
+            gsap.from('.hero-stats > div', {
+                opacity: 0, y: 20,
+                duration: 0.8, ease: "power3.out",
+                stagger: 0.1, delay: 1.2
+            });
+
+            // Terminal — slide in from right
+            gsap.from('.hero-terminal', {
+                opacity: 0, x: 60,
+                duration: 1.2, ease: "power4.out", delay: 0.8
+            });
+
+            // ===== SCROLL-TRIGGERED SECTIONS =====
+            // Feature cards — stagger from center
+            gsap.from('.feature-card', {
+                scrollTrigger: { trigger: '.features-grid', start: 'top 80%' },
+                opacity: 0, y: 40, scale: 0.95,
+                duration: 0.8, ease: "power3.out",
+                stagger: { each: 0.1, from: "center" }
+            });
+
+            // Section headings
+            document.querySelectorAll('.section-heading').forEach(heading => {
+                if (typeof SplitText !== 'undefined') {
+                    const split = new SplitText(heading, { type: "lines", mask: "lines" });
+                    gsap.from(split.lines, {
+                        scrollTrigger: { trigger: heading, start: 'top 85%' },
+                        yPercent: 100, opacity: 0,
+                        duration: 1, ease: "power4.out",
+                        stagger: 0.08
+                    });
+                } else {
+                    gsap.from(heading, {
+                        scrollTrigger: { trigger: heading, start: 'top 85%' },
+                        opacity: 0, y: 30, duration: 1, ease: "power4.out"
+                    });
+                }
+            });
+
+            // Section labels
+            document.querySelectorAll('.section-label').forEach(label => {
+                gsap.from(label, {
+                    scrollTrigger: { trigger: label, start: 'top 85%' },
+                    opacity: 0, x: -30, duration: 0.8, ease: "power3.out"
+                });
+            });
+
+            // Metric blocks — stagger from edges
+            gsap.from('.metric-block', {
+                scrollTrigger: { trigger: '.metrics-row', start: 'top 80%' },
+                opacity: 0, y: 30, scale: 0.9,
+                duration: 0.8, ease: "back.out(1.4)",
+                stagger: { each: 0.1, from: "edges" }
+            });
+
+            // Testimonial
+            gsap.from('.testimonial-quote', {
+                scrollTrigger: { trigger: '.testimonial', start: 'top 75%' },
+                opacity: 0, y: 40, duration: 1.2, ease: "power4.out"
+            });
+            gsap.from('.testimonial-author', {
+                scrollTrigger: { trigger: '.testimonial', start: 'top 70%' },
+                opacity: 0, y: 20, duration: 0.8, ease: "power3.out", delay: 0.3
+            });
+
+            // CTA box
+            gsap.from('.cta-box', {
+                scrollTrigger: { trigger: '.cta', start: 'top 80%' },
+                opacity: 0, y: 50, scale: 0.95,
+                duration: 1, ease: "power4.out"
+            });
+
+            // ===== PARALLAX on feature cards =====
+            document.querySelectorAll('.feature-card').forEach(card => {
+                gsap.to(card, {
+                    yPercent: -5,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+            });
+        } else {
+            // Reduced motion: still handle nav scroll without animation
+            const topBar = document.getElementById('topBar');
+            window.addEventListener('scroll', () => {
+                topBar.classList.toggle('scrolled', window.scrollY > 50);
+            });
+        }
+
+        // ===== CUSTOM CURSOR (runs regardless of motion preference) =====
         const dot = document.getElementById('cursorDot');
         const ring = document.getElementById('cursorRing');
         if (dot && ring && window.innerWidth > 768) {
@@ -839,141 +1144,6 @@
                 el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
             });
         }
-
-        // ===== MAGNETIC BUTTONS =====
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
-                const inner = btn.querySelector('span');
-                if (inner) gsap.to(inner, { x: x * 0.15, y: y * 0.15, duration: 0.4, ease: "power2.out" });
-            });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-                const inner = btn.querySelector('span');
-                if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-            });
-        });
-
-        // ===== NAV SCROLL =====
-        const topBar = document.getElementById('topBar');
-        ScrollTrigger.create({
-            start: 50,
-            onUpdate: (self) => {
-                topBar.classList.toggle('scrolled', self.scroll() > 50);
-            }
-        });
-
-        // ===== GSAP TEXT REVEALS =====
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Hero label
-        gsap.from('.hero-label', { opacity: 0, x: -30, duration: 1, ease: "power4.out", delay: 0.2 });
-
-        // Hero title — split into lines
-        if (typeof SplitText !== 'undefined') {
-            const heroSplit = new SplitText('.hero-title', { type: "lines", mask: "lines" });
-            gsap.from(heroSplit.lines, {
-                yPercent: 100, opacity: 0,
-                duration: 1.2, ease: "power4.out",
-                stagger: 0.1, delay: 0.4
-            });
-        } else {
-            gsap.from('.hero-title', { opacity: 0, y: 40, duration: 1, ease: "power4.out", delay: 0.4 });
-        }
-
-        // Hero subtitle + actions
-        gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 1, ease: "power4.out", delay: 0.7 });
-        gsap.from('.hero-actions', { opacity: 0, y: 30, duration: 1, ease: "power4.out", delay: 0.9 });
-
-        // Hero stats — stagger from left
-        gsap.from('.hero-stats > div', {
-            opacity: 0, y: 20,
-            duration: 0.8, ease: "power3.out",
-            stagger: 0.1, delay: 1.2
-        });
-
-        // Terminal — slide in from right
-        gsap.from('.hero-terminal', {
-            opacity: 0, x: 60,
-            duration: 1.2, ease: "power4.out", delay: 0.8
-        });
-
-        // ===== SCROLL-TRIGGERED SECTIONS =====
-        // Feature cards — stagger from center
-        gsap.from('.feature-card', {
-            scrollTrigger: { trigger: '.features-grid', start: 'top 80%' },
-            opacity: 0, y: 40, scale: 0.95,
-            duration: 0.8, ease: "power3.out",
-            stagger: { each: 0.1, from: "center" }
-        });
-
-        // Section headings
-        document.querySelectorAll('.section-heading').forEach(heading => {
-            if (typeof SplitText !== 'undefined') {
-                const split = new SplitText(heading, { type: "lines", mask: "lines" });
-                gsap.from(split.lines, {
-                    scrollTrigger: { trigger: heading, start: 'top 85%' },
-                    yPercent: 100, opacity: 0,
-                    duration: 1, ease: "power4.out",
-                    stagger: 0.08
-                });
-            } else {
-                gsap.from(heading, {
-                    scrollTrigger: { trigger: heading, start: 'top 85%' },
-                    opacity: 0, y: 30, duration: 1, ease: "power4.out"
-                });
-            }
-        });
-
-        // Section labels
-        document.querySelectorAll('.section-label').forEach(label => {
-            gsap.from(label, {
-                scrollTrigger: { trigger: label, start: 'top 85%' },
-                opacity: 0, x: -30, duration: 0.8, ease: "power3.out"
-            });
-        });
-
-        // Metric blocks — stagger from edges
-        gsap.from('.metric-block', {
-            scrollTrigger: { trigger: '.metrics-row', start: 'top 80%' },
-            opacity: 0, y: 30, scale: 0.9,
-            duration: 0.8, ease: "back.out(1.4)",
-            stagger: { each: 0.1, from: "edges" }
-        });
-
-        // Testimonial
-        gsap.from('.testimonial-quote', {
-            scrollTrigger: { trigger: '.testimonial', start: 'top 75%' },
-            opacity: 0, y: 40, duration: 1.2, ease: "power4.out"
-        });
-        gsap.from('.testimonial-author', {
-            scrollTrigger: { trigger: '.testimonial', start: 'top 70%' },
-            opacity: 0, y: 20, duration: 0.8, ease: "power3.out", delay: 0.3
-        });
-
-        // CTA box
-        gsap.from('.cta-box', {
-            scrollTrigger: { trigger: '.cta', start: 'top 80%' },
-            opacity: 0, y: 50, scale: 0.95,
-            duration: 1, ease: "power4.out"
-        });
-
-        // ===== PARALLAX on feature cards =====
-        document.querySelectorAll('.feature-card').forEach(card => {
-            gsap.to(card, {
-                yPercent: -5,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: 1
-                }
-            });
-        });
     </script>
 </body>
 </html>
