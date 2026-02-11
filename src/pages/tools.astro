@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+import CTA from '../components/CTA.astro';
+---
+
+<BaseLayout
+  title="Free Tools"
+  description="Powerful tools to audit and transform your online presence. Coming soon."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Free Tools" />
+      <h1 class="text-heading reveal">Free Tools</h1>
+      <p class="hero-sub reveal" data-delay="0.1">
+        Powerful tools to audit and transform your online presence. Coming soon.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section class="section" id="tools">
+    <div class="container">
+      <div class="tools-grid">
+        <ComingSoon
+          title="SEO Scanner"
+          description="Input your website URL and get an automated audit covering performance, accessibility, SEO, and more. See exactly what's holding your site back."
+          features={[
+            "Automated 130-point analysis",
+            "Performance scoring",
+            "SEO recommendations",
+            "Competitive insights",
+          ]}
+        />
+
+        <ComingSoon
+          title="Site Preview Builder"
+          description="See what your website could look like with a premium redesign. Pick a style preset, we scan your content, and build a preview in minutes."
+          features={[
+            "Scan your existing site",
+            "Choose from 9 style presets",
+            "Auto-generated preview",
+            "Real working pages",
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Can't Wait? I'll Do It For You"
+    subtext="Book a call and I'll run the audit or build the preview manually."
+  />
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-lg);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

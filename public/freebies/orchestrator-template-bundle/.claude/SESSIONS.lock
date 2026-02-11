@@ -1,0 +1,56 @@
+# Session Locks
+
+> Prevents conflicts when multiple AI sessions might work on the same project.
+> AI manages this automatically - you shouldn't need to edit manually.
+
+---
+
+## Active Sessions
+
+| Session ID | Task | Files Claimed | Last Heartbeat | Status |
+|------------|------|---------------|----------------|--------|
+| | | | | |
+
+**Status values:** ACTIVE, INACTIVE, STALE
+
+**Stale:** Last heartbeat >30 minutes ago. New session can override.
+
+---
+
+## File Locks
+
+| File/Pattern | Session | Claimed At |
+|--------------|---------|------------|
+| | | |
+
+---
+
+## How It Works
+
+1. **Session Start:** AI generates ID (session-YYYYMMDD-HHMMSS), registers here
+2. **File Claiming:** Before modifying files, AI "claims" them here
+3. **Heartbeat:** AI updates timestamp periodically
+4. **Conflict Check:** If another session has the file, stop and report
+5. **Session End:** AI marks status as INACTIVE
+
+---
+
+## Manual Override
+
+If an AI session crashed and left stale entries:
+
+1. Check "Last Heartbeat" - if >30 min old, it's stale
+2. Delete the row or change Status to INACTIVE
+3. New session can then proceed
+
+---
+
+## Example
+
+```markdown
+## Active Sessions
+
+| Session ID | Task | Files Claimed | Last Heartbeat | Status |
+|------------|------|---------------|----------------|--------|
+| session-20240115-103022 | W001 | src/auth.js, src/login.jsx | 2024-01-15T10:45:00 | ACTIVE |
+```

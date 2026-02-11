@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY Automation Starter Kit | Free Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #12121a;
+            --gold: #ffc13b;
+            --cyan: #00e5ff;
+            --green: #00ff88;
+            --text: #ffffff;
+            --text-dim: #a0a0b0;
+            --border: rgba(0, 255, 136, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .nav-logo::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+            nav {
+                padding: 1rem;
+            }
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 100px 30px 60px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--green);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h1 span {
+            color: var(--green);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+        }
+
+        .cover-image {
+            width: 100%;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+
+        .highlight {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* What's Inside */
+        .whats-inside {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .whats-inside h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--green);
+        }
+
+        .whats-inside ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .whats-inside li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .whats-inside li:last-child {
+            border-bottom: none;
+        }
+
+        .whats-inside li::before {
+            content: '→';
+            color: var(--cyan);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 229, 255, 0.05) 100%);
+            border: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section p {
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Preview text */
+        .preview-section {
+            margin: 3rem 0;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .prompt-preview {
+            background: var(--bg-card);
+            border-left: 3px solid var(--green);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-dim);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.875rem;
+            }
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="../../index.html" class="nav-logo">Ops_Architect</a>
+            <ul class="nav-links">
+                <li><a href="../../index.html#about">About</a></li>
+                <li><a href="../../index.html#projects">Projects</a></li>
+                <li><a href="../../index.html#resources">Free Guides</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="badge">Beginner Guide</div>
+
+        <h1>DIY Automation<br><span>Starter Kit</span></h1>
+
+        <p class="subtitle">10 ready-to-use prompts that work with any AI. Turn repetitive tasks into automations in minutes.</p>
+
+        <img src="../images/03-cover.png" alt="DIY Automation Starter Kit" class="cover-image">
+
+        <div class="preview-section">
+            <h2>Automation Without the Learning Curve</h2>
+
+            <p>You don't need to learn Python. You don't need "no-code" tools with monthly fees. You don't need a developer.</p>
+
+            <p>You need the right prompts.</p>
+
+            <p>This kit gives you <span class="highlight">10 copy-paste prompts</span> that turn any AI (ChatGPT, Claude, Gemini) into your personal automation builder.</p>
+
+            <div class="prompt-preview">
+                <strong style="color: var(--green);">Example Prompt:</strong><br><br>
+                "I need to [task]. Create a step-by-step system I can follow every time. Include a checklist I can reuse and any templates I'd need..."
+            </div>
+
+            <p>That's it. No coding. No complexity. Just prompts that work.</p>
+        </div>
+
+        <div class="whats-inside">
+            <h3>What's Inside the Full Kit</h3>
+            <ul>
+                <li>10 ready-to-use automation prompts</li>
+                <li>Email template generator prompt</li>
+                <li>Meeting prep automation prompt</li>
+                <li>Data cleanup prompt</li>
+                <li>Report generator prompt</li>
+                <li>File organization prompt</li>
+                <li>And 5 more for common business tasks</li>
+            </ul>
+        </div>
+
+        <div class="cta-section">
+            <h2>Get the Full Kit Free</h2>
+            <p>10 prompts you can use today with any AI assistant.</p>
+
+            <div class="form-container">
+                <script async data-uid="e0c47d23b5" src="https://ineffable-automations.kit.com/e0c47d23b5/index.js"></script>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
+        </div>
+    </div>
+</body>
+</html>

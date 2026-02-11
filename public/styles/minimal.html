@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Architecture — Minimal Clean Style Demo</title>
+    <meta name="description" content="Minimal Clean design preset demo — Aura Architecture. White space, restraint, Cormorant Garamond typography, near-zero motion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --charcoal: #1A1A1A;
+            --sage: #8B9D83;
+            --off-white: #F5F5F0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            opacity: 0.15;
+            transition: opacity 1s ease;
+        }
+
+        .nav:hover .nav-links {
+            opacity: 0.6;
+        }
+
+        .nav-links a {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: opacity 0.6s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .back-link {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .nav:hover .back-link {
+            opacity: 0.4;
+        }
+
+        .back-link:hover {
+            opacity: 0.8 !important;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(5rem, 15vw, 20rem);
+            font-weight: 300;
+            color: var(--charcoal);
+            letter-spacing: -0.02em;
+            line-height: 0.85;
+            user-select: none;
+        }
+
+        .hero-subtitle {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            font-weight: 300;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            opacity: 0;
+            margin-top: 2rem;
+            animation: subtitleFade 1.5s ease forwards;
+            animation-delay: 2s;
+        }
+
+        @keyframes subtitleFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 0.4; transform: translateY(0); }
+        }
+
+        /* ===== SELECTED WORKS — HORIZONTAL SCROLL ===== */
+        .works {
+            padding: 10rem 0 8rem;
+            position: relative;
+        }
+        .scroll-arrow {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.5s ease;
+        }
+        .scroll-arrow:hover { opacity: 0.8; }
+        .scroll-arrow span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+            color: var(--charcoal);
+        }
+        .scroll-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--charcoal);
+            fill: none;
+            stroke-width: 1.5;
+            animation: nudgeRight 2s ease-in-out infinite;
+        }
+        @keyframes nudgeRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+        .scroll-arrow.hidden { opacity: 0; pointer-events: none; }
+
+        .works-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            opacity: 0.3;
+            padding: 0 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .works-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            gap: 2rem;
+            padding: 0 3rem;
+        }
+
+        .works-container::-webkit-scrollbar { display: none; }
+
+        .work-card {
+            min-width: 80vw;
+            scroll-snap-align: start;
+            height: 70vh;
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 3rem;
+            clip-path: inset(0 0 0 0);
+            transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .work-card.animate-in {
+            clip-path: inset(0 100% 0 0);
+        }
+
+        .work-card.animate-in.visible {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .work-card-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: opacity 1.5s ease 0.5s;
+        }
+
+        .work-card.animate-in .work-card-label {
+            opacity: 0;
+        }
+
+        .work-card.animate-in.visible .work-card-label {
+            opacity: 0.7;
+        }
+
+        .work-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 300;
+            margin-top: 0.5rem;
+            opacity: 1;
+            transition: opacity 1.5s ease 0.7s;
+        }
+
+        .work-card.animate-in .work-card-title {
+            opacity: 0;
+        }
+
+        .work-card.animate-in.visible .work-card-title {
+            opacity: 1;
+        }
+
+        /* Card gradients */
+        .work-card--meridian {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%), url('images/minimal/project-1.png') center/cover no-repeat;
+            color: var(--white);
+        }
+
+        .work-card--glass {
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%), url('images/minimal/project-2.png') center/cover no-repeat;
+            color: var(--white);
+        }
+
+        .work-card--vessel {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%), url('images/minimal/project-3.png') center/cover no-repeat;
+            color: var(--white);
+        }
+
+        .work-card--horizon {
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%), url('images/minimal/project-4.png') center/cover no-repeat;
+            color: var(--white);
+        }
+
+        .work-card--solace {
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%), url('images/minimal/project-5.png') center/cover no-repeat;
+            color: var(--white);
+        }
+
+        /* ===== PHILOSOPHY ===== */
+        .philosophy {
+            padding: 10rem 3rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .philosophy-text {
+            width: 40%;
+            margin-left: 40%;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            font-weight: 300;
+            line-height: 2.5;
+            color: var(--charcoal);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease, transform 2s ease;
+        }
+
+        .philosophy-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .philosophy-text .drop-cap {
+            float: left;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1;
+            color: var(--sage);
+            margin-right: 0.3rem;
+            margin-top: 0.15em;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 12rem 3rem 6rem;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .contact-line {
+            width: 60px;
+            height: 1px;
+            background: var(--sage);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .contact-line.visible {
+            opacity: 1;
+        }
+
+        .contact-email {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 5rem);
+            font-weight: 300;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 1.5s ease 0.3s, transform 2s ease 0.3s;
+        }
+
+        .contact-email.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-email:hover {
+            color: var(--sage);
+            transition: color 0.6s ease;
+        }
+
+        .contact-copy {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            color: var(--charcoal);
+            opacity: 0.15;
+            margin-top: 4rem;
+        }
+
+        /* ===== PRESET BADGE ===== */
+        .preset-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.625rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            text-decoration: none;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.15;
+            padding: 0.5rem 1rem;
+            transition: opacity 1s ease;
+        }
+
+        .preset-badge:hover {
+            opacity: 0.5;
+        }
+
+        /* ===== FADE-OUT ON SCROLL ===== */
+        .fade-section {
+            transition: opacity 0.8s ease;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .work-card {
+                min-width: 90vw;
+                height: 60vh;
+                padding: 2rem;
+            }
+
+            .works-container {
+                padding: 0 1.5rem;
+                gap: 1rem;
+            }
+
+            .works-label {
+                padding: 0 1.5rem;
+            }
+
+            .philosophy {
+                padding: 6rem 1.5rem;
+            }
+
+            .philosophy-text {
+                width: 80%;
+                margin-left: 10%;
+                line-height: 2.2;
+            }
+
+            .contact {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .preset-badge {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+
+            .work-card {
+                min-width: 92vw;
+                height: 50vh;
+            }
+
+            .philosophy-text {
+                width: 90%;
+                margin-left: 5%;
+            }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-delay: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .hero-subtitle {
+                opacity: 0.4;
+            }
+
+            .philosophy-text,
+            .contact-email,
+            .contact-line,
+            .work-card {
+                opacity: 1;
+                transform: none;
+                clip-path: inset(0 0 0 0);
+            }
+
+            .work-card-label,
+            .work-card-title {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Ineffable Nav Bar -->
+<div id="ineffable-topbar" style="position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1.5rem;background:rgba(5,5,8,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,193,59,0.1);font-family:'Outfit',system-ui,sans-serif;">
+  <a href="/" style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;color:#ffc13b;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;">
+    <span style="width:7px;height:7px;background:#ffc13b;border-radius:2px;display:inline-block;"></span>
+    Ineffable
+  </a>
+  <a href="/websites" style="text-decoration:none;color:rgba(255,255,255,0.5);font-size:0.7rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#ffc13b'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+    ← Back to Tailored Websites
+  </a>
+</div>
+<div style="height:42px;"></div>
+<!-- /Ineffable Nav Bar -->
+
+    <!-- NAV -->
+    <nav class="nav">
+        <ul class="nav-links">
+            <li><a href="#works">Works</a></li>
+            <li><a href="#philosophy">Philosophy</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="./" class="back-link">&#8592; Gallery</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1 class="hero-title">AURA</h1>
+        <p class="hero-subtitle">Architecture &amp; Design</p>
+    </section>
+
+    <!-- SELECTED WORKS -->
+    <section class="works" id="works">
+        <p class="works-label">Selected Works</p>
+        <div class="scroll-arrow" id="scrollArrow" onclick="document.getElementById('worksContainer').scrollBy({left: window.innerWidth * 0.8, behavior: 'smooth'})">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="works-container" id="worksContainer">
+            <div class="work-card work-card--meridian fade-section">
+                <div>
+                    <p class="work-card-label">Residential &mdash; 2023</p>
+                    <h2 class="work-card-title">Meridian House</h2>
+                </div>
+            </div>
+            <div class="work-card work-card--glass fade-section">
+                <div>
+                    <p class="work-card-label">Cultural &mdash; 2022</p>
+                    <h2 class="work-card-title">The Glass Pavilion</h2>
+                </div>
+            </div>
+            <div class="work-card work-card--vessel fade-section">
+                <div>
+                    <p class="work-card-label">Commercial &mdash; 2024</p>
+                    <h2 class="work-card-title">Vessel 42</h2>
+                </div>
+            </div>
+            <div class="work-card work-card--horizon fade-section">
+                <div>
+                    <p class="work-card-label">Mixed Use &mdash; 2023</p>
+                    <h2 class="work-card-title">Horizon Tower</h2>
+                </div>
+            </div>
+            <div class="work-card work-card--solace fade-section">
+                <div>
+                    <p class="work-card-label">Residential &mdash; 2024</p>
+                    <h2 class="work-card-title">Casa Solace</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="philosophy" id="philosophy">
+        <p class="philosophy-text fade-section"><span class="drop-cap">W</span>e believe architecture should disappear into its environment. Our practice is rooted in the tension between presence and absence&thinsp;&mdash;&thinsp;creating spaces that feel inevitable, as though they&rsquo;ve always existed.</p>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact-line"></div>
+        <a href="mailto:hello@aura-arch.com" class="contact-email">hello@aura-arch.com</a>
+        <p class="contact-copy">&copy; 2024 Aura Architecture</p>
+    </section>
+
+    <!-- PRESET BADGE -->
+    <a href="./" class="preset-badge">Minimal Clean Preset</a>
+
+    <script>
+        // ===== INTERSECTION OBSERVER — VISIBILITY =====
+        const observerOptions = {
+            threshold: [0, 0.15, 0.3, 0.5, 0.7, 1]
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        // Animate work cards on horizontal scroll
+        const worksContainer = document.getElementById('worksContainer');
+        const workCards = document.querySelectorAll('.work-card');
+        workCards.forEach((card, i) => {
+            if (i === 0) {
+                card.classList.add('visible');
+            } else {
+                card.classList.add('animate-in');
+            }
+        });
+        // Reveal cards as they scroll into view horizontally
+        function checkHorizontalVisibility() {
+            if (!worksContainer) return;
+            const containerRect = worksContainer.getBoundingClientRect();
+            workCards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                if (cardRect.left < containerRect.right - 100) {
+                    card.classList.add('visible');
+                }
+            });
+        }
+        if (worksContainer) {
+            const scrollArrow = document.getElementById('scrollArrow');
+            worksContainer.addEventListener('scroll', () => {
+                checkHorizontalVisibility();
+                // Hide arrow when near end
+                if (scrollArrow) {
+                    const atEnd = worksContainer.scrollLeft + worksContainer.clientWidth >= worksContainer.scrollWidth - 100;
+                    scrollArrow.classList.toggle('hidden', atEnd);
+                }
+            });
+            setTimeout(checkHorizontalVisibility, 500);
+        }
+
+        // Observe philosophy text
+        const philText = document.querySelector('.philosophy-text');
+        if (philText) revealObserver.observe(philText);
+
+        // Observe contact elements
+        const contactLine = document.querySelector('.contact-line');
+        const contactEmail = document.querySelector('.contact-email');
+        const contactObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.3 });
+
+        if (contactLine) contactObserver.observe(contactLine);
+        if (contactEmail) contactObserver.observe(contactEmail);
+
+        // ===== FADE-OUT ON SCROLL =====
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.target.classList.contains('fade-section')) {
+                    const ratio = entry.intersectionRatio;
+                    if (ratio < 0.2 && !entry.isIntersecting) {
+                        entry.target.style.opacity = '0.2';
+                    } else {
+                        entry.target.style.opacity = '';
+                    }
+                }
+            });
+        }, { threshold: [0, 0.1, 0.2, 0.3, 0.5, 1] });
+
+        document.querySelectorAll('.fade-section').forEach(el => {
+            fadeObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+import { services } from '../data/services';
+import { stats, projects } from '../data/stats';
+---
+
+<BaseLayout title="Custom Software. Tailored Websites. Zero Busywork.">
+  <!-- Hero Section -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        <span class="badge-text font-mono">Available for Projects</span>
+      </div>
+
+      <h1 class="hero-title reveal" data-delay="0.1">
+        <span class="hero-title-line">
+          <span class="title-word" id="logoReveal">I</span><span class="title-reveal">neffable</span>
+        </span>
+      </h1>
+
+      <p class="hero-tagline font-mono reveal" data-delay="0.2">
+        // <span class="text-gold">Custom Software. Tailored Websites. Zero Busywork.</span> //
+      </p>
+
+      <p class="hero-sub reveal" data-delay="0.3">
+        I build what others outsource — from 30-minute Excel fixes to full AI automation
+        systems. If it's manual and repetitive, I make it disappear.
+      </p>
+
+      <div class="hero-actions reveal" data-delay="0.4">
+        <a href="#work" class="btn btn-primary">See What I Build</a>
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">
+          Tell Me Your Problem
+        </a>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar reveal" data-delay="0.5">
+        {stats.map(stat => (
+          <div class="stat">
+            <span class={`stat-value text-${stat.color}`}>{stat.value}</span>
+            <span class="stat-label font-mono">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Overview -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="What I Build" />
+        <h2 class="text-heading reveal">From quick fixes to complete systems</h2>
+      </div>
+
+      <div class="services-grid">
+        {services.map((service, i) => (
+          <a href={service.href} class="service-card card reveal" data-delay={`${i * 0.1}`}>
+            <div class={`service-icon text-${service.color}`}>{service.icon}</div>
+            <h3 class="service-title">{service.title}</h3>
+            <p class="service-desc">{service.description}</p>
+            <span class={`service-stat font-mono text-${service.color}`}>{service.stats}</span>
+            <span class="service-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="section-lg" id="work">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Proof, Not Promises" color="cyan" />
+        <h2 class="text-heading reveal">Real systems solving real problems</h2>
+      </div>
+
+      {projects.map((project, i) => (
+        <div class={`project-showcase ${i % 2 === 1 ? 'project-reverse' : ''} reveal`}>
+          <div class="project-info">
+            <SectionLabel text={project.category} color={i === 0 ? 'gold' : i === 1 ? 'cyan' : 'green'} />
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-desc text-body">{project.description}</p>
+            <div class="project-stats">
+              {project.stats.map(stat => (
+                <div class="project-stat">
+                  <span class="project-stat-value text-cyan font-mono">{stat.value}</span>
+                  <span class="project-stat-label font-mono">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+            <div class="project-tags">
+              {project.tags.map(tag => (
+                <span class="project-tag font-mono">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <div class="project-media">
+            {project.image ? (
+              <img src={project.image} alt={project.title} loading="lazy" class="project-image" />
+            ) : project.video ? (
+              <video src={project.video} controls preload="metadata" class="project-video">
+                <track kind="captions" />
+              </video>
+            ) : null}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Time Savings Section -->
+  <section class="section-lg reality-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Reality" />
+        <h2 class="text-heading reveal" style="text-align: center;">You're Losing More Time Than You Think</h2>
+        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 700px; margin: 1rem auto 0;">
+          It's not that you chose manual work. You just don't know there's another way.
+        </p>
+      </div>
+
+      <div class="math-card card reveal" data-delay="0.2">
+        <div class="math-label font-mono tag" style="text-align: center; margin: 0 auto 2rem;">The Math</div>
+        <div class="math-grid">
+          <div class="math-employees">
+            <div class="math-employee">
+              <span class="math-emp-name text-gold font-mono">Employee A</span>
+              <span class="math-emp-task">Recurring task</span>
+              <span class="math-emp-time font-mono">~10 min/day</span>
+            </div>
+            <div class="math-employee">
+              <span class="math-emp-name text-gold font-mono">Employee B</span>
+              <span class="math-emp-task">Reformatting data</span>
+              <span class="math-emp-time font-mono">~15 min/day</span>
+            </div>
+            <div class="math-employee">
+              <span class="math-emp-name text-gold font-mono">Employee C</span>
+              <span class="math-emp-task">Manual entry</span>
+              <span class="math-emp-time font-mono">~25 min/day</span>
+            </div>
+          </div>
+          <div class="math-result">
+            <div class="math-flow">
+              <span class="math-flow-item font-mono">~5 hrs<br /><small>per week</small></span>
+              <span class="math-flow-arrow">→</span>
+              <span class="math-flow-item font-mono">20 hrs<br /><small>per month</small></span>
+              <span class="math-flow-arrow">→</span>
+              <span class="math-flow-item math-flow-highlight font-mono text-gold">240 hrs<br /><small>per year</small></span>
+            </div>
+            <p class="math-punchline">That's <span class="text-gold font-mono">six full work weeks</span> gone to tasks that could run themselves.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reality-closer reveal" data-delay="0.3">
+        <p class="text-body" style="text-align: center; font-size: var(--text-lg);">
+          Now multiply that across your whole team. Connect those fixes so systems talk to each other.
+          Suddenly you're not saving minutes — <strong class="text-gold">you're getting back entire workdays.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Tell Me Your Repetitive Task"
+    subtext="I'll show you how to eliminate it — or at least cut it in half."
+    secondaryText="Or explore what I build"
+    secondaryLink="/automation"
+  />
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid var(--border-hover);
+    margin-bottom: var(--space-md);
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .badge-text {
+    font-size: var(--text-xs);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero-title {
+    font-size: var(--text-display);
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word { color: var(--gold); }
+  .title-reveal { color: var(--text); }
+
+  .hero-tagline {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 3rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+
+  .stat { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: var(--text-2xl); font-weight: 700; }
+  .stat-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+  .section-header { margin-bottom: var(--space-lg); }
+
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+  .service-card { display: flex; flex-direction: column; gap: 0.75rem; text-decoration: none; padding: 2rem; }
+  .service-icon { font-size: 2rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-elevated); }
+  .service-title { font-size: var(--text-lg); font-weight: 700; }
+  .service-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; flex: 1; }
+  .service-stat { font-size: var(--text-xs); letter-spacing: 0.05em; }
+  .service-arrow { font-size: 1.25rem; color: var(--text-muted); transition: all 0.3s; }
+  .service-card:hover .service-arrow { color: var(--gold); transform: translateX(4px); }
+
+  .project-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; margin-bottom: var(--space-xl); }
+  .project-showcase.project-reverse { direction: rtl; }
+  .project-showcase.project-reverse > * { direction: ltr; }
+  .project-title { font-size: var(--text-2xl); font-weight: 800; margin-bottom: 1rem; }
+  .project-desc { margin-bottom: 1.5rem; }
+  .project-stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+  .project-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+  .project-stat-value { font-size: var(--text-xl); font-weight: 700; }
+  .project-stat-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .project-tag { font-size: 0.65rem; padding: 0.3rem 0.75rem; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+  .project-media { border: 1px solid var(--border); overflow: hidden; background: var(--bg-card); }
+  .project-image, .project-video { width: 100%; display: block; }
+
+  .reality-section { background: transparent; }
+  .math-card { padding: var(--space-lg); margin: var(--space-md) 0; }
+  .math-grid { display: flex; flex-direction: column; gap: 2rem; }
+  .math-employees { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .math-employee { display: flex; flex-direction: column; gap: 0.25rem; text-align: center; padding: 1rem; border: 1px solid var(--border); }
+  .math-emp-name { font-size: var(--text-sm); }
+  .math-emp-task { font-size: var(--text-sm); color: var(--text-dim); }
+  .math-emp-time { font-size: var(--text-sm); color: var(--text-secondary); }
+  .math-flow { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .math-flow-item { font-size: var(--text-xl); text-align: center; }
+  .math-flow-item small { display: block; font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .math-flow-highlight { font-size: var(--text-2xl); font-weight: 700; }
+  .math-flow-arrow { color: var(--text-muted); font-size: 1.5rem; }
+  .math-punchline { text-align: center; font-size: var(--text-base); color: var(--text-secondary); }
+  .reality-closer { margin-top: var(--space-md); }
+
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-showcase { grid-template-columns: 1fr; }
+    .project-showcase.project-reverse { direction: ltr; }
+    .stats-bar { gap: 2rem; padding: 1.5rem 2rem; }
+  }
+
+  @media (max-width: 768px) {
+    .hero { min-height: auto; padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 2rem; }
+    .stats-bar { flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+    .math-employees { grid-template-columns: 1fr; }
+    .math-flow { flex-wrap: wrap; gap: 1rem; }
+    .project-stats { flex-wrap: wrap; gap: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .hero-actions .btn { width: 100%; }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  function initHeroAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const reveal = document.querySelector('.title-reveal') as HTMLElement;
+    if (!reveal) return;
+
+    gsap.fromTo(reveal,
+      { opacity: 0, width: 0, overflow: 'hidden', display: 'inline-block' },
+      { opacity: 1, width: 'auto', duration: 1.2, delay: 0.8, ease: 'power3.out' }
+    );
+  }
+
+  initHeroAnimations();
+  document.addEventListener('astro:after-swap', initHeroAnimations);
+</script>

@@ -1,0 +1,145 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  features?: string[];
+}
+
+const { title, description, features = [] } = Astro.props;
+---
+
+<div class="coming-soon card reveal">
+  <div class="coming-soon-badge tag">Coming Soon</div>
+  <h3 class="coming-soon-title">{title}</h3>
+  <p class="coming-soon-desc">{description}</p>
+
+  {features.length > 0 && (
+    <ul class="coming-soon-features">
+      {features.map(f => (
+        <li class="coming-soon-feature">
+          <span class="feature-dot"></span>
+          {f}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <div class="coming-soon-actions">
+    <form class="email-capture" data-netlify="true" name="notify" method="POST">
+      <input type="email" name="email" placeholder="Get early access" required class="email-input" />
+      <button type="submit" class="email-btn">Notify Me</button>
+    </form>
+    <p class="coming-soon-alt">
+      Want this now? <a href="https://calendly.com/luis-aviles-khn" target="_blank" rel="noopener">Book a call</a> and I'll do it manually for you.
+    </p>
+  </div>
+</div>
+
+<style>
+  .coming-soon {
+    text-align: center;
+    padding: var(--space-lg);
+    border-style: dashed;
+  }
+
+  .coming-soon-badge {
+    margin: 0 auto 1.5rem;
+  }
+
+  .coming-soon-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .coming-soon-desc {
+    font-size: var(--text-base);
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.7;
+  }
+
+  .coming-soon-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .coming-soon-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .feature-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .email-capture {
+    display: flex;
+    max-width: 400px;
+    margin: 0 auto 1rem;
+    border: 1px solid var(--border-hover);
+    overflow: hidden;
+  }
+
+  .email-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    background: var(--bg-elevated);
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    outline: none;
+  }
+
+  .email-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .email-input:focus {
+    background: var(--bg-card);
+  }
+
+  .email-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--gold);
+    color: var(--bg-deep);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .email-btn:hover {
+    background: #ffcf5e;
+  }
+
+  .coming-soon-alt {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .coming-soon-alt a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .coming-soon-alt a:hover {
+    color: #ffcf5e;
+  }
+</style>

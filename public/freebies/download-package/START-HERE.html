@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Here - AI Operations Starter Kit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #12121a;
+            --gold: #ffc13b;
+            --cyan: #00e5ff;
+            --green: #00ff88;
+            --text: #ffffff;
+            --text-dim: #a0a0b0;
+            --border: rgba(255, 193, 59, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 60px 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--green);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        h1 span { color: var(--gold); }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--text);
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        /* Package contents */
+        .package-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .package-icon {
+            font-size: 2rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .package-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .package-content p {
+            font-size: 0.9375rem;
+            margin: 0;
+        }
+
+        .package-content .path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            margin-top: 0.5rem;
+        }
+
+        /* Quick start steps */
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            min-width: 40px;
+        }
+
+        .step-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            font-size: 0.9375rem;
+        }
+
+        /* PDF instructions */
+        .pdf-box {
+            background: linear-gradient(135deg, rgba(255, 193, 59, 0.1) 0%, rgba(0, 229, 255, 0.05) 100%);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .pdf-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .pdf-box ol {
+            margin: 0 0 0 1.25rem;
+            color: var(--text-dim);
+        }
+
+        .pdf-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">Welcome</div>
+
+        <h1>AI Operations<br><span>Starter Kit</span></h1>
+
+        <p class="subtitle">Everything you need to start building AI-powered workflows that last.</p>
+
+        <h2>What's In This Package</h2>
+
+        <div class="package-item">
+            <div class="package-icon">📚</div>
+            <div class="package-content">
+                <h3>Three Complete Guides</h3>
+                <p>In-depth guides on AI orchestration, building lasting tools, and 10 ready-to-use automation templates.</p>
+                <div class="path">📁 guides/</div>
+            </div>
+        </div>
+
+        <div class="package-item">
+            <div class="package-icon">🛠️</div>
+            <div class="package-content">
+                <h3>Orchestrator Template</h3>
+                <p>The complete template I use on every project: CLAUDE.md, state files, and Python tools ready to customize.</p>
+                <div class="path">📁 template/</div>
+            </div>
+        </div>
+
+        <div class="package-item">
+            <div class="package-icon">🖼️</div>
+            <div class="package-content">
+                <h3>Diagrams & Visuals</h3>
+                <p>All the diagrams from the guides - useful for reference or presentations.</p>
+                <div class="path">📁 images/</div>
+            </div>
+        </div>
+
+        <h2>Quick Start</h2>
+
+        <div class="step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+                <h4>Read the Guides</h4>
+                <p>Start with <strong>01-orchestrator-blueprint.html</strong> to understand the system. Open in any browser.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+                <h4>Copy the Template</h4>
+                <p>Copy the <strong>template/</strong> folder into your project. Rename it to <strong>.claude/</strong> if using Claude Code.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+                <h4>Customize CLAUDE.md</h4>
+                <p>Fill in the PROJECT-SPECIFIC section with your project's details, goals, and tools.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">04</div>
+            <div class="step-content">
+                <h4>Try a Pipeline Run</h4>
+                <p>Test with a small task: <strong>/analyze</strong> → <strong>/plan</strong> → <strong>/implement</strong></p>
+            </div>
+        </div>
+
+        <div class="pdf-box">
+            <h3>Want PDF Versions?</h3>
+            <ol>
+                <li>Open any guide in your browser</li>
+                <li>Press <strong>Ctrl+P</strong> (or Cmd+P on Mac)</li>
+                <li>Destination: <strong>"Save as PDF"</strong></li>
+                <li>Check <strong>"Background graphics"</strong></li>
+                <li>Set Margins to <strong>"None"</strong></li>
+                <li>Uncheck <strong>"Headers and footers"</strong></li>
+                <li>Save</li>
+            </ol>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">Each guide has print instructions at the top that disappear in the PDF.</p>
+        </div>
+
+        <h2>The Guides</h2>
+
+        <div class="package-item">
+            <div class="package-icon" style="color: var(--gold);">01</div>
+            <div class="package-content">
+                <h3>The AI Orchestrator Blueprint</h3>
+                <p>How to build a system that remembers context, enforces quality, and coordinates multiple agents. The foundation.</p>
+            </div>
+        </div>
+
+        <div class="package-item">
+            <div class="package-icon" style="color: var(--cyan);">02</div>
+            <div class="package-content">
+                <h3>Build Tools, Don't Rent Capability</h3>
+                <p>The mindset shift: have AI create lasting tools instead of doing tasks directly. Own your automation.</p>
+            </div>
+        </div>
+
+        <div class="package-item">
+            <div class="package-icon" style="color: var(--green);">03</div>
+            <div class="package-content">
+                <h3>DIY Automation Starter Kit</h3>
+                <p>10 copy-paste automation templates that work with any AI. No coding experience required.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
+            <p style="color: var(--text-dim);">From Spreadsheets to Systems</p>
+        </div>
+    </div>
+</body>
+</html>

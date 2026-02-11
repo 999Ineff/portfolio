@@ -1,0 +1,127 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import BackgroundEffects from '../components/BackgroundEffects.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Ineffable — Custom Software. Tailored Websites. Zero Busywork.',
+  ogImage
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://ineffable.dev');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | Ineffable</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- SEO -->
+  <meta name="description" content={description}>
+  <meta name="author" content="Luis Aviles">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href={canonicalURL.toString()}>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={`${title} | Ineffable`}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalURL.toString()}>
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"}>
+
+  <!-- Security -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://assets.calendly.com">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- View Transitions -->
+  <ViewTransitions />
+</head>
+<body>
+  <BackgroundEffects />
+  <Nav />
+
+  <main id="main-content" transition:animate="fade">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <!-- GSAP Core + ScrollTrigger (loaded globally) -->
+  <script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Make gsap available globally for components
+    window.gsap = gsap;
+    window.ScrollTrigger = ScrollTrigger;
+
+    // Global scroll reveal animation
+    function initScrollReveal() {
+      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      reveals.forEach((el, i) => {
+        const isLeft = el.classList.contains('reveal-left');
+        const isRight = el.classList.contains('reveal-right');
+        const isScale = el.classList.contains('reveal-scale');
+
+        const from = {
+          opacity: 0,
+          y: isLeft || isRight ? 0 : 40,
+          x: isLeft ? -40 : isRight ? 40 : 0,
+          scale: isScale ? 0.9 : 1,
+        };
+
+        gsap.fromTo(el, from, {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          },
+          delay: el.dataset.delay ? parseFloat(el.dataset.delay) : 0,
+        });
+      });
+    }
+
+    // Run on initial load and after view transitions
+    initScrollReveal();
+    document.addEventListener('astro:after-swap', () => {
+      ScrollTrigger.refresh();
+      initScrollReveal();
+    });
+  </script>
+</body>
+</html>

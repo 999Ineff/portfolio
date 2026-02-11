@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terranova Lotes — Tierra Developer Style Demo</title>
+    <meta name="description" content="Tierra Developer design preset demo — Terranova Lotes residential land developer. Navy, gold accents, lot inventory, WhatsApp CTA.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --navy: #1A365D;
+            --navy-dark: #0F1F3D;
+            --gold: #D4A574;
+            --gold-light: #E8C9A8;
+            --sand: #FAF5EF;
+            --sand-dark: #F0E6D6;
+            --green-avail: #16A34A;
+            --amber-reserved: #F59E0B;
+            --rose-sold: #E11D48;
+            --whatsapp: #25D366;
+            --text-dark: #1A365D;
+            --text-body: #3D4F6F;
+            --text-light: #8899AA;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--sand);
+            color: var(--text-body);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+        }
+        .top-bar.scrolled {
+            background: rgba(15, 31, 61, 0.96);
+            backdrop-filter: blur(20px);
+            padding: 0.875rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.375rem;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--gold);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: var(--navy-dark);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-right {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--gold); }
+        .nav-wa-btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--white);
+            background: var(--whatsapp);
+            padding: 0.625rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-wa-btn:hover {
+            background: #20BD5A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26,54,93,0.75), rgba(26,54,93,0.8)), url('images/tierra/aerial.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 7rem 3rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 30% 50%, rgba(212,165,116,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 30%, rgba(26,54,93,0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--sand), transparent);
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            flex: 0 0 58%;
+            max-width: 58%;
+        }
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .hero-label::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 1.25rem;
+        }
+        .hero-title .gold { color: var(--gold); }
+        .hero-sub {
+            font-size: 1.125rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            max-width: 520px;
+        }
+        .hero-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--whatsapp);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 1rem 2.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+        .hero-wa-btn:hover {
+            background: #20BD5A;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(37,211,102,0.35);
+        }
+        @keyframes gentlePulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
+            50% { box-shadow: 0 4px 25px rgba(37,211,102,0.5); }
+        }
+        .hero-wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .hero-trust {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero-trust-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.02em;
+        }
+        .hero-trust-item strong {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        /* Pricing Card */
+        .hero-card {
+            flex: 0 0 38%;
+            max-width: 38%;
+        }
+        .pricing-card {
+            background: var(--sand);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .pricing-card-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .pricing-card-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        .pricing-card-sub {
+            font-size: 0.9375rem;
+            color: var(--text-light);
+            margin-bottom: 1.75rem;
+        }
+        .pricing-card-detail {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--text-body);
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--sand-dark);
+        }
+        .pricing-card-detail:last-of-type {
+            margin-bottom: 1.75rem;
+        }
+        .pricing-card .hero-wa-btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 0.9375rem;
+        }
+
+        /* ===== LOT MAP ===== */
+        .lot-map-section {
+            padding: 6rem 3rem;
+            background: var(--sand);
+        }
+        .lot-map-section .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .section-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            line-height: 1.15;
+        }
+        .section-sub {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        .map-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        .lot-map-container {
+            flex: 1;
+            height: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 2px solid rgba(26,54,93,0.15);
+            position: relative;
+        }
+        .lot-map-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.4s ease-out;
+        }
+        /* lot-map-image::after removed - not applicable to img elements */
+        .map-legend {
+            flex: 0 0 220px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid rgba(26,54,93,0.08);
+        }
+        .map-legend h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-body);
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .legend-dot.available { background: var(--green-avail); }
+        .legend-dot.reserved { background: var(--amber-reserved); }
+        .legend-dot.sold { background: var(--rose-sold); }
+        .legend-stat {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--sand-dark);
+        }
+        .legend-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--green-avail);
+        }
+        .legend-stat-label {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* ===== LOT GRID ===== */
+        .lots-section {
+            padding: 6rem 3rem;
+            background: var(--white);
+        }
+        .lots-section .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .lots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+        .lot-card {
+            background: var(--sand);
+            border: 1px solid rgba(26,54,93,0.08);
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            overflow: hidden;
+        }
+        .lot-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(26,54,93,0.1);
+            border-color: var(--gold);
+        }
+        .lot-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .lot-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            background: var(--gold);
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            letter-spacing: 0.03em;
+        }
+        .lot-status {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .lot-status.available {
+            background: rgba(22,163,74,0.1);
+            color: var(--green-avail);
+        }
+        .lot-status.reserved {
+            background: rgba(245,158,11,0.1);
+            color: var(--amber-reserved);
+        }
+        .lot-status.sold {
+            background: rgba(225,29,72,0.1);
+            color: var(--rose-sold);
+        }
+        .lot-size {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .lot-size span {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        .lot-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 0.375rem;
+        }
+        .lot-location {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            margin-bottom: 1.25rem;
+        }
+        .lot-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            padding: 0.625rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .lot-btn.available-btn {
+            background: var(--gold);
+            color: var(--navy-dark);
+        }
+        .lot-btn.available-btn:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .lot-btn.reserved-btn {
+            background: rgba(245,158,11,0.15);
+            color: var(--amber-reserved);
+            cursor: default;
+        }
+        .lot-btn.sold-btn {
+            background: rgba(225,29,72,0.1);
+            color: var(--rose-sold);
+            cursor: default;
+        }
+
+        /* ===== LOCATION ===== */
+        .location-section {
+            padding: 6rem 3rem;
+            background: var(--navy);
+            color: var(--white);
+        }
+        .location-section .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .location-section .section-heading { color: var(--white); }
+        .location-section .section-sub { color: rgba(255,255,255,0.5); }
+        .poi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .poi-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            transition: all 0.4s;
+        }
+        .poi-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+        .poi-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .poi-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+        .poi-detail {
+            display: flex;
+            gap: 1.25rem;
+        }
+        .poi-distance, .poi-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            color: var(--gold-light);
+        }
+        .poi-time { color: rgba(255,255,255,0.4); }
+
+        /* ===== PAYMENT ===== */
+        .payment-section {
+            padding: 6rem 3rem;
+            background: var(--sand);
+        }
+        .payment-section .section-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .payment-layout {
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+        .payment-info {
+            flex: 0 0 55%;
+        }
+        .payment-detail-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        .payment-detail-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--sand-dark);
+            font-size: 1rem;
+        }
+        .payment-detail-list li .check {
+            width: 28px;
+            height: 28px;
+            background: rgba(22,163,74,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green-avail);
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        .payment-card-wrap {
+            flex: 0 0 42%;
+        }
+        .payment-card {
+            background: var(--white);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
+        .payment-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--sand);
+            font-size: 0.9375rem;
+        }
+        .payment-row-label { color: var(--text-light); }
+        .payment-row-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .bank-accounts {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--sand);
+        }
+        .bank-accounts h5 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+        .bank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+        }
+        .bank-name {
+            font-size: 0.875rem;
+            color: var(--text-body);
+            font-weight: 500;
+        }
+        .account-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== CTA ===== */
+        .final-cta {
+            padding: 6rem 3rem;
+            background: var(--navy);
+            text-align: center;
+        }
+        .final-cta .section-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .final-cta h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+        .final-cta h2 .gold { color: var(--gold); }
+        .cta-options {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .cta-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--whatsapp);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .cta-wa-btn:hover {
+            background: #20BD5A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37,211,102,0.35);
+        }
+        .cta-wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .cta-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .cta-phone:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .cta-info-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy-dark);
+            background: var(--gold);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .cta-info-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: var(--navy-dark);
+            padding: 3rem;
+        }
+        .footer-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .footer-wa {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--whatsapp);
+            text-decoration: none;
+        }
+        .footer-wa:hover { text-decoration: underline; }
+        .footer-credit {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.3);
+        }
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        .footer-social a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+        .footer-social a:hover { color: var(--gold); }
+        .footer-lang {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .wa-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 98;
+            width: 60px;
+            height: 60px;
+            background: var(--whatsapp);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+            text-decoration: none;
+            transition: all 0.3s;
+            animation: waPulse 2.5s ease-in-out infinite;
+        }
+        .wa-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+        }
+        .wa-float svg { width: 30px; height: 30px; fill: var(--white); }
+        @keyframes waPulse {
+            0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 6px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
+        }
+
+        /* ===== PRESET BADGE ===== */
+        .preset-badge {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            z-index: 97;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6875rem;
+            color: var(--gold);
+            background: var(--navy);
+            border: 1px solid rgba(212,165,116,0.3);
+            padding: 0.625rem 1.25rem;
+            border-radius: 4px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .preset-badge:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212,165,116,0.15);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .hero-inner { flex-direction: column; text-align: center; }
+            .hero-content { flex: 1; max-width: 100%; }
+            .hero-content .hero-label { justify-content: center; }
+            .hero-sub { margin-left: auto; margin-right: auto; }
+            .hero-trust { justify-content: center; flex-wrap: wrap; }
+            .hero-card { flex: 1; max-width: 420px; }
+            .lots-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .top-bar { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero { padding: 6rem 1.5rem 4rem; }
+            .lots-grid { grid-template-columns: repeat(2, 1fr); }
+            .poi-grid { grid-template-columns: repeat(2, 1fr); }
+            .payment-layout { flex-direction: column; }
+            .payment-info, .payment-card-wrap { flex: 1; width: 100%; }
+            .map-wrapper { flex-direction: column; }
+            .map-legend { flex: auto; }
+            .lot-map-section, .lots-section, .location-section, .payment-section { padding: 4rem 1.5rem; }
+            .cta-options { flex-direction: column; align-items: center; }
+            .hero-trust { gap: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .lots-grid { grid-template-columns: 1fr; }
+            .poi-grid { grid-template-columns: 1fr; }
+            .hero-trust { flex-direction: column; gap: 0.75rem; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            .footer-right { flex-direction: column; gap: 1rem; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .wa-float { animation: none; }
+            .hero-wa-btn { animation: none; }
+        }
+    </style>
+</head>
+<body>
+<!-- Ineffable Nav Bar -->
+<div id="ineffable-topbar" style="position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:space-between;padding:0.6rem 1.5rem;background:rgba(5,5,8,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,193,59,0.1);font-family:'Outfit',system-ui,sans-serif;">
+  <a href="/" style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;color:#ffc13b;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;">
+    <span style="width:7px;height:7px;background:#ffc13b;border-radius:2px;display:inline-block;"></span>
+    Ineffable
+  </a>
+  <a href="/websites" style="text-decoration:none;color:rgba(255,255,255,0.5);font-size:0.7rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#ffc13b'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+    ← Back to Tailored Websites
+  </a>
+</div>
+<div style="height:42px;"></div>
+<!-- /Ineffable Nav Bar -->
+
+    <!-- NAV -->
+    <header class="top-bar" id="topBar">
+        <a href="./" class="logo">
+            <div class="logo-icon">T</div>
+            Terranova
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#mapa">Mapa</a></li>
+                <li><a href="#lotes">Lotes</a></li>
+                <li><a href="#ubicacion">Ubicacion</a></li>
+                <li><a href="#pagos">Pagos</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <a href="./" class="back-link">&larr; Galeria</a>
+            <a href="https://wa.me/50499999999" class="nav-wa-btn">
+                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-label">Terranova Lotes Residenciales</div>
+                <h1 class="hero-title">
+                    Compra Tu Terreno<br>en <span class="gold">Terranova</span>
+                </h1>
+                <p class="hero-sub">La mejor inversion para tu familia. Lotes desde 200 varas cuadradas con financiamiento directo. Sin banco, sin fiador.</p>
+                <a href="https://wa.me/50499999999" class="hero-wa-btn">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                    Consultar Disponibilidad
+                </a>
+                <div class="hero-trust">
+                    <div class="hero-trust-item"><strong>200+</strong> Lotes</div>
+                    <div class="hero-trust-item"><strong>5</strong> Etapas</div>
+                    <div class="hero-trust-item"><strong>Financiamiento</strong> Directo</div>
+                </div>
+            </div>
+            <div class="hero-card">
+                <div class="pricing-card" id="pricingCard">
+                    <div class="pricing-card-label">Inversion Desde</div>
+                    <div class="pricing-card-price">L. 5,000<span style="font-size:1rem;color:var(--text-light);font-weight:400;">/mes</span></div>
+                    <div class="pricing-card-sub">Enganche desde 5%</div>
+                    <div class="pricing-card-detail">Lotes desde 200 v&sup2;</div>
+                    <div class="pricing-card-detail">Plazo hasta 7 anios</div>
+                    <div class="pricing-card-detail">Sin intereses 6 meses</div>
+                    <a href="https://wa.me/50499999999" class="hero-wa-btn" style="animation-delay:1s;">
+                        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                        Reservar Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOT MAP -->
+    <section class="lot-map-section" id="mapa">
+        <div class="section-inner">
+            <div class="section-label">Mapa Interactivo</div>
+            <h2 class="section-heading">Explora el Proyecto</h2>
+            <p class="section-sub">Pasa el cursor sobre el mapa para explorar cada zona del proyecto Terranova.</p>
+            <div class="map-wrapper">
+                <div class="lot-map-container">
+                    <img src="images/tierra/lot-map.png" alt="Mapa de Lotes Terranova" class="lot-map-image" id="lotMapImage" style="width: 100%; height: auto; display: block;">
+                </div>
+                <div class="map-legend">
+                    <h4>Estado de Lotes</h4>
+                    <div class="legend-item">
+                        <div class="legend-dot available"></div>
+                        Disponible
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot reserved"></div>
+                        Reservado
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot sold"></div>
+                        Vendido
+                    </div>
+                    <div class="legend-stat">
+                        <div class="legend-stat-value">147</div>
+                        <div class="legend-stat-label">Lotes Disponibles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOTS GRID -->
+    <section class="lots-section" id="lotes">
+        <div class="section-inner">
+            <div class="section-label">Inventario</div>
+            <h2 class="section-heading">Lotes Disponibles</h2>
+            <p class="section-sub">Selecciona tu lote ideal. Todos incluyen escritura publica y acceso pavimentado.</p>
+            <div class="lots-grid">
+                <!-- Lot 1 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">A-01</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">250 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 350,000</div>
+                    <div class="lot-location">Etapa 1 &middot; Esquina</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 2 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">A-02</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">200 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 280,000</div>
+                    <div class="lot-location">Etapa 1 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 3 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">A-03</div>
+                        <div class="lot-status reserved">Reservado</div>
+                    </div>
+                    <div class="lot-size">300 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 420,000</div>
+                    <div class="lot-location">Etapa 1 &middot; Esquina</div>
+                    <button class="lot-btn reserved-btn">Reservado</button>
+                </div>
+                <!-- Lot 4 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">B-01</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">225 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 315,000</div>
+                    <div class="lot-location">Etapa 2 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 5 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">B-02</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">275 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 385,000</div>
+                    <div class="lot-location">Etapa 2 &middot; Esquina</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 6 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">B-03</div>
+                        <div class="lot-status reserved">Reservado</div>
+                    </div>
+                    <div class="lot-size">210 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 294,000</div>
+                    <div class="lot-location">Etapa 2 &middot; Intermedio</div>
+                    <button class="lot-btn reserved-btn">Reservado</button>
+                </div>
+                <!-- Lot 7 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">C-01</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">240 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 336,000</div>
+                    <div class="lot-location">Etapa 3 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 8 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">C-02</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">320 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 448,000</div>
+                    <div class="lot-location">Etapa 3 &middot; Esquina Doble</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 9 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">C-03</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">200 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 280,000</div>
+                    <div class="lot-location">Etapa 3 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 10 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">D-01</div>
+                        <div class="lot-status reserved">Reservado</div>
+                    </div>
+                    <div class="lot-size">260 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 364,000</div>
+                    <div class="lot-location">Etapa 4 &middot; Esquina</div>
+                    <button class="lot-btn reserved-btn">Reservado</button>
+                </div>
+                <!-- Lot 11 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">D-02</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">230 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 322,000</div>
+                    <div class="lot-location">Etapa 4 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 12 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">D-03</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">215 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 301,000</div>
+                    <div class="lot-location">Etapa 4 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 13 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">E-01</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">280 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 392,000</div>
+                    <div class="lot-location">Etapa 5 &middot; Premium</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 14 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">E-02</div>
+                        <div class="lot-status sold">Vendido</div>
+                    </div>
+                    <div class="lot-size">350 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 490,000</div>
+                    <div class="lot-location">Etapa 5 &middot; Esquina Premium</div>
+                    <button class="lot-btn sold-btn">Vendido</button>
+                </div>
+                <!-- Lot 15 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">E-03</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">245 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 343,000</div>
+                    <div class="lot-location">Etapa 5 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+                <!-- Lot 16 -->
+                <div class="lot-card">
+                    <div class="lot-card-top">
+                        <div class="lot-number">E-04</div>
+                        <div class="lot-status available">Disponible</div>
+                    </div>
+                    <div class="lot-size">200 <span>v&sup2;</span></div>
+                    <div class="lot-price">L. 280,000</div>
+                    <div class="lot-location">Etapa 5 &middot; Intermedio</div>
+                    <button class="lot-btn available-btn">Reservar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="location-section" id="ubicacion">
+        <div class="section-inner">
+            <div class="section-label">Ubicacion Estrategica</div>
+            <h2 class="section-heading">Conectado con Todo</h2>
+            <p class="section-sub">Acceso rapido a las principales ciudades y servicios del Valle de Sula.</p>
+            <div class="poi-grid">
+                <div class="poi-card">
+                    <div class="poi-icon">&#127961;</div>
+                    <div class="poi-name">San Pedro Sula</div>
+                    <div class="poi-detail">
+                        <span class="poi-distance">15 km</span>
+                        <span class="poi-time">20 min</span>
+                    </div>
+                </div>
+                <div class="poi-card">
+                    <div class="poi-icon">&#127963;</div>
+                    <div class="poi-name">La Lima</div>
+                    <div class="poi-detail">
+                        <span class="poi-distance">8 km</span>
+                        <span class="poi-time">12 min</span>
+                    </div>
+                </div>
+                <div class="poi-card">
+                    <div class="poi-icon">&#9992;&#65039;</div>
+                    <div class="poi-name">Aeropuerto Ramon Villeda</div>
+                    <div class="poi-detail">
+                        <span class="poi-distance">25 km</span>
+                        <span class="poi-time">30 min</span>
+                    </div>
+                </div>
+                <div class="poi-card">
+                    <div class="poi-icon">&#127754;</div>
+                    <div class="poi-name">Lago de Yojoa</div>
+                    <div class="poi-detail">
+                        <span class="poi-distance">60 km</span>
+                        <span class="poi-time">1 hr</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAYMENT -->
+    <section class="payment-section" id="pagos">
+        <div class="section-inner">
+            <div class="section-label">Financiamiento</div>
+            <h2 class="section-heading">Plan de Pago Flexible</h2>
+            <p class="section-sub">Financiamiento directo sin tramites bancarios. Tu lote, a tu ritmo.</p>
+            <div class="payment-layout">
+                <div class="payment-info">
+                    <ul class="payment-detail-list">
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Financiamiento directo — sin banco, sin fiador
+                        </li>
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Enganche desde el 5% del precio total
+                        </li>
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Cuotas mensuales desde L. 5,000
+                        </li>
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Plazo de hasta 7 anios para pagar
+                        </li>
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Sin intereses los primeros 6 meses
+                        </li>
+                        <li>
+                            <span class="check">&#10003;</span>
+                            Escritura publica al completar pago
+                        </li>
+                    </ul>
+                </div>
+                <div class="payment-card-wrap">
+                    <div class="payment-card">
+                        <h4>Resumen de Pagos</h4>
+                        <div class="payment-row">
+                            <span class="payment-row-label">Enganche</span>
+                            <span class="payment-row-value">5% del precio</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="payment-row-label">Cuota Desde</span>
+                            <span class="payment-row-value">L. 5,000/mes</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="payment-row-label">Plazo Maximo</span>
+                            <span class="payment-row-value">7 anios</span>
+                        </div>
+                        <div class="payment-row">
+                            <span class="payment-row-label">Interes Inicial</span>
+                            <span class="payment-row-value">0% x 6 meses</span>
+                        </div>
+                        <div class="bank-accounts">
+                            <h5>Cuentas de Pago</h5>
+                            <div class="bank-row">
+                                <span class="bank-name">Banco Atlantida</span>
+                                <span class="account-number" data-account="200-123456-7"></span>
+                            </div>
+                            <div class="bank-row">
+                                <span class="bank-name">BAC Credomatic</span>
+                                <span class="account-number" data-account="100-987654-3"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="section-inner">
+            <h2>&iquest;Listo para invertir<br>en tu <span class="gold">futuro</span>?</h2>
+            <div class="cta-options">
+                <a href="https://wa.me/50499999999" class="cta-wa-btn">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+                    Escribir por WhatsApp
+                </a>
+                <a href="tel:+50499999999" class="cta-phone">&#128222; (504) 9999-9999</a>
+                <a href="#pagos" class="cta-info-btn">Solicitar Informacion</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="https://wa.me/50499999999" class="footer-wa">(504) 9999-9999</a>
+                <span class="footer-credit">Terranova Lotes &mdash; This is a design demo by Ops_Architect</span>
+            </div>
+            <div class="footer-right">
+                <div class="footer-social">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                </div>
+                <span class="footer-lang">ES | EN</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/50499999999" class="wa-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></svg>
+    </a>
+
+    <!-- PRESET BADGE -->
+    <a href="./" class="preset-badge">Tierra Developer Preset</a>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ===== NAV SCROLL =====
+        const topBar = document.getElementById('topBar');
+        ScrollTrigger.create({
+            start: 50,
+            onUpdate: (self) => {
+                topBar.classList.toggle('scrolled', self.scroll() > 50);
+            }
+        });
+
+        // ===== HERO ANIMATIONS =====
+        gsap.from('.hero-label', { opacity: 0, x: -30, duration: 0.7, ease: "power3.out", delay: 0.2 });
+        gsap.from('.hero-title', { opacity: 0, y: 40, duration: 0.8, ease: "power3.out", delay: 0.4 });
+        gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.7, ease: "power3.out", delay: 0.6 });
+        gsap.from('.hero-content .hero-wa-btn', { opacity: 0, y: 20, duration: 0.6, ease: "power3.out", delay: 0.8 });
+        gsap.from('.hero-trust > div', { opacity: 0, y: 15, duration: 0.5, stagger: 0.08, ease: "power3.out", delay: 1.0 });
+
+        // Pricing card scale-in
+        gsap.from('#pricingCard', {
+            opacity: 0, scale: 0.9, y: 30,
+            duration: 0.8, ease: "back.out(1.5)", delay: 0.6
+        });
+
+        // ===== MAP HOVER ZOOM =====
+        const mapContainer = document.querySelector('.lot-map-container');
+        const mapImage = document.querySelector('.lot-map-image');
+        if (mapContainer && mapImage) {
+            mapContainer.addEventListener('mousemove', (e) => {
+                const rect = mapContainer.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                mapImage.style.transformOrigin = x + '% ' + y + '%';
+                mapImage.style.transform = 'scale(1.5)';
+            });
+            mapContainer.addEventListener('mouseleave', () => {
+                mapImage.style.transform = 'scale(1)';
+            });
+        }
+
+        // Map section reveal
+        gsap.from('.lot-map-container', {
+            scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
+            opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
+        });
+        gsap.from('.map-legend', {
+            scrollTrigger: { trigger: '.lot-map-section', start: 'top 80%' },
+            opacity: 0, x: 30, duration: 0.7, ease: "power3.out", delay: 0.2
+        });
+
+        // ===== LOT CARDS BATCH STAGGER =====
+        ScrollTrigger.batch('.lot-card', {
+            onEnter: batch => gsap.from(batch, {
+                opacity: 0, y: 30, scale: 0.95,
+                stagger: 0.04, duration: 0.6, ease: "power3.out"
+            }),
+            start: "top 90%"
+        });
+
+        // ===== POI CARDS STAGGER =====
+        gsap.from('.poi-card', {
+            scrollTrigger: { trigger: '.poi-grid', start: 'top 85%' },
+            opacity: 0, y: 30,
+            stagger: 0.1, duration: 0.6, ease: "power3.out"
+        });
+
+        // ===== PAYMENT SECTION =====
+        gsap.from('.payment-detail-list li', {
+            scrollTrigger: { trigger: '.payment-detail-list', start: 'top 85%' },
+            opacity: 0, x: -20,
+            stagger: 0.08, duration: 0.5, ease: "power3.out"
+        });
+        gsap.from('.payment-card', {
+            scrollTrigger: { trigger: '.payment-card-wrap', start: 'top 85%' },
+            opacity: 0, y: 30, scale: 0.95,
+            duration: 0.7, ease: "power3.out"
+        });
+
+        // ===== BANK ACCOUNT TYPING ANIMATION =====
+        document.querySelectorAll('.account-number').forEach(el => {
+            const text = el.getAttribute('data-account');
+            el.textContent = '';
+            gsap.to(el, {
+                duration: text.length * 0.08,
+                ease: "none",
+                scrollTrigger: { trigger: el, start: "top 80%" },
+                onUpdate: function() {
+                    const progress = this.progress();
+                    const chars = Math.round(progress * text.length);
+                    el.textContent = text.substring(0, chars);
+                }
+            });
+        });
+
+        // ===== SECTION HEADINGS =====
+        document.querySelectorAll('.section-heading').forEach(heading => {
+            gsap.from(heading, {
+                scrollTrigger: { trigger: heading, start: 'top 85%' },
+                opacity: 0, y: 25, duration: 0.7, ease: "power3.out"
+            });
+        });
+        document.querySelectorAll('.section-label').forEach(label => {
+            gsap.from(label, {
+                scrollTrigger: { trigger: label, start: 'top 85%' },
+                opacity: 0, x: -20, duration: 0.6, ease: "power3.out"
+            });
+        });
+
+        // ===== FINAL CTA =====
+        gsap.from('.final-cta h2', {
+            scrollTrigger: { trigger: '.final-cta', start: 'top 80%' },
+            opacity: 0, y: 30, duration: 0.8, ease: "power3.out"
+        });
+        gsap.from('.cta-options > *', {
+            scrollTrigger: { trigger: '.cta-options', start: 'top 85%' },
+            opacity: 0, y: 20,
+            stagger: 0.1, duration: 0.6, ease: "power3.out"
+        });
+    </script>
+</body>
+</html>

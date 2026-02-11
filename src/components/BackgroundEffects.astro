@@ -1,0 +1,109 @@
+---
+// Global background: grid + orbs + noise + mouse spotlight
+---
+
+<div class="bg-effects" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="bg-noise"></div>
+  <div class="spotlight"></div>
+</div>
+
+<style>
+  .bg-effects {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 193, 59, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 193, 59, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: orbFloat 20s ease-in-out infinite;
+  }
+
+  .orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 193, 59, 0.12) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+  }
+
+  .orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+    bottom: -150px;
+    left: -150px;
+    animation-delay: -7s;
+  }
+
+  .orb-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    animation-delay: -14s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -30px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(20px, 10px) scale(1.02); }
+  }
+
+  .bg-noise {
+    position: absolute;
+    inset: 0;
+    background: var(--noise);
+    opacity: 0.03;
+  }
+
+  /* Mouse Spotlight */
+  .spotlight {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orb { animation: none; }
+    .spotlight { display: none; }
+  }
+</style>
+
+<script>
+  function initSpotlight() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const spotlight = document.querySelector('.spotlight');
+    if (!spotlight) return;
+
+    // Skip on primarily touch devices (no fine pointer)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    document.addEventListener('mousemove', (e) => {
+      (spotlight as HTMLElement).style.background =
+        `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, rgba(255,193,59,0.15), transparent 40%)`;
+    }, { passive: true });
+  }
+
+  initSpotlight();
+  document.addEventListener('astro:after-swap', initSpotlight);
+</script>

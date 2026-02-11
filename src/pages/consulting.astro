@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+---
+
+<BaseLayout
+  title="Consulting"
+  description="Operations consulting from someone who's been in the trenches. AI strategy, automation roadmapping, and process design."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Consulting" />
+      <h1 class="hero-title reveal" data-delay="0.1">
+        I've Sat in <span class="gradient-text-gold">Your Seat.</span>
+      </h1>
+      <p class="hero-sub reveal" data-delay="0.2">
+        Nine years of operations leadership means I don't just understand the tech —
+        I understand the pain points, the politics, and the real reason things don't get fixed.
+      </p>
+      <div class="hero-actions reveal" data-delay="0.3">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
+          Book a Discovery Call
+        </a>
+        <a href="#who-its-for" class="btn btn-outline">Is This for Me?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Cover -->
+  <section class="section" id="what-i-cover">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="What I Cover" color="cyan" />
+        <h2 class="text-heading reveal">Strategy meets execution</h2>
+      </div>
+
+      <div class="consulting-grid">
+        <div class="consulting-card card reveal" data-delay="0">
+          <div class="consulting-icon text-gold">&#9670;</div>
+          <h3 class="consulting-card-title">AI Strategy</h3>
+          <p class="consulting-card-desc">
+            Where AI actually adds value in your operations — not where the hype says it should.
+            Practical implementation plans, not slide decks.
+          </p>
+        </div>
+        <div class="consulting-card card reveal" data-delay="0.05">
+          <div class="consulting-icon text-cyan">&#9881;</div>
+          <h3 class="consulting-card-title">Operations Optimization</h3>
+          <p class="consulting-card-desc">
+            Find the bottlenecks costing you the most time and money. Redesign workflows
+            so the same team produces more with less friction.
+          </p>
+        </div>
+        <div class="consulting-card card reveal" data-delay="0.1">
+          <div class="consulting-icon text-green">&#9776;</div>
+          <h3 class="consulting-card-title">Automation Roadmapping</h3>
+          <p class="consulting-card-desc">
+            Prioritized plan for what to automate first, second, and never. ROI-driven
+            sequencing so every dollar spent compounds.
+          </p>
+        </div>
+        <div class="consulting-card card reveal" data-delay="0.15">
+          <div class="consulting-icon text-gold">&#9733;</div>
+          <h3 class="consulting-card-title">Team Alignment</h3>
+          <p class="consulting-card-desc">
+            Get everyone building in the same direction. Translate between technical and
+            non-technical teams so nothing gets lost.
+          </p>
+        </div>
+        <div class="consulting-card card reveal" data-delay="0.2">
+          <div class="consulting-icon text-cyan">&#9874;</div>
+          <h3 class="consulting-card-title">Tool Selection</h3>
+          <p class="consulting-card-desc">
+            Cut through the noise. Pick the right platforms, vendors, and integrations
+            based on what your team will actually use.
+          </p>
+        </div>
+        <div class="consulting-card card reveal" data-delay="0.25">
+          <div class="consulting-icon text-green">&#9635;</div>
+          <h3 class="consulting-card-title">Process Design</h3>
+          <p class="consulting-card-desc">
+            Build processes that survive contact with reality. SOPs, handoff procedures,
+            and accountability structures that stick.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It's For -->
+  <section class="section-lg persona-section" id="who-its-for">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Who It's For" color="gold" />
+        <h2 class="text-heading reveal" style="text-align: center;">Find yourself here?</h2>
+      </div>
+
+      <div class="persona-grid">
+        <div class="persona-card card reveal" data-delay="0">
+          <div class="persona-role">
+            <span class="persona-icon text-green">&#9632;</span>
+            <span class="persona-title font-mono">Employee</span>
+          </div>
+          <p class="persona-pain">
+            "I waste hours on tasks that should take minutes."
+          </p>
+          <ul class="persona-points">
+            <li>Copy-pasting between systems all day</li>
+            <li>Rebuilding the same reports every week</li>
+            <li>Manually tracking things that should update themselves</li>
+          </ul>
+          <p class="persona-solution">
+            <span class="text-gold font-mono">//</span> I identify which tasks to eliminate and build the tools to do it.
+          </p>
+        </div>
+
+        <div class="persona-card card reveal" data-delay="0.1">
+          <div class="persona-role">
+            <span class="persona-icon text-cyan">&#9632;</span>
+            <span class="persona-title font-mono">Manager</span>
+          </div>
+          <p class="persona-pain">
+            "My team's output doesn't match their effort."
+          </p>
+          <ul class="persona-points">
+            <li>Good people stuck in bad processes</li>
+            <li>Visibility gaps between teams</li>
+            <li>No way to measure what's actually working</li>
+          </ul>
+          <p class="persona-solution">
+            <span class="text-gold font-mono">//</span> I redesign workflows so effort translates to results.
+          </p>
+        </div>
+
+        <div class="persona-card card reveal" data-delay="0.2">
+          <div class="persona-role">
+            <span class="persona-icon text-gold">&#9632;</span>
+            <span class="persona-title font-mono">C-Suite</span>
+          </div>
+          <p class="persona-pain">
+            "I know tech could help but I don't know where to start."
+          </p>
+          <ul class="persona-points">
+            <li>Vendors pitch solutions to problems you're not sure you have</li>
+            <li>Every team wants different tools</li>
+            <li>Past investments haven't delivered the promised ROI</li>
+          </ul>
+          <p class="persona-solution">
+            <span class="text-gold font-mono">//</span> I translate business goals into a tech roadmap that actually delivers.
+          </p>
+        </div>
+
+        <div class="persona-card card reveal" data-delay="0.3">
+          <div class="persona-role">
+            <span class="persona-icon text-gold">&#9670;</span>
+            <span class="persona-title font-mono">Owner</span>
+          </div>
+          <p class="persona-pain">
+            "I'm running everything and building nothing."
+          </p>
+          <ul class="persona-points">
+            <li>Trapped in day-to-day operations you built</li>
+            <li>Can't step away without things breaking</li>
+            <li>Growth means more of your time, not less</li>
+          </ul>
+          <p class="persona-solution">
+            <span class="text-gold font-mono">//</span> I build the systems that let you work on the business, not in it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="How It Works" color="cyan" />
+        <h2 class="text-heading reveal" style="text-align: center;">Four steps. No fluff.</h2>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step reveal" data-delay="0">
+          <div class="process-number font-mono text-gold">01</div>
+          <div class="process-line"></div>
+          <h3 class="process-title">Discovery Call</h3>
+          <p class="process-desc">
+            30 minutes. You tell me where it hurts. I ask the questions
+            most consultants don't think to ask.
+          </p>
+        </div>
+        <div class="process-step reveal" data-delay="0.1">
+          <div class="process-number font-mono text-gold">02</div>
+          <div class="process-line"></div>
+          <h3 class="process-title">Assessment</h3>
+          <p class="process-desc">
+            I map your current workflows, data flow, and team structure.
+            Find the gaps between where you are and where you want to be.
+          </p>
+        </div>
+        <div class="process-step reveal" data-delay="0.2">
+          <div class="process-number font-mono text-gold">03</div>
+          <div class="process-line"></div>
+          <h3 class="process-title">Roadmap</h3>
+          <p class="process-desc">
+            Prioritized action plan with clear ROI projections. What to fix
+            first, what to defer, and what to skip entirely.
+          </p>
+        </div>
+        <div class="process-step reveal" data-delay="0.3">
+          <div class="process-number font-mono text-cyan">04</div>
+          <div class="process-line process-line-last"></div>
+          <h3 class="process-title">Build <span class="text-dim">(optional)</span></h3>
+          <p class="process-desc">
+            If the roadmap calls for custom software, I can build it too.
+            Strategy and execution from the same person — no handoff gaps.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tiers & Pricing (Coming Soon) -->
+  <section class="section-lg tiers-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Packages" color="gold" />
+        <h2 class="text-heading reveal" style="text-align: center; margin-bottom: var(--space-md);">Consulting Tiers</h2>
+      </div>
+      <ComingSoon
+        title="Consulting Tiers"
+        description="Structured advisory packages coming soon. From single sessions to ongoing strategic partnerships."
+        features={[
+          "One-time strategy sessions",
+          "Monthly advisory retainer",
+          "Full implementation partnership",
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- Background / Credentials -->
+  <section class="section" id="background">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Background" color="green" />
+        <h2 class="text-heading reveal" style="text-align: center;">
+          Most directors manage.<br />
+          <span class="text-gold">I manage AND build.</span>
+        </h2>
+      </div>
+
+      <div class="credentials-card card reveal" data-delay="0.1">
+        <div class="credentials-grid">
+          <div class="credential">
+            <span class="credential-value text-gold font-mono">9+</span>
+            <span class="credential-label font-mono">Years in Operations</span>
+          </div>
+          <div class="credential">
+            <span class="credential-value text-cyan font-mono">Director</span>
+            <span class="credential-label font-mono">Level Roles</span>
+          </div>
+          <div class="credential">
+            <span class="credential-value text-green font-mono">Both</span>
+            <span class="credential-label font-mono">Strategy + Execution</span>
+          </div>
+        </div>
+        <div class="credentials-text">
+          <p class="text-body" style="text-align: center; max-width: 700px; margin: 0 auto;">
+            I've managed teams, built SOPs, designed compensation structures, handled vendor
+            negotiations, and sat in the meetings where "we should automate that" gets said
+            and never done. The difference? <strong class="text-gold">I actually build the thing.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Let's Talk About Your Operations"
+    subtext="30-minute discovery call. No pitch, no slides — just a conversation about what's costing you the most time."
+    secondaryText="See what I build"
+    secondaryLink="/platforms"
+  />
+</BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── Consulting Grid ─────────────────────────────────────── */
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .consulting-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .consulting-card {
+    padding: 2rem;
+  }
+
+  .consulting-icon {
+    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    margin-bottom: 1rem;
+  }
+
+  .consulting-card-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .consulting-card-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ── Persona Cards ───────────────────────────────────────── */
+  .persona-section {
+    background: var(--bg-dark);
+  }
+
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .persona-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .persona-role {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .persona-icon {
+    font-size: 0.75rem;
+  }
+
+  .persona-title {
+    font-size: var(--text-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .persona-pain {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .persona-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .persona-points li {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .persona-points li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+  }
+
+  .persona-solution {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  /* ── Process Steps ───────────────────────────────────────── */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .process-step {
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+  }
+
+  .process-number {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .process-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--border));
+    margin-bottom: 1.5rem;
+  }
+
+  .process-line-last {
+    background: linear-gradient(90deg, var(--cyan-dim), transparent);
+  }
+
+  .process-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .process-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ── Tiers Section ───────────────────────────────────────── */
+  .tiers-section {
+    background: var(--bg-dark);
+  }
+
+  /* ── Credentials ─────────────────────────────────────────── */
+  .credentials-card {
+    padding: var(--space-lg);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .credentials-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .credential {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .credential-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+  }
+
+  .credential-label {
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .consulting-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .process-line {
+      display: none;
+    }
+
+    .credentials-grid {
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding-top: calc(var(--nav-height) + 2rem);
+      padding-bottom: 2rem;
+    }
+
+    .persona-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .consulting-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .credentials-grid {
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .credentials-card {
+      padding: var(--space-md);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .consulting-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .credentials-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

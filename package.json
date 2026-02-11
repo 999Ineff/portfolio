@@ -1,0 +1,20 @@
+{
+  "name": "ineffable",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Ineffable — Custom Software. Tailored Websites. Zero Busywork.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.1",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.17.1",
+    "gsap": "^3.12.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

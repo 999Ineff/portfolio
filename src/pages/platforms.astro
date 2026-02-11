@@ -1,0 +1,623 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+---
+
+<BaseLayout
+  title="Custom Platforms"
+  description="Not just websites — complete business platforms with dashboards, databases, AI, and integrations."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Custom Platforms" />
+      <h1 class="hero-title reveal" data-delay="0.1">
+        Not Just a Website.<br /><span class="gradient-text-gold">A System.</span>
+      </h1>
+      <p class="hero-sub reveal" data-delay="0.2">
+        Complete business platforms with dashboards, databases, AI assistants, and
+        integrations — engineered to run your operations, not just display them.
+      </p>
+      <div class="hero-actions reveal" data-delay="0.3">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
+          Tell Me What You Need
+        </a>
+        <a href="#case-bce" class="btn btn-outline">See a Platform</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's a Platform? -->
+  <section class="section" id="what-is">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="The Difference" color="cyan" />
+        <h2 class="text-heading reveal">A website shows. A platform <span class="text-cyan">does.</span></h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 700px;">
+          Most businesses get a website and call it done. But a platform connects your people,
+          data, and workflows into one system that actually runs the business behind the scenes.
+        </p>
+      </div>
+
+      <div class="platform-grid">
+        <div class="platform-item card reveal" data-delay="0">
+          <div class="platform-icon text-gold">&#9633;</div>
+          <h3 class="platform-item-title">Dashboard</h3>
+          <p class="platform-item-desc">Real-time visibility into operations, finances, and KPIs</p>
+        </div>
+        <div class="platform-item card reveal" data-delay="0.05">
+          <div class="platform-icon text-cyan">&#9638;</div>
+          <h3 class="platform-item-title">Database</h3>
+          <p class="platform-item-desc">Structured data storage with relationships and search</p>
+        </div>
+        <div class="platform-item card reveal" data-delay="0.1">
+          <div class="platform-icon text-green">&#9672;</div>
+          <h3 class="platform-item-title">AI Assistant</h3>
+          <p class="platform-item-desc">Natural language queries, smart categorization, insights</p>
+        </div>
+        <div class="platform-item card reveal" data-delay="0.15">
+          <div class="platform-icon text-gold">&#8644;</div>
+          <h3 class="platform-item-title">API Integrations</h3>
+          <p class="platform-item-desc">Connect to the tools you already use — no rekeying</p>
+        </div>
+        <div class="platform-item card reveal" data-delay="0.2">
+          <div class="platform-icon text-cyan">&#9775;</div>
+          <h3 class="platform-item-title">User Management</h3>
+          <p class="platform-item-desc">Roles, permissions, and team-based access control</p>
+        </div>
+        <div class="platform-item card reveal" data-delay="0.25">
+          <div class="platform-icon text-green">&#9707;</div>
+          <h3 class="platform-item-title">Automated Reporting</h3>
+          <p class="platform-item-desc">Scheduled reports that build themselves from live data</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study: BCE Owner Dashboard -->
+  <section class="section-lg case-section" id="case-bce">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Case Study" color="gold" />
+        <h2 class="text-heading reveal">Owner Operations Dashboard</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 750px;">
+          Complete operational infrastructure for a cleaning company — replacing spreadsheets,
+          manual tracking, and guesswork with a single source of truth.
+        </p>
+      </div>
+
+      <div class="case-showcase reveal" data-delay="0.2">
+        <div class="case-media">
+          <img
+            src="/assets/screenshots/BCE Owner DashBoard.png"
+            alt="BCE Owner Operations Dashboard showing financial metrics and AI assistant"
+            loading="lazy"
+            class="case-image"
+          />
+        </div>
+
+        <div class="case-details">
+          <h3 class="case-details-title">What the platform does</h3>
+          <ul class="case-features">
+            <li class="case-feature">
+              <span class="feature-marker text-gold font-mono">//</span>
+              <span>AI assistant for instant business queries and data lookup</span>
+            </li>
+            <li class="case-feature">
+              <span class="feature-marker text-gold font-mono">//</span>
+              <span>Financial dashboards with real-time revenue and expense tracking</span>
+            </li>
+            <li class="case-feature">
+              <span class="feature-marker text-gold font-mono">//</span>
+              <span>CRM automation — client lifecycle from lead to recurring service</span>
+            </li>
+            <li class="case-feature">
+              <span class="feature-marker text-gold font-mono">//</span>
+              <span>SOP management for standardized team operations</span>
+            </li>
+            <li class="case-feature">
+              <span class="feature-marker text-gold font-mono">//</span>
+              <span>Owner reporting with drill-down insights and trend analysis</span>
+            </li>
+          </ul>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <span class="case-stat-value text-gold font-mono">500+</span>
+              <span class="case-stat-label font-mono">Classification Rules</span>
+            </div>
+            <div class="case-stat">
+              <span class="case-stat-value text-cyan font-mono">85%</span>
+              <span class="case-stat-label font-mono">Faster Processing</span>
+            </div>
+            <div class="case-stat">
+              <span class="case-stat-value text-green font-mono">130+</span>
+              <span class="case-stat-label font-mono">Hours Saved/Year</span>
+            </div>
+          </div>
+
+          <div class="case-tags">
+            <span class="tag">Python</span>
+            <span class="tag tag-cyan">AI</span>
+            <span class="tag">Dashboard</span>
+            <span class="tag tag-cyan">CRM</span>
+            <span class="tag tag-green">Automation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study: Receipt Tool → Office Platform -->
+  <section class="section-lg" id="case-receipt">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Small to Big" color="cyan" />
+        <h2 class="text-heading reveal">From Photo Tool to Office Platform</h2>
+      </div>
+
+      <div class="journey-layout reveal" data-delay="0.1">
+        <!-- Left: Story -->
+        <div class="journey-story">
+          <div class="journey-step card">
+            <span class="journey-number font-mono text-gold">01</span>
+            <h3 class="journey-step-title">The Ask</h3>
+            <p class="journey-step-desc">
+              "Can you make it so I take a photo of a receipt and it saves to a Google Sheet?"
+            </p>
+            <span class="journey-tag font-mono text-dim">30-min automation</span>
+          </div>
+
+          <div class="journey-arrow">
+            <span class="journey-arrow-line"></span>
+            <span class="journey-arrow-text font-mono text-gold">evolved into</span>
+            <span class="journey-arrow-line"></span>
+          </div>
+
+          <div class="journey-step card journey-step-big">
+            <span class="journey-number font-mono text-cyan">02</span>
+            <h3 class="journey-step-title">The Platform</h3>
+            <p class="journey-step-desc">
+              A complete office tool with login, employee dashboards, team management,
+              categorized expense tracking, and admin controls.
+            </p>
+            <span class="journey-tag font-mono text-cyan">Full office platform</span>
+          </div>
+        </div>
+
+        <!-- Right: Video -->
+        <div class="journey-video">
+          <div class="video-wrapper">
+            <video src="/assets/videos/TeleGramImagetoDB.mp4" controls preload="metadata" class="journey-demo-video">
+              <track kind="captions" />
+            </video>
+          </div>
+          <p class="video-caption font-mono text-dim">The original receipt scanner in action — Telegram photo → AI extraction → database</p>
+        </div>
+      </div>
+
+      <div class="journey-lesson reveal" data-delay="0.2">
+        <p class="text-body" style="text-align: center; font-size: var(--text-lg); max-width: 700px; margin: 0 auto;">
+          This is how most platforms start — one pain point, solved properly, then expanded
+          into a system. <strong class="text-gold">The small fix proves the value. The platform captures it.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section tech-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Tech Stack" color="green" />
+        <h2 class="text-heading reveal" style="text-align: center;">Built with what works</h2>
+      </div>
+
+      <div class="tech-grid">
+        <div class="tech-item reveal" data-delay="0">
+          <span class="tech-name">Python</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.03">
+          <span class="tech-name">JavaScript</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.06">
+          <span class="tech-name">React</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.09">
+          <span class="tech-name">Node.js</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.12">
+          <span class="tech-name">REST APIs</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.15">
+          <span class="tech-name">AI / LLMs</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.18">
+          <span class="tech-name">Databases</span>
+        </div>
+        <div class="tech-item reveal" data-delay="0.21">
+          <span class="tech-name">Cloud Deploy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Need a System, Not Just a Website?"
+    subtext="Tell me what your business actually needs — I'll design the platform around it."
+    secondaryText="See consulting options"
+    secondaryLink="/consulting"
+  />
+</BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── Platform Grid ───────────────────────────────────────── */
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .platform-item {
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .platform-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    margin: 0 auto 1rem;
+  }
+
+  .platform-item-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .platform-item-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── Case Study: BCE ─────────────────────────────────────── */
+  .case-section {
+    background: var(--bg-dark);
+  }
+
+  .case-showcase {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .case-media {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+
+  .case-image {
+    width: 100%;
+    display: block;
+  }
+
+  .case-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .case-details-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+
+  .case-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .case-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .feature-marker {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .case-stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .case-stat-value {
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+
+  .case-stat-label {
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ── Journey Section ─────────────────────────────────────── */
+  .journey-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-lg);
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .journey-story {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .journey-step {
+    padding: 2rem;
+  }
+
+  .journey-number {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .journey-step-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .journey-step-desc {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .journey-tag {
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .journey-step-big {
+    border-color: var(--border-hover);
+  }
+
+  .journey-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .journey-arrow-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  }
+
+  .journey-arrow-text {
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .journey-video {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-wrapper {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+
+  .journey-demo-video {
+    width: 100%;
+    display: block;
+  }
+
+  .video-caption {
+    text-align: center;
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+  }
+
+  .journey-lesson {
+    margin-top: var(--space-md);
+  }
+
+  /* ── Tech Stack ──────────────────────────────────────────── */
+  .tech-section {
+    background: var(--bg-dark);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: all var(--duration-base) var(--ease-out);
+  }
+
+  .tech-item:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .tech-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .tech-item:hover .tech-name {
+    color: var(--gold);
+  }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .platform-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .case-showcase {
+      grid-template-columns: 1fr;
+    }
+
+    .journey-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .tech-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding-top: calc(var(--nav-height) + 2rem);
+      padding-bottom: 2rem;
+    }
+
+    .platform-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .case-stats {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .platform-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .case-stats {
+      flex-direction: column;
+    }
+
+    .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .journey-grid {
+      gap: 1rem;
+    }
+  }
+</style>

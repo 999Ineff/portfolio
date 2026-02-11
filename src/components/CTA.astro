@@ -1,0 +1,65 @@
+---
+interface Props {
+  heading?: string;
+  subtext?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  secondaryText?: string;
+  secondaryLink?: string;
+}
+
+const {
+  heading = "Ready to Stop Doing It Manually?",
+  subtext = "Tell me the task you hate most. I'll show you how to eliminate it.",
+  buttonText = "Book a Call",
+  buttonLink = "https://calendly.com/luis-aviles-khn",
+  secondaryText,
+  secondaryLink,
+} = Astro.props;
+---
+
+<section class="cta-section section">
+  <div class="container-narrow cta-inner">
+    <h2 class="cta-heading text-heading reveal">{heading}</h2>
+    <p class="cta-subtext reveal" data-delay="0.1">{subtext}</p>
+    <div class="cta-actions reveal" data-delay="0.2">
+      <a href={buttonLink} class="btn btn-primary" target="_blank" rel="noopener">
+        {buttonText}
+      </a>
+      {secondaryText && secondaryLink && (
+        <a href={secondaryLink} class="btn btn-ghost">
+          {secondaryText} →
+        </a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+  }
+
+  .cta-inner {
+    max-width: 700px;
+  }
+
+  .cta-heading {
+    margin-bottom: 1rem;
+  }
+
+  .cta-subtext {
+    font-size: var(--text-lg);
+    color: var(--text-dim);
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

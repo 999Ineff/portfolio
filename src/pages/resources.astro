@@ -1,0 +1,380 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+
+const guides = [
+  {
+    title: "The AI Project Orchestrator Blueprint",
+    level: "Advanced",
+    levelColor: "green",
+    description: "The complete orchestration guide: CLAUDE.md architecture, 9-stage pipeline, session management, and parallel execution. The same system used to build this site.",
+    link: "/freebies/landing-pages/01-ai-orchestrator-blueprint.html",
+    features: ["CLAUDE.md template", "9-stage pipeline", "Session locking", "Parallel tasks"],
+  },
+  {
+    title: "Build Tools, Don't Rent Them",
+    level: "Intermediate",
+    levelColor: "cyan",
+    description: "Why AI should build your tools, not be the tool. Real examples comparing custom-built solutions vs. SaaS subscriptions, with cost breakdowns.",
+    link: "/freebies/landing-pages/02-build-tools-not-rent.html",
+    features: ["Cost comparisons", "Real examples", "Build vs. buy framework", "ROI calculator"],
+  },
+  {
+    title: "DIY Automation Starter Kit",
+    level: "Beginner",
+    levelColor: "gold",
+    description: "10 ready-to-use prompts that work with any AI. Copy-paste templates for common business tasks — no coding required.",
+    link: "/freebies/landing-pages/03-diy-automation-starter-kit.html",
+    features: ["10 prompt templates", "Zero coding", "Any AI platform", "Copy-paste ready"],
+  },
+];
+---
+
+<BaseLayout
+  title="Free Resources"
+  description="Guides, templates, and tools to help you start automating — no strings attached."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Resources" />
+      <h1 class="text-heading reveal">Free Resources</h1>
+      <p class="hero-sub reveal" data-delay="0.1">
+        Guides, templates, and tools to help you start automating — no strings attached.
+      </p>
+    </div>
+  </section>
+
+  <!-- Guide Cards -->
+  <section class="section" id="guides">
+    <div class="container">
+      <div class="guides-grid">
+        {guides.map((guide, i) => (
+          <a href={guide.link} class={`guide-card card guide-card--${guide.levelColor} reveal`} data-delay={`${i * 0.15}`}>
+            <div class="guide-level-bar"></div>
+            <div class="guide-card-inner">
+              <span class={`guide-level tag tag-${guide.levelColor === 'gold' ? '' : guide.levelColor}`}>
+                {guide.level}
+              </span>
+              <h3 class="guide-title">{guide.title}</h3>
+              <p class="guide-desc">{guide.description}</p>
+              <ul class="guide-features">
+                {guide.features.map(f => (
+                  <li class="guide-feature">
+                    <span class={`guide-feature-dot guide-feature-dot--${guide.levelColor}`}></span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <span class="guide-link font-mono">
+                Get the guide <span class="guide-arrow">→</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Template Bundle -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Template Pack" color="cyan" />
+        <h2 class="text-heading reveal" style="text-align: center;">Orchestrator Template Bundle</h2>
+      </div>
+
+      <!-- TODO: Wire up Kit email capture for template bundle download (same as guide landing pages) -->
+      <div class="bundle-card card reveal" data-delay="0.1">
+        <div class="bundle-inner">
+          <div class="bundle-info">
+            <h3 class="bundle-title">Complete Project Template</h3>
+            <p class="bundle-desc">
+              The full project scaffolding used across every Ineffable build. Includes Python tools,
+              orchestration config, pipeline state management, and real-world examples.
+            </p>
+            <ul class="bundle-contents">
+              <li class="bundle-item">
+                <span class="bundle-icon font-mono text-gold">.claude/</span>
+                <span class="bundle-item-desc">CLAUDE.md + pipeline config</span>
+              </li>
+              <li class="bundle-item">
+                <span class="bundle-icon font-mono text-cyan">tools/</span>
+                <span class="bundle-item-desc">Python automation scripts</span>
+              </li>
+              <li class="bundle-item">
+                <span class="bundle-icon font-mono text-green">examples/</span>
+                <span class="bundle-item-desc">Real project walkthroughs</span>
+              </li>
+            </ul>
+          </div>
+          <div class="bundle-action">
+            <span class="bundle-format font-mono tag">Free Download</span>
+            <a href="/freebies/AI-Orchestrator-Starter-Kit.zip" class="btn btn-primary bundle-btn" download>Get the Template</a>
+            <span class="bundle-note font-mono">Enter your email to download</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Ready to Go Beyond the Guides?" />
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-lg);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* Guide Cards */
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .guide-card {
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .guide-level-bar {
+    height: 3px;
+    width: 100%;
+  }
+
+  .guide-card--green .guide-level-bar {
+    background: var(--green);
+  }
+
+  .guide-card--cyan .guide-level-bar {
+    background: var(--cyan);
+  }
+
+  .guide-card--gold .guide-level-bar {
+    background: var(--gradient-gold);
+  }
+
+  .guide-card-inner {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .guide-level {
+    align-self: flex-start;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .guide-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1.3;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .guide-card:hover .guide-title {
+    color: var(--gold);
+  }
+
+  .guide-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .guide-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .guide-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .guide-feature-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .guide-feature-dot--gold { background: var(--gold); }
+  .guide-feature-dot--cyan { background: var(--cyan); }
+  .guide-feature-dot--green { background: var(--green); }
+
+  .guide-link {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .guide-arrow {
+    display: inline-block;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .guide-card:hover .guide-link {
+    color: var(--gold);
+  }
+
+  .guide-card:hover .guide-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Override card::before for guide cards — we use the top bar instead */
+  .guide-card::before {
+    display: none;
+  }
+
+  /* Bundle Card */
+  .bundle-card {
+    padding: var(--space-lg);
+  }
+
+  .bundle-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .bundle-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .bundle-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    max-width: 550px;
+  }
+
+  .bundle-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .bundle-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: var(--text-sm);
+  }
+
+  .bundle-icon {
+    font-size: var(--text-xs);
+    min-width: 80px;
+  }
+
+  .bundle-item-desc {
+    color: var(--text-dim);
+  }
+
+  .bundle-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .bundle-format {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .bundle-btn {
+    width: 100%;
+    min-width: 200px;
+  }
+
+  .bundle-note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .guides-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .guides-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bundle-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .bundle-desc {
+      max-width: none;
+    }
+
+    .bundle-contents {
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bundle-card {
+      padding: var(--space-md);
+    }
+
+    .bundle-item {
+      flex-direction: column;
+      gap: 0.25rem;
+      text-align: center;
+    }
+
+    .bundle-icon {
+      min-width: auto;
+    }
+  }
+</style>

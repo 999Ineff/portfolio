@@ -1,0 +1,745 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+import { quickWins } from '../data/stats';
+---
+
+<BaseLayout
+  title="Custom Automation"
+  description="Stop doing what a script can do. From quick macros to full AI-integrated automation systems — eliminate manual work at every level."
+>
+  <!-- Hero Section -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Custom Automation" />
+
+      <h1 class="hero-title reveal" data-delay="0.1">
+        Stop Doing What<br />
+        <span class="text-gold">a Script Can Do</span>
+      </h1>
+
+      <p class="hero-sub reveal" data-delay="0.2">
+        Every minute you spend on repetitive work is a minute stolen from the work that actually matters.
+        I build automations that give that time back — starting from day one.
+      </p>
+
+      <div class="hero-actions reveal" data-delay="0.3">
+        <a href="#tiers" class="btn btn-primary">See the Automation Ladder</a>
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">
+          Tell Me Your Task
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three-Tier Automation Ladder -->
+  <section class="section-lg" id="tiers">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="The Automation Ladder" color="cyan" />
+        <h2 class="text-heading reveal">Three levels of freedom from manual work</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1">
+          Not every problem needs a full platform. Some need a 20-line script. The key is matching the right level of automation to the right problem.
+        </p>
+      </div>
+
+      <div class="tiers-grid">
+        <!-- Tier 1 -->
+        <div class="tier-card tier-card--gold card reveal" data-delay="0">
+          <div class="tier-header">
+            <span class="tier-number font-mono text-gold">01</span>
+            <span class="tier-badge font-mono tag">Tier 1</span>
+          </div>
+          <h3 class="tier-title">Quick Scripts</h3>
+          <p class="tier-desc text-body">
+            Small, targeted fixes that kill one repetitive task dead. Built in a day, saving time forever.
+          </p>
+          <ul class="tier-examples">
+            <li class="tier-example"><span class="tier-dot tier-dot--gold"></span>Excel macros & formatters</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--gold"></span>File sorters & renamers</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--gold"></span>Email template generators</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--gold"></span>Data cleanup scripts</li>
+          </ul>
+          <div class="tier-savings">
+            <span class="tier-savings-value font-mono text-gold">Saves 30 min/day</span>
+            <span class="tier-savings-label">per automation</span>
+          </div>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-card tier-card--cyan card reveal" data-delay="0.1">
+          <div class="tier-header">
+            <span class="tier-number font-mono text-cyan">02</span>
+            <span class="tier-badge font-mono tag tag-cyan">Tier 2</span>
+          </div>
+          <h3 class="tier-title">Connected Automations</h3>
+          <p class="tier-desc text-body">
+            Multiple tools talking to each other. Data flows between systems without anyone touching it.
+          </p>
+          <ul class="tier-examples">
+            <li class="tier-example"><span class="tier-dot tier-dot--cyan"></span>API integrations & syncs</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--cyan"></span>Web scrapers & data pipelines</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--cyan"></span>Multi-tool workflow chains</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--cyan"></span>Scheduled report generation</li>
+          </ul>
+          <div class="tier-savings">
+            <span class="tier-savings-value font-mono text-cyan">Saves hours/day</span>
+            <span class="tier-savings-label">across your team</span>
+          </div>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-card tier-card--green card reveal" data-delay="0.2">
+          <div class="tier-header">
+            <span class="tier-number font-mono text-green">03</span>
+            <span class="tier-badge font-mono tag tag-green">Tier 3</span>
+          </div>
+          <h3 class="tier-title">Full Automation Systems</h3>
+          <p class="tier-desc text-body">
+            End-to-end systems that replace entire manual processes. AI-integrated, self-running, self-reporting.
+          </p>
+          <ul class="tier-examples">
+            <li class="tier-example"><span class="tier-dot tier-dot--green"></span>End-to-end process automation</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--green"></span>AI-powered decision engines</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--green"></span>Self-monitoring dashboards</li>
+            <li class="tier-example"><span class="tier-dot tier-dot--green"></span>Complete operational platforms</li>
+          </ul>
+          <div class="tier-savings">
+            <span class="tier-savings-value font-mono text-green">Saves entire roles</span>
+            <span class="tier-savings-label">full process replacement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Common Use Cases Grid -->
+  <section class="section-lg usecases-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Sound Familiar?" />
+        <h2 class="text-heading reveal" style="text-align: center;">Things you didn't know could be automated</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+          Most people don't realize how much of their day is automatable. If you recognize any of these, we should talk.
+        </p>
+      </div>
+
+      <div class="usecases-grid">
+        <div class="usecase-card card reveal" data-delay="0">
+          <span class="usecase-icon">&#x1F4CA;</span>
+          <h4 class="usecase-title">Building Reports Manually</h4>
+          <p class="usecase-desc">Pulling numbers from three systems, pasting into a spreadsheet, formatting it every Monday morning.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.05">
+          <span class="usecase-icon">&#x2328;</span>
+          <h4 class="usecase-title">Data Entry Between Systems</h4>
+          <p class="usecase-desc">Copying info from emails into your CRM, then into your spreadsheet, then into your invoicing tool.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.1">
+          <span class="usecase-icon">&#x1F4CB;</span>
+          <h4 class="usecase-title">Copy-Paste Workflows</h4>
+          <p class="usecase-desc">Moving data between tabs, apps, or documents because nothing talks to anything else.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.15">
+          <span class="usecase-icon">&#x1F4C1;</span>
+          <h4 class="usecase-title">File Formatting & Sorting</h4>
+          <p class="usecase-desc">Renaming downloads, converting formats, organizing into folders by date or client name.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.2">
+          <span class="usecase-icon">&#x2709;</span>
+          <h4 class="usecase-title">Repetitive Email Responses</h4>
+          <p class="usecase-desc">Sending the same confirmation, follow-up, or status update dozens of times per week.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.25">
+          <span class="usecase-icon">&#x1F4C5;</span>
+          <h4 class="usecase-title">Scheduling & Coordination</h4>
+          <p class="usecase-desc">Back-and-forth emails to find meeting times, manually updating shared calendars, sending reminders.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.3">
+          <span class="usecase-icon">&#x1F9FE;</span>
+          <h4 class="usecase-title">Invoice Processing</h4>
+          <p class="usecase-desc">Manually entering invoice data, matching POs, chasing approvals, updating your books.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.35">
+          <span class="usecase-icon">&#x1F4E6;</span>
+          <h4 class="usecase-title">Inventory Tracking</h4>
+          <p class="usecase-desc">Counting stock by hand, updating spreadsheets, reordering when levels drop below thresholds.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.4">
+          <span class="usecase-icon">&#x1F50D;</span>
+          <h4 class="usecase-title">Research & Data Gathering</h4>
+          <p class="usecase-desc">Visiting the same sites daily to check prices, leads, or competitor info and logging it manually.</p>
+        </div>
+        <div class="usecase-card card reveal" data-delay="0.45">
+          <span class="usecase-icon">&#x1F504;</span>
+          <h4 class="usecase-title">Status Update Rounds</h4>
+          <p class="usecase-desc">Asking every team member for updates, compiling them, then sending a summary to leadership.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Wins Section -->
+  <section class="section-lg">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Quick Wins" color="green" />
+        <h2 class="text-heading reveal" style="text-align: center;">Small scripts, big impact</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+          These are real automations I build for clients. Each one takes days to build but saves time every single day after that.
+        </p>
+      </div>
+
+      <div class="quickwins-grid">
+        {quickWins.map((win, i) => (
+          <div class="quickwin-card card reveal" data-delay={`${i * 0.08}`}>
+            <span class="quickwin-icon">{win.icon}</span>
+            <h4 class="quickwin-title">{win.title}</h4>
+            <p class="quickwin-desc text-body">{win.description}</p>
+            <div class="quickwin-saves">
+              <span class="quickwin-saves-badge font-mono text-green">{win.saves}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Showcase -->
+  <section class="section-lg" id="demo">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="See It In Action" color="gold" />
+        <h2 class="text-heading reveal" style="text-align: center;">Real Automations, Running Right Now</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+          Not mockups. Not prototypes. These are tools people use every day.
+        </p>
+      </div>
+
+      <div class="demo-showcase reveal" data-delay="0.2">
+        <div class="demo-info">
+          <span class="demo-label font-mono tag">Desktop Tool</span>
+          <h3 class="demo-title">OneKey Writer</h3>
+          <p class="demo-desc text-body">
+            A Windows system tray app that improves any text instantly. Select text anywhere,
+            press a hotkey, choose a transformation — done. Works across every application.
+          </p>
+          <ul class="demo-features">
+            <li class="demo-feature">
+              <span class="demo-dot"></span>
+              10+ AI writing templates
+            </li>
+            <li class="demo-feature">
+              <span class="demo-dot"></span>
+              Works in any app system-wide
+            </li>
+            <li class="demo-feature">
+              <span class="demo-dot"></span>
+              One hotkey to activate
+            </li>
+            <li class="demo-feature">
+              <span class="demo-dot"></span>
+              Fix grammar, rewrite, translate, summarize
+            </li>
+          </ul>
+          <div class="demo-tags">
+            <span class="project-tag font-mono">Python</span>
+            <span class="project-tag font-mono">Desktop</span>
+            <span class="project-tag font-mono">AI</span>
+            <span class="project-tag font-mono">System Tray</span>
+          </div>
+        </div>
+        <div class="demo-media">
+          <video src="/assets/videos/TextHelperDemo.mp4" controls preload="metadata" class="demo-video">
+            <track kind="captions" />
+          </video>
+          <p class="demo-caption font-mono text-dim">Select text → hotkey → choose transformation → done</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Bigger Picture -->
+  <section class="section-lg bigger-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Bigger Picture" color="cyan" />
+        <h2 class="text-heading reveal" style="text-align: center;">What if you connected all these small fixes?</h2>
+      </div>
+
+      <div class="bigger-narrative reveal" data-delay="0.1">
+        <div class="narrative-step">
+          <span class="narrative-number font-mono text-gold">01</span>
+          <div class="narrative-content">
+            <h4 class="narrative-title">It starts with one script</h4>
+            <p class="text-body">You automate your weekly report. Suddenly Monday mornings are free. You wonder what else you've been doing manually.</p>
+          </div>
+        </div>
+
+        <div class="narrative-connector"></div>
+
+        <div class="narrative-step">
+          <span class="narrative-number font-mono text-cyan">02</span>
+          <div class="narrative-content">
+            <h4 class="narrative-title">Then the scripts start talking</h4>
+            <p class="text-body">Your report script pulls from your CRM sync. Your CRM sync triggers your email templates. Data flows without anyone touching it.</p>
+          </div>
+        </div>
+
+        <div class="narrative-connector"></div>
+
+        <div class="narrative-step">
+          <span class="narrative-number font-mono text-green">03</span>
+          <div class="narrative-content">
+            <h4 class="narrative-title">Now you have a system</h4>
+            <p class="text-body">Connected automations become a platform. Dashboards, AI decisions, self-monitoring workflows. That's where the real leverage lives.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bigger-cta reveal" data-delay="0.2" style="text-align: center; margin-top: var(--space-lg);">
+        <p class="text-body" style="font-size: var(--text-lg); max-width: 600px; margin: 0 auto var(--space-md);">
+          When small automations compound into full systems, you stop saving minutes and start
+          <strong class="text-green">reclaiming entire workflows.</strong>
+        </p>
+        <a href="/platforms" class="btn btn-outline">See Full Platforms &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTA
+    heading="What's Your Most Repetitive Task?"
+    subtext="Tell me the task you hate most. I'll show you how to eliminate it — or at least cut it in half."
+  />
+</BaseLayout>
+
+<style>
+  /* ── Hero ──────────────────────────────────────────────────── */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 850px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: var(--text-4xl);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 650px;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── Section Header ───────────────────────────────────────── */
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-subtext {
+    max-width: 700px;
+  }
+
+  /* ── Tiers Grid ───────────────────────────────────────────── */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .tier-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .tier-card--gold { border-color: rgba(255, 193, 59, 0.15); }
+  .tier-card--cyan { border-color: rgba(0, 229, 255, 0.15); }
+  .tier-card--green { border-color: rgba(0, 255, 136, 0.15); }
+
+  .tier-card--gold:hover { border-color: rgba(255, 193, 59, 0.35); }
+  .tier-card--cyan:hover { border-color: rgba(0, 229, 255, 0.35); }
+  .tier-card--green:hover { border-color: rgba(0, 255, 136, 0.35); }
+
+  .tier-card--gold::before { background: var(--gradient-gold); }
+  .tier-card--cyan::before { background: linear-gradient(135deg, #00e5ff 0%, #00b8d4 100%); }
+  .tier-card--green::before { background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%); }
+
+  .tier-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-number {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    opacity: 0.2;
+  }
+
+  .tier-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .tier-desc {
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: auto;
+    padding-bottom: 1.5rem;
+  }
+
+  .tier-example {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .tier-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tier-dot--gold { background: var(--gold); }
+  .tier-dot--cyan { background: var(--cyan); }
+  .tier-dot--green { background: var(--green); }
+
+  .tier-savings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .tier-savings-value {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .tier-savings-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── Use Cases Grid ───────────────────────────────────────── */
+  .usecases-section {
+    background: var(--bg-dark);
+  }
+
+  .usecases-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+  }
+
+  .usecase-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .usecase-icon {
+    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    margin-bottom: 0.25rem;
+  }
+
+  .usecase-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .usecase-desc {
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── Quick Wins Grid ──────────────────────────────────────── */
+  .quickwins-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .quickwin-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem;
+  }
+
+  .quickwin-icon {
+    font-size: 1.75rem;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+  }
+
+  .quickwin-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .quickwin-desc {
+    font-size: var(--text-sm);
+    flex: 1;
+  }
+
+  .quickwin-saves {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .quickwin-saves-badge {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Demo Showcase ───────────────────────────────────────── */
+  .demo-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .demo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .demo-label {
+    align-self: flex-start;
+  }
+
+  .demo-title {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+  }
+
+  .demo-desc {
+    line-height: 1.7;
+  }
+
+  .demo-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.5rem 0;
+  }
+
+  .demo-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .demo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .demo-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .demo-media {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .demo-video {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+
+  .demo-caption {
+    text-align: center;
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    margin-top: 1rem;
+  }
+
+  /* ── Bigger Picture ───────────────────────────────────────── */
+  .bigger-section {
+    background: var(--bg-dark);
+  }
+
+  .bigger-narrative {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .narrative-step {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .narrative-number {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    opacity: 0.3;
+    flex-shrink: 0;
+    width: 60px;
+    text-align: center;
+    line-height: 1;
+    padding-top: 0.25rem;
+  }
+
+  .narrative-content {
+    flex: 1;
+  }
+
+  .narrative-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .narrative-connector {
+    width: 2px;
+    height: 2.5rem;
+    background: linear-gradient(180deg, var(--border-hover), transparent);
+    margin-left: 30px;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── Responsive ───────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .tiers-grid {
+      grid-template-columns: 1fr;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .usecases-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quickwins-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .demo-showcase {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding-top: calc(var(--nav-height) + 2rem);
+      padding-bottom: 2rem;
+    }
+
+    .usecases-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quickwins-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .narrative-step {
+      gap: 1.25rem;
+    }
+
+    .narrative-number {
+      width: 40px;
+      font-size: var(--text-xl);
+    }
+
+    .narrative-connector {
+      margin-left: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .usecases-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tier-header {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  }
+</style>

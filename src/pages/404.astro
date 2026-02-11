@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you're looking for doesn't exist."
+>
+  <section class="error-section">
+    <div class="container error-inner">
+      <span class="error-code font-mono">404</span>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-desc">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/automation" class="btn btn-outline">See What I Build</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--nav-height) var(--space-md) var(--space-lg);
+  }
+
+  .error-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 500px;
+  }
+
+  .error-code {
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.3;
+  }
+
+  .error-title {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+  }
+
+  .error-desc {
+    font-size: var(--text-base);
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .error-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .error-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

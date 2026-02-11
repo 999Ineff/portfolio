@@ -1,0 +1,656 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+
+const stylePresets = [
+  { name: 'bold-playful', label: 'Bold & Playful', description: 'High-energy colors, chunky type, and playful geometry for brands that refuse to blend in.' },
+  { name: 'corporate-saas', label: 'Corporate SaaS', description: 'Clean grids, confident spacing, and trust-building layouts for B2B products and platforms.' },
+  { name: 'dark-tech', label: 'Dark Tech', description: 'Deep backgrounds, neon accents, and sharp edges for dev tools, AI, and cutting-edge tech.' },
+  { name: 'editorial', label: 'Editorial', description: 'Typography-driven layouts with generous whitespace, perfect for long-form content and storytelling.' },
+  { name: 'luxury', label: 'Luxury', description: 'Refined serif type, muted palettes, and slow transitions for premium and high-end brands.' },
+  { name: 'minimal', label: 'Minimal', description: 'Stripped to essentials. Maximum breathing room, invisible grids, and quiet confidence.' },
+  { name: 'tierra-developer', label: 'Tierra Developer', description: 'Warm earth tones meet developer precision. Terminal aesthetics with an organic twist.' },
+  { name: 'warm-organic', label: 'Warm Organic', description: 'Soft gradients, rounded shapes, and earthy colors for wellness, food, and lifestyle brands.' },
+  { name: 'warm-vibrant', label: 'Warm Vibrant', description: 'Sunset palettes, bold gradients, and energetic layouts for creative studios and agencies.' },
+];
+
+const processSteps = [
+  { icon: '01', title: 'Discovery', desc: 'We learn your brand, goals, and audience. You show us what you love.' },
+  { icon: '02', title: 'Design', desc: 'Style preset or custom vision — we craft the look before a single line of code.' },
+  { icon: '03', title: 'Build', desc: 'Production-grade code. Fast, accessible, SEO-ready from day one.' },
+  { icon: '04', title: 'SEO', desc: 'Technical audit, on-page optimization, schema markup, and performance tuning.' },
+  { icon: '05', title: 'Launch', desc: 'Deployment, DNS, SSL, analytics — everything handled. You just share the link.' },
+  { icon: '06', title: 'Maintain', desc: 'Ongoing updates, monitoring, and support. Your site stays fast and current.' },
+];
+---
+
+<BaseLayout
+  title="Tailored Websites"
+  description="Premium custom web design with built-in SEO. Pick a style, we build it. Truly custom websites that match your vision."
+>
+  <!-- Hero Section -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Tailored Websites" />
+
+      <h1 class="hero-title text-heading reveal" data-delay="0.1">
+        Your Website Should Work <span class="text-gold">as Hard as You Do</span>
+      </h1>
+
+      <p class="hero-sub reveal" data-delay="0.2">
+        Premium custom web design with built-in SEO, performance, and personality.
+        No templates. No page builders. Just code that converts.
+      </p>
+
+      <div class="hero-actions reveal" data-delay="0.3">
+        <a href="#styles" class="btn btn-primary">Browse Style Presets</a>
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">
+          Start Your Project
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Style Presets Gallery -->
+  <section class="section-lg" id="styles">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Style Presets" color="cyan" />
+        <h2 class="text-heading reveal" style="text-align: center;">Pick a Style. I'll Build It for You.</h2>
+        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+          Nine real, working style demos you can browse right now. Find the vibe that fits your brand — or use them as a starting point for something entirely yours.
+        </p>
+      </div>
+
+      <div class="presets-grid">
+        {stylePresets.map((preset, i) => (
+          <a
+            href={`/styles/${preset.name}.html`}
+            class="preset-card card reveal"
+            data-delay={`${(i % 3) * 0.1}`}
+          >
+            <div class="preset-name-row">
+              <span class="preset-name font-mono">{preset.label}</span>
+              <span class="preset-slug font-mono text-dim">/{preset.name}</span>
+            </div>
+            <p class="preset-desc">{preset.description}</p>
+            <div class="preset-hover-cta">
+              <span class="font-mono">View Live Demo</span>
+              <span class="preset-arrow">&rarr;</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- Component / Animation Gallery (Coming Soon) -->
+  <section class="section" id="components">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Components" color="green" />
+      </div>
+
+      <ComingSoon
+        title="Animation & Component Gallery"
+        description="A curated collection of premium animations, scroll effects, and UI components. Pick exactly what you want for your site."
+        features={["Scroll animations", "Hover interactions", "Loading effects", "Navigation patterns", "Hero layouts"]}
+      />
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- SEO Tiers -->
+  <section class="section-lg" id="seo">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="SEO Services" />
+        <h2 class="text-heading reveal" style="text-align: center;">Every Site Deserves to Be Found</h2>
+        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+          SEO isn't an add-on. It's built into every site I deliver. Need a deeper dive? Choose your tier.
+        </p>
+      </div>
+
+      <div class="tiers-grid">
+        <!-- Free SEO Scan -->
+        <div class="tier-card card reveal">
+          <div class="tier-badge tag tag-green">Coming Soon</div>
+          <h3 class="tier-name">Free SEO Scan</h3>
+          <p class="tier-price font-mono text-green">$0</p>
+          <p class="tier-desc">Quick automated scan of your site's SEO health. Get a basic report in minutes.</p>
+          <ul class="tier-features">
+            <li class="tier-feature">
+              <span class="tier-check text-green">&#10003;</span>
+              Basic SEO health report
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-green">&#10003;</span>
+              1 scan per site
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-green">&#10003;</span>
+              Core vitals overview
+            </li>
+          </ul>
+          <div class="tier-action">
+            <span class="btn btn-ghost font-mono" style="opacity: 0.5; cursor: default;">Coming Soon</span>
+          </div>
+        </div>
+
+        <!-- 130-Point Audit -->
+        <div class="tier-card tier-card--featured card reveal" data-delay="0.1">
+          <div class="tier-badge tag">Recommended</div>
+          <h3 class="tier-name">130-Point Audit</h3>
+          <p class="tier-price font-mono text-gold">Contact</p>
+          <p class="tier-desc">Comprehensive 130-point analysis across 13 categories. Full report with prioritized recommendations.</p>
+          <ul class="tier-features">
+            <li class="tier-feature">
+              <span class="tier-check text-gold">&#10003;</span>
+              130 audit checkpoints
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-gold">&#10003;</span>
+              13 category deep dive
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-gold">&#10003;</span>
+              Full written report
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-gold">&#10003;</span>
+              Prioritized action items
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-gold">&#10003;</span>
+              Executive summary
+            </li>
+          </ul>
+          <div class="tier-action">
+            <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Get Your Audit</a>
+          </div>
+        </div>
+
+        <!-- 130-Plus Enterprise -->
+        <div class="tier-card card reveal" data-delay="0.2">
+          <div class="tier-badge tag tag-cyan">Enterprise</div>
+          <h3 class="tier-name">130-Plus Enterprise</h3>
+          <p class="tier-price font-mono text-cyan">Contact</p>
+          <p class="tier-desc">Everything in the 130-Point Audit plus 7 specialty modules for total SEO dominance.</p>
+          <ul class="tier-features">
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Full 130-point audit
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Local SEO module
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Security analysis
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Competitive intelligence
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Content quality audit
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Backlinks & authority
+            </li>
+            <li class="tier-feature">
+              <span class="tier-check text-cyan">&#10003;</span>
+              Social & brand signals
+            </li>
+          </ul>
+          <div class="tier-action">
+            <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">Contact for Pricing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- Process Timeline -->
+  <section class="section-lg" id="process">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Process" color="cyan" />
+        <h2 class="text-heading reveal" style="text-align: center;">From Idea to Live in Six Steps</h2>
+      </div>
+
+      <div class="timeline">
+        {processSteps.map((step, i) => (
+          <div class="timeline-step reveal" data-delay={`${i * 0.08}`}>
+            <div class="timeline-icon font-mono">{step.icon}</div>
+            <div class="timeline-connector"></div>
+            <h3 class="timeline-title">{step.title}</h3>
+            <p class="timeline-desc">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- You Show Us, We Build It -->
+  <section class="section-lg" id="custom">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Truly Custom" />
+        <h2 class="text-heading reveal" style="text-align: center;">You Show Us, We Build It</h2>
+      </div>
+
+      <div class="custom-block card reveal" data-delay="0.1">
+        <div class="custom-content">
+          <p class="custom-text text-body">
+            Style presets are a starting point, not a ceiling. Have a Figma file, a competitor's site, a napkin sketch, or a mood board?
+            Show us what you love and we'll transform it into a production-grade site that's unmistakably <strong class="text-gold">yours</strong>.
+          </p>
+          <p class="custom-text text-body">
+            Every site is hand-coded — no page builders, no WordPress themes, no compromises.
+            Your brand deserves a website built with the same care you put into your business.
+          </p>
+          <div class="custom-methods">
+            <div class="custom-method">
+              <span class="custom-method-icon text-gold">&#9672;</span>
+              <span>Share a reference site</span>
+            </div>
+            <div class="custom-method">
+              <span class="custom-method-icon text-cyan">&#9672;</span>
+              <span>Send a Figma or sketch</span>
+            </div>
+            <div class="custom-method">
+              <span class="custom-method-icon text-green">&#9672;</span>
+              <span>Describe your vision</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTA
+    heading="Ready for a Website That Actually Works?"
+    subtext="Tell me about your project and I'll show you what's possible."
+    secondaryText="Browse style presets"
+    secondaryLink="#styles"
+  />
+</BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    text-align: center;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: var(--space-md);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* ── Style Presets Gallery ────────────────────────────────── */
+  .presets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .preset-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    transition: all var(--duration-base) var(--ease-out);
+  }
+
+  .preset-card:hover {
+    border-color: var(--border-active);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 193, 59, 0.15);
+  }
+
+  .preset-name-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .preset-name {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .preset-slug {
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+  }
+
+  .preset-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .preset-hover-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all var(--duration-base) var(--ease-out);
+  }
+
+  .preset-card:hover .preset-hover-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .preset-arrow {
+    font-size: 1.25rem;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .preset-card:hover .preset-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ── SEO Tiers ───────────────────────────────────────────── */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .tier-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all var(--duration-base) var(--ease-out);
+  }
+
+  .tier-card--featured {
+    border-color: rgba(255, 193, 59, 0.3);
+    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%);
+    position: relative;
+  }
+
+  .tier-card--featured::before {
+    opacity: 1;
+  }
+
+  .tier-badge {
+    align-self: center;
+  }
+
+  .tier-name {
+    font-size: var(--text-xl);
+    font-weight: 700;
+  }
+
+  .tier-price {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+  }
+
+  .tier-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .tier-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: left;
+    margin: 0.5rem 0;
+  }
+
+  .tier-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .tier-check {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    width: 1.25rem;
+    text-align: center;
+  }
+
+  .tier-action {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  /* ── Process Timeline ────────────────────────────────────── */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    position: relative;
+  }
+
+  .timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    position: relative;
+  }
+
+  .timeline-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-hover);
+    background: var(--bg-elevated);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--cyan);
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-connector {
+    position: absolute;
+    top: 28px;
+    left: calc(50% + 28px);
+    width: calc(100% - 56px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-hover), var(--border));
+  }
+
+  .timeline-step:last-child .timeline-connector {
+    display: none;
+  }
+
+  .timeline-title {
+    font-size: var(--text-base);
+    font-weight: 700;
+  }
+
+  .timeline-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ── Custom / You Show Us ────────────────────────────────── */
+  .custom-block {
+    padding: var(--space-lg);
+  }
+
+  .custom-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .custom-text {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .custom-methods {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+
+  .custom-method {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .custom-method-icon {
+    font-size: 0.6rem;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .presets-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tiers-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tiers-grid .tier-card:first-child {
+      grid-column: 1 / -1;
+      max-width: 400px;
+      justify-self: center;
+    }
+
+    .timeline {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .timeline-connector {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding-top: calc(var(--nav-height) + 2rem);
+      padding-bottom: 2rem;
+    }
+
+    .presets-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tiers-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tiers-grid .tier-card:first-child {
+      max-width: none;
+    }
+
+    .timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .preset-hover-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .custom-methods {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .timeline {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .preset-name-row {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

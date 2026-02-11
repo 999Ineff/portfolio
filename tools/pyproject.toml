@@ -1,0 +1,10 @@
+[project]
+name = "portfolio-image-tools"
+version = "0.1.0"
+description = "Image generation tools for portfolio"
+requires-python = ">=3.10"
+dependencies = [
+    "google-genai>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "pillow>=10.0.0",
+]

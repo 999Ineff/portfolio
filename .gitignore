@@ -12,6 +12,17 @@ Thumbs.db
 node_modules/
 *.log
 
+# Build output
+dist/
+.astro/
+
+# Secrets
+tools/.env
+
+# Personal notes
+emails.txt
+Site Idea.txt
+
 # Large media files - DO NOT REMOVE
 *.mp4
 *.mov
