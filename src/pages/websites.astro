@@ -71,14 +71,27 @@ const processSteps = [
             class="preset-card card reveal"
             data-delay={`${(i % 3) * 0.1}`}
           >
-            <div class="preset-name-row">
-              <span class="preset-name font-mono">{preset.label}</span>
-              <span class="preset-slug font-mono text-dim">/{preset.name}</span>
+            <div class="preset-preview">
+              <iframe
+                src={`/styles/${preset.name}.html`}
+                loading="lazy"
+                tabindex="-1"
+                aria-hidden="true"
+                class="preset-iframe"
+                title={`${preset.label} preview`}
+              ></iframe>
+              <div class="preset-preview-overlay"></div>
             </div>
-            <p class="preset-desc">{preset.description}</p>
-            <div class="preset-hover-cta">
-              <span class="font-mono">View Live Demo</span>
-              <span class="preset-arrow">&rarr;</span>
+            <div class="preset-info">
+              <div class="preset-name-row">
+                <span class="preset-name font-mono">{preset.label}</span>
+                <span class="preset-slug font-mono text-dim">/{preset.name}</span>
+              </div>
+              <p class="preset-desc">{preset.description}</p>
+              <div class="preset-hover-cta">
+                <span class="font-mono">View Live Demo</span>
+                <span class="preset-arrow">&rarr;</span>
+              </div>
             </div>
           </a>
         ))}
@@ -340,18 +353,61 @@ const processSteps = [
   .preset-card {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 2rem;
+    padding: 0;
     text-decoration: none;
     position: relative;
     cursor: pointer;
     transition: all var(--duration-base) var(--ease-out);
+    overflow: hidden;
   }
 
   .preset-card:hover {
     border-color: var(--border-active);
     transform: translateY(-6px);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 193, 59, 0.15);
+  }
+
+  /* ── Preview iframe ─────────────────────────────────────── */
+  .preset-preview {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: #0a0a0f;
+  }
+
+  .preset-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 800px;
+    transform: scale(var(--preview-scale, 0.334));
+    transform-origin: top left;
+    border: none;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .preset-preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(5, 5, 8, 0.6) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .preset-card:hover .preset-preview-overlay {
+    background: linear-gradient(180deg, transparent 40%, rgba(5, 5, 8, 0.3) 100%);
+  }
+
+  /* ── Card info area ─────────────────────────────────────── */
+  .preset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem 2rem 2rem;
   }
 
   .preset-name-row {
@@ -609,6 +665,10 @@ const processSteps = [
       grid-template-columns: 1fr;
     }
 
+    .preset-preview {
+      height: 220px;
+    }
+
     .tiers-grid {
       grid-template-columns: 1fr;
     }
@@ -654,3 +714,19 @@ const processSteps = [
     }
   }
 </style>
+
+<script>
+  function scalePreviewIframes() {
+    document.querySelectorAll('.preset-preview').forEach((container) => {
+      const width = container.clientWidth;
+      if (width > 0) {
+        const scale = width / 1280;
+        (container as HTMLElement).style.setProperty('--preview-scale', String(scale));
+      }
+    });
+  }
+
+  scalePreviewIframes();
+  window.addEventListener('resize', scalePreviewIframes);
+  document.addEventListener('astro:after-swap', scalePreviewIframes);
+</script>

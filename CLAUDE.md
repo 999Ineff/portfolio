@@ -1,148 +1,91 @@
-# Portfolio Project
+# Ineffable — Portfolio & Business Site
 
-> **Status:** Ready for Deployment
-> **Last Updated:** 2026-02-03
-> **Purpose:** Client-facing portfolio website to showcase automation/ops skills and get clients
+> **Status:** Redesign In Progress
+> **Last Updated:** 2026-02-11
+> **Purpose:** Full business website for Ineffable — custom software, web design, platforms, and consulting
+> **Live (Legacy):** https://luis-f-portfolio.netlify.app/
 
 ---
 
-## What This Project Is
+## Brand
 
-A personal portfolio site for positioning as an **Operations Architect** - someone who bridges operations management with technical building capabilities. Target clients: small businesses, solo entrepreneurs, employees who need automation.
-
-**Tagline:** "From Spreadsheets to Systems"
+**Name:** Ineffable
+**Tagline:** "Custom Software. Tailored Websites. Zero Busywork."
+**Secondary Tagline:** "From Spreadsheets to Systems"
 **Core Message:** "I build what others outsource"
+**Logo Concept:** Single golden "I" that expands letter-by-letter to reveal "Ineffable"
+**Owner:** Luis Aviles
 
 ---
 
-## Current State
+## Agreed Decisions (2026-02-11 Planning Session)
 
-### Completed
-- [x] Full HTML/CSS/JS portfolio site (`index.html`)
-- [x] Dark mode "Digital Command Center" design with gold/cyan/green accents
-- [x] Responsive layout
-- [x] Scroll animations and hover interactions
-- [x] All content sections structured
-- [x] Accordion-style vault with 10 projects
-- [x] "You're Losing More Time Than You Think" math breakdown section
-- [x] Calendly integration (popup widget)
-- [x] LinkedIn link updated
-- [x] Stats updated: 9+ Years, 10+ Systems Built, 500+ Automation Rules, 91% Video Production Savings
-- [x] Video demos with playback controls
-- [x] Free Resources section with 3 lead magnet guides
-- [x] Orchestrator Template Bundle (downloadable)
-
-### Lead Magnets Created (`freebies/`)
-1. **01-ai-orchestrator-blueprint.html** (Advanced)
-   - Full guide on project orchestration, CLAUDE.md, 9-stage pipeline
-   - Includes downloadable template bundle with Python tools
-   - Generated images: cover, ecosystem diagram, hybrid pipeline
-
-2. **02-build-tools-not-rent.html** (Intermediate)
-   - "AI should build tools, not be the tool" philosophy
-   - Real examples and cost comparisons
-   - Generated images: cover, build flow diagram
-
-3. **03-diy-automation-starter-kit.html** (Beginner)
-   - 10 ready-to-use prompts for any AI
-   - Copy-paste templates for common tasks
-   - Generated images: cover, process flow
-
-### Orchestrator Template Bundle (`freebies/orchestrator-template-bundle/`)
-Complete downloadable template including:
-- `.claude/CLAUDE.md` - Main orchestrator template
-- `.claude/WORK_QUEUE.md` - Task tracking
-- `.claude/PIPELINE_STATE.md` - Progress tracking
-- `.claude/SESSIONS.lock` - Session management
-- `.claude/DECISIONS.md` - Decision log
-- `tools/new_project.py` - Scaffold new projects
-- `tools/update_state.py` - Safe state file updates
-- `tools/parse_plan.py` - Dependency analysis
-- `examples/sample-project-config.md` - Example configuration
-- `README.md` - Quick start guide
-- `ALTERNATIVES.md` - Guide for non-Claude Code users
-
-### Remaining Tasks
-- [ ] Deploy to Netlify
-- [ ] Test all links after deployment
-- [ ] Consider generating hero images with Gemini API (optional)
+| Item | Decision |
+|------|----------|
+| Framework | **Astro** (static-first, islands for interactivity) |
+| Brand | **Ineffable** (standalone, no suffix) |
+| Tagline | "Custom Software. Tailored Websites. Zero Busywork." |
+| Nav Items | Custom Automation / Tailored Websites / Custom Platforms / Consulting / Blog / Resources |
+| Homepage Feature | Jarvis-style persona selector (voice toggle, localStorage, defaults to full site) |
+| Coming Soon Pages | Teaser + email capture + "Want this now? Book a call" CTA |
+| Design | Dark theme evolved — GSAP animations, page transitions, magnetic cursor |
+| Hosting | Netlify (or Vercel when server features needed) |
+| Style Presets | 9 existing presets preserved and migrated |
 
 ---
 
-## Site Structure
+## Site Architecture
 
 ```
-index.html
-├── Hero Section
-│   ├── "Operations Architect" title
-│   ├── "From Spreadsheets to Systems" tagline
-│   ├── Stats: 9+ Years, 10+ Systems, 500+ Rules, 91% Savings
-│   └── CTAs: "See My Work" / "Book a Call"
-│
-├── About Section
-│   ├── Career philosophy ("I build solutions myself")
-│   └── Timeline: Windstream → LTC → BCE
-│
-├── Time Savings Section
-│   ├── Math breakdown showing 10 min/day = 60+ hrs/year
-│   └── ROI calculation
-│
-├── Vault Section (accordion)
-│   └── 10 projects with expandable details
-│
-├── Quick Wins Section (6 examples)
-│   └── Excel macros, file scripts, email generators, etc.
-│
-├── Services Section (6 offerings)
-│   └── Workflow Automation, AI Integrations, Dashboards, etc.
-│
-├── Free Resources Section (NEW)
-│   ├── AI Orchestrator Blueprint (Advanced)
-│   ├── Build Tools Not Rent (Intermediate)
-│   └── DIY Automation Starter Kit (Beginner)
-│
-└── CTA Section
-    └── "Tell Me Your Repetitive Task" + Calendly
-```
+HOME (/)
+├── Hero: Ineffable branding + tagline + Jarvis persona selector
+├── Service overview cards (route to service pages)
+├── Social proof / stats
+├── Featured case studies
+├── Time savings math section (migrated)
+└── CTA: Book a Call
 
----
+CUSTOM AUTOMATION (/automation)
+├── Small wins: macros, scripts, scrapers (30min/day savings story)
+├── Integration systems: connecting tools
+├── Full automation suites: end-to-end
+├── Case studies with video demos
+├── ROI calculator or visual
+└── CTA
 
-## Folder Structure
+TAILORED WEBSITES (/websites)
+├── Style Presets Gallery (9 existing presets — live demos)
+├── Component/Animation Showcase (mini 21st.dev gallery)
+├── SEO Tiers: Free Scan / 130-point / 130-plus
+├── Process: how a website gets built
+└── CTA
 
-```
-C:\Users\ainef\Portfolio\
-├── index.html              # Main portfolio site
-├── CLAUDE.md               # This file
-├── reference/              # Previous HTML designs for reference
-│   ├── career_comparison.html
-│   └── coo_profile.html
-└── freebies/               # Lead magnet guides
-    ├── 01-ai-orchestrator-blueprint.html
-    ├── 02-build-tools-not-rent.html
-    ├── 03-diy-automation-starter-kit.html
-    ├── images/             # Generated images for guides
-    │   ├── 01-cover.png
-    │   ├── 01-claudemd-ecosystem.png
-    │   ├── 01-hybrid-pipeline.png
-    │   ├── 02-cover.png
-    │   ├── 02-build-flow.png
-    │   ├── 03-cover.png
-    │   └── 03-process-flow.png
-    └── orchestrator-template-bundle/
-        ├── README.md
-        ├── ALTERNATIVES.md
-        ├── .claude/
-        │   ├── CLAUDE.md
-        │   ├── WORK_QUEUE.md
-        │   ├── PIPELINE_STATE.md
-        │   ├── SESSIONS.lock
-        │   └── DECISIONS.md
-        ├── tools/
-        │   ├── new_project.py
-        │   ├── update_state.py
-        │   └── parse_plan.py
-        └── examples/
-            └── sample-project-config.md
+CUSTOM PLATFORMS (/platforms)
+├── What a "platform" means (dashboards, team tools, full systems)
+├── Case study: BCE Owner Dashboard (rich media)
+├── Case study: Receipt tool → full office platform
+├── Tech stack overview
+└── CTA
+
+CONSULTING (/consulting)
+├── What I cover: AI, ops, automation strategy
+├── Who it's for: employee / manager / C-suite / owner
+├── Tiers & pricing (TBD — Coming Soon treatment if not ready)
+└── CTA
+
+BLOG (/blog)
+├── LinkedIn content repurposed
+└── Searchable/filterable
+
+RESOURCES (/resources)
+├── Free guides (existing 3 lead magnets)
+├── Orchestrator template bundle
+└── Downloadables
+
+FREE TOOLS (/tools) — COMING SOON
+├── SEO Scanner (input site → automated audit → results → upsell)
+├── Site Preview Builder (scan site → choose preset → auto-generate preview)
+└── Tiered access: free/paid
 ```
 
 ---
@@ -160,40 +103,55 @@ C:\Users\ainef\Portfolio\
 - Green (success): #00ff88
 - Red (negative): #ff4757
 
-**Effects:**
-- Floating gradient orbs (animated)
-- Grid overlay background
+**Effects (Evolved):**
+- Floating gradient orbs (cursor-reactive)
+- Grid overlay background (parallax on scroll)
 - Noise texture overlay
-- Scroll-reveal animations
-- Hover lift + glow effects
+- GSAP scroll-linked animations
+- Page transitions (clip-path or morph)
+- Magnetic cursor (morphs on interactive elements)
+- Text reveal animations (character/line)
+- 3D card tilts on hover
+- Staggered entrance choreography
 
 ---
 
 ## Integrations
 
-**Calendly:**
-- URL: https://calendly.com/luis-aviles-khn
-- Implementation: Popup widget (link in nav + CTA section)
-
-**LinkedIn:**
-- URL: https://www.linkedin.com/in/luis-aviles-0b969235a/
+**Calendly:** https://calendly.com/luis-aviles-khn
+**LinkedIn:** https://www.linkedin.com/in/luis-aviles-0b969235a/
 
 ---
 
-## Deployment
+## Legacy Assets (from v1)
 
-**Target:** Netlify
-**Domain:** TBD (will get free .netlify.app subdomain)
+All content from the original `index.html` is preserved for migration:
+- Hero copy, stats, CTAs
+- About section + career timeline (Windstream → LTC → BCE)
+- "You're Losing More Time Than You Think" math breakdown
+- 2 featured project showcases (BCE Dashboard, Video Content Factory)
+- OneKey Writer showcase
+- The Vault (10 accordion projects)
+- Quick Wins (6 cards)
+- Services grid (6 cards)
+- Free Resources (3 guide cards)
+- CTA section with Calendly
 
-To deploy:
-1. Push to GitHub or drag-drop folder to Netlify
-2. All files are static HTML/CSS/JS - no build step needed
-3. Test video playback (needs byte-range support - Netlify provides this)
-4. Test all links and Calendly popup
+**Style Presets (9):** `/styles/`
+- bold-playful, corporate-saas, dark-tech, editorial, luxury, minimal, tierra-developer, warm-organic, warm-vibrant
+
+**Lead Magnets:** `/freebies/`
+- 3 HTML landing pages + PDFs + images + orchestrator template bundle
+
+**Video Demos:** `/assets/`
+- TeleGramImagetoDB.mp4, TextHelperDemo.mp4
+
+**Screenshots:** `/assets/screenshots/`
+- BCE Owner Dashboard.png, Tiktok Channel posts + views.png
 
 ---
 
-## Gemini Image API (for future use)
+## Gemini Image API
 
 Location: `C:\Users\ainef\google-image-gen-api-starter\`
 
@@ -203,4 +161,63 @@ uv run python main.py output.png "prompt here"
 uv run python main.py output.png "subject" --style styles/blue_glass_3d.md
 ```
 
-Used for generating guide cover images and diagrams.
+---
+
+## Phase Roadmap
+
+### Phase 1 — "The Complete Site" (Current)
+Full Astro multi-page site with all core pages, animations, Jarvis selector.
+Service pages with full content. Coming Soon treatment for unbuilt features.
+
+### Phase 2 — "The Platform"
+- Free SEO scanner tool (site audit → results → upsell)
+- Site preview builder (scan → choose preset → auto-generate)
+- User accounts with tiered access (free/paid)
+- Image asset database with prompt indexing
+- SSR mode + API endpoints on Astro
+
+### Phase 3 — "The Ecosystem"
+- Paid tier tools
+- Client dashboard
+- Automated onboarding pipeline
+- Full CRM integration
+
+---
+
+## Future Stage Notes
+
+### VIDEO CONTENT FOR AUTOMATIONS PAGE
+Need visual demos showing automations in action. Fast-paced (under 5 min total), wow-factor focus.
+- Show a scraper opening browser, navigating, pulling data, saving to Excel
+- Demo a macro running across spreadsheets
+- The "click run and watch the browser move" moment is the hook
+- BCE job scraper was the best demo but no longer have CRM access
+- Possible demo: YouTube data scraper pulling stats → saving to Excel
+- Possible demo: Multi-site property auditor scanning websites for criteria
+- Investigate AI video generation (Google's video models, etc.) for supplementary content
+- Combine: 2-3 real screen recordings + AI-generated explainer segments
+- Common use case list for employees and owners who don't know what can be automated
+
+### IMAGE ASSET INDEXING SYSTEM
+Build a database indexing every generated image with its prompt.
+Enables reuse across projects, reduces API spend.
+System checks DB before generating — if similar image exists, reuse it.
+
+### FREE TOOL — SEO SCANNER
+Cloud-based version of the site audit system. Tiered access.
+Free: 3 scans/month + basic SEO report.
+Paid: unlimited + full 130-point audit + preset preview.
+Goal: demonstrate failures → upsell fix + new website.
+
+### FREE TOOL — SITE PREVIEW BUILDER
+Scans visitor's site (content, colors, branding, industry).
+Visitor chooses a preset from the gallery.
+System rebuilds 1-2 pages in that preset with their content.
+Loading animations while building. Notify when done.
+Goal: let them SEE what their site could look like → contract to build it.
+
+### COMPONENT/ANIMATION GALLERY
+Mini 21st.dev — curated gallery of premium animations and UI components.
+5-10 examples per category. Visual/video demos.
+Message: "This is custom, not stock. You choose exactly what you want."
+Once a paid customer, direct them to 21st.dev to pick components for their site.
