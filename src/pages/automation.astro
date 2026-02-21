@@ -251,9 +251,16 @@ import { quickWins } from '../data/stats';
           </div>
         </div>
         <div class="demo-media">
-          <video src="/assets/videos/TextHelperDemo.mp4" controls preload="metadata" class="demo-video">
-            <track kind="captions" />
-          </video>
+          <div class="demo-video-wrap">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/W442lFjPt_A?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+              title="OneKey Writer Demo"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="demo-video"
+            ></iframe>
+          </div>
           <p class="demo-caption font-mono text-dim">Select text → hotkey → choose transformation → done</p>
         </div>
       </div>
@@ -611,11 +618,22 @@ import { quickWins } from '../data/stats';
     flex-direction: column;
   }
 
-  .demo-video {
-    width: 100%;
-    display: block;
+  .demo-video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
     border: 1px solid var(--border);
     background: var(--bg-card);
+  }
+
+  .demo-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   .demo-caption {

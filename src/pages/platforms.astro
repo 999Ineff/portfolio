@@ -189,9 +189,16 @@ import CTA from '../components/CTA.astro';
         <!-- Right: Video -->
         <div class="journey-video">
           <div class="video-wrapper">
-            <video src="/assets/videos/TeleGramImagetoDB.mp4" controls preload="metadata" class="journey-demo-video">
-              <track kind="captions" />
-            </video>
+            <div class="journey-video-wrap">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/7ejI_nq4-tc?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
+                title="Telegram Receipt Scanner Demo"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="journey-demo-video"
+              ></iframe>
+            </div>
           </div>
           <p class="video-caption font-mono text-dim">The original receipt scanner in action — Telegram photo → AI extraction → database</p>
         </div>
@@ -498,9 +505,20 @@ import CTA from '../components/CTA.astro';
     background: var(--bg-card);
   }
 
+  .journey-video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+
   .journey-demo-video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: block;
+    height: 100%;
+    border: none;
   }
 
   .video-caption {

@@ -102,10 +102,17 @@ import { stats, projects } from '../data/stats';
           <div class="project-media">
             {project.image ? (
               <img src={project.image} alt={project.title} loading="lazy" class="project-image" />
-            ) : project.video ? (
-              <video src={project.video} controls preload="metadata" class="project-video">
-                <track kind="captions" />
-              </video>
+            ) : project.youtube ? (
+              <div class="project-video-wrap">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${project.youtube}?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1`}
+                  title={project.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  class="project-video"
+                ></iframe>
+              </div>
             ) : null}
           </div>
         </div>
@@ -289,7 +296,9 @@ import { stats, projects } from '../data/stats';
   .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .project-tag { font-size: 0.65rem; padding: 0.3rem 0.75rem; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
   .project-media { border: 1px solid var(--border); overflow: hidden; background: var(--bg-card); }
-  .project-image, .project-video { width: 100%; display: block; }
+  .project-image { width: 100%; display: block; }
+  .project-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .project-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
   .reality-section { background: transparent; }
   .math-card { padding: var(--space-lg); margin: var(--space-md) 0; }

@@ -80,7 +80,7 @@ export const projects = [
       { value: 'Any App', label: 'System-Wide' },
       { value: '1 Click', label: 'To Transform' },
     ],
-    video: '/assets/videos/TextHelperDemo.mp4',
+    youtube: 'W442lFjPt_A',
     tags: ['Python', 'Desktop', 'AI', 'System Tray'],
     type: 'automation',
   },
