@@ -17,7 +17,10 @@ import { stats, projects } from '../data/stats';
 
       <h1 class="hero-title reveal" data-delay="0.1">
         <span class="hero-title-line">
-          <span class="title-word" id="logoReveal">I</span><span class="title-reveal">neffable</span>
+          <span class="title-word">I</span><span class="title-reveal">neffable</span>
+        </span>
+        <span class="hero-title-line">
+          <span class="title-word">S</span><span class="title-reveal">olutions</span>
         </span>
       </h1>
 
@@ -230,12 +233,20 @@ import { stats, projects } from '../data/stats';
   .hero-title {
     font-size: var(--text-display);
     font-weight: 900;
-    line-height: 0.9;
+    line-height: 1;
     margin-bottom: 1.5rem;
   }
 
+  .hero-title-line {
+    display: block;
+    white-space: nowrap;
+  }
+
   .title-word { color: var(--gold); }
-  .title-reveal { color: var(--text); }
+  .title-reveal {
+    color: var(--text);
+    vertical-align: bottom;
+  }
 
   .hero-tagline {
     font-size: var(--text-sm);
@@ -344,13 +355,17 @@ import { stats, projects } from '../data/stats';
   function initHeroAnimations() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const reveal = document.querySelector('.title-reveal') as HTMLElement;
-    if (!reveal) return;
+    const reveals = document.querySelectorAll('.title-reveal');
+    if (!reveals.length) return;
 
-    gsap.fromTo(reveal,
-      { opacity: 0, width: 0, overflow: 'hidden', display: 'inline-block' },
-      { opacity: 1, width: 'auto', duration: 1.2, delay: 0.8, ease: 'power3.out' }
-    );
+    gsap.set(reveals, { display: 'inline-block', overflow: 'hidden', whiteSpace: 'nowrap', width: 0 });
+
+    gsap.to(reveals, {
+      width: 'auto',
+      duration: 1.4,
+      delay: 0.6,
+      ease: 'power3.out',
+    });
   }
 
   initHeroAnimations();

@@ -3,7 +3,9 @@
 > **Status:** Redesign In Progress
 > **Last Updated:** 2026-02-11
 > **Purpose:** Full business website for Ineffable — custom software, web design, platforms, and consulting
-> **Live (Legacy):** https://luis-f-portfolio.netlify.app/
+> **Live:** https://ineffablesolutions.net
+> **Netlify URL:** https://luis-f-portfolio.netlify.app/
+> **Domain Registrar:** GoDaddy (ineffablesolutions.net)
 
 ---
 
