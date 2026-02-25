@@ -10,27 +10,27 @@ import { stats, projects } from '../data/stats';
   <!-- Hero Section -->
   <section class="hero section-lg">
     <div class="container hero-inner">
-      <div class="hero-badge reveal">
+      <div class="hero-badge glass reveal">
         <span class="badge-dot"></span>
         <span class="badge-text font-mono">Available for Projects</span>
       </div>
 
       <h1 class="hero-title reveal" data-delay="0.1">
         <span class="hero-title-line">
-          <span class="title-word">I</span><span class="title-reveal">neffable</span>
+          <span class="title-word gradient-text-gold">I</span><span class="title-reveal">neffable</span>
         </span>
         <span class="hero-title-line">
-          <span class="title-word">S</span><span class="title-reveal">olutions</span>
+          <span class="title-word gradient-text-gold">S</span><span class="title-reveal">olutions</span>
         </span>
       </h1>
 
-      <p class="hero-tagline font-mono reveal" data-delay="0.2">
-        // <span class="text-gold">Custom Software. Tailored Websites. Zero Busywork.</span> //
+      <p class="hero-tagline font-mono reveal glass" data-delay="0.2">
+        <span class="text-gold">Custom Software. Tailored Websites. Zero Busywork.</span>
       </p>
 
       <p class="hero-sub reveal" data-delay="0.3">
         I build what others outsource — from 30-minute Excel fixes to full AI automation
-        systems. If it's manual and repetitive, I make it disappear.
+        systems. <strong class="text-text">If it's manual and repetitive, I make it disappear.</strong>
       </p>
 
       <div class="hero-actions reveal" data-delay="0.4">
@@ -41,7 +41,7 @@ import { stats, projects } from '../data/stats';
       </div>
 
       <!-- Stats Bar -->
-      <div class="stats-bar reveal" data-delay="0.5">
+      <div class="stats-bar glass-panel reveal" data-delay="0.5">
         {stats.map(stat => (
           <div class="stat">
             <span class={`stat-value text-${stat.color}`}>{stat.value}</span>
@@ -189,7 +189,7 @@ import { stats, projects } from '../data/stats';
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: var(--nav-height);
+    padding-top: calc(var(--nav-height) + 2rem);
     text-align: center;
   }
 
@@ -199,6 +199,8 @@ import { stats, projects } from '../data/stats';
     align-items: center;
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
 
   .hero-badge {
@@ -206,7 +208,7 @@ import { stats, projects } from '../data/stats';
     align-items: center;
     gap: 0.75rem;
     padding: 0.6rem 1.5rem;
-    border: 1px solid var(--border-hover);
+    border-radius: 100px;
     margin-bottom: var(--space-md);
   }
 
@@ -215,131 +217,367 @@ import { stats, projects } from '../data/stats';
     height: 8px;
     background: var(--green);
     border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
     animation: pulse 2s infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.7; }
   }
 
   .badge-text {
     font-size: var(--text-xs);
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--text-secondary);
   }
 
   .hero-title {
     font-size: var(--text-display);
     font-weight: 900;
-    line-height: 1;
-    margin-bottom: 1.5rem;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-title-line {
-    display: block;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
-  .title-word { color: var(--gold); }
+  .title-word { 
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 0.8s var(--ease-spring) forwards;
+  }
+  
+  .title-word.gradient-text-gold {
+    animation-delay: 0.2s; /* 'I' and 'S' appear first */
+  }
+
   .title-reveal {
+    display: inline-block;
     color: var(--text);
-    vertical-align: bottom;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpFade 0.8s var(--ease-spring) forwards;
+    animation-delay: 0.8s; /* The rest of the words appear later */
+  }
+
+  @keyframes slideUpFade {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .hero-tagline {
     font-size: var(--text-sm);
     color: var(--text-dim);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 193, 59, 0.15);
+    background: rgba(255, 193, 59, 0.03);
     letter-spacing: 0.05em;
   }
 
   .hero-sub {
     font-size: var(--text-lg);
-    color: var(--text-secondary);
-    max-width: 650px;
+    color: var(--text-dim);
+    max-width: 700px;
     margin-bottom: var(--space-md);
-    line-height: 1.7;
+    line-height: 1.6;
+    font-weight: 300;
   }
 
   .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-xl);
   }
 
   .stats-bar {
     display: flex;
-    gap: 3rem;
-    padding: 2rem 3rem;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
+    gap: 4rem;
+    padding: 2.5rem 4rem;
+    width: 100%;
+    justify-content: space-around;
   }
 
-  .stat { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
-  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: var(--text-2xl); font-weight: 700; }
-  .stat-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .stat { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: var(--text-3xl); font-weight: 700; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+  .stat-label { font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
 
   .section-header { margin-bottom: var(--space-lg); }
 
-  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  /* Bento Grid for Services */
+  .services-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 2rem; 
+  }
 
-  .service-card { display: flex; flex-direction: column; gap: 0.75rem; text-decoration: none; padding: 2rem; }
-  .service-icon { font-size: 2rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-elevated); }
+  .service-card { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.25rem; 
+    text-decoration: none; 
+    padding: 3rem; 
+    border-radius: 24px;
+    background: var(--bg-glass);
+    transition: all 0.5s var(--ease-spring);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .service-icon { 
+    font-size: 2.5rem; 
+    width: 64px; 
+    height: 64px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
   .service-title { font-size: var(--text-lg); font-weight: 700; }
   .service-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; flex: 1; }
   .service-stat { font-size: var(--text-xs); letter-spacing: 0.05em; }
   .service-arrow { font-size: 1.25rem; color: var(--text-muted); transition: all 0.3s; }
   .service-card:hover .service-arrow { color: var(--gold); transform: translateX(4px); }
 
-  .project-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; margin-bottom: var(--space-xl); }
-  .project-showcase.project-reverse { direction: rtl; }
-  .project-showcase.project-reverse > * { direction: ltr; }
-  .project-title { font-size: var(--text-2xl); font-weight: 800; margin-bottom: 1rem; }
-  .project-desc { margin-bottom: 1.5rem; }
-  .project-stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+  .project-showcase { 
+    display: grid; 
+    grid-template-columns: 1fr 1.2fr; 
+    gap: 0; 
+    align-items: center; 
+    margin-bottom: var(--space-xl); 
+    position: relative;
+  }
+  
+  .project-showcase.project-reverse { 
+    grid-template-columns: 1.2fr 1fr; 
+    direction: rtl; 
+  }
+  
+  .project-showcase.project-reverse > * { 
+    direction: ltr; 
+  }
+  
+  .project-info {
+    z-index: 2;
+    padding: 3rem;
+    border-radius: 24px;
+    background: rgba(10, 10, 15, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateX(2rem); /* Overlap effect */
+  }
+
+  .project-showcase.project-reverse .project-info {
+    transform: translateX(-2rem);
+  }
+
+  .project-title { font-size: var(--text-2xl); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+  .project-desc { margin-bottom: 2rem; color: var(--text-secondary); }
+  
+  .project-stats { 
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 2rem; 
+    margin-bottom: 2rem; 
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
   .project-stat { display: flex; flex-direction: column; gap: 0.25rem; }
-  .project-stat-value { font-size: var(--text-xl); font-weight: 700; }
-  .project-stat-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .project-tag { font-size: 0.65rem; padding: 0.3rem 0.75rem; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
-  .project-media { border: 1px solid var(--border); overflow: hidden; background: var(--bg-card); }
-  .project-image { width: 100%; display: block; }
+  .project-stat-value { font-size: var(--text-xl); font-weight: 700; color: var(--text); }
+  .project-stat-label { font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .project-tag { 
+    font-size: 0.7rem; 
+    padding: 0.4rem 1rem; 
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    color: var(--text-dim); 
+    letter-spacing: 0.05em; 
+    font-family: 'JetBrains Mono', monospace; 
+    border-radius: 100px;
+  }
+  
+  .project-media { 
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    overflow: hidden; 
+    background: var(--bg-card);
+    transform: scale(0.95);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .project-showcase:hover .project-media {
+    transform: scale(0.98);
+  }
+  
+  .project-image { width: 100%; display: block; filter: brightness(0.9) contrast(1.1); transition: filter 0.5s; }
+  .project-showcase:hover .project-image { filter: brightness(1) contrast(1.1); }
+  
   .project-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
   .project-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
   .reality-section { background: transparent; }
-  .math-card { padding: var(--space-lg); margin: var(--space-md) 0; }
-  .math-grid { display: flex; flex-direction: column; gap: 2rem; }
-  .math-employees { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .math-employee { display: flex; flex-direction: column; gap: 0.25rem; text-align: center; padding: 1rem; border: 1px solid var(--border); }
-  .math-emp-name { font-size: var(--text-sm); }
+  
+  .math-card { 
+    padding: 0; 
+    margin: var(--space-md) 0; 
+    border-radius: 24px;
+    background: rgba(10, 10, 15, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .math-card-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  .math-label { 
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(255, 193, 59, 0.1);
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    display: inline-block;
+    border: 1px solid rgba(255, 193, 59, 0.2);
+  }
+  
+  .math-grid { 
+    display: flex; 
+    flex-direction: column; 
+  }
+  
+  .math-employees { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .math-employee { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+    text-align: center; 
+    padding: 3rem 2rem; 
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    transition: background 0.3s var(--ease-out);
+  }
+  
+  .math-employee:last-child {
+    border-right: none;
+  }
+  
+  .math-employee:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  .math-emp-name { font-size: var(--text-base); color: var(--gold); }
   .math-emp-task { font-size: var(--text-sm); color: var(--text-dim); }
-  .math-emp-time { font-size: var(--text-sm); color: var(--text-secondary); }
-  .math-flow { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
-  .math-flow-item { font-size: var(--text-xl); text-align: center; }
-  .math-flow-item small { display: block; font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-  .math-flow-highlight { font-size: var(--text-2xl); font-weight: 700; }
-  .math-flow-arrow { color: var(--text-muted); font-size: 1.5rem; }
-  .math-punchline { text-align: center; font-size: var(--text-base); color: var(--text-secondary); }
-  .reality-closer { margin-top: var(--space-md); }
+  .math-emp-time { 
+    font-size: var(--text-xl); 
+    color: var(--text); 
+    margin-top: 1rem;
+    font-weight: 600; 
+  }
+  
+  .math-result {
+    padding: 3rem 2rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 193, 59, 0.03) 100%);
+  }
+  
+  .math-flow { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 2rem; 
+    margin-bottom: 2rem; 
+  }
+  
+  .math-flow-item { 
+    font-size: var(--text-xl); 
+    text-align: center; 
+    color: var(--text-secondary);
+  }
+  
+  .math-flow-item small { 
+    display: block; 
+    font-size: var(--text-xs); 
+    color: var(--text-dim); 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    margin-top: 0.5rem;
+  }
+  
+  .math-flow-highlight { 
+    font-size: var(--text-3xl); 
+    font-weight: 800; 
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(255, 193, 59, 0.2);
+  }
+  
+  .math-flow-arrow { 
+    color: rgba(255, 255, 255, 0.1); 
+    font-size: 2rem; 
+    font-weight: 300;
+  }
+  
+  .math-punchline { 
+    text-align: center; 
+    font-size: var(--text-lg); 
+    color: var(--text-secondary); 
+  }
+  
+  .reality-closer { margin-top: var(--space-xl); }
 
   @media (max-width: 1024px) {
     .services-grid { grid-template-columns: repeat(2, 1fr); }
     .project-showcase { grid-template-columns: 1fr; }
     .project-showcase.project-reverse { direction: ltr; }
+    .project-info { transform: translateX(0); }
+    .project-showcase.project-reverse .project-info { transform: translateX(0); }
     .stats-bar { gap: 2rem; padding: 1.5rem 2rem; }
   }
 
   @media (max-width: 768px) {
     .hero { min-height: auto; padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 2rem; }
     .stats-bar { flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
-    .math-employees { grid-template-columns: 1fr; }
+    .math-employees { grid-template-columns: 1fr; border-bottom: none; }
+    .math-employee { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; }
+    .math-employee:last-child { border-bottom: none; }
     .math-flow { flex-wrap: wrap; gap: 1rem; }
-    .project-stats { flex-wrap: wrap; gap: 1rem; }
+    .project-stats { gap: 1rem; }
   }
 
   @media (max-width: 480px) {
