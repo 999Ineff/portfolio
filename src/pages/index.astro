@@ -1464,10 +1464,9 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
 // Premium word-by-word masked text reveal (SplitText-style)
 // Each word wraps in overflow:hidden container — text slides up from below mask
 function splitAndReveal(el: HTMLElement, gsap: any, baseDelay: number = 0) {
-  // Collect text nodes and spans, rebuild as word-wrapped spans
-  const rawHTML = el.innerHTML;
-  // Split on whitespace while preserving existing spans (accent etc.)
-  // Strategy: process child nodes to get words, wrap each in .word-mask
+  // Wrap each word in overflow:hidden mask for slide-up reveal.
+  // Elements with gradient text (background-clip: text) are treated as atomic —
+  // wrapping their internals in inline-block children breaks the gradient rendering.
   const wrapWords = (node: Node): string => {
     if (node.nodeType === Node.TEXT_NODE) {
       const text = node.textContent || '';
@@ -1478,10 +1477,14 @@ function splitAndReveal(el: HTMLElement, gsap: any, baseDelay: number = 0) {
       }).join('');
     } else if (node.nodeType === Node.ELEMENT_NODE) {
       const elem = node as HTMLElement;
-      const inner = Array.from(elem.childNodes).map(wrapWords).join('');
-      // Clone element with same attributes
+      const style = elem.getAttribute('style') || '';
       const tag = elem.tagName.toLowerCase();
       const attribs = Array.from(elem.attributes).map(a => `${a.name}="${a.value}"`).join(' ');
+      // If element has gradient text styles, treat as atomic — don't restructure internals
+      if (style.includes('background-clip') || style.includes('text-fill-color')) {
+        return `<span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;"><${tag} ${attribs}>${elem.innerHTML}</${tag}></span></span>`;
+      }
+      const inner = Array.from(elem.childNodes).map(wrapWords).join('');
       return `<${tag} ${attribs}><span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;">${inner}</span></span></${tag}>`;
     }
     return '';
@@ -1518,17 +1521,19 @@ function initHero() {
   // Staggered entrance for hero sub + elements (using existing .reveal system)
   // CSS sets hero .reveal to opacity:1 as a no-JS fallback.
   // gsap.set() overrides that back to hidden so GSAP can animate them in.
+  // Stagger-reveal all hero elements EXCEPT the H1 (handled by splitAndReveal above)
   const heroReveals = document.querySelectorAll<HTMLElement>('.hero .reveal, .hero .reveal-scale');
-  // First pass: set all to hidden initial state so GSAP owns the animation
   heroReveals.forEach(el => {
+    // Skip H1 — splitAndReveal already owns its animation
+    if (el.classList.contains('hero-h1')) return;
     if (el.classList.contains('reveal-scale')) {
       gsap.set(el, { opacity: 0, scale: 0.9 });
     } else {
       gsap.set(el, { opacity: 0, y: 20 });
     }
   });
-  // Second pass: animate each in with its stagger delay
   heroReveals.forEach(el => {
+    if (el.classList.contains('hero-h1')) return;
     const delay = parseFloat(el.dataset.delay || '0');
     if (el.classList.contains('reveal-scale')) {
       gsap.to(el, { opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out', delay: delay + 0.2 });
