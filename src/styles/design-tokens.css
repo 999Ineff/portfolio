@@ -107,7 +107,7 @@
   --text-xl:    clamp(2rem, 1.8rem + 1.0vw, 2.5rem);           /* 32px → 40px */
   --text-2xl:   clamp(2.5rem, 2.1rem + 2.0vw, 3.5rem);         /* 40px → 56px */
   --text-3xl:   clamp(3rem, 2.5rem + 2.5vw, 5rem);             /* 48px → 80px */
-  --text-hero:  clamp(4rem, 3rem + 5vw, 8rem);                  /* 64px → 128px */
+  --text-hero:  clamp(3.5rem, 2.5rem + 4vw, 5.5rem);            /* 56px → 88px */
 
   /* ── Spacing Scale ──────────────────────────────────────
      Base unit: 8px

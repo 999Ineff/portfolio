@@ -629,6 +629,15 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   align-items: center;
 }
 
+/* Hero elements must be visible immediately — don't depend on GSAP for above-fold content.
+   If JS fails or ScrollTrigger doesn't fire, the hero stays readable.
+   GSAP's initHero() will gsap.set() these back to hidden before animating. */
+.hero .reveal,
+.hero .reveal-scale {
+  opacity: 1;
+  transform: none;
+}
+
 .hero-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1507,14 +1516,25 @@ function initHero() {
   }
 
   // Staggered entrance for hero sub + elements (using existing .reveal system)
-  // The BaseLayout ScrollTrigger handles .reveal — hero is above fold so trigger immediately
+  // CSS sets hero .reveal to opacity:1 as a no-JS fallback.
+  // gsap.set() overrides that back to hidden so GSAP can animate them in.
   const heroReveals = document.querySelectorAll<HTMLElement>('.hero .reveal, .hero .reveal-scale');
+  // First pass: set all to hidden initial state so GSAP owns the animation
+  heroReveals.forEach(el => {
+    if (el.classList.contains('reveal-scale')) {
+      gsap.set(el, { opacity: 0, scale: 0.9 });
+    } else {
+      gsap.set(el, { opacity: 0, y: 20 });
+    }
+  });
+  // Second pass: animate each in with its stagger delay
   heroReveals.forEach(el => {
     const delay = parseFloat(el.dataset.delay || '0');
-    gsap.fromTo(el,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: delay + 0.2 }
-    );
+    if (el.classList.contains('reveal-scale')) {
+      gsap.to(el, { opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out', delay: delay + 0.2 });
+    } else {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: delay + 0.2 });
+    }
   });
 
   // Floating orbs

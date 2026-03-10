@@ -614,9 +614,9 @@ const stats = [
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  display: grid;
-  grid-template-columns: 3rem 1fr;
-  gap: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
   transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
 }
 .why-card:hover {
@@ -624,9 +624,9 @@ const stats = [
   box-shadow: var(--shadow-glow-gold);
 }
 .why-card__number {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   color: var(--gold);
-  padding-top: 0.2rem;
+  letter-spacing: 0.1em;
 }
 .why-card__title {
   font-family: var(--font-display);
@@ -744,8 +744,6 @@ const stats = [
   .process-step { grid-template-columns: 1fr; gap: var(--space-sm); }
   .process-step__number { display: none; }
   .process-step__header { flex-direction: column; gap: var(--space-2xs); }
-  .why-card { grid-template-columns: 1fr; gap: var(--space-sm); }
-  .why-card__number { display: none; }
   .about-cta__actions { flex-direction: column; align-items: center; }
   .about-hero__photo { display: none; }
 }

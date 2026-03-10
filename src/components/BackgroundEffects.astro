@@ -1,9 +1,8 @@
 ---
-// Global background: grid + orbs + noise + mouse spotlight
+// Global background: orbs + noise + mouse spotlight
 ---
 
 <div class="bg-effects" aria-hidden="true">
-  <div class="bg-grid"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
@@ -19,17 +18,6 @@
     z-index: -1;
   }
 
-  .bg-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 100%);
-  }
-
   .orb {
     position: absolute;
     border-radius: 50%;
@@ -42,7 +30,7 @@
   .orb-1 {
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(255, 193, 59, 0.08) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(255, 193, 59, 0.18) 0%, transparent 60%);
     top: -200px;
     right: -200px;
   }
@@ -50,7 +38,7 @@
   .orb-2 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(0, 229, 255, 0.14) 0%, transparent 60%);
     bottom: -200px;
     left: -200px;
     animation-delay: -5s;
@@ -60,17 +48,18 @@
   .orb-3 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(0, 255, 136, 0.04) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 60%);
     top: 40%;
     left: 40%;
     animation-delay: -10s;
   }
 
   @keyframes orbFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(50px, -50px) scale(1.1); }
-    66% { transform: translate(-30px, 40px) scale(0.9); }
-    100% { transform: translate(40px, 20px) scale(1.05); }
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25%  { transform: translate(50px, -50px) scale(1.12) rotate(3deg); }
+    50%  { transform: translate(-30px, 40px) scale(0.9) rotate(-2deg); }
+    75%  { transform: translate(60px, 30px) scale(1.08) rotate(4deg); }
+    100% { transform: translate(40px, 20px) scale(1.05) rotate(-1deg); }
   }
 
   .bg-noise {
@@ -107,10 +96,76 @@
 
     document.addEventListener('mousemove', (e) => {
       (spotlight as HTMLElement).style.background =
-        `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, rgba(255,193,59,0.15), transparent 40%)`;
+        `radial-gradient(325px circle at ${e.clientX}px ${e.clientY}px, rgba(255,193,59,0.10), transparent 40%)`;
+    }, { passive: true });
+  }
+
+  function initScrollOrbs() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Skip on touch devices
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const orbs = document.querySelectorAll<HTMLElement>('.orb');
+    if (!orbs.length) return;
+
+    let lastScrollY = window.scrollY;
+    let rafId: number | null = null;
+    let scrollDelta = 0;
+
+    const DECAY = 0.88;       // how quickly the reaction fades
+    const STRENGTH = 0.06;    // how far orbs shift per pixel of scroll delta
+
+    function applyScrollShift() {
+      scrollDelta *= DECAY;
+
+      orbs.forEach((orb, i) => {
+        // Each orb shifts in a slightly different direction for organic feel
+        const dirX = i === 0 ? 1 : i === 1 ? -1 : 0.5;
+        const dirY = i === 0 ? -0.5 : i === 1 ? 0.8 : -1;
+        const shift = scrollDelta * STRENGTH;
+        orb.style.setProperty('--scroll-x', `${shift * dirX}px`);
+        orb.style.setProperty('--scroll-y', `${shift * dirY}px`);
+      });
+
+      if (Math.abs(scrollDelta) > 0.5) {
+        rafId = requestAnimationFrame(applyScrollShift);
+      } else {
+        // Reset cleanly
+        orbs.forEach(orb => {
+          orb.style.setProperty('--scroll-x', '0px');
+          orb.style.setProperty('--scroll-y', '0px');
+        });
+        rafId = null;
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      scrollDelta += currentY - lastScrollY;
+      lastScrollY = currentY;
+
+      // Clamp to avoid extreme movement
+      scrollDelta = Math.max(-120, Math.min(120, scrollDelta));
+
+      if (rafId === null) {
+        rafId = requestAnimationFrame(applyScrollShift);
+      }
     }, { passive: true });
   }
 
   initSpotlight();
-  document.addEventListener('astro:after-swap', initSpotlight);
+  initScrollOrbs();
+
+  document.addEventListener('astro:after-swap', () => {
+    initSpotlight();
+    initScrollOrbs();
+  });
 </script>
+
+<style>
+  /* Scroll-reactive offset applied via CSS custom properties set by JS */
+  .orb {
+    translate: var(--scroll-x, 0px) var(--scroll-y, 0px);
+  }
+</style>
