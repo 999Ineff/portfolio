@@ -1,0 +1,603 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Contact';
+const description = 'Book a free 15-minute discovery call, or send a message. No pitch, no pressure — just clarity on what to build and whether I\'m the right fit.';
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- HERO -->
+  <section class="contact-hero">
+    <div class="container">
+      <p class="label reveal">Contact</p>
+      <h1 class="contact-hero__heading reveal" data-delay="0.1">
+        Let's figure out<br />
+        what you need.
+      </h1>
+      <p class="contact-hero__sub reveal" data-delay="0.2">
+        15-minute call. No commitment, no pitch deck. You'll leave knowing
+        exactly what to build — and whether I'm the right fit.
+      </p>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
+  <section class="contact-main">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- LEFT: Calendly embed + email -->
+        <div class="contact-left reveal-left" data-delay="0">
+          <div class="contact-block">
+            <p class="block-label mono">Book a call</p>
+            <h2 class="block-heading">Schedule directly.</h2>
+            <p class="block-sub">
+              Pick a time that works for you. All calls are via Google Meet or Zoom.
+              I'll confirm same-day.
+            </p>
+            <!-- Calendly inline embed -->
+            <div class="calendly-wrapper">
+              <div
+                class="calendly-inline-widget"
+                data-url="https://calendly.com/luis-aviles-khn?hide_gdpr_banner=1&background_color=0a0a12&text_color=e8eaf0&primary_color=ffc13b"
+                style="min-width:280px;height:700px;"
+              ></div>
+            </div>
+            <div class="email-alt reveal" data-delay="0.3">
+              <span class="email-alt__label">Prefer email?</span>
+              <a href="mailto:luis@ineffablesolutions.net" class="email-alt__link">
+                luis@ineffablesolutions.net
+              </a>
+            </div>
+            <div class="bilingual-note reveal" data-delay="0.4">
+              <span class="bilingual-icon mono">◈</span>
+              <span>Se habla español &mdash; hablamos su idioma, sin problema.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Contact form -->
+        <div class="contact-right reveal-right" data-delay="0.1">
+
+          <!-- Capacity indicator (D21) -->
+          <div class="capacity-block reveal" data-delay="0.15">
+            <span class="capacity-dot"></span>
+            <span class="capacity-text">
+              Currently accepting new projects &mdash; <strong>Q2 2026: 1 project slot remaining</strong>
+            </span>
+          </div>
+
+          <div class="contact-block">
+            <p class="block-label mono">Send a message</p>
+            <h2 class="block-heading">Or fill this out.</h2>
+            <p class="block-sub">
+              Tell me what you're working on. I respond within one business day.
+            </p>
+
+            <!-- Netlify Form (D14: budget qualifier dropdown) -->
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              class="contact-form"
+              id="contact-form"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p class="hidden" aria-hidden="true">
+                <label>Don't fill this out: <input name="bot-field" /></label>
+              </p>
+
+              <div class="form-row form-row--2col">
+                <div class="field">
+                  <label class="field-label" for="name">Name <span class="required" aria-hidden="true">*</span></label>
+                  <input
+                    class="field-input"
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                    autocomplete="name"
+                  />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="email">Email <span class="required" aria-hidden="true">*</span></label>
+                  <input
+                    class="field-input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@company.com"
+                    required
+                    autocomplete="email"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="company">Company <span class="field-optional">(optional)</span></label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Your company or project"
+                  autocomplete="organization"
+                />
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="service">What are you looking for? <span class="required" aria-hidden="true">*</span></label>
+                <div class="field-select-wrapper">
+                  <select class="field-select" id="service" name="service" required>
+                    <option value="" disabled selected>Select one…</option>
+                    <option value="automation">Custom Automation (scripts, macros, workflows)</option>
+                    <option value="website">Tailored Website (custom design + SEO)</option>
+                    <option value="platform">Custom Platform (SaaS, dashboard, CRM)</option>
+                    <option value="consulting">Consulting (strategy, audit, roadmap)</option>
+                    <option value="unsure">Not sure yet — need to talk it through</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+              </div>
+
+              <!-- Budget qualifier (D14) -->
+              <div class="field">
+                <label class="field-label" for="budget">Estimated budget <span class="required" aria-hidden="true">*</span></label>
+                <div class="field-select-wrapper">
+                  <select class="field-select" id="budget" name="budget" required>
+                    <option value="" disabled selected>Select a range…</option>
+                    <option value="under-1k">Under $1,000</option>
+                    <option value="1k-5k">$1,000 – $5,000</option>
+                    <option value="5k-15k">$5,000 – $15,000</option>
+                    <option value="15k-50k">$15,000 – $50,000</option>
+                    <option value="50k-plus">$50,000+</option>
+                  </select>
+                  <span class="select-arrow" aria-hidden="true">▾</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="message">Tell me about your project <span class="required" aria-hidden="true">*</span></label>
+                <textarea
+                  class="field-input field-textarea"
+                  id="message"
+                  name="message"
+                  placeholder="What are you trying to build or automate? What's the biggest problem right now?"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-submit">
+                Send Message
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </button>
+
+              <div class="form-success" id="form-success" role="alert" aria-live="polite">
+                <span class="success-icon" aria-hidden="true">✓</span>
+                <div>
+                  <strong>Message received.</strong>
+                  <p>I'll respond within one business day. Check your inbox (and spam, just in case).</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="expect-section">
+    <div class="container narrow">
+      <p class="label reveal">What Happens Next</p>
+      <h2 class="section-heading reveal" data-delay="0.1">After you reach out.</h2>
+      <div class="expect-steps">
+        {[
+          { step: '01', title: 'I respond same-day', desc: 'Usually within a few hours during business days. You\'ll always hear back within 24 hours.' },
+          { step: '02', title: 'I schedule a call', desc: '15 minutes. You explain the problem; I ask questions. No jargon, no prep needed.' },
+          { step: '03', title: 'You get a scope document', desc: 'Within 2 business days: exactly what I\'d build, in what order, at what cost. No vague estimates.' },
+          { step: '04', title: 'You decide', desc: 'No pressure. The scope document is yours to keep — useful even if we don\'t work together.' },
+        ].map((s, i) => (
+          <div class="expect-step reveal" data-delay={i * 0.1}>
+            <div class="expect-step__number mono">{s.step}</div>
+            <div class="expect-step__content">
+              <h3 class="expect-step__title">{s.title}</h3>
+              <p class="expect-step__desc">{s.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+/* ── Layout ───────────────────────────────────────────────── */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg); }
+.container.narrow { max-width: var(--narrow-width); }
+.hidden { display: none; }
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2xl);
+  line-height: 1.1;
+}
+.mono { font-family: var(--font-mono); }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.contact-hero {
+  padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-2xl);
+}
+.contact-hero__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.contact-hero__sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 52ch;
+}
+
+/* ── Main Grid ────────────────────────────────────────────── */
+.contact-main {
+  padding: var(--space-xl) 0 var(--space-section);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* Shared block styles */
+.contact-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+}
+.block-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.block-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+.block-sub {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-xl);
+}
+
+/* ── Capacity Indicator (D21) ─────────────────────────────── */
+.capacity-block {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl);
+  font-size: var(--text-sm);
+  color: var(--green);
+}
+.capacity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+}
+.capacity-text { line-height: 1.5; color: var(--text-secondary); }
+.capacity-text strong { color: var(--green); }
+
+/* ── Calendly ─────────────────────────────────────────────── */
+.calendly-wrapper {
+  margin-bottom: var(--space-xl);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.email-alt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-lg);
+}
+.email-alt__label {
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+}
+.email-alt__link {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.email-alt__link:hover { color: var(--text-primary); }
+.bilingual-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+}
+.bilingual-icon { color: var(--gold); font-size: 0.7rem; }
+
+/* ── Form ─────────────────────────────────────────────────── */
+.contact-form { display: flex; flex-direction: column; gap: var(--space-lg); }
+.form-row { display: flex; gap: var(--space-md); }
+.form-row--2col .field { flex: 1; }
+.field { display: flex; flex-direction: column; gap: var(--space-xs); }
+.field-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.field-optional { font-weight: 400; color: var(--text-dim); }
+.required { color: var(--gold); margin-left: 0.1em; }
+
+.field-input {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  width: 100%;
+}
+.field-input::placeholder { color: var(--text-dim); }
+.field-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+}
+.field-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.field-select-wrapper {
+  position: relative;
+}
+.field-select {
+  appearance: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.875rem 2.5rem 0.875rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  width: 100%;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+.field-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.08);
+}
+.field-select option { background: var(--bg-elevated); color: var(--text-primary); }
+.select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+  font-size: 0.7rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+  border: none;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg-deep);
+  box-shadow: 0 4px 24px var(--gold-glow);
+  width: 100%;
+  justify-content: center;
+}
+.btn-primary:hover { box-shadow: 0 8px 32px var(--gold-glow); }
+.btn-arrow { transition: transform var(--duration-fast) var(--ease-out); }
+.btn-primary:hover .btn-arrow { transform: translateX(4px); }
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success state */
+.form-success {
+  display: none;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: var(--radius-lg);
+  color: var(--green);
+}
+.form-success.visible { display: flex; }
+.success-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.form-success strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+}
+.form-success p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
+
+/* ── What to Expect ───────────────────────────────────────── */
+.expect-section {
+  padding: var(--space-section) 0;
+  background: var(--bg-surface);
+}
+.expect-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.expect-step {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--duration-base) var(--ease-out);
+}
+.expect-step:last-child { border-bottom: none; }
+.expect-step:hover { background: var(--bg-elevated); }
+.expect-step__number {
+  font-size: var(--text-sm);
+  color: var(--gold);
+  padding-top: 0.2rem;
+}
+.expect-step__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+.expect-step__desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--text-base);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-right { order: -1; }
+  .capacity-block { order: -2; }
+}
+@media (max-width: 768px) {
+  .contact-hero { padding-top: calc(var(--nav-height) + var(--space-xl)); }
+  .contact-hero__heading { font-size: clamp(2rem, 7vw, 3rem); }
+  .contact-block { padding: var(--space-xl); }
+  .form-row--2col { flex-direction: column; }
+  .section-heading { font-size: var(--text-xl); }
+  .expect-step { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .expect-step__number { display: none; }
+}
+
+/* GSAP fallback */
+@media (scripting: none) {
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
+}
+</style>
+
+<script>
+  // Load Calendly widget script
+  const script = document.createElement('script');
+  script.src = 'https://assets.calendly.com/assets/external/widget.js';
+  script.async = true;
+  document.head.appendChild(script);
+
+  // Contact form AJAX submission (Netlify Forms)
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const successMsg = document.getElementById('form-success');
+  const submitBtn = form?.querySelector<HTMLButtonElement>('.btn-submit');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data as any).toString(),
+        });
+
+        if (res.ok) {
+          form.reset();
+          if (successMsg) successMsg.classList.add('visible');
+          // Track with Plausible if available
+          if (typeof (window as any).plausible === 'function') {
+            (window as any).plausible('Contact Form Submitted');
+          }
+        } else {
+          throw new Error('Network response not ok');
+        }
+      } catch {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Send Message <span class="btn-arrow" aria-hidden="true">→</span>';
+        }
+        alert('Something went wrong. Please email luis@ineffablesolutions.net directly.');
+      }
+    });
+  }
+</script>

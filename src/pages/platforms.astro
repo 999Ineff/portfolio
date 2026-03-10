@@ -6,70 +6,249 @@ import CTA from '../components/CTA.astro';
 
 <BaseLayout
   title="Custom Platforms"
-  description="Not just websites — complete business platforms with dashboards, databases, AI, and integrations."
+  description="Replace 10 disconnected tools with one system built for how you actually work. Dashboards, databases, AI assistants, and integrations — engineered to run your operations."
 >
   <!-- Hero -->
   <section class="hero section-lg">
     <div class="container hero-inner">
       <SectionLabel text="Custom Platforms" />
       <h1 class="hero-title reveal" data-delay="0.1">
-        Not Just a Website.<br /><span class="gradient-text-gold">A System.</span>
+        Replace 10 Disconnected Tools<br />
+        <span class="text-gold">With One System That Works</span>
       </h1>
       <p class="hero-sub reveal" data-delay="0.2">
-        Complete business platforms with dashboards, databases, AI assistants, and
-        integrations — engineered to run your operations, not just display them.
+        Your CRM doesn't talk to your spreadsheets. Your spreadsheets don't talk to your accounting.
+        Your accounting doesn't talk to anything. I build the system that connects all of it.
       </p>
       <div class="hero-actions reveal" data-delay="0.3">
         <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
-          Tell Me What You Need
+          Schedule a Discovery Session
         </a>
-        <a href="#case-bce" class="btn btn-outline">See a Platform</a>
+        <a href="#case-bce" class="btn btn-secondary">See a Platform</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative Animation: Disconnected → Connected Systems -->
+  <section class="section narrative-section" id="animation">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Architecture" color="cyan" />
+        <h2 class="text-heading reveal">From scattered tools to unified system</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 600px;">
+          Watch disconnected silos connect into a single source of truth. Data flows. Decisions accelerate.
+        </p>
+      </div>
+
+      <div class="narrative-stage reveal" data-delay="0.2" id="platform-animation">
+        <svg
+          class="narrative-svg"
+          viewBox="0 0 800 380"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Animation showing scattered disconnected tools connecting into a unified platform dashboard"
+          role="img"
+        >
+          <rect width="800" height="380" fill="#0a0a12"/>
+
+          <!-- BEFORE: Scattered disconnected tools -->
+          <g id="scattered-tools">
+            <!-- CRM box (top left, disconnected) -->
+            <g id="tool-crm">
+              <rect x="30" y="30" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="85" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">CRM</text>
+              <text x="85" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">Salesforce</text>
+              <text x="85" y="81" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">$150/mo</text>
+            </g>
+
+            <!-- Email box (top center-left) -->
+            <g id="tool-email">
+              <rect x="180" y="15" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="235" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">EMAIL</text>
+              <text x="235" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">Mailchimp</text>
+              <text x="235" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">$75/mo</text>
+            </g>
+
+            <!-- Spreadsheet (top right) -->
+            <g id="tool-sheets">
+              <rect x="330" y="25" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="385" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">SHEETS</text>
+              <text x="385" y="65" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">Manual entry</text>
+              <text x="385" y="76" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">error-prone</text>
+            </g>
+
+            <!-- Accounting (bottom left) -->
+            <g id="tool-accounting">
+              <rect x="30" y="190" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="85" y="215" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">ACCOUNTING</text>
+              <text x="85" y="230" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">QuickBooks</text>
+              <text x="85" y="241" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">$60/mo</text>
+            </g>
+
+            <!-- Project mgmt (bottom center-left) -->
+            <g id="tool-pm">
+              <rect x="180" y="205" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="235" y="230" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">PROJECTS</text>
+              <text x="235" y="245" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">Asana</text>
+              <text x="235" y="256" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">$50/mo</text>
+            </g>
+
+            <!-- Analytics (bottom right) -->
+            <g id="tool-analytics">
+              <rect x="330" y="195" width="110" height="60" rx="6" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="385" y="220" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">ANALYTICS</text>
+              <text x="385" y="235" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">Multiple tools</text>
+              <text x="385" y="246" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">no single view</text>
+            </g>
+
+            <!-- Cost total label -->
+            <text x="220" y="300" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ff4757">$335–$500+/mo, 6 logins, no unified view</text>
+          </g>
+
+          <!-- CENTER: Platform hub (hidden initially) -->
+          <g id="platform-hub" opacity="0">
+            <!-- Connection lines flowing to center -->
+            <line id="line-crm" x1="140" y1="60" x2="480" y2="190" stroke="#ffc13b" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+            <line id="line-email" x1="290" y1="45" x2="480" y2="190" stroke="#00e5ff" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+            <line id="line-sheets" x1="385" y1="85" x2="480" y2="190" stroke="#00ff88" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+            <line id="line-accounting" x1="140" y1="220" x2="480" y2="190" stroke="#ffc13b" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+            <line id="line-pm" x1="290" y1="235" x2="480" y2="190" stroke="#00e5ff" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+            <line id="line-analytics" x1="385" y1="225" x2="480" y2="190" stroke="#00ff88" stroke-width="1" stroke-dasharray="0" opacity="0"/>
+
+            <!-- Data flow dots on lines -->
+            <circle id="dot1" cx="140" cy="60" r="4" fill="#ffc13b" opacity="0"/>
+            <circle id="dot2" cx="290" cy="45" r="4" fill="#00e5ff" opacity="0"/>
+            <circle id="dot3" cx="385" cy="85" r="4" fill="#00ff88" opacity="0"/>
+          </g>
+
+          <!-- RIGHT: Unified Dashboard Panel -->
+          <g id="dashboard" opacity="0">
+            <rect x="460" y="20" width="320" height="320" rx="8" fill="#141420" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+            <rect x="460" y="20" width="320" height="40" rx="8" fill="#0f0f1a"/>
+            <rect x="460" y="48" width="320" height="12" rx="0" fill="#0f0f1a"/>
+            <text x="476" y="45" font-family="JetBrains Mono, monospace" font-size="10" fill="#ffc13b">Ineffable Platform</text>
+            <text x="750" y="45" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">LIVE</text>
+            <circle cx="760" cy="41" r="4" fill="#00ff88" opacity="0.8"/>
+
+            <!-- Metric cards row -->
+            <rect x="468" y="68" width="90" height="50" rx="4" fill="#0a0a12" stroke="rgba(255,193,59,0.15)" stroke-width="0.5"/>
+            <text x="513" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">REVENUE</text>
+            <text x="513" y="103" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#ffc13b" font-weight="700">$84K</text>
+            <text x="513" y="113" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#00ff88">+12% MoM</text>
+
+            <rect x="566" y="68" width="90" height="50" rx="4" fill="#0a0a12" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+            <text x="611" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">LEADS</text>
+            <text x="611" y="103" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#00e5ff" font-weight="700">247</text>
+            <text x="611" y="113" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#00e5ff">this month</text>
+
+            <rect x="664" y="68" width="90" height="50" rx="4" fill="#0a0a12" stroke="rgba(0,255,136,0.15)" stroke-width="0.5"/>
+            <text x="709" y="86" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">TASKS</text>
+            <text x="709" y="103" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#00ff88" font-weight="700">94%</text>
+            <text x="709" y="113" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#00ff88">on time</text>
+
+            <!-- Mini chart -->
+            <rect x="468" y="126" width="286" height="70" rx="4" fill="#0a0a12"/>
+            <text x="476" y="140" font-family="JetBrains Mono, monospace" font-size="8" fill="#6b7280">REVENUE TREND</text>
+            <polyline points="476,185 510,178 544,172 578,165 612,170 646,158 680,150 714,142 748,135" stroke="#ffc13b" stroke-width="1.5" fill="none" opacity="0.8"/>
+            <polyline points="476,185 510,178 544,172 578,165 612,170 646,158 680,150 714,142 748,135 748,195 476,195" fill="rgba(255,193,59,0.06)" stroke="none"/>
+
+            <!-- AI Query box -->
+            <rect x="468" y="204" width="286" height="36" rx="4" fill="#0a0a12" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+            <text x="478" y="217" font-family="JetBrains Mono, monospace" font-size="8" fill="#00e5ff">&#x2BA7; AI</text>
+            <text x="500" y="217" font-family="JetBrains Mono, monospace" font-size="8" fill="#a0a8bb">What was revenue last quarter?</text>
+            <text x="478" y="232" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">$73,200 — up 18% vs Q3. Top client: Acme Corp ($14K)</text>
+
+            <!-- Recent activity -->
+            <rect x="468" y="248" width="286" height="80" rx="4" fill="#0a0a12"/>
+            <text x="476" y="262" font-family="JetBrains Mono, monospace" font-size="8" fill="#6b7280">RECENT ACTIVITY</text>
+            <text x="476" y="276" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">&#x2022; Lead from website — auto-added to CRM</text>
+            <text x="476" y="289" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">&#x2022; Invoice #447 paid — QuickBooks synced</text>
+            <text x="476" y="302" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">&#x2022; Monthly report generated — sent to owner</text>
+            <text x="476" y="315" font-family="JetBrains Mono, monospace" font-size="7" fill="#00ff88">&#x2022; 0 manual steps required</text>
+          </g>
+        </svg>
+
+        <div class="animation-labels">
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--red);"></span>
+            <span class="font-mono">6 disconnected tools, 6 logins</span>
+          </div>
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--cyan);"></span>
+            <span class="font-mono">One platform, real-time, AI-queryable</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- What's a Platform? -->
-  <section class="section" id="what-is">
+  <section class="section-lg" id="what-is">
     <div class="container">
       <div class="section-header">
         <SectionLabel text="The Difference" color="cyan" />
         <h2 class="text-heading reveal">A website shows. A platform <span class="text-cyan">does.</span></h2>
         <p class="text-body reveal" data-delay="0.1" style="max-width: 700px;">
           Most businesses get a website and call it done. But a platform connects your people,
-          data, and workflows into one system that actually runs the business behind the scenes.
+          data, and workflows into one system that runs the business behind the scenes.
         </p>
       </div>
 
       <div class="platform-grid">
-        <div class="platform-item card reveal" data-delay="0">
-          <div class="platform-icon text-gold">&#9633;</div>
-          <h3 class="platform-item-title">Dashboard</h3>
-          <p class="platform-item-desc">Real-time visibility into operations, finances, and KPIs</p>
+        {[
+          { icon: '&#9633;', color: 'gold', title: 'Dashboard', desc: 'Real-time visibility into operations, finances, and KPIs — no spreadsheet required' },
+          { icon: '&#9638;', color: 'cyan', title: 'Database', desc: 'Structured data storage with relationships, search, and automated sync' },
+          { icon: '&#9672;', color: 'green', title: 'AI Assistant', desc: 'Natural language queries, smart categorization, pattern recognition' },
+          { icon: '&#8644;', color: 'gold', title: 'API Integrations', desc: 'Connect to the tools you already use — no manual rekeying ever' },
+          { icon: '&#9775;', color: 'cyan', title: 'User Management', desc: 'Roles, permissions, and team-based access control at every level' },
+          { icon: '&#9707;', color: 'green', title: 'Automated Reporting', desc: 'Scheduled reports that build themselves from live data and send themselves' },
+        ].map((item, i) => (
+          <div class={`platform-item card reveal`} data-delay={`${i * 0.06}`}>
+            <div class={`platform-icon text-${item.color}`} set:html={item.icon}></div>
+            <h3 class="platform-item-title">{item.title}</h3>
+            <p class="platform-item-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem: The Tool Sprawl Pain (D16 loss aversion) -->
+  <section class="section-lg problem-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Real Cost" />
+        <h2 class="text-heading reveal">
+          Tool sprawl is <span class="text-red">bleeding you dry</span>
+        </h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          The average SMB pays for 8–12 SaaS tools that don't talk to each other. The cost isn't just the subscriptions — it's the time lost to switching, reconciling, and re-entering data.
+        </p>
+      </div>
+
+      <div class="problems-grid">
+        <div class="problem-card card reveal" data-delay="0">
+          <div class="problem-cost font-mono text-red">$500–$2,000/mo</div>
+          <h4 class="problem-title">Tool Subscription Sprawl</h4>
+          <p class="problem-desc">CRM + email + project management + analytics + accounting + invoicing + communication. Each one "just $50/month" — until you add them up.</p>
+          <div class="problem-loss"><span class="font-mono text-dim">Year cost:</span> <span class="font-mono text-red">$6K–$24K — for tools that don't talk</span></div>
         </div>
-        <div class="platform-item card reveal" data-delay="0.05">
-          <div class="platform-icon text-cyan">&#9638;</div>
-          <h3 class="platform-item-title">Database</h3>
-          <p class="platform-item-desc">Structured data storage with relationships and search</p>
+        <div class="problem-card card reveal" data-delay="0.08">
+          <div class="problem-cost font-mono text-red">3–5 hrs/week</div>
+          <h4 class="problem-title">Data Reconciliation</h4>
+          <p class="problem-desc">Your CRM says one thing. Your accounting says another. Your spreadsheet says something else. Someone spends Friday reconciling them. Every week.</p>
+          <div class="problem-loss"><span class="font-mono text-dim">Year cost:</span> <span class="font-mono text-red">200+ hrs of high-value time on data janitor work</span></div>
         </div>
-        <div class="platform-item card reveal" data-delay="0.1">
-          <div class="platform-icon text-green">&#9672;</div>
-          <h3 class="platform-item-title">AI Assistant</h3>
-          <p class="platform-item-desc">Natural language queries, smart categorization, insights</p>
+        <div class="problem-card card reveal" data-delay="0.16">
+          <div class="problem-cost font-mono text-red">No single truth</div>
+          <h4 class="problem-title">Decisions Made Blind</h4>
+          <p class="problem-desc">To answer "how's the business doing?" you need to open 4 tabs, pull 3 reports, and do manual math. That's not a dashboard — that's detective work.</p>
+          <div class="problem-loss"><span class="font-mono text-dim">Real cost:</span> <span class="font-mono text-red">Slow decisions + missed opportunities</span></div>
         </div>
-        <div class="platform-item card reveal" data-delay="0.15">
-          <div class="platform-icon text-gold">&#8644;</div>
-          <h3 class="platform-item-title">API Integrations</h3>
-          <p class="platform-item-desc">Connect to the tools you already use — no rekeying</p>
-        </div>
-        <div class="platform-item card reveal" data-delay="0.2">
-          <div class="platform-icon text-cyan">&#9775;</div>
-          <h3 class="platform-item-title">User Management</h3>
-          <p class="platform-item-desc">Roles, permissions, and team-based access control</p>
-        </div>
-        <div class="platform-item card reveal" data-delay="0.25">
-          <div class="platform-icon text-green">&#9707;</div>
-          <h3 class="platform-item-title">Automated Reporting</h3>
-          <p class="platform-item-desc">Scheduled reports that build themselves from live data</p>
+        <div class="problem-card card reveal" data-delay="0.24">
+          <div class="problem-cost font-mono text-red">6–10 logins</div>
+          <h4 class="problem-title">Context Switching Tax</h4>
+          <p class="problem-desc">Every time you jump between tools, you lose 23 minutes of focus. Multiply that by your team. Multiply that by a workday. That's the invisible productivity drain.</p>
+          <div class="problem-loss"><span class="font-mono text-dim">Team cost:</span> <span class="font-mono text-red">Hours of lost focus per person per day</span></div>
         </div>
       </div>
     </div>
@@ -82,19 +261,26 @@ import CTA from '../components/CTA.astro';
         <SectionLabel text="Case Study" color="gold" />
         <h2 class="text-heading reveal">Owner Operations Dashboard</h2>
         <p class="text-body reveal" data-delay="0.1" style="max-width: 750px;">
-          Complete operational infrastructure for a cleaning company — replacing spreadsheets,
+          Complete operational infrastructure for a service company — replacing disconnected spreadsheets,
           manual tracking, and guesswork with a single source of truth.
         </p>
       </div>
 
       <div class="case-showcase reveal" data-delay="0.2">
         <div class="case-media">
-          <img
-            src="/assets/screenshots/BCE Owner DashBoard.png"
-            alt="BCE Owner Operations Dashboard showing financial metrics and AI assistant"
-            loading="lazy"
-            class="case-image"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/assets/screenshots/bce-dashboard.webp"
+            />
+            <img
+              src="/assets/screenshots/BCE Owner DashBoard.png"
+              alt="BCE Owner Operations Dashboard showing financial metrics and AI assistant"
+              loading="lazy"
+              decoding="async"
+              class="case-image"
+            />
+          </picture>
         </div>
 
         <div class="case-details">
@@ -102,7 +288,7 @@ import CTA from '../components/CTA.astro';
           <ul class="case-features">
             <li class="case-feature">
               <span class="feature-marker text-gold font-mono">//</span>
-              <span>AI assistant for instant business queries and data lookup</span>
+              <span>AI assistant for instant business queries and data lookup — ask in plain English</span>
             </li>
             <li class="case-feature">
               <span class="feature-marker text-gold font-mono">//</span>
@@ -150,15 +336,17 @@ import CTA from '../components/CTA.astro';
   </section>
 
   <!-- Case Study: Receipt Tool → Office Platform -->
-  <section class="section-lg" id="case-receipt">
+  <section class="section-lg journey-section" id="case-receipt">
     <div class="container">
       <div class="section-header">
         <SectionLabel text="Small to Big" color="cyan" />
         <h2 class="text-heading reveal">From Photo Tool to Office Platform</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 700px;">
+          Most platforms start as one small pain point solved properly. Then they grow. This is how that happens.
+        </p>
       </div>
 
       <div class="journey-layout reveal" data-delay="0.1">
-        <!-- Left: Story -->
         <div class="journey-story">
           <div class="journey-step card">
             <span class="journey-number font-mono text-gold">01</span>
@@ -186,7 +374,6 @@ import CTA from '../components/CTA.astro';
           </div>
         </div>
 
-        <!-- Right: Video -->
         <div class="journey-video">
           <div class="video-wrapper">
             <div class="journey-video-wrap">
@@ -205,10 +392,121 @@ import CTA from '../components/CTA.astro';
       </div>
 
       <div class="journey-lesson reveal" data-delay="0.2">
-        <p class="text-body" style="text-align: center; font-size: var(--text-lg); max-width: 700px; margin: 0 auto;">
+        <p class="text-body" style="font-size: var(--text-lg); max-width: 700px;">
           This is how most platforms start — one pain point, solved properly, then expanded
           into a system. <strong class="text-gold">The small fix proves the value. The platform captures it.</strong>
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tiers & Pricing -->
+  <section class="section-lg" id="tiers">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Pricing" color="gold" />
+        <h2 class="text-heading reveal">Platform pricing. No mystery.</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          Platform builds are scoped to your needs. These ranges are starting points — I'll build a proposal after understanding your specific system.
+        </p>
+      </div>
+
+      <div class="platform-tiers">
+        <div class="platform-tier card reveal" data-delay="0">
+          <div class="tier-badge-label tag tag-cyan font-mono">Full System</div>
+          <h3 class="tier-name">Connected Platform</h3>
+          <div class="tier-pricing">
+            <span class="tier-price font-mono text-gold">$10,500 – $14,000</span>
+            <span class="tier-market font-mono text-dim">Market: $15,000 – $20,000</span>
+          </div>
+          <p class="tier-desc">Custom integrations, unified dashboard, role-based access. Replaces 3–5 disconnected tools with one system.</p>
+          <ul class="tier-features">
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Custom integrations (CRM, accounting, email)</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Unified analytics dashboard</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Role-based user access</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Automated reporting</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>60-day support</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Schedule Discovery</a>
+        </div>
+
+        <div class="platform-tier platform-tier--featured card reveal" data-delay="0.15">
+          <div class="tier-badge-label tag font-mono">Custom Platform</div>
+          <h3 class="tier-name">Full Business Platform</h3>
+          <div class="tier-pricing">
+            <span class="tier-price font-mono text-gold">$28,000 – $42,000</span>
+            <span class="tier-market font-mono text-dim">Market: $40,000 – $60,000</span>
+          </div>
+          <p class="tier-desc">SaaS MVP, custom CRM, BI platform, or full digital transformation. Built from scratch around your exact processes and team structure.</p>
+          <ul class="tier-features">
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Everything in Connected Platform</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Custom database architecture</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>AI assistant for natural language queries</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Multi-location / multi-team support</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>White-label ready</li>
+            <li class="tier-feature"><span class="feat-check text-gold">&#10003;</span>Ongoing retainer option</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Schedule Discovery</a>
+        </div>
+      </div>
+      <div class="launch-banner reveal" data-delay="0.3">
+        <span class="launch-banner__icon mono">◈</span>
+        <span>Pre-portfolio rates. Pricing increases with each completed case study.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="section-lg comparison-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Compare" color="gold" />
+        <h2 class="text-heading reveal">SaaS tools vs custom platform</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          Off-the-shelf tools make sense until they don't. Here's when custom is the right call.
+        </p>
+      </div>
+
+      <div class="comparison-table reveal" data-delay="0.2">
+        <div class="comparison-header">
+          <div class="comparison-col comparison-col--label"></div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">SaaS Stack</span>
+            <span class="comparison-option-sub font-mono text-dim">Salesforce, HubSpot, etc.</span>
+          </div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">Enterprise Agency</span>
+            <span class="comparison-option-sub font-mono text-dim">10+ person firm</span>
+          </div>
+          <div class="comparison-col comparison-col--featured">
+            <span class="comparison-option-name font-mono text-gold">Ineffable</span>
+            <span class="comparison-option-sub font-mono text-dim">Custom platform</span>
+          </div>
+        </div>
+
+        {[
+          { label: 'Annual cost', a: '$6K–$24K/year ongoing', b: '$50K–$200K+ build', c: '$10.5K–$42K one-time' },
+          { label: 'Built for your process', a: 'You adapt to the tool', b: 'Somewhat (big team, slow)', c: 'Built around your exact workflow' },
+          { label: 'Data ownership', a: 'Vendor holds your data', b: 'Usually yours', c: 'Always yours, always portable' },
+          { label: 'Customization ceiling', a: 'Limited by their roadmap', b: 'High but slow and expensive', c: 'None — it\'s just code' },
+          { label: 'Communication', a: 'Support tickets', b: 'Account manager layer', c: 'Direct, async-friendly' },
+          { label: 'Time to value', a: 'Fast setup, slow adoption', b: '6–18 months', c: '3–8 weeks to first version' },
+        ].map((row, i) => (
+          <div class={`comparison-row ${i % 2 === 0 ? 'comparison-row--alt' : ''}`}>
+            <div class="comparison-col comparison-col--label">
+              <span class="comparison-label font-mono">{row.label}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.a}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.b}</span>
+            </div>
+            <div class="comparison-col comparison-col--featured">
+              <span class="comparison-value text-gold">{row.c}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -218,91 +516,198 @@ import CTA from '../components/CTA.astro';
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Tech Stack" color="green" />
-        <h2 class="text-heading reveal" style="text-align: center;">Built with what works</h2>
+        <h2 class="text-heading reveal">Built with what works — not what's trendy</h2>
       </div>
 
       <div class="tech-grid">
-        <div class="tech-item reveal" data-delay="0">
-          <span class="tech-name">Python</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.03">
-          <span class="tech-name">JavaScript</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.06">
-          <span class="tech-name">React</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.09">
-          <span class="tech-name">Node.js</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.12">
-          <span class="tech-name">REST APIs</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.15">
-          <span class="tech-name">AI / LLMs</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.18">
-          <span class="tech-name">Databases</span>
-        </div>
-        <div class="tech-item reveal" data-delay="0.21">
-          <span class="tech-name">Cloud Deploy</span>
-        </div>
+        {['Python', 'JavaScript', 'React', 'Node.js', 'REST APIs', 'AI / LLMs', 'Databases', 'Cloud Deploy'].map((tech, i) => (
+          <div class="tech-item reveal" data-delay={`${i * 0.04}`}>
+            <span class="tech-name">{tech}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How I Work — Process Section -->
+  <section class="section-lg process-section">
+    <div class="container">
+      <p class="label reveal">Process</p>
+      <h2 class="text-heading reveal" data-delay="0.1">How I build your platform.</h2>
+      <div class="process-steps">
+        {[
+          { icon: '01', title: 'Discovery', desc: 'I map your current systems, pain points, and team workflows. We identify what a unified platform needs to do.' },
+          { icon: '02', title: 'Architecture', desc: 'I design the data model, user roles, integrations, and technical stack. You approve before any code is written.' },
+          { icon: '03', title: 'Build in Sprints', desc: 'Two-week cycles. Each sprint delivers working features you can test. No three-month black boxes.' },
+          { icon: '04', title: 'Integration', desc: 'I connect your platform to existing tools — CRMs, payment processors, APIs, internal systems.' },
+          { icon: '05', title: 'Launch + Support', desc: 'Deployment, user training, documentation, and 90 days of priority support. Your team is never left guessing.' },
+        ].map((step, i) => (
+          <div class="process-step reveal" data-delay={0.1 + i * 0.08}>
+            <div class="process-step__number mono">{step.icon}</div>
+            <div class="process-step__content">
+              <h3 class="process-step__title">{step.title}</h3>
+              <p class="process-step__desc">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-lg faq-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="FAQ" color="cyan" />
+        <h2 class="text-heading reveal">Questions before you reach out</h2>
+      </div>
+
+      <div class="faq-list">
+        {[
+          {
+            q: 'Can you build a SaaS product?',
+            a: 'Yes. SaaS MVPs are in the Custom Platform tier ($28K–$42K). I\'ve built multi-user systems with authentication, role-based access, billing integrations, and admin panels. I start with an MVP, validate, then scale.',
+          },
+          {
+            q: 'How do you handle ongoing maintenance?',
+            a: 'Monthly retainers start at $500/mo for platform maintenance — covering bug fixes, dependency updates, performance monitoring, and small feature additions. I can also provide a flat-rate support contract for the first year.',
+          },
+          {
+            q: 'What tech stack do you use?',
+            a: 'Python (FastAPI or Django) for the backend, React for the frontend, PostgreSQL or SQLite for the database, and AWS/Netlify/Railway for deployment. The specific stack depends on your use case — I use what\'s right, not what\'s familiar.',
+          },
+          {
+            q: 'How long does a platform take to build?',
+            a: 'Connected Platform (smaller scope): 3–6 weeks. Full Business Platform: 6–12 weeks. I deliver incrementally — you see working software in week 2, not week 12.',
+          },
+          {
+            q: 'Do I own the code?',
+            a: 'Yes. Always. No exceptions. You get the full repository, all source files, documentation, and deployment credentials. If you ever want to take it to another developer, nothing stops you.',
+          },
+          {
+            q: 'What if my needs aren\'t clear yet?',
+            a: 'That\'s what discovery is for. Book a 30-minute call — no commitment. I\'ll help you figure out whether you need a platform, an automation, or just a better process. I\'ll tell you honestly if the investment makes sense.',
+          },
+        ].map((item, i) => (
+          <details class="faq-item reveal" data-delay={`${i * 0.06}`}>
+            <summary class="faq-question">
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-icon font-mono">+</span>
+            </summary>
+            <p class="faq-answer text-body">{item.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
   <CTA
     heading="Need a System, Not Just a Website?"
-    subtext="Tell me what your business actually needs — I'll design the platform around it."
+    subtext="Tell me what your business actually needs — I'll design the platform around it. No pitch, just a conversation."
     secondaryText="See consulting options"
     secondaryLink="/consulting"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Can you build a SaaS product?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. SaaS MVPs are in the Custom Platform tier ($28K–$42K). I've built multi-user systems with authentication, role-based access, billing integrations, and admin panels." } },
+      { "@type": "Question", "name": "How do you handle ongoing maintenance?", "acceptedAnswer": { "@type": "Answer", "text": "Monthly retainers start at $500/mo for platform maintenance — covering bug fixes, dependency updates, performance monitoring, and small feature additions." } },
+      { "@type": "Question", "name": "What tech stack do you use?", "acceptedAnswer": { "@type": "Answer", "text": "Python (FastAPI or Django) for the backend, React for the frontend, PostgreSQL or SQLite for the database, and AWS/Netlify/Railway for deployment." } },
+      { "@type": "Question", "name": "How long does a platform take to build?", "acceptedAnswer": { "@type": "Answer", "text": "Connected Platform (smaller scope): 3–6 weeks. Full Business Platform: 6–12 weeks. I deliver incrementally — you see working software in week 2, not week 12." } },
+      { "@type": "Question", "name": "Do I own the code?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Always. No exceptions. You get the full repository, all source files, documentation, and deployment credentials." } },
+      { "@type": "Question", "name": "What if my needs aren't clear yet?", "acceptedAnswer": { "@type": "Answer", "text": "That's what discovery is for. Book a 30-minute call — no commitment. I'll help you figure out whether you need a platform, an automation, or just a better process." } }
+    ]
+  })} />
 </BaseLayout>
 
 <style>
   /* ── Hero ─────────────────────────────────────────────────── */
   .hero {
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
-    padding-top: calc(var(--nav-height) + var(--space-lg));
-    text-align: center;
+    padding-top: calc(var(--nav-height) + var(--space-md));
+    padding-bottom: var(--space-lg);
   }
 
   .hero-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     max-width: 850px;
-    margin: 0 auto;
   }
 
   .hero-title {
-    font-size: var(--text-4xl);
+    font-size: clamp(2.2rem, 4vw, var(--text-3xl));
     font-weight: 900;
     line-height: 1.05;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
   }
 
   .hero-sub {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     color: var(--text-secondary);
     max-width: 650px;
-    margin-bottom: var(--space-md);
+    margin-bottom: 1.25rem;
     line-height: 1.7;
+    text-align: left;
   }
 
   .hero-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  /* ── Platform Grid ───────────────────────────────────────── */
-  .section-header {
-    margin-bottom: var(--space-lg);
+  /* ── Launch Banner ────────────────────────────────────────── */
+  .launch-banner { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--gold-subtle); border: 1px solid var(--border-active); border-radius: var(--radius-pill); font-size: var(--text-sm); color: var(--gold); margin-top: var(--space-lg); }
+  .launch-banner__icon { font-size: var(--text-md); }
+
+  /* ── Narrative ────────────────────────────────────────────── */
+  .narrative-section { background: var(--bg-surface); }
+  .narrative-stage { max-width: 900px; margin: 0 auto; }
+
+  .narrative-svg {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    background: var(--bg-deep);
+    display: block;
   }
 
+  .animation-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0.5rem 0;
+    gap: 1rem;
+  }
+
+  .anim-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .anim-label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Section Header ───────────────────────────────────────── */
+  .section-header { margin-bottom: var(--space-lg); }
+  .section-subtext { max-width: 700px; }
+
+  /* ── Platform Grid ────────────────────────────────────────── */
   .platform-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -315,8 +720,7 @@ import CTA from '../components/CTA.astro';
   }
 
   .platform-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.75rem;
     width: 56px;
     height: 56px;
     display: flex;
@@ -327,22 +731,35 @@ import CTA from '../components/CTA.astro';
     margin: 0 auto 1rem;
   }
 
-  .platform-item-title {
-    font-size: var(--text-lg);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  .platform-item-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.5rem; }
+  .platform-item-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; }
+
+  /* ── Problem Section ──────────────────────────────────────── */
+  .problem-section { background: var(--bg-deep); }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
   }
 
-  .platform-item-desc {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    line-height: 1.6;
+  .problem-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-color: rgba(255, 71, 87, 0.1);
   }
 
-  /* ── Case Study: BCE ─────────────────────────────────────── */
-  .case-section {
-    background: var(--bg-dark);
-  }
+  .problem-card:hover { border-color: rgba(255, 71, 87, 0.25); }
+  .problem-cost { font-size: var(--text-lg); font-weight: 700; }
+  .problem-title { font-size: var(--text-lg); font-weight: 700; }
+  .problem-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.7; flex: 1; }
+  .problem-loss { padding-top: 0.75rem; border-top: 1px solid var(--border); font-size: var(--text-xs); letter-spacing: 0.05em; }
+
+  /* ── Case Study ───────────────────────────────────────────── */
+  .case-section { background: var(--bg-surface); }
 
   .case-showcase {
     display: grid;
@@ -351,81 +768,24 @@ import CTA from '../components/CTA.astro';
     align-items: start;
   }
 
-  .case-media {
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: var(--bg-card);
-  }
+  .case-media { border: 1px solid var(--border); overflow: hidden; background: var(--bg-card); }
+  .case-image { width: 100%; display: block; }
+  .case-details { display: flex; flex-direction: column; gap: 1.5rem; }
+  .case-details-title { font-size: var(--text-xl); font-weight: 700; }
 
-  .case-image {
-    width: 100%;
-    display: block;
-  }
+  .case-features { display: flex; flex-direction: column; gap: 0.75rem; }
+  .case-feature { display: flex; align-items: flex-start; gap: 0.75rem; font-size: var(--text-base); color: var(--text-secondary); line-height: 1.6; }
+  .feature-marker { flex-shrink: 0; margin-top: 0.15rem; }
 
-  .case-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .case-details-title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-  }
-
-  .case-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .case-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    font-size: var(--text-base);
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .feature-marker {
-    flex-shrink: 0;
-    margin-top: 0.15rem;
-  }
-
-  .case-stats {
-    display: flex;
-    gap: 2rem;
-    padding: 1.5rem 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .case-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .case-stat-value {
-    font-size: var(--text-xl);
-    font-weight: 700;
-  }
-
-  .case-stat-label {
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  .case-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  .case-stats { display: flex; gap: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .case-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+  .case-stat-value { font-size: var(--text-xl); font-weight: 700; }
+  .case-stat-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   /* ── Journey Section ─────────────────────────────────────── */
+  .journey-section { background: var(--bg-deep); }
+
   .journey-layout {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -434,108 +794,62 @@ import CTA from '../components/CTA.astro';
     margin-bottom: var(--space-lg);
   }
 
-  .journey-story {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+  .journey-story { display: flex; flex-direction: column; align-items: stretch; }
+  .journey-step { padding: 2rem; }
+  .journey-number { font-size: var(--text-2xl); font-weight: 800; display: block; margin-bottom: 0.75rem; }
+  .journey-step-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: 0.75rem; }
+  .journey-step-desc { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+  .journey-tag { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; }
+  .journey-step-big { border-color: var(--border-hover); }
+
+  .journey-arrow { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; }
+  .journey-arrow-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim), transparent); }
+  .journey-arrow-text { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+
+  .journey-video { display: flex; flex-direction: column; }
+  .video-wrapper { border: 1px solid var(--border); overflow: hidden; background: var(--bg-card); }
+  .journey-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+  .journey-demo-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .video-caption { text-align: center; font-size: var(--text-xs); letter-spacing: 0.05em; margin-top: 1rem; }
+  .journey-lesson { margin-top: var(--space-md); }
+
+  /* ── Platform Tiers ───────────────────────────────────────── */
+  .platform-tiers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .journey-step {
-    padding: 2rem;
-  }
+  .platform-tier { display: flex; flex-direction: column; gap: 1rem; padding: 2.5rem 2rem; }
+  .platform-tier--featured { border-color: rgba(255, 193, 59, 0.3); background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%); }
+  .tier-badge-label { align-self: flex-start; }
+  .tier-name { font-size: var(--text-xl); font-weight: 700; }
+  .tier-pricing { display: flex; flex-direction: column; gap: 0.25rem; }
+  .tier-price { font-size: var(--text-lg); font-weight: 700; }
+  .tier-market { font-size: var(--text-xs); letter-spacing: 0.05em; text-decoration: line-through; opacity: 0.7; }
+  .tier-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; }
+  .tier-features { display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+  .tier-feature { display: flex; align-items: center; gap: 0.75rem; font-size: var(--text-sm); color: var(--text-secondary); }
+  .feat-check { flex-shrink: 0; width: 1.25rem; text-align: center; }
 
-  .journey-number {
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    display: block;
-    margin-bottom: 0.75rem;
-  }
-
-  .journey-step-title {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .journey-step-desc {
-    font-size: var(--text-base);
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-
-  .journey-tag {
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .journey-step-big {
-    border-color: var(--border-hover);
-  }
-
-  .journey-arrow {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-  }
-
-  .journey-arrow-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-  }
-
-  .journey-arrow-text {
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .journey-video {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .video-wrapper {
-    border: 1px solid var(--border);
-    overflow: hidden;
-    background: var(--bg-card);
-  }
-
-  .journey-video-wrap {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .journey-demo-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .video-caption {
-    text-align: center;
-    font-size: var(--text-xs);
-    letter-spacing: 0.05em;
-    margin-top: 1rem;
-  }
-
-  .journey-lesson {
-    margin-top: var(--space-md);
-  }
+  /* ── Comparison Table ─────────────────────────────────────── */
+  .comparison-section { background: var(--bg-surface); }
+  .comparison-table { border: 1px solid var(--border); overflow: hidden; }
+  .comparison-header, .comparison-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .comparison-header { background: var(--bg-elevated); }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row--alt { background: var(--bg-surface); }
+  .comparison-col { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.25rem; }
+  .comparison-col--featured { background: rgba(255, 193, 59, 0.04); border-left: 1px solid rgba(255, 193, 59, 0.2); }
+  .comparison-option-name { font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); letter-spacing: 0.03em; }
+  .comparison-option-sub { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+  .comparison-label { font-size: var(--text-xs); color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase; }
+  .comparison-value { font-size: var(--text-sm); line-height: 1.5; }
 
   /* ── Tech Stack ──────────────────────────────────────────── */
-  .tech-section {
-    background: var(--bg-dark);
-  }
+  .tech-section { background: var(--bg-surface); }
 
   .tech-grid {
     display: grid;
@@ -545,97 +859,131 @@ import CTA from '../components/CTA.astro';
     margin: 0 auto;
   }
 
-  .tech-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.25rem 1rem;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    transition: all var(--duration-base) var(--ease-out);
-  }
+  .tech-item { display: flex; align-items: center; justify-content: center; padding: 1.25rem 1rem; border: 1px solid var(--border); background: var(--bg-card); transition: all var(--duration-base) var(--ease-out); }
+  .tech-item:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  .tech-name { font-family: 'JetBrains Mono', monospace; font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); letter-spacing: 0.05em; }
+  .tech-item:hover .tech-name { color: var(--gold); }
 
-  .tech-item:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-  }
+  /* ── FAQ ──────────────────────────────────────────────────── */
+  .faq-section { background: var(--bg-deep); }
+  .faq-list { display: flex; flex-direction: column; border: 1px solid var(--border); }
+  .faq-item { border-bottom: 1px solid var(--border); cursor: pointer; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; list-style: none; cursor: pointer; transition: background var(--duration-fast) var(--ease-out); }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question:hover { background: var(--bg-surface); }
+  .faq-q-text { font-size: var(--text-base); font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+  .faq-icon { font-size: var(--text-lg); color: var(--gold); flex-shrink: 0; transition: transform var(--duration-base) var(--ease-out); line-height: 1; }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+  .faq-answer { padding: 0 2rem 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: var(--text-base); }
 
-  .tech-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--text-secondary);
-    letter-spacing: 0.05em;
-  }
-
-  .tech-item:hover .tech-name {
-    color: var(--gold);
-  }
+  /* ── Process Section ─────────────────────────────────────── */
+  .process-section { padding: var(--space-section) 0; }
+  .process-steps { display: flex; flex-direction: column; gap: var(--space-lg); max-width: 720px; margin-top: var(--space-lg); }
+  .process-step { display: flex; gap: var(--space-lg); align-items: flex-start; }
+  .process-step__number { font-family: var(--font-mono); font-size: var(--text-xl); color: var(--gold); font-weight: 700; flex-shrink: 0; width: 3rem; }
+  .process-step__title { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+  .process-step__desc { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.65; }
 
   /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 1024px) {
-    .platform-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .case-showcase {
-      grid-template-columns: 1fr;
-    }
-
-    .journey-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .tech-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    .platform-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-showcase { grid-template-columns: 1fr; }
+    .journey-layout { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: repeat(4, 1fr); }
+    .problems-grid { grid-template-columns: 1fr; }
+    .platform-tiers { grid-template-columns: 1fr; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr 1fr; }
+    .comparison-col--label { display: none; }
   }
 
   @media (max-width: 768px) {
-    .hero {
-      min-height: auto;
-      padding-top: calc(var(--nav-height) + 2rem);
-      padding-bottom: 2rem;
-    }
-
-    .platform-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .case-stats {
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .tech-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .hero { min-height: auto; padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 2rem; }
+    .platform-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-stats { flex-wrap: wrap; gap: 1rem; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr; }
+    .comparison-col--option:first-of-type { display: none; }
+    .faq-question { padding: 1.25rem 1.5rem; }
+    .faq-answer { padding: 0 1.5rem 1.25rem; }
   }
 
   @media (max-width: 480px) {
-    .platform-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .hero-actions {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .hero-actions .btn {
-      width: 100%;
-    }
-
-    .case-stats {
-      flex-direction: column;
-    }
-
-    .tech-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .journey-grid {
-      gap: 1rem;
-    }
+    .platform-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .hero-actions .btn { width: 100%; }
+    .case-stats { flex-direction: column; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr; }
+    .comparison-col--option { display: none; }
   }
 </style>
+
+<script>
+  // Platform animation: scattered tools connect to dashboard
+  (function() {
+    const stage = document.getElementById('platform-animation');
+    if (!stage) return;
+
+    let animated = false;
+
+    function runAnimation() {
+      if (animated) return;
+      animated = true;
+
+      const gsap = (window as any).gsap;
+      if (!gsap) return;
+
+      const tl = gsap.timeline();
+
+      // Phase 1: Tool nodes flash red (signal they're isolated)
+      tl.to('#scattered-tools', { opacity: 0.7, duration: 0.3 }, 0.3);
+
+      // Phase 2: Platform hub & lines appear
+      tl.to('#platform-hub', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.8);
+
+      // Phase 3: Connection lines draw in
+      tl.to(['#line-crm', '#line-email', '#line-sheets', '#line-accounting', '#line-pm', '#line-analytics'], {
+        opacity: 0.6,
+        duration: 0.3,
+        stagger: 0.1,
+        ease: 'power2.out',
+      }, 1.2);
+
+      // Phase 4: Data dots flow
+      const dots = ['#dot1', '#dot2', '#dot3'];
+      dots.forEach((d, i) => {
+        tl.to(d, {
+          attr: { cx: 480, cy: 190, opacity: 0.9 },
+          duration: 0.6,
+          ease: 'power1.inOut',
+          delay: i * 0.15,
+        }, 1.6);
+        tl.to(d, { opacity: 0, duration: 0.2 }, '+=0.1');
+      });
+
+      // Phase 5: Dashboard appears
+      tl.to('#dashboard', { opacity: 1, duration: 0.7, ease: 'power3.out' }, 2.3);
+
+      // Phase 6: Scattered tools fade to secondary
+      tl.to('#scattered-tools', { opacity: 0.2, duration: 0.5, ease: 'power2.out' }, 2.6);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              runAnimation();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(stage);
+    } else {
+      setTimeout(runAnimation, 1000);
+    }
+  })();
+</script>

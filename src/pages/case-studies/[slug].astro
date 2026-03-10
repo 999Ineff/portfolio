@@ -1,0 +1,694 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import CTA from '../../components/CTA.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const tierLabels: Record<string, string> = {
+  micro: 'Quick Win',
+  growth: 'Growth Build',
+  professional: 'Full System',
+  enterprise: 'Custom Platform',
+};
+
+const tierColors: Record<string, 'gold' | 'cyan' | 'green'> = {
+  micro: 'gold',
+  growth: 'cyan',
+  professional: 'green',
+  enterprise: 'gold',
+};
+
+const serviceLabels: Record<string, string> = {
+  automation: 'Automation',
+  website: 'Tailored Website',
+  platform: 'Custom Platform',
+  consulting: 'Consulting',
+};
+
+const ctaMap: Record<string, { heading: string; subtext: string; button: string }> = {
+  micro: {
+    heading: 'Want to eliminate your most time-consuming task?',
+    subtext: 'Tell me exactly what you\'re doing manually. I\'ll price a solution and explain exactly how it works — no commitment.',
+    button: 'Tell Me Your Task',
+  },
+  growth: {
+    heading: 'Ready for results like these?',
+    subtext: 'A 15-minute call is enough to scope your project and give you a real number.',
+    button: 'Book a 15-Min Call',
+  },
+  professional: {
+    heading: 'Looking to scale your operations?',
+    subtext: 'Let\'s map out what a unified system would look like for your business.',
+    button: 'Schedule a Discovery Session',
+  },
+  enterprise: {
+    heading: 'Building something at this scale?',
+    subtext: 'Enterprise platforms start with a discovery session. I\'ll audit your current stack and tell you exactly what\'s worth keeping.',
+    button: 'Schedule a Discovery Session',
+  },
+};
+
+const tierColor = tierColors[project.data.tier];
+const tierLabel = tierLabels[project.data.tier];
+const ctaCopy = ctaMap[project.data.tier];
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={`${project.data.result}. ${project.data.challenge.substring(0, 100)}...`}
+>
+  <article class="case-study">
+
+    <!-- Header -->
+    <header class="case-header section-lg">
+      <div class="container case-header-inner">
+        <a href="/case-studies" class="back-link reveal">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          All Work
+        </a>
+
+        <div class="case-badges reveal" data-delay="0.05">
+          <span class={`tag tag-${tierColor === 'gold' ? '' : tierColor}`}>{tierLabel}</span>
+          <span class="service-badge font-mono">{serviceLabels[project.data.serviceType]}</span>
+          <span class="industry-badge font-mono">{project.data.industry}</span>
+        </div>
+
+        <div class="case-title-group">
+          <p class="case-client font-mono reveal" data-delay="0.08">{project.data.client}</p>
+          <h1 class="case-title reveal" data-delay="0.1">{project.data.title}</h1>
+          <p class="case-result reveal" data-delay="0.15">
+            <span class={`result-highlight text-${tierColor}`}>Result:</span>
+            {project.data.result}
+          </p>
+        </div>
+
+        <p class="case-date font-mono reveal" data-delay="0.2">{formatDate(project.data.date)}</p>
+      </div>
+    </header>
+
+    <!-- Metrics Strip -->
+    <section class="metrics-strip">
+      <div class="container">
+        <div class="metrics-grid reveal" data-delay="0.1">
+          {project.data.metrics.map((metric, i) => (
+            <div class="metric-item">
+              <span
+                class={`metric-value font-mono js-counter text-${tierColor === 'gold' ? 'gold' : tierColor}`}
+                data-value={metric.value}
+                data-prefix={metric.prefix || ''}
+                data-index={i}
+              >
+                {metric.prefix}{metric.value}
+              </span>
+              <span class="metric-label">{metric.label}</span>
+            </div>
+          ))}
+        </div>
+        {project.data.placeholder && (
+          <p class="placeholder-note font-mono">
+            * Metrics are representative. Exact figures used with client permission.
+          </p>
+        )}
+      </div>
+    </section>
+
+    <!-- Body Content -->
+    <div class="case-body">
+      <div class="container-reading">
+        <div class="prose reveal" data-delay="0.15">
+          <Content />
+        </div>
+
+        {project.data.testimonial && (
+          <blockquote class="testimonial reveal" data-delay="0.2">
+            <div class="testimonial-quote-mark" aria-hidden="true">"</div>
+            <p class="testimonial-text">{project.data.testimonial.quote}</p>
+            <cite class="testimonial-cite">
+              <span class="testimonial-author">{project.data.testimonial.author}</span>
+              <span class="testimonial-role font-mono">{project.data.testimonial.role}</span>
+            </cite>
+          </blockquote>
+        )}
+
+        {project.data.tags && (
+          <div class="case-tags reveal" data-delay="0.25">
+            {project.data.tags.map(tag => (
+              <span class="case-tag font-mono">#{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Process Steps (visual) — D8: steps with descriptions, not just labels -->
+    <section class="process-section section">
+      <div class="container-narrow">
+        <SectionLabel text="The Process" color={tierColor} />
+        <h2 class="process-heading reveal">How it gets built</h2>
+        <div class="process-steps">
+          {[
+            { label: 'Discovery', desc: 'Understand the bottleneck, the data, and what success looks like.' },
+            { label: 'Architecture', desc: 'Design the simplest solution that fully solves the problem.' },
+            { label: 'Build', desc: 'Iterative development with working previews at each stage.' },
+            { label: 'Deploy', desc: 'Handoff with documentation, training, and a 30-day support window.' },
+          ].map((step, i) => (
+            <div class="process-step reveal" data-delay={`${i * 0.1}`}>
+              <div class={`step-number font-mono text-${tierColor === 'gold' ? 'gold' : tierColor}`}>
+                0{i + 1}
+              </div>
+              <div class="step-line" aria-hidden="true"></div>
+              <div class="step-content">
+                <div class="step-label">{step.label}</div>
+                <p class="step-desc">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <CTA
+      heading={ctaCopy.heading}
+      subtext={ctaCopy.subtext}
+      buttonText={ctaCopy.button}
+      buttonLink="https://calendly.com/luis-aviles-khn"
+      secondaryText="See all work"
+      secondaryLink="/case-studies"
+    />
+
+  </article>
+</BaseLayout>
+
+<script>
+  // Counter animation for metrics on scroll
+  function initCounters() {
+    const counters = document.querySelectorAll<HTMLElement>('.js-counter');
+    if (!counters.length) return;
+
+    const gsap = (window as any).gsap;
+    const ScrollTrigger = (window as any).ScrollTrigger;
+    if (!gsap || !ScrollTrigger) return;
+
+    counters.forEach(el => {
+      const rawValue = el.dataset.value || '';
+      const prefix = el.dataset.prefix || '';
+
+      // Extract numeric part — handle formats like "5 → 1", "4 hrs → 15 min", "$350"
+      const numericMatch = rawValue.match(/[\d,]+/);
+      if (!numericMatch) return; // Non-numeric metrics (like "5 → 1") stay static
+
+      const numericStr = numericMatch[0].replace(/,/g, '');
+      const num = parseFloat(numericStr);
+      if (isNaN(num) || num > 9999) return; // Skip very large or invalid numbers
+
+      const originalText = el.textContent || '';
+      const hasDecimal = rawValue.includes('.');
+
+      const obj = { val: 0 };
+      gsap.to(obj, {
+        val: num,
+        duration: 1.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        },
+        onUpdate: () => {
+          const formatted = hasDecimal
+            ? obj.val.toFixed(1)
+            : Math.round(obj.val).toLocaleString();
+          el.textContent = `${prefix}${formatted}`;
+        },
+        onComplete: () => {
+          // Restore original text (handles "5 → 1" or complex formats)
+          el.textContent = `${prefix}${rawValue}`;
+        },
+      });
+    });
+  }
+
+  initCounters();
+  document.addEventListener('astro:after-swap', initCounters);
+</script>
+
+<style>
+  /* Header */
+  .case-header {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-lg);
+  }
+
+  .case-header-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    transition: color var(--duration-fast);
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--gold);
+  }
+
+  .case-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .service-badge,
+  .industry-badge {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .industry-badge::before {
+    content: '·';
+    margin-right: 0.75rem;
+    color: var(--border-hover);
+  }
+
+  .case-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .case-client {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .case-title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .case-result {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .result-highlight {
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .text-gold { color: var(--gold); }
+  .text-cyan { color: var(--cyan); }
+  .text-green { color: var(--green); }
+
+  .case-date {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Metrics Strip */
+  .metrics-strip {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-lg) 0;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .metric-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .placeholder-note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+  }
+
+  /* Case Body */
+  .case-body {
+    padding: var(--space-2xl) 0;
+  }
+
+  .container-reading {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  /* Prose */
+  .prose {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.85;
+  }
+
+  .prose :global(h2) {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .prose :global(h3) {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.35rem;
+  }
+
+  .prose :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .prose :global(em) {
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1.35rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose :global(ul) { list-style: disc; }
+  .prose :global(ol) { list-style: decimal; }
+
+  .prose :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .prose :global(li strong) {
+    color: var(--gold);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .prose :global(code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--bg-elevated);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--cyan);
+  }
+
+  .prose :global(pre) {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-secondary);
+  }
+
+  .prose :global(hr) {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+    margin: 2.5rem 0;
+  }
+
+  /* Testimonial */
+  .testimonial {
+    position: relative;
+    border-left: 2px solid var(--gold);
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+    background: var(--bg-card);
+    margin: var(--space-lg) 0;
+  }
+
+  .testimonial-quote-mark {
+    font-size: 5rem;
+    font-family: 'Cabinet Grotesk', serif;
+    font-weight: 900;
+    color: var(--gold-subtle);
+    line-height: 0.8;
+    position: absolute;
+    top: var(--space-md);
+    left: var(--space-md);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .testimonial-text {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .testimonial-cite {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-style: normal;
+  }
+
+  .testimonial-author {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .testimonial-role {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Tags */
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .case-tag {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Process Steps */
+  .process-section {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .process-heading {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    reveal: true;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    position: relative;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .step-number {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .step-line {
+    position: absolute;
+    top: 1.5rem;
+    left: 3.5rem;
+    right: -1rem;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-hover), transparent);
+  }
+
+  .process-step:last-child .step-line {
+    display: none;
+  }
+
+  .step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .step-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .step-desc {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .case-header {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .case-title {
+      font-size: var(--text-2xl);
+    }
+
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .process-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .step-line {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .case-badges {
+      flex-wrap: wrap;
+    }
+
+    .industry-badge::before {
+      display: none;
+    }
+
+    .metrics-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .process-steps {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Accessibility: Show content when scripting is disabled */
+  @media (scripting: none) {
+    .reveal,
+    .reveal-left,
+    .reveal-right,
+    .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>

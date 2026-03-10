@@ -1,0 +1,757 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'About Luis Aviles';
+const description = 'The person who designs your system IS the person who builds it. 9 years building enterprise software at Windstream, LTC, and BCE — now building better for independent businesses.';
+
+const timeline = [
+  {
+    year: '2015',
+    company: 'Windstream Communications',
+    role: 'Operations Analyst',
+    detail: 'Enterprise-scale data systems. Learned what "real" infrastructure looks like. Saw $100K/yr lost to manual processes that a $500 script could have fixed.',
+  },
+  {
+    year: '2018',
+    company: 'LTC Financial Partners',
+    role: 'Systems Analyst',
+    detail: 'Financial reporting pipelines, compliance automation, CRM integrations. Learned how companies evaluate and buy software — and how often they overpay.',
+  },
+  {
+    year: '2021',
+    company: 'BCE',
+    role: 'Lead Developer & Ops',
+    detail: 'Built the BCE Owner Dashboard from scratch — job scraping, property auditing, financial reporting. A full platform built in-house instead of paying $40K to an agency.',
+  },
+  {
+    year: '2024',
+    company: 'Ineffable',
+    role: 'Founder',
+    detail: 'Left to fill the gap I kept seeing: businesses that needed $5K–$50K solutions getting quoted $150K by agencies or getting burned by offshore shops.',
+  },
+];
+
+const whyOnePerson = [
+  {
+    title: 'Direct access, always.',
+    body: 'You talk to the person who writes the code. No account managers, no handoff tax, no "let me check with the team." If something needs changing at 11pm before your launch, I know exactly where to go.',
+  },
+  {
+    title: 'No miscommunication.',
+    body: 'At an agency, your idea passes through a salesperson, a project manager, a designer, and a developer. Each handoff costs you fidelity. I heard you — and I\'m building it.',
+  },
+  {
+    title: 'Genuine stake in the outcome.',
+    body: 'My reputation is your project. I don\'t move on to the next client until yours works. Agencies optimize for throughput. I optimize for the result.',
+  },
+];
+
+const stats = [
+  { value: '9+', label: 'Years enterprise ops', mono: true },
+  { value: '30+', label: 'Systems built', mono: true },
+  { value: '$100K+', label: 'Client savings documented', mono: true },
+  { value: '4', label: 'Industries served', mono: true },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-hero__inner">
+        <div class="about-hero__text">
+          <p class="label reveal" data-delay="0">About</p>
+          <h1 class="about-hero__heading reveal" data-delay="0.1">
+            The person who designs<br />
+            your system <em>is</em> the person<br />
+            who builds it.
+          </h1>
+          <p class="hero-sub reveal" data-delay="0.15">
+            I design systems that replace busywork — custom software, tailored websites, and automation for businesses that know they need better but don't know where to start.
+          </p>
+          <p class="about-hero__sub reveal" data-delay="0.25">
+            9 years building enterprise systems at Windstream, LTC, and BCE.
+            I left to do the same work — for businesses that deserve it, at prices that make sense.
+          </p>
+          <div class="about-hero__ctas reveal" data-delay="0.4">
+            <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              Book a Call
+            </a>
+            <a href="/case-studies" class="btn btn-secondary">See My Work</a>
+          </div>
+        </div>
+        <div class="about-hero__photo reveal-scale" data-delay="0.2">
+          <div class="photo-frame">
+            <picture>
+              <source
+                type="image/webp"
+                srcset="/images/luis/headshot-1x.webp 1x, /images/luis/headshot.webp 2x"
+              />
+              <img
+                src="/images/luis/headshot.png"
+                alt="Luis Aviles — Founder, Ineffable"
+                class="photo-img"
+                width="280"
+                height="340"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+            <div class="photo-accent-ring"></div>
+          </div>
+          <div class="bilingual-badge">
+            <span class="bilingual-icon">◈</span>
+            <span>Hablamos español</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-bar__grid">
+        {stats.map((s, i) => (
+          <div class="stat-item reveal" data-delay={i * 0.1}>
+            <span class={`stat-value ${s.mono ? 'mono' : ''}`}>{s.value}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGIN STORY -->
+  <section class="origin-story">
+    <div class="container narrow">
+      <p class="label reveal">Origin</p>
+      <div class="origin-beats">
+        <!-- Beat 1 -->
+        <div class="beat reveal-left" data-delay="0">
+          <div class="beat__number mono">01</div>
+          <div class="beat__content">
+            <h2 class="beat__heading">9 years in the trenches.</h2>
+            <p>
+              I spent nearly a decade inside enterprise companies — Windstream, LTC, BCE — building
+              the systems that ran their operations. Automations that saved 30+ hours a week.
+              Dashboards that replaced spreadsheet hell. Integrations between tools that were never
+              meant to talk to each other.
+            </p>
+            <p>
+              The work was real. The scale was real. And the pattern was always the same: companies
+              were losing enormous amounts of money to problems a good developer could solve in a
+              weekend — but couldn't find one they trusted.
+            </p>
+          </div>
+        </div>
+
+        <!-- Beat 2 -->
+        <div class="beat reveal-right" data-delay="0.1">
+          <div class="beat__number mono">02</div>
+          <div class="beat__content">
+            <h2 class="beat__heading">Saw the gap.</h2>
+            <p>
+              Good developers charge $150/hr through agencies. Bad ones charge $15/hr on Upwork.
+              If your budget is $5K–$50K, you don't have a good option. Agencies quote you
+              $100K and deliver a template. Freelancers disappear after the first revision.
+            </p>
+            <p>
+              I kept watching business owners make that choice and lose either way. The gap
+              wasn't technical — it was positioning. No one was building a practice specifically
+              for this tier, at the quality it deserved, at a price that wasn't absurd.
+            </p>
+          </div>
+        </div>
+
+        <!-- Beat 3 -->
+        <div class="beat reveal-left" data-delay="0.1">
+          <div class="beat__number mono">03</div>
+          <div class="beat__content">
+            <h2 class="beat__heading">Built the arsenal.</h2>
+            <p>
+              Not just coding talent — a full-stack operation. Audit systems, SEO tooling,
+              content pipelines, AI assistants, financial analysis. The same enterprise-grade
+              infrastructure I used at companies with dedicated IT departments, rebuilt for
+              one-person efficiency.
+            </p>
+            <p>
+              That's what Ineffable is: the work I was doing for large companies, available
+              to independent businesses at prices that reflect the absence of agency overhead —
+              not the absence of quality.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS TIMELINE -->
+  <section class="timeline-section">
+    <div class="container">
+      <p class="label reveal">Career</p>
+      <h2 class="section-heading reveal" data-delay="0.1">Where the work came from.</h2>
+      <div class="timeline">
+        {timeline.map((item, i) => (
+          <div class="timeline__item reveal" data-delay={i * 0.12}>
+            <div class="timeline__year mono">{item.year}</div>
+            <div class="timeline__connector">
+              <div class="timeline__dot"></div>
+              {i < timeline.length - 1 && <div class="timeline__line"></div>}
+            </div>
+            <div class="timeline__body">
+              <div class="timeline__company">{item.company}</div>
+              <div class="timeline__role">{item.role}</div>
+              <p class="timeline__detail">{item.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKING WITH ME -->
+  <section class="process-section">
+    <div class="container">
+      <p class="label reveal">Process</p>
+      <h2 class="section-heading reveal" data-delay="0.1">How a project actually works.</h2>
+      <div class="process-steps">
+        {[
+          { step: '01', title: 'Discovery Call', time: 'Day 1', desc: '15–30 minutes. No pitch, no deck. You tell me what you need; I ask the questions that surface what you actually need.' },
+          { step: '02', title: 'Scope Document', time: 'Day 2–3', desc: 'A written deliverable defining exactly what gets built, in what order, at what cost. No surprises.' },
+          { step: '03', title: 'Build Sprint', time: 'Week 1–4', desc: 'I build and you see progress. Real updates on real work, not "we\'re working on it."' },
+          { step: '04', title: 'Review & Revisions', time: 'Week 4–5', desc: 'You test it. We refine it. Two full revision rounds included. Edge cases don\'t slip through.' },
+          { step: '05', title: 'Launch & Handoff', time: 'Week 5–6', desc: 'Deployed, documented, and transferred. You own everything — code, credentials, documentation.' },
+        ].map((p, i) => (
+          <div class="process-step reveal" data-delay={i * 0.1}>
+            <div class="process-step__number mono">{p.step}</div>
+            <div class="process-step__content">
+              <div class="process-step__header">
+                <span class="process-step__title">{p.title}</span>
+                <span class="process-step__time mono">{p.time}</span>
+              </div>
+              <p class="process-step__desc">{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ONE PERSON (D13 — "Why One Person?" section) -->
+  <section class="solo-section">
+    <div class="container narrow">
+      <p class="label reveal">The Question Everyone Asks</p>
+      <h2 class="section-heading reveal" data-delay="0.1">
+        Is it just you?
+      </h2>
+      <p class="solo-section__lead reveal" data-delay="0.2">
+        Yes. And that's the whole point.
+      </p>
+      <p class="solo-section__answer reveal" data-delay="0.3">
+        Agencies charge $150/hr because 3 people touch your project. I charge $85/hr because one person owns it end-to-end. Same output. No overhead. No handoffs. No "I'll get that to you Tuesday."
+      </p>
+      <div class="why-cards">
+        {whyOnePerson.map((card, i) => (
+          <div class="why-card reveal" data-delay={0.1 + i * 0.12}>
+            <div class="why-card__number mono">{String(i + 1).padStart(2, '0')}</div>
+            <h3 class="why-card__title">{card.title}</h3>
+            <p class="why-card__body">{card.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="capacity-indicator reveal" data-delay="0.5">
+        <span class="capacity-dot"></span>
+        <span>Currently accepting new projects &mdash; Q2 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta">
+    <div class="container narrow">
+      <h2 class="about-cta__heading reveal">
+        Ready to build something that actually works?
+      </h2>
+      <p class="about-cta__sub reveal" data-delay="0.1">
+        15-minute discovery call. No commitment, no pitch deck.
+        You'll leave with clarity on what to build — even if we don't work together.
+      </p>
+      <div class="about-cta__actions reveal" data-delay="0.2">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          Book a Call
+        </a>
+        <a href="/pricing" class="btn btn-secondary">See Pricing</a>
+      </div>
+      <p class="about-cta__bilingual reveal" data-delay="0.35">
+        Se habla español &mdash; <a href="/contact">Contáctame aquí</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+/* ── Page Layout ──────────────────────────────────────────── */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg); }
+.container.narrow { max-width: var(--narrow-width); }
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2xl);
+  line-height: 1.1;
+}
+.mono { font-family: var(--font-mono); }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.about-hero {
+  padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-section);
+}
+.hero-sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 58ch;
+  margin-bottom: var(--space-md);
+}
+.about-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+.about-hero__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.about-hero__heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+.about-hero__sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 56ch;
+  margin-bottom: var(--space-xl);
+}
+.about-hero__ctas { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+
+/* Photo */
+.about-hero__photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding-top: var(--space-xl);
+}
+.photo-frame {
+  position: relative;
+  width: 280px;
+  height: 340px;
+}
+.photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+.photo-accent-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: calc(var(--radius-lg) + 8px);
+  border: 1px solid var(--border-active);
+  pointer-events: none;
+}
+.bilingual-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+.bilingual-icon { color: var(--gold); font-size: 0.75rem; }
+
+/* ── Stats Bar ────────────────────────────────────────────── */
+.stats-bar {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+.stats-bar__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-sm) 0;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Origin Story ─────────────────────────────────────────── */
+.origin-story {
+  padding: var(--space-section) 0;
+}
+.origin-beats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+}
+.beat {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+.beat__number {
+  font-size: var(--text-sm);
+  color: var(--gold);
+  padding-top: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.beat__content h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  line-height: 1.15;
+}
+.beat__content p {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-size: var(--text-base);
+  max-width: 65ch;
+}
+.beat__content p + p { margin-top: var(--space-sm); }
+
+/* ── Timeline ─────────────────────────────────────────────── */
+.timeline-section {
+  padding: var(--space-section) 0;
+  background: var(--bg-surface);
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.timeline__item {
+  display: grid;
+  grid-template-columns: 4rem 40px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+  padding-bottom: var(--space-2xl);
+}
+.timeline__year {
+  font-size: var(--text-sm);
+  color: var(--gold);
+  padding-top: 0.2rem;
+  letter-spacing: 0.05em;
+}
+.timeline__connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.3rem;
+}
+.timeline__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.timeline__line {
+  width: 1px;
+  flex: 1;
+  background: var(--border);
+  margin-top: var(--space-xs);
+  min-height: 60px;
+}
+.timeline__body { padding-top: 0; }
+.timeline__company {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+.timeline__role {
+  font-size: var(--text-sm);
+  color: var(--cyan);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.timeline__detail {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--text-base);
+  max-width: 60ch;
+}
+
+/* ── Process ──────────────────────────────────────────────── */
+.process-section { padding: var(--space-section) 0; }
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.process-step {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  transition: background var(--duration-base) var(--ease-out);
+}
+.process-step:last-child { border-bottom: none; }
+.process-step:hover { background: var(--bg-elevated); }
+.process-step__number {
+  font-size: var(--text-sm);
+  color: var(--gold);
+  padding-top: 0.2rem;
+}
+.process-step__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+  gap: var(--space-md);
+}
+.process-step__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.process-step__time {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.process-step__desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--text-base);
+}
+
+/* ── Why One Person ───────────────────────────────────────── */
+.solo-section {
+  padding: var(--space-section) 0;
+  background: var(--bg-surface);
+}
+.solo-section__lead {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-lg);
+}
+.solo-section__answer {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-size: var(--text-md);
+  margin-bottom: var(--space-2xl);
+  max-width: 60ch;
+}
+.why-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+.why-card {
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-lg);
+  transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+}
+.why-card:hover {
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-glow-gold);
+}
+.why-card__number {
+  font-size: var(--text-sm);
+  color: var(--gold);
+  padding-top: 0.2rem;
+}
+.why-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+.why-card__body {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--text-base);
+}
+.capacity-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(0, 255, 136, 0.06);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  color: var(--green);
+}
+.capacity-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+}
+
+/* ── About CTA ────────────────────────────────────────────── */
+.about-cta {
+  padding: var(--space-section) 0;
+  text-align: center;
+}
+.about-cta__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.about-cta__sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 52ch;
+  margin: 0 auto var(--space-xl);
+}
+.about-cta__actions { display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-lg); }
+.about-cta__bilingual {
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+}
+.about-cta__bilingual a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Buttons (mirror from global) ─────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg-deep);
+  box-shadow: 0 4px 24px var(--gold-glow);
+}
+.btn-primary:hover { box-shadow: 0 8px 32px var(--gold-glow); }
+.btn-secondary {
+  background: transparent;
+  color: var(--cyan);
+  border: 1.5px solid var(--cyan);
+  box-shadow: 0 0 16px transparent;
+}
+.btn-secondary:hover { box-shadow: 0 0 16px var(--cyan-glow); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .about-hero__inner { grid-template-columns: 1fr; }
+  .about-hero__photo { flex-direction: row; padding-top: 0; order: -1; }
+  .photo-frame { width: 200px; height: 240px; }
+  .stats-bar__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .about-hero { padding-top: calc(var(--nav-height) + var(--space-xl)); }
+  .about-hero__heading { font-size: clamp(2rem, 7vw, 3rem); }
+  .section-heading { font-size: var(--text-xl); margin-bottom: var(--space-xl); }
+  .beat { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .beat__number { font-size: var(--text-xs); }
+  .timeline__item { grid-template-columns: 3rem 24px 1fr; gap: var(--space-md); }
+  .process-step { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .process-step__number { display: none; }
+  .process-step__header { flex-direction: column; gap: var(--space-2xs); }
+  .why-card { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .why-card__number { display: none; }
+  .about-cta__actions { flex-direction: column; align-items: center; }
+  .about-hero__photo { display: none; }
+}
+
+/* GSAP reveal fallback */
+@media (scripting: none) {
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
+}
+</style>

@@ -1,0 +1,248 @@
+---
+/**
+ * CustomCursor.astro
+ * Replaces the default OS cursor with a precision dot + lagging ring follower.
+ *
+ * Integration — add to BaseLayout.astro immediately after <body> opens:
+ *   <body>
+ *     <CustomCursor />
+ *     <IntroAnimation />
+ *     ...
+ *
+ * Behavior:
+ *   - Small dot (8px gold)  — precise, fast follower (duration 0.15s)
+ *   - Large ring (40px)     — lagging follower (duration 0.6s)
+ *   - Ring expands 3x on hover over a, button, [role="button"], .interactive
+ *   - Dot shrinks 0.5x on the same hover targets (contrast punch)
+ *   - mix-blend-mode: difference on ring for visual interest against backgrounds
+ *   - Fades in on first mousemove — invisible until cursor moves
+ *   - Desktop / pointer: fine only — hidden on touch, stylus, coarse pointer
+ *   - Hidden during intro animation (body[data-theme="intro"])
+ *   - Respects prefers-reduced-motion — skips init entirely
+ *   - z-index 10001 (above intro overlay at 9999, skip button at 10000)
+ *   - Re-initializes after every Astro View Transitions swap
+ *
+ * The component owns its own HTML elements and CSS.
+ * No JS dependencies other than window.gsap (set globally by BaseLayout).
+ */
+---
+
+<!-- Cursor elements — placed at body level, positioned via JS transforms -->
+<div class="custom-cursor"    aria-hidden="true" role="presentation"></div>
+<div class="cursor-follower"  aria-hidden="true" role="presentation"></div>
+
+<style is:global>
+  /* ── Cursor elements ──────────────────────────────────── */
+  .custom-cursor {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10001;
+    /* translate(-50%,-50%) keeps origin at cursor tip, not top-left corner.
+       GSAP sets x/y which stack on top of this transform via its matrix math. */
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    /* Subtle inner glow so dot reads on light sections */
+    box-shadow: 0 0 6px rgba(255, 193, 59, 0.6);
+  }
+
+  .cursor-follower {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 193, 59, 0.4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    /* difference: ring inverts whatever is beneath it — creates natural
+       contrast so the ring stays visible against both dark and light sections */
+    mix-blend-mode: difference;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* ── Active state — hide default cursor site-wide ────── */
+  body.custom-cursor-active {
+    cursor: none !important;
+  }
+
+  body.custom-cursor-active *,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"],
+  body.custom-cursor-active input,
+  body.custom-cursor-active select,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active label {
+    cursor: none !important;
+  }
+
+  /* ── Hide during intro animation ─────────────────────── */
+  body[data-theme="intro"] .custom-cursor,
+  body[data-theme="intro"] .cursor-follower {
+    opacity: 0 !important;
+    transition: none;
+  }
+
+  /* ── Touch / coarse pointer — never show custom cursor ─ */
+  @media (hover: none),
+         (pointer: coarse) {
+    .custom-cursor,
+    .cursor-follower {
+      display: none !important;
+    }
+  }
+
+  /* ── Reduced motion — skip the whole thing ────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .custom-cursor,
+    .cursor-follower {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    // ── Guard: touch devices and reduced-motion users get the OS cursor ──
+    if (!window.matchMedia('(hover: hover)').matches)        return;
+    if ( window.matchMedia('(pointer: coarse)').matches)     return;
+    if ( window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Interactive selector used for expand/contract hover effect
+    const INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label, .interactive';
+
+    // Track cleanup so re-init on view transitions doesn't leak listeners
+    let cleanupFns: Array<() => void> = [];
+
+    function cleanup() {
+      cleanupFns.forEach(fn => fn());
+      cleanupFns = [];
+    }
+
+    function init() {
+      cleanup(); // tear down any previous instance
+
+      const dot      = document.querySelector<HTMLElement>('.custom-cursor');
+      const ring     = document.querySelector<HTMLElement>('.cursor-follower');
+      if (!dot || !ring) return;
+
+      const gsap = (window as any).gsap;
+      if (!gsap) {
+        // GSAP not loaded yet — retry once it's ready
+        let attempts = 0;
+        const poll = setInterval(() => {
+          attempts++;
+          if ((window as any).gsap) { clearInterval(poll); init(); }
+          else if (attempts > 40)    clearInterval(poll);
+        }, 50);
+        return;
+      }
+
+      // ── quickTo: one tween allocation, cheaply updated on every mousemove ──
+      // Dot follows cursor with minimal lag (precision)
+      const dotX  = gsap.quickTo(dot,  'x', { duration: 0.15, ease: 'power3.out' });
+      const dotY  = gsap.quickTo(dot,  'y', { duration: 0.15, ease: 'power3.out' });
+      // Ring follows with deliberate lag (organic, alive feeling)
+      const ringX = gsap.quickTo(ring, 'x', { duration: 0.6,  ease: 'power3.out' });
+      const ringY = gsap.quickTo(ring, 'y', { duration: 0.6,  ease: 'power3.out' });
+
+      let visible = false;
+
+      function onMouseMove(e: MouseEvent) {
+        dotX(e.clientX);
+        dotY(e.clientY);
+        ringX(e.clientX);
+        ringY(e.clientY);
+
+        // Fade in on first move — avoids flash in the corner on page load
+        if (!visible) {
+          visible = true;
+          dot.style.opacity  = '1';
+          ring.style.opacity = '1';
+          document.body.classList.add('custom-cursor-active');
+        }
+      }
+
+      // ── Interactive element hover — expand ring, shrink dot ──────────────
+      function onInteractiveEnter() {
+        gsap.to(ring, { scale: 3,   duration: 0.3, ease: 'power2.out' });
+        gsap.to(dot,  { scale: 0.5, duration: 0.3, ease: 'power2.out' });
+      }
+
+      function onInteractiveLeave() {
+        gsap.to(ring, { scale: 1, duration: 0.3, ease: 'power2.out' });
+        gsap.to(dot,  { scale: 1, duration: 0.3, ease: 'power2.out' });
+      }
+
+      // ── Hide when cursor leaves the browser window ────────────────────────
+      function onMouseLeave() {
+        gsap.to([dot, ring], { opacity: 0, duration: 0.3, ease: 'power2.out' });
+        visible = false;
+      }
+
+      function onMouseEnter() {
+        if (!visible) return; // will fade in on next mousemove
+        gsap.to([dot, ring], { opacity: 1, duration: 0.3, ease: 'power2.out' });
+      }
+
+      // Attach listeners with event delegation where possible
+      window.addEventListener('mousemove', onMouseMove);
+      document.documentElement.addEventListener('mouseleave', onMouseLeave);
+      document.documentElement.addEventListener('mouseenter', onMouseEnter);
+
+      // Use event delegation on document for interactive targets so it catches
+      // dynamically added elements (e.g., toast notifications, modals)
+      function onDocMouseOver(e: MouseEvent) {
+        if ((e.target as Element).closest(INTERACTIVE)) {
+          onInteractiveEnter();
+        }
+      }
+
+      function onDocMouseOut(e: MouseEvent) {
+        const from = e.target as Element;
+        const to   = e.relatedTarget as Element | null;
+        // Only fire when leaving the interactive zone entirely (not child-to-child)
+        if (from.closest(INTERACTIVE) && !to?.closest(INTERACTIVE)) {
+          onInteractiveLeave();
+        }
+      }
+
+      document.addEventListener('mouseover', onDocMouseOver);
+      document.addEventListener('mouseout',  onDocMouseOut);
+
+      // Register cleanup for next init call
+      cleanupFns.push(() => {
+        window.removeEventListener('mousemove', onMouseMove);
+        document.documentElement.removeEventListener('mouseleave', onMouseLeave);
+        document.documentElement.removeEventListener('mouseenter', onMouseEnter);
+        document.removeEventListener('mouseover', onDocMouseOver);
+        document.removeEventListener('mouseout',  onDocMouseOut);
+
+        // Reset visual state — cursor elements persist in DOM across transitions
+        dot.style.opacity  = '0';
+        ring.style.opacity = '0';
+        gsap.set([dot, ring], { scale: 1 });
+        document.body.classList.remove('custom-cursor-active');
+        visible = false;
+      });
+    }
+
+    // Initial mount
+    init();
+
+    // Astro View Transitions — re-init after every page swap.
+    // The cursor elements stay in the DOM (they're in BaseLayout, outside <main>)
+    // but interactive targets change, so we rebuild the listener set.
+    document.addEventListener('astro:after-swap', init);
+  })();
+</script>

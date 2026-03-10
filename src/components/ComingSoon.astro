@@ -25,7 +25,9 @@ const { title, description, features = [] } = Astro.props;
   )}
 
   <div class="coming-soon-actions">
-    <form class="email-capture" data-netlify="true" name="notify" method="POST">
+    <form class="email-capture" data-netlify="true" data-netlify-honeypot="bot-field" name="notify" method="POST">
+      <input type="hidden" name="form-name" value="notify" />
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
       <input type="email" name="email" placeholder="Get early access" required class="email-input" />
       <button type="submit" class="email-btn">Notify Me</button>
     </form>

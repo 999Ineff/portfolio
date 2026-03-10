@@ -35,6 +35,8 @@
     border-radius: 50%;
     filter: blur(100px);
     animation: orbFloat 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+    will-change: transform;  /* Promote to compositor layer — prevents main-thread repaint */
+    contain: layout style;   /* Limit layout recalc scope */
   }
 
   .orb-1 {

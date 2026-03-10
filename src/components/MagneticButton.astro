@@ -1,0 +1,174 @@
+---
+/**
+ * MagneticButton.astro
+ * Wraps any button or link with elastic magnetic cursor-follow behavior.
+ *
+ * Usage:
+ *   <MagneticButton class="btn btn-primary" href="/contact">
+ *     <span>Book a Call</span>
+ *   </MagneticButton>
+ *
+ *   <MagneticButton class="btn btn-secondary" strength={0.4} innerStrength={0.2}>
+ *     <span>Learn More</span>
+ *   </MagneticButton>
+ *
+ * Props:
+ *   class         — CSS classes forwarded to the element (btn-primary, btn-outline, etc.)
+ *   href          — If provided renders <a>, otherwise renders <button>
+ *   strength      — Outer element travel distance (0–1, default 0.3)
+ *   innerStrength — Inner content travel distance (0–1, default 0.15)
+ *   id, target, rel, type, aria-label, data-* — all forwarded via rest
+ *
+ * Behavior:
+ *   - Desktop-only (hover: hover media query)
+ *   - Respects prefers-reduced-motion
+ *   - Uses gsap.quickTo for performance (single allocation per mount)
+ *   - Elastic snap-back on mouseleave
+ *   - Does NOT override existing button styles
+ */
+
+interface Props {
+  class?: string;
+  href?: string;
+  strength?: number;
+  innerStrength?: number;
+  [key: string]: unknown;
+}
+
+const {
+  class: className = '',
+  href,
+  strength = 0.3,
+  innerStrength = 0.15,
+  ...rest
+} = Astro.props;
+
+// Unique ID so the inline script can target exactly this instance
+const uid = `mag-${Math.random().toString(36).slice(2, 8)}`;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  id={uid}
+  class={`magnetic-btn ${className}`}
+  href={href}
+  data-strength={strength}
+  data-inner-strength={innerStrength}
+  {...rest}
+>
+  <span class="magnetic-btn__inner">
+    <slot />
+  </span>
+</Tag>
+
+<style>
+  /*
+   * The magnetic wrapper must be inline-block so GSAP transforms apply.
+   * All other visual styling comes from the passed `class` prop (btn-primary, etc.)
+   * We deliberately avoid !important so existing styles remain in control.
+   */
+  .magnetic-btn {
+    display: inline-block;
+    /* Avoid layout shift during transform */
+    transform-origin: center center;
+  }
+
+  .magnetic-btn__inner {
+    display: inline-block;
+    transform-origin: center center;
+  }
+
+  /* Promote to GPU layer only while hovered — avoids constant repaint */
+  .magnetic-btn.is-hovered {
+    will-change: transform;
+  }
+
+  .magnetic-btn.is-hovered .magnetic-btn__inner {
+    will-change: transform;
+  }
+</style>
+
+<script define:vars={{ uid, strength, innerStrength }}>
+  (function () {
+    // Desktop + motion check — bail early on touch or reduced-motion
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function init() {
+      const btn = document.getElementById(uid);
+      if (!btn) return;
+
+      const inner = btn.querySelector('.magnetic-btn__inner');
+      if (!inner) return;
+
+      // Read strength from data attributes so server-rendered values match
+      const s  = parseFloat(btn.dataset.strength)      || strength;
+      const si = parseFloat(btn.dataset.innerStrength) || innerStrength;
+
+      // quickTo: allocates the tween once, then cheaply updates the target value.
+      // ~50-250% faster than calling gsap.to() on every mousemove.
+      const gsap = window.gsap;
+      if (!gsap) return;
+
+      const moveX     = gsap.quickTo(btn,   'x', { duration: 0.4, ease: 'power2.out' });
+      const moveY     = gsap.quickTo(btn,   'y', { duration: 0.4, ease: 'power2.out' });
+      const innerMoveX = gsap.quickTo(inner, 'x', { duration: 0.4, ease: 'power2.out' });
+      const innerMoveY = gsap.quickTo(inner, 'y', { duration: 0.4, ease: 'power2.out' });
+
+      function onMouseMove(e) {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+
+        moveX(dx * s);
+        moveY(dy * s);
+        innerMoveX(dx * si);
+        innerMoveY(dy * si);
+      }
+
+      function onMouseEnter() {
+        btn.classList.add('is-hovered');
+        btn.addEventListener('mousemove', onMouseMove);
+      }
+
+      function onMouseLeave() {
+        btn.classList.remove('is-hovered');
+        btn.removeEventListener('mousemove', onMouseMove);
+
+        // Elastic snap-back — the "alive" feeling that makes magnetic buttons special
+        gsap.to(btn,   { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+        gsap.to(inner, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+
+        // Remove will-change after animation completes to free GPU layer
+        setTimeout(() => {
+          btn.classList.remove('is-hovered');
+        }, 750);
+      }
+
+      btn.addEventListener('mouseenter', onMouseEnter);
+      btn.addEventListener('mouseleave', onMouseLeave);
+    }
+
+    // GSAP may not be defined yet if this script executes before BaseLayout's
+    // global init script. Poll briefly then give up.
+    if (window.gsap) {
+      init();
+    } else {
+      let attempts = 0;
+      const poll = setInterval(() => {
+        attempts++;
+        if (window.gsap) {
+          clearInterval(poll);
+          init();
+        } else if (attempts > 20) {
+          clearInterval(poll);
+        }
+      }, 50);
+    }
+
+    // Re-init after Astro View Transitions swap
+    document.addEventListener('astro:after-swap', init);
+  })();
+</script>

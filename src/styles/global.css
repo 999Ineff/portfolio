@@ -1,81 +1,33 @@
 /* ═══════════════════════════════════════════════════════════
-   INEFFABLE — Global Design System
+   INEFFABLE — Global Stylesheet
    Custom Software. Tailored Websites. Zero Busywork.
+
+   Imports design-tokens.css for all custom properties.
+   This file contains: reset, base styles, utilities, components.
    ═══════════════════════════════════════════════════════════ */
 
-/* ── CSS Variables ────────────────────────────────────────── */
-:root {
-  /* Backgrounds */
-  --bg-deep: #020202;
-  /* Richer, near-oled black */
-  --bg-dark: #07070a;
-  --bg-card: rgba(15, 15, 20, 0.4);
-  --bg-elevated: rgba(25, 25, 35, 0.6);
-  --bg-glass: rgba(10, 10, 15, 0.5);
-  /* Glass base */
+@import './design-tokens.css';
 
-  /* Borders */
-  --border: rgba(255, 255, 255, 0.05);
-  --border-hover: rgba(255, 255, 255, 0.15);
-  --border-active: rgba(255, 193, 59, 0.4);
+/* ── Lenis Smooth Scroll ─────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
 
-  /* Accent Colors */
-  --gold: #ffc13b;
-  --gold-dim: #b8933a;
-  --gold-glow: rgba(255, 193, 59, 0.4);
-  --cyan: #00e5ff;
-  --cyan-dim: #00a8b8;
-  --cyan-glow: rgba(0, 229, 255, 0.3);
-  --green: #00ff88;
-  --green-dim: #00b85e;
-  --red: #ff4757;
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
 
-  /* Text */
-  --text: #ffffff;
-  --text-secondary: #dcdce6;
-  --text-dim: #8888a0;
-  --text-muted: #555566;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
 
-  /* Gradients */
-  --gradient-gold: linear-gradient(135deg, #ffc13b 0%, #ff8f00 100%);
-  --gradient-cyber: linear-gradient(135deg, #00e5ff 0%, #00ff88 100%);
-  --gradient-card: linear-gradient(135deg, rgba(255, 193, 59, 0.05) 0%, rgba(0, 229, 255, 0.03) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.0) 100%);
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
 
-  /* Typography Scale (fluid) */
-  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
-  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
-  --text-base: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
-  --text-lg: clamp(1.1rem, 0.9rem + 0.5vw, 1.25rem);
-  --text-xl: clamp(1.35rem, 1.1rem + 0.75vw, 1.75rem);
-  --text-2xl: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem);
-  --text-3xl: clamp(2.25rem, 1.5rem + 2.5vw, 3.5rem);
-  --text-4xl: clamp(3rem, 1.8rem + 3.5vw, 5rem);
-  --text-display: clamp(3.5rem, 2.5rem + 5vw, 7rem);
-
-  /* Spacing */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 2rem;
-  --space-lg: 4rem;
-  --space-xl: 6rem;
-  --space-2xl: 10rem;
-
-  /* Layout */
-  --max-width: 1400px;
-  --content-width: 1100px;
-  --nav-height: 80px;
-
-  /* Transitions */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  /* Smoother precision ease */
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 0.2s;
-  --duration-base: 0.4s;
-  --duration-slow: 0.8s;
-
-  /* Noise texture */
-  --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 /* ── Reset ────────────────────────────────────────────────── */
@@ -87,16 +39,45 @@
   box-sizing: border-box;
 }
 
+/* ── Skip Navigation Link ─────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.5rem 1.25rem;
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: top 0.2s var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ── Global Focus Indicators (WCAG 2.4.7) ────────────────── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
   background: var(--bg-deep);
-  color: var(--text);
+  color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
@@ -145,31 +126,49 @@ ol {
   background: var(--gold);
 }
 
-/* ── Typography ───────────────────────────────────────────── */
-.font-mono {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+/* ── Typography Utilities ────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
 }
 
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Hero display — Cabinet Grotesk at max scale
+   [Neuro D9: Hero 64-80px] */
 .text-display {
-  font-size: var(--text-display);
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
   font-weight: 900;
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
 }
 
+/* Section headings — Cabinet Grotesk
+   [Neuro D9: Section headings 32-40px] */
 .text-heading {
-  font-size: var(--text-3xl);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
   font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
+/* Sub-headings — Cabinet Grotesk */
 .text-subheading {
-  font-size: var(--text-xl);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
   font-weight: 600;
   line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
+/* Body text — Satoshi
+   [Neuro D9: Body 16-18px, line-height 1.6-1.8] */
 .text-body {
   font-size: var(--text-base);
   font-weight: 400;
@@ -177,30 +176,32 @@ ol {
   color: var(--text-secondary);
 }
 
+/* Section labels — Satoshi uppercase (NOT mono per D10)
+   [Neuro D10: JetBrains Mono ONLY for stats/code] */
 .text-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.text-gold {
   color: var(--gold);
 }
 
-.text-cyan {
-  color: var(--cyan);
+/* Data display — JetBrains Mono (per D10: stats, ROI, code only) */
+.text-data {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
 }
 
-.text-green {
-  color: var(--green);
-}
-
-.text-dim {
-  color: var(--text-dim);
-}
+/* Color utilities */
+.text-gold { color: var(--gold); }
+.text-cyan { color: var(--cyan); }
+.text-green { color: var(--green); }
+.text-dim { color: var(--text-dim); }
+.text-muted { color: var(--text-muted); }
 
 .gradient-text-gold {
   background: var(--gradient-gold);
@@ -221,26 +222,31 @@ ol {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-md);
+  padding: 0 var(--space-lg);
 }
 
 .container-narrow {
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 0 var(--space-md);
+  padding: 0 var(--space-lg);
 }
 
+.container-text {
+  width: 100%;
+  max-width: var(--narrow-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* Section — responsive vertical padding
+   [Neuro D4: Section padding 80-120px vertical] */
 .section {
-  padding: var(--space-xl) 0;
+  padding: var(--space-section) 0;
   position: relative;
 }
 
-.section-lg {
-  padding: var(--space-2xl) 0;
-}
-
-/* ── Utilities: Premium Glassmorphism ──────────────────────── */
+/* ── Glassmorphism ───────────────────────────────────────── */
 .glass {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
@@ -250,36 +256,46 @@ ol {
 }
 
 .glass-panel {
-  background: linear-gradient(135deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 15, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(20, 20, 30, 0.6) 0%,
+    rgba(10, 10, 18, 0.4) 100%
+  );
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     0 8px 32px 0 rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
 }
 
-/* ── Buttons ──────────────────────────────────────────────── */
+/* ── Buttons ────────────────────────────────────────────────
+   [Neuro D6: Primary = gold fill + dark text]
+   [Neuro D6: Secondary = cyan outline]
+   [Neuro D10: NOT mono — body font for buttons] */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--text-xs);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  /* Slightly rounded edges instead of sharp corners */
-  transition: all var(--duration-base) var(--ease-spring);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-sm);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
   position: relative;
   overflow: hidden;
   white-space: nowrap;
 }
 
+/* Primary CTA — gold fill, dark text [Neuro D6] */
 .btn-primary {
   background: var(--gradient-gold);
   color: var(--bg-deep);
@@ -292,6 +308,21 @@ ol {
   box-shadow: 0 12px 35px rgba(255, 193, 59, 0.35);
 }
 
+/* Secondary CTA — cyan outline [Neuro D6] */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 229, 255, 0.08);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 229, 255, 0.15);
+}
+
+/* Outline — gold outline (for nav CTA, etc.) */
 .btn-outline {
   background: var(--bg-glass);
   backdrop-filter: blur(10px);
@@ -323,32 +354,36 @@ ol {
   left: 0;
 }
 
+/* Ghost — minimal, for tertiary actions */
 .btn-ghost {
   background: transparent;
   color: var(--text-dim);
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .btn-ghost:hover {
-  color: var(--text);
+  color: var(--text-primary);
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* ── Cards ────────────────────────────────────────────────── */
+/* ── Cards ──────────────────────────────────────────────────
+   [Neuro D4: Card gaps 24-32px]
+   Uses elevation system from design tokens */
 .card {
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: var(--space-md);
-  transition: all var(--duration-base) var(--ease-out);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
 }
 
+/* Gold top-line accent on hover */
 .card::before {
   content: '';
   position: absolute;
@@ -361,12 +396,16 @@ ol {
   transition: opacity var(--duration-base) var(--ease-out);
 }
 
-/* Add a subtle inner glow gradient for premium feel */
+/* Subtle radial glow on hover */
 .card::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 193, 59, 0.08) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 193, 59, 0.06) 0%,
+    transparent 70%
+  );
   opacity: 0;
   transition: opacity var(--duration-base) var(--ease-out);
   pointer-events: none;
@@ -375,10 +414,7 @@ ol {
 .card:hover {
   border-color: var(--border-hover);
   transform: translateY(-4px);
-  box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(20, 20, 25, 0.7) 0%, rgba(10, 10, 15, 0.5) 100%);
+  box-shadow: var(--shadow-lg);
 }
 
 .card:hover::before,
@@ -386,7 +422,8 @@ ol {
   opacity: 1;
 }
 
-/* ── Grid Layouts ─────────────────────────────────────────── */
+/* ── Grid Layouts ───────────────────────────────────────────
+   [Neuro D4: Card gaps 24-32px] */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -406,30 +443,25 @@ ol {
 }
 
 @media (max-width: 1024px) {
-  .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .grid-4 {
-    grid-template-columns: 1fr;
-  }
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
 
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-2 {
-    grid-template-columns: 1fr;
+  .container,
+  .container-narrow,
+  .container-text {
+    padding: 0 var(--space-sm);
   }
 }
 
-/* ── Animations (GSAP-ready classes) ──────────────────────── */
+/* ── GSAP Animation Classes ─────────────────────────────────
+   Elements start hidden and are revealed by ScrollTrigger.
+   Reduced motion: show everything immediately. */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -450,12 +482,8 @@ ol {
   transform: scale(0.9);
 }
 
-/* Reduced motion */
+/* ── Reduced Motion ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .reveal,
   .reveal-left,
   .reveal-right,
@@ -481,16 +509,17 @@ ol {
   margin: var(--space-lg) 0;
 }
 
-/* ── Tag / Badge ──────────────────────────────────────────── */
+/* ── Tags / Badges ────────────────────────────────────────── */
 .tag {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-body);
   font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.4rem 1rem;
   border: 1px solid var(--border-hover);
+  border-radius: var(--radius-sm);
   color: var(--gold);
 }
 
@@ -502,4 +531,614 @@ ol {
 .tag-green {
   border-color: rgba(0, 255, 136, 0.2);
   color: var(--green);
+}
+
+/* ── Selection ────────────────────────────────────────────── */
+::selection {
+  background: rgba(255, 193, 59, 0.25);
+  color: var(--text-primary);
+}
+
+/* ── Section header utility ───────────────────────────────── */
+.section-header {
+  margin-bottom: var(--space-xl);
+}
+
+.section-header .tag {
+  margin-bottom: var(--space-sm);
+}
+
+/* ── Section-lg ───────────────────────────────────────────── */
+.section-lg {
+  padding: calc(var(--space-section) * 1.4) 0;
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   JARVIS PERSONALIZATION ENGINE — Component Styles
+   These live in global.css so the React island can access them.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Hero trigger ─────────────────────────────────────────── */
+.jarvis-root {
+  display: contents;
+}
+
+.jarvis-hero-cta {
+  display: inline-flex;
+  align-items: center;
+}
+
+.jarvis-customize-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(255, 193, 59, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1.75rem;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.jarvis-customize-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-gold);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.jarvis-customize-btn:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 193, 59, 0.2);
+  color: var(--bg-deep);
+}
+
+.jarvis-customize-btn:hover::before {
+  opacity: 1;
+}
+
+.jarvis-customize-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.jarvis-customize-arrow {
+  position: relative;
+  z-index: 1;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.jarvis-customize-btn:hover .jarvis-customize-arrow {
+  transform: translateX(4px);
+}
+
+/* Live dot pulse */
+.jarvis-dot-live {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(255, 193, 59, 0.6);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+.jarvis-returning {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ── Modal backdrop ───────────────────────────────────────── */
+.jarvis-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.jarvis-modal-backdrop-click {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 18, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+/* ── Modal panel ──────────────────────────────────────────── */
+.jarvis-modal {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(255, 193, 59, 0.15);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 193, 59, 0.06);
+  overflow: hidden;
+  animation: jarvisModalIn 0.4s var(--ease-spring) forwards;
+}
+
+@keyframes jarvisModalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.jarvis-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.jarvis-brand-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jarvis-brand-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.jarvis-step-indicator {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.jarvis-tier-badge {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(255, 193, 59, 0.25);
+  border-radius: var(--radius-pill);
+  color: var(--gold);
+}
+
+.jarvis-close-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.jarvis-close-btn:hover {
+  background: var(--bg-highest);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+/* ── Question pane ────────────────────────────────────────── */
+.jarvis-question-pane {
+  padding: 2rem 1.75rem 1.75rem;
+}
+
+.jarvis-q-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.jarvis-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.jarvis-option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-spring);
+}
+
+.jarvis-option-card:hover {
+  border-color: rgba(255, 193, 59, 0.3);
+  background: rgba(255, 193, 59, 0.04);
+  transform: translateY(-2px);
+}
+
+.jarvis-option-selected,
+.jarvis-option-card:focus-visible {
+  border-color: var(--gold);
+  background: rgba(255, 193, 59, 0.06);
+  box-shadow: 0 0 0 2px rgba(255, 193, 59, 0.15);
+}
+
+.jarvis-option-label {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.jarvis-option-sub {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.jarvis-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.5rem 0;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.jarvis-back-btn:hover { color: var(--text-primary); }
+
+/* ── Loading pane ─────────────────────────────────────────── */
+.jarvis-loading-pane {
+  padding: 3rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.jarvis-loading-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jarvis-loading-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.jarvis-loading-dots {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-left: 0.25rem;
+}
+
+.jarvis-loading-dots span {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  animation: dotBounce 1.2s infinite;
+}
+
+.jarvis-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.jarvis-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Result overlay ───────────────────────────────────────── */
+.jarvis-result-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.jarvis-result-bg-click {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 18, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.jarvis-result-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  max-height: 85vh;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(255, 193, 59, 0.15);
+  border-bottom: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 193, 59, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.jarvis-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.jarvis-result-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0 1.75rem 2rem;
+  overscroll-behavior: contain;
+}
+
+.jarvis-result-section {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.jarvis-result-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.jarvis-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.jarvis-result-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.jarvis-result-sub {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* Services grid in result */
+.jarvis-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.jarvis-svc-card {
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.jarvis-svc-card:hover {
+  border-color: var(--border-hover);
+}
+
+.jarvis-svc-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent, var(--gold));
+  opacity: 0.6;
+}
+
+.jarvis-svc-title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.jarvis-svc-desc {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* Pricing block */
+.jarvis-pricing-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.jarvis-price-main {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+
+.jarvis-price-compare {
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+}
+
+.jarvis-price-strike {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.jarvis-price-note {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Process flow */
+.jarvis-process {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.jarvis-process-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jarvis-process-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 193, 59, 0.1);
+  border: 1px solid rgba(255, 193, 59, 0.25);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.jarvis-process-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.jarvis-process-arrow {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* CTAs in result */
+.jarvis-result-cta-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.jarvis-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient-gold);
+  color: var(--bg-deep);
+  padding: 1rem 2rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.jarvis-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 193, 59, 0.3);
+}
+
+.jarvis-cta-secondary {
+  background: transparent;
+  border: none;
+  color: var(--cyan);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  letter-spacing: 0.04em;
+  transition: color var(--duration-fast);
+}
+
+.jarvis-cta-secondary:hover { color: var(--text-primary); }
+
+.jarvis-redo-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  padding: 0.25rem 0;
+  transition: color var(--duration-fast);
+}
+
+.jarvis-redo-btn:hover { color: var(--text-dim); }
+
+/* ── Jarvis responsive ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .jarvis-options-grid { grid-template-columns: 1fr; }
+  .jarvis-svc-grid { grid-template-columns: 1fr; }
+  .jarvis-process { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .jarvis-process-arrow { display: none; }
+  .jarvis-result-panel { max-height: 90vh; }
+  .jarvis-result-scroll { padding: 0 1.25rem 1.5rem; }
+  .jarvis-modal { border-radius: var(--radius-xl) var(--radius-xl) 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; }
 }

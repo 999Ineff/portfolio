@@ -1,0 +1,258 @@
+---
+/**
+ * LeadCapture.astro — Reusable email capture component
+ *
+ * Used for: newsletter footer, resource downloads, exit-intent popups.
+ * All submissions go to Netlify Forms with unique `formName` for segmentation.
+ *
+ * Props:
+ *   title       — Headline above the form
+ *   description — Supporting text (optional)
+ *   formName    — Netlify form name (unique per placement for segmentation)
+ *   ctaText     — Button label (default: "Get Access")
+ *   dark        — Use darker background variant (default: false)
+ *   plausibleEvent — Custom Plausible event to fire on success (optional)
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  formName: string;
+  ctaText?: string;
+  dark?: boolean;
+  plausibleEvent?: string;
+}
+
+const {
+  title,
+  description,
+  formName,
+  ctaText = 'Get Access',
+  dark = false,
+  plausibleEvent,
+} = Astro.props;
+
+const formId = `lc-${formName.replace(/[^a-zA-Z0-9]/g, '-')}`;
+const successId = `${formId}-success`;
+---
+
+<div class:list={['lead-capture', dark && 'lead-capture--dark']}>
+  <div class="lead-capture-inner">
+    <h3 class="lead-capture-title">{title}</h3>
+    {description && <p class="lead-capture-desc">{description}</p>}
+
+    <form
+      id={formId}
+      class="lead-capture-form"
+      name={formName}
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      data-plausible-event={plausibleEvent}
+      novalidate
+    >
+      <input type="hidden" name="form-name" value={formName}>
+      <p class="sr-only" aria-hidden="true">
+        <label>Don't fill this: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+      </p>
+
+      <div class="lead-capture-row">
+        <label for={`${formId}-email`} class="sr-only">Your email address</label>
+        <input
+          type="email"
+          id={`${formId}-email`}
+          name="email"
+          placeholder="your@email.com"
+          class="lead-capture-input"
+          autocomplete="email"
+          required
+          aria-required="true"
+        >
+        <button type="submit" class="btn btn-primary lead-capture-btn">
+          {ctaText}
+        </button>
+      </div>
+      <p class="lead-capture-fine">No spam. Unsubscribe any time.</p>
+    </form>
+
+    <p
+      id={successId}
+      class="lead-capture-success"
+      aria-live="polite"
+      hidden
+    >
+      You're in. Check your inbox.
+    </p>
+  </div>
+</div>
+
+<style>
+  .lead-capture {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+  }
+
+  .lead-capture--dark {
+    background: var(--bg-card);
+    border-color: var(--border-active);
+  }
+
+  .lead-capture-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .lead-capture-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .lead-capture-desc {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .lead-capture-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .lead-capture-row {
+    display: flex;
+    gap: 0;
+  }
+
+  .lead-capture-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    outline: none;
+    transition: border-color 0.3s var(--ease-out);
+    min-width: 0; /* prevents flex overflow */
+  }
+
+  .lead-capture-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .lead-capture-input:focus {
+    border-color: var(--border-focus);
+  }
+
+  .lead-capture-btn {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .lead-capture-fine {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .lead-capture-success {
+    font-size: var(--text-base);
+    color: var(--green);
+    font-weight: 500;
+    text-align: center;
+    padding: var(--space-sm);
+    background: rgba(0, 255, 136, 0.06);
+    border: 1px solid rgba(0, 255, 136, 0.15);
+    border-radius: var(--radius-sm);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  @media (max-width: 480px) {
+    .lead-capture-row {
+      flex-direction: column;
+    }
+
+    .lead-capture-input {
+      border-right: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .lead-capture-btn {
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      width: 100%;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // Handle all LeadCapture forms on the page
+    document.querySelectorAll('[data-netlify="true"][id^="lc-"]').forEach(function (form) {
+      if (!(form instanceof HTMLFormElement)) return;
+
+      var successId = form.id + '-success';
+      var successMsg = document.getElementById(successId);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var emailInput = form.querySelector('input[name="email"]');
+        if (!emailInput || !(emailInput instanceof HTMLInputElement) || !emailInput.validity.valid) {
+          emailInput && emailInput.focus();
+          return;
+        }
+
+        var data = new FormData(form);
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString(),
+        })
+          .then(function (res) {
+            if (res.ok) {
+              form.style.display = 'none';
+              if (successMsg) successMsg.removeAttribute('hidden');
+
+              // Fire custom Plausible event if specified
+              var plausibleEvent = form.dataset.plausibleEvent;
+              if (plausibleEvent && typeof window.plausible === 'function') {
+                window.plausible(plausibleEvent);
+              }
+            } else {
+              console.warn('Form submission failed:', res.status);
+            }
+          })
+          .catch(function (err) {
+            console.warn('Form error:', err);
+          });
+      });
+    });
+  })();
+</script>

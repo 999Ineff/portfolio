@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const lastUpdated = '2026-03-05';
+---
+
+<BaseLayout
+  title="Accessibility Statement"
+  description="Ineffable is committed to web accessibility. Learn about our WCAG 2.1 AA compliance efforts and how to report issues."
+>
+  <article class="legal-page section">
+    <div class="container-text">
+      <header class="legal-header">
+        <span class="tag tag-green">Accessibility</span>
+        <h1 class="legal-title" id="legal-h1">Accessibility Statement</h1>
+        <p class="legal-meta">Last Updated: {lastUpdated}</p>
+        <p class="legal-intro reveal">
+          Ineffable Solutions is committed to ensuring digital accessibility for everyone,
+          including people with disabilities. We continuously improve the experience and apply
+          relevant accessibility standards.
+        </p>
+
+        <div class="legal-trust-badge reveal">
+          <span class="trust-badge-icon" aria-hidden="true">✓</span>
+          <span class="trust-badge-text">WCAG 2.1 Level AA target. Reduced motion respected. Keyboard-navigable throughout.</span>
+        </div>
+      </header>
+
+      <div class="legal-body">
+        <section class="legal-section reveal" id="section-commitment">
+          <h2>Our Commitment</h2>
+          <p>
+            We aim to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1
+            Level AA</strong>. These guidelines explain how to make web content more accessible
+            to people with visual, auditory, motor, cognitive, and neurological disabilities.
+          </p>
+        </section>
+
+        <section class="legal-section reveal">
+          <h2>Measures We Have Taken</h2>
+          <ul>
+            <li>Semantic HTML with a single <code>&lt;h1&gt;</code> per page and logical heading hierarchy</li>
+            <li>Color contrast ratios verified at WCAG AAA level for primary text and accent colors</li>
+            <li>All interactive elements are keyboard-navigable with visible focus indicators</li>
+            <li>Screen reader-compatible ARIA labels on navigation, forms, and dialogs</li>
+            <li>Responsive design across mobile (375px), tablet (768px), and desktop (1440px+)</li>
+            <li>Animations respect <code>prefers-reduced-motion</code> — all animations are disabled or minimized for users who prefer reduced motion</li>
+            <li>Skip-to-content link available for keyboard and assistive technology users</li>
+            <li>Form inputs have associated <code>&lt;label&gt;</code> elements</li>
+            <li>Meaningful alt text for all content images</li>
+          </ul>
+        </section>
+
+        <section class="legal-section reveal">
+          <h2>Known Limitations</h2>
+          <p>We are actively working on the following known gaps:</p>
+          <ul>
+            <li>
+              <strong>Intro animation:</strong> The 3D/2D intro animation plays on first visit.
+              A clearly labeled "Skip" button is always visible and keyboard-accessible. Reduced
+              motion preference skips the animation entirely.
+            </li>
+            <li>
+              <strong>Third-party embeds:</strong> Calendly (booking) and YouTube (video demos)
+              are third-party tools with their own accessibility implementations.
+            </li>
+            <li>
+              <strong>New content:</strong> Newly published blog posts or case studies may
+              temporarily have accessibility gaps while we review them.
+            </li>
+          </ul>
+        </section>
+
+        <section class="legal-section reveal">
+          <h2>Compatibility</h2>
+          <p>This site is designed to work with:</p>
+          <ul>
+            <li>Current versions of Chrome, Firefox, Safari, and Edge</li>
+            <li>Screen readers: NVDA (Windows), JAWS (Windows), VoiceOver (macOS/iOS), TalkBack (Android)</li>
+            <li>Browser zoom up to 200% without horizontal scrolling</li>
+            <li>Operating system accessibility features (high contrast, large text)</li>
+          </ul>
+        </section>
+
+        <section class="legal-section reveal">
+          <h2>Feedback and Contact</h2>
+          <p>
+            We welcome feedback on accessibility barriers. If you encounter an issue that
+            prevents you from accessing content or using a feature, please let us know. We aim
+            to respond within <strong>5 business days</strong>.
+          </p>
+          <address class="legal-contact">
+            <strong>Ineffable Solutions — Accessibility</strong><br>
+            Luis Aviles<br>
+            <a href="mailto:luis@ineffablesolutions.net">luis@ineffablesolutions.net</a>
+          </address>
+        </section>
+
+        <section class="legal-section reveal">
+          <h2>Assessment Approach</h2>
+          <p>
+            Accessibility is self-assessed during development and reviewed when pages are
+            created or significantly updated. We use browser developer tools, manual keyboard
+            testing, and automated checks via Lighthouse and Axe.
+          </p>
+          <p>
+            This statement was written on {lastUpdated} and will be reviewed and updated
+            as the site evolves.
+          </p>
+        </section>
+      </div>
+      <!-- Conversion CTA — even accessibility pages don't need to be dead ends -->
+      <div class="legal-cta reveal">
+        <p class="legal-cta-heading">Building something accessible?</p>
+        <p class="legal-cta-sub">Accessibility is built into every site I deliver. If you need a WCAG-compliant website or have an existing site with accessibility gaps, let's fix it.</p>
+        <div class="legal-cta-actions">
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Book a Free Call</a>
+          <a href="/websites" class="btn btn-ghost">See Website Services</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: calc(var(--nav-height) + var(--space-2xl));
+    padding-bottom: var(--space-3xl);
+  }
+
+  .legal-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: var(--space-sm) 0 var(--space-xs);
+    letter-spacing: -0.02em;
+  }
+
+  .legal-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    margin-bottom: var(--space-md);
+  }
+
+  .legal-intro {
+    font-size: var(--text-md);
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .legal-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .legal-section {
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .legal-section:last-child {
+    border-bottom: none;
+  }
+
+  .legal-section h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.01em;
+  }
+
+  .legal-section p {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-sm);
+  }
+
+  .legal-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .legal-section ul {
+    list-style: disc;
+    padding-left: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+  }
+
+  .legal-section li {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--cyan);
+    background: var(--bg-card);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+
+  .legal-contact {
+    font-style: normal;
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.9;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+
+  .legal-contact a {
+    color: var(--cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .legal-contact a:hover {
+    color: var(--text-primary);
+  }
+
+  strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ── Trust Badge ─────────────────────────────────────────── */
+  .legal-trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--space-md);
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 136, 0.06);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: var(--radius-pill);
+  }
+
+  .trust-badge-icon {
+    color: var(--green);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  .trust-badge-text {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* ── Conversion CTA ──────────────────────────────────────── */
+  .legal-cta {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl) var(--space-xl);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-active);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .legal-cta-heading {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-xs);
+  }
+
+  .legal-cta-sub {
+    font-size: var(--text-base);
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto var(--space-lg);
+  }
+
+  .legal-cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── No-script fallback ───────────────────────────────────── */
+  @media (scripting: none) {
+    .reveal,
+    .reveal-left,
+    .reveal-right,
+    .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const h1 = document.getElementById('legal-h1');
+  if (h1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const text = h1.textContent || '';
+    h1.textContent = '';
+    h1.style.opacity = '1';
+    const chars = text.split('').map(char => {
+      const span = document.createElement('span');
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.style.display = 'inline-block';
+      span.style.opacity = '0';
+      span.style.transform = 'translateY(20px)';
+      h1.appendChild(span);
+      return span;
+    });
+
+    gsap.to(chars, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power3.out',
+      stagger: 0.025,
+      delay: 0.1,
+    });
+  } else if (h1) {
+    h1.style.opacity = '1';
+  }
+</script>

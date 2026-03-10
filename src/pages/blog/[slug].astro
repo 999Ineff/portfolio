@@ -17,7 +17,15 @@ export async function getStaticPaths() {
 }
 
 const { post, prevPost, nextPost } = Astro.props;
-const { Content } = await render(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
+
+// Estimate reading time: ~200 words per minute on dark backgrounds (adjusted from 238)
+function estimateReadingTime(body: string): number {
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
+
+const readingTime = estimateReadingTime(post.body || '');
 ---
 
 <BlogPostLayout
@@ -31,6 +39,8 @@ const { Content } = await render(post);
   linkedInUrl={post.data.linkedInUrl}
   prevPost={prevPost}
   nextPost={nextPost}
+  readingTime={readingTime}
+  currentSlug={post.id}
 >
   <Content />
 </BlogPostLayout>

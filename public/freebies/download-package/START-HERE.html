@@ -19,6 +19,12 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* Fix 17: Focus styles */
+        *:focus-visible {
+            outline: 2px solid var(--gold, #ffc13b);
+            outline-offset: 2px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
@@ -32,10 +38,11 @@
             margin: 0 auto;
         }
 
+        /* Fix 8: Badge font size from 0.7rem to 0.75rem */
         .badge {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--green);
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -161,6 +168,25 @@
             margin-bottom: 0.5rem;
         }
 
+        .pdf-box .pdf-note {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* Fix 16: CSS classes for previously inline styles */
+        .guide-icon-gold {
+            color: var(--gold);
+        }
+        .guide-icon-cyan {
+            color: var(--cyan);
+        }
+        .guide-icon-green {
+            color: var(--green);
+        }
+        .footer-tagline {
+            color: var(--text-dim);
+        }
+
         /* Footer */
         .footer {
             margin-top: 4rem;
@@ -176,124 +202,160 @@
         .footer a {
             color: var(--gold);
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover,
+        .footer a:focus {
+            color: var(--cyan);
+        }
+
+        /* Fix 13: Responsive media queries */
+        @media (max-width: 768px) {
+            body { padding: 40px 20px; }
+            h1 { font-size: 1.75rem; }
+            .package-item { flex-direction: column; }
+            .step { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 30px 15px; }
+            h1 { font-size: 1.5rem; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="badge">Welcome</div>
+    <!-- Fix 14: main landmark -->
+    <main>
+        <div class="container">
+            <div class="badge">Welcome</div>
 
-        <h1>AI Operations<br><span>Starter Kit</span></h1>
+            <h1>AI Operations<br><span>Starter Kit</span></h1>
 
-        <p class="subtitle">Everything you need to start building AI-powered workflows that last.</p>
+            <p class="subtitle">Everything you need to start building AI-powered workflows that last.</p>
 
-        <h2>What's In This Package</h2>
+            <h2>What's In This Package</h2>
 
-        <div class="package-item">
-            <div class="package-icon">📚</div>
-            <div class="package-content">
-                <h3>Three Complete Guides</h3>
-                <p>In-depth guides on AI orchestration, building lasting tools, and 10 ready-to-use automation templates.</p>
-                <div class="path">📁 guides/</div>
+            <div class="package-item">
+                <!-- Fix 15: aria-hidden on emoji icons -->
+                <div class="package-icon" aria-hidden="true">&#x1F4DA;</div>
+                <div class="package-content">
+                    <h3>Three Complete Guides</h3>
+                    <p>In-depth guides on AI orchestration, building lasting tools, and 10 ready-to-use automation templates.</p>
+                    <div class="path">&#x1F4C1; guides/</div>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <!-- Fix 15: aria-hidden on emoji icons -->
+                <div class="package-icon" aria-hidden="true">&#x1F6E0;&#xFE0F;</div>
+                <div class="package-content">
+                    <h3>Orchestrator Template</h3>
+                    <p>The complete template I use on every project: CLAUDE.md, state files, and Python tools ready to customize.</p>
+                    <div class="path">&#x1F4C1; template/</div>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <!-- Fix 15: aria-hidden on emoji icons -->
+                <div class="package-icon" aria-hidden="true">&#x1F5BC;&#xFE0F;</div>
+                <div class="package-content">
+                    <h3>Diagrams & Visuals</h3>
+                    <p>All the diagrams from the guides - useful for reference or presentations.</p>
+                    <div class="path">&#x1F4C1; images/</div>
+                </div>
+            </div>
+
+            <h2>Quick Start</h2>
+
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h4>Read the Guides</h4>
+                    <p>Start with <strong>01-orchestrator-blueprint.html</strong> to understand the system. Open in any browser.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h4>Copy the Template</h4>
+                    <p>Copy the <strong>template/</strong> folder into your project. Rename it to <strong>.claude/</strong> if using Claude Code.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h4>Customize CLAUDE.md</h4>
+                    <p>Fill in the PROJECT-SPECIFIC section with your project's details, goals, and tools.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h4>Try a Pipeline Run</h4>
+                    <p>Test with a small task: <strong>/analyze</strong> → <strong>/plan</strong> → <strong>/implement</strong></p>
+                </div>
+            </div>
+
+            <div class="pdf-box">
+                <h3>Want PDF Versions?</h3>
+                <ol>
+                    <li>Open any guide in your browser</li>
+                    <li>Press <strong>Ctrl+P</strong> (or Cmd+P on Mac)</li>
+                    <li>Destination: <strong>"Save as PDF"</strong></li>
+                    <li>Check <strong>"Background graphics"</strong></li>
+                    <li>Set Margins to <strong>"None"</strong></li>
+                    <li>Uncheck <strong>"Headers and footers"</strong></li>
+                    <li>Save</li>
+                </ol>
+                <!-- Fix 16: Moved from inline style to CSS class -->
+                <p class="pdf-note">Each guide has print instructions at the top that disappear in the PDF.</p>
+            </div>
+
+            <h2>The Guides</h2>
+
+            <div class="package-item">
+                <!-- Fix 16: Moved from inline style to CSS class -->
+                <div class="package-icon guide-icon-gold" aria-hidden="true">01</div>
+                <div class="package-content">
+                    <h3>The AI Orchestrator Blueprint</h3>
+                    <p>How to build a system that remembers context, enforces quality, and coordinates multiple agents. The foundation.</p>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <!-- Fix 16: Moved from inline style to CSS class -->
+                <div class="package-icon guide-icon-cyan" aria-hidden="true">02</div>
+                <div class="package-content">
+                    <h3>Build Tools, Don't Rent Capability</h3>
+                    <p>The mindset shift: have AI create lasting tools instead of doing tasks directly. Own your automation.</p>
+                </div>
+            </div>
+
+            <div class="package-item">
+                <!-- Fix 16: Moved from inline style to CSS class -->
+                <div class="package-icon guide-icon-green" aria-hidden="true">03</div>
+                <div class="package-content">
+                    <h3>DIY Automation Starter Kit</h3>
+                    <p>10 copy-paste automation templates that work with any AI. No coding experience required.</p>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
+                <!-- Fix 16: Moved from inline style to CSS class -->
+                <p class="footer-tagline">From Spreadsheets to Systems</p>
             </div>
         </div>
-
-        <div class="package-item">
-            <div class="package-icon">🛠️</div>
-            <div class="package-content">
-                <h3>Orchestrator Template</h3>
-                <p>The complete template I use on every project: CLAUDE.md, state files, and Python tools ready to customize.</p>
-                <div class="path">📁 template/</div>
-            </div>
-        </div>
-
-        <div class="package-item">
-            <div class="package-icon">🖼️</div>
-            <div class="package-content">
-                <h3>Diagrams & Visuals</h3>
-                <p>All the diagrams from the guides - useful for reference or presentations.</p>
-                <div class="path">📁 images/</div>
-            </div>
-        </div>
-
-        <h2>Quick Start</h2>
-
-        <div class="step">
-            <div class="step-number">01</div>
-            <div class="step-content">
-                <h4>Read the Guides</h4>
-                <p>Start with <strong>01-orchestrator-blueprint.html</strong> to understand the system. Open in any browser.</p>
-            </div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">02</div>
-            <div class="step-content">
-                <h4>Copy the Template</h4>
-                <p>Copy the <strong>template/</strong> folder into your project. Rename it to <strong>.claude/</strong> if using Claude Code.</p>
-            </div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">03</div>
-            <div class="step-content">
-                <h4>Customize CLAUDE.md</h4>
-                <p>Fill in the PROJECT-SPECIFIC section with your project's details, goals, and tools.</p>
-            </div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">04</div>
-            <div class="step-content">
-                <h4>Try a Pipeline Run</h4>
-                <p>Test with a small task: <strong>/analyze</strong> → <strong>/plan</strong> → <strong>/implement</strong></p>
-            </div>
-        </div>
-
-        <div class="pdf-box">
-            <h3>Want PDF Versions?</h3>
-            <ol>
-                <li>Open any guide in your browser</li>
-                <li>Press <strong>Ctrl+P</strong> (or Cmd+P on Mac)</li>
-                <li>Destination: <strong>"Save as PDF"</strong></li>
-                <li>Check <strong>"Background graphics"</strong></li>
-                <li>Set Margins to <strong>"None"</strong></li>
-                <li>Uncheck <strong>"Headers and footers"</strong></li>
-                <li>Save</li>
-            </ol>
-            <p style="margin-top: 1rem; font-size: 0.875rem;">Each guide has print instructions at the top that disappear in the PDF.</p>
-        </div>
-
-        <h2>The Guides</h2>
-
-        <div class="package-item">
-            <div class="package-icon" style="color: var(--gold);">01</div>
-            <div class="package-content">
-                <h3>The AI Orchestrator Blueprint</h3>
-                <p>How to build a system that remembers context, enforces quality, and coordinates multiple agents. The foundation.</p>
-            </div>
-        </div>
-
-        <div class="package-item">
-            <div class="package-icon" style="color: var(--cyan);">02</div>
-            <div class="package-content">
-                <h3>Build Tools, Don't Rent Capability</h3>
-                <p>The mindset shift: have AI create lasting tools instead of doing tasks directly. Own your automation.</p>
-            </div>
-        </div>
-
-        <div class="package-item">
-            <div class="package-icon" style="color: var(--green);">03</div>
-            <div class="package-content">
-                <h3>DIY Automation Starter Kit</h3>
-                <p>10 copy-paste automation templates that work with any AI. No coding experience required.</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
-            <p style="color: var(--text-dim);">From Spreadsheets to Systems</p>
-        </div>
-    </div>
+    </main>
 </body>
 </html>

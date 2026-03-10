@@ -7,7 +7,7 @@ import ComingSoon from '../components/ComingSoon.astro';
 const stylePresets = [
   { name: 'bold-playful', label: 'Bold & Playful', description: 'High-energy colors, chunky type, and playful geometry for brands that refuse to blend in.' },
   { name: 'corporate-saas', label: 'Corporate SaaS', description: 'Clean grids, confident spacing, and trust-building layouts for B2B products and platforms.' },
-  { name: 'dark-tech', label: 'Dark Tech', description: 'Deep backgrounds, neon accents, and sharp edges for dev tools, AI, and cutting-edge tech.' },
+  { name: 'dark-tech', label: 'Dark Tech', description: 'Deep backgrounds, neon accents, and sharp edges for dev tools, AI, and modern tech.' },
   { name: 'editorial', label: 'Editorial', description: 'Typography-driven layouts with generous whitespace, perfect for long-form content and storytelling.' },
   { name: 'luxury', label: 'Luxury', description: 'Refined serif type, muted palettes, and slow transitions for premium and high-end brands.' },
   { name: 'minimal', label: 'Minimal', description: 'Stripped to essentials. Maximum breathing room, invisible grids, and quiet confidence.' },
@@ -17,8 +17,8 @@ const stylePresets = [
 ];
 
 const processSteps = [
-  { icon: '01', title: 'Discovery', desc: 'We learn your brand, goals, and audience. You show us what you love.' },
-  { icon: '02', title: 'Design', desc: 'Style preset or custom vision — we craft the look before a single line of code.' },
+  { icon: '01', title: 'Discovery', desc: 'I learn your brand, goals, and audience. You show me what you love.' },
+  { icon: '02', title: 'Design', desc: 'Style preset or custom vision — I craft the look before a single line of code.' },
   { icon: '03', title: 'Build', desc: 'Production-grade code. Fast, accessible, SEO-ready from day one.' },
   { icon: '04', title: 'SEO', desc: 'Technical audit, on-page optimization, schema markup, and performance tuning.' },
   { icon: '05', title: 'Launch', desc: 'Deployment, DNS, SSL, analytics — everything handled. You just share the link.' },
@@ -28,27 +28,267 @@ const processSteps = [
 
 <BaseLayout
   title="Tailored Websites"
-  description="Premium custom web design with built-in SEO. Pick a style, we build it. Truly custom websites that match your vision."
+  description="A website that works as hard as you do — not a template with your logo slapped on it. Premium custom web design with built-in SEO and personality."
 >
   <!-- Hero Section -->
   <section class="hero section-lg">
     <div class="container hero-inner">
       <SectionLabel text="Tailored Websites" />
 
-      <h1 class="hero-title text-heading reveal" data-delay="0.1">
-        Your Website Should Work <span class="text-gold">as Hard as You Do</span>
+      <h1 class="hero-title reveal" data-delay="0.1">
+        A Website That Works as Hard<br />
+        <span class="text-gold">as You Do</span>
       </h1>
 
       <p class="hero-sub reveal" data-delay="0.2">
-        Premium custom web design with built-in SEO, performance, and personality.
-        No templates. No page builders. Just code that converts.
+        Not a template. Not a page builder. A production-grade site that's unmistakably yours — built to convert, built to last.
       </p>
 
       <div class="hero-actions reveal" data-delay="0.3">
-        <a href="#styles" class="btn btn-primary">Browse Style Presets</a>
-        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">
-          Start Your Project
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
+          Book a 15-Min Call
         </a>
+        <a href="#styles" class="btn btn-secondary">Browse Style Presets</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative Animation: Template → Custom Transformation (D22 before/after) -->
+  <section class="section narrative-section" id="transformation">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Transformation" color="cyan" />
+        <h2 class="text-heading reveal">From template to unmistakable</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 600px;">
+          Watch what happens when a generic template gets replaced with a site built around your brand — on every device, at every breakpoint.
+        </p>
+      </div>
+
+      <!-- SVG Narrative Animation: Device transformation -->
+      <div class="narrative-stage reveal" data-delay="0.2" id="website-animation">
+        <svg
+          class="narrative-svg"
+          viewBox="0 0 800 380"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Animation showing transformation from generic template to custom branded website across desktop, tablet, and mobile"
+          role="img"
+        >
+          <rect width="800" height="380" fill="#0a0a12"/>
+
+          <!-- BEFORE: Generic Template (left) -->
+          <g id="before-group">
+            <!-- Desktop frame (boring gray) -->
+            <rect x="20" y="20" width="340" height="220" rx="6" fill="#141420" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <!-- Browser bar -->
+            <rect x="20" y="20" width="340" height="28" rx="6" fill="#1a1a28"/>
+            <rect x="20" y="36" width="340" height="12" rx="0" fill="#1a1a28"/>
+            <circle cx="36" cy="33" r="4" fill="#ff4757" opacity="0.5"/>
+            <circle cx="50" cy="33" r="4" fill="#ffc13b" opacity="0.5"/>
+            <circle cx="64" cy="33" r="4" fill="#00ff88" opacity="0.3"/>
+            <rect x="80" y="28" width="200" height="10" rx="2" fill="#222233"/>
+            <text x="180" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#4a4a5c">yourwebsite.com</text>
+
+            <!-- Nav bar: boring gray -->
+            <rect x="20" y="48" width="340" height="30" fill="#1a1a28"/>
+            <rect x="30" y="55" width="40" height="10" rx="2" fill="#2a2a3a"/>
+            <rect x="200" y="57" width="25" height="6" rx="1" fill="#2a2a3a"/>
+            <rect x="235" y="57" width="25" height="6" rx="1" fill="#2a2a3a"/>
+            <rect x="270" y="57" width="25" height="6" rx="1" fill="#2a2a3a"/>
+            <rect x="310" y="54" width="40" height="12" rx="2" fill="#2a2a3a"/>
+
+            <!-- Hero: gray blob -->
+            <rect x="20" y="78" width="340" height="90" fill="#12121e"/>
+            <rect x="60" y="95" width="160" height="12" rx="2" fill="#2a2a3a"/>
+            <rect x="60" y="113" width="200" height="8" rx="2" fill="#1e1e2e"/>
+            <rect x="60" y="127" width="150" height="8" rx="2" fill="#1e1e2e"/>
+            <rect x="60" y="145" width="70" height="18" rx="3" fill="#2a2a3a"/>
+            <rect x="140" y="145" width="70" height="18" rx="3" fill="#222233"/>
+            <!-- Stock photo placeholder -->
+            <rect x="230" y="85" width="120" height="75" rx="4" fill="#1a1a28" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <text x="290" y="126" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2a2a3a">photo.jpg</text>
+
+            <!-- Services row: cookie-cutter cards -->
+            <rect x="25" y="178" width="100" height="50" rx="2" fill="#12121e" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <rect x="135" y="178" width="100" height="50" rx="2" fill="#12121e" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <rect x="245" y="178" width="100" height="50" rx="2" fill="#12121e" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <text x="75" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#2a2a3a">Service 1</text>
+            <text x="185" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#2a2a3a">Service 2</text>
+            <text x="295" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#2a2a3a">Service 3</text>
+
+            <!-- Mobile (broken) -->
+            <rect x="50" y="252" width="80" height="110" rx="6" fill="#141420" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <rect x="50" y="252" width="80" height="20" rx="6" fill="#1a1a28"/>
+            <rect x="50" y="262" width="80" height="10" rx="0" fill="#1a1a28"/>
+            <rect x="56" y="280" width="68" height="8" rx="1" fill="#1a1a28"/>
+            <!-- overflow text -->
+            <text x="130" y="290" font-family="JetBrains Mono, monospace" font-size="6" fill="#ff4757">overflow</text>
+            <rect x="56" y="295" width="80" height="6" rx="1" fill="#1a1a28"/>
+            <rect x="56" y="308" width="80" height="6" rx="1" fill="#1a1a28"/>
+            <rect x="56" y="322" width="50" height="18" rx="2" fill="#2a2a3a"/>
+
+            <!-- Tablet (overlapping content) -->
+            <rect x="200" y="252" width="140" height="110" rx="6" fill="#141420" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <rect x="200" y="252" width="140" height="20" rx="6" fill="#1a1a28"/>
+            <rect x="200" y="262" width="140" height="10" rx="0" fill="#1a1a28"/>
+            <rect x="206" y="278" width="128" height="10" rx="1" fill="#1a1a28"/>
+            <rect x="206" y="294" width="60" height="40" rx="2" fill="#1a1a28"/>
+            <rect x="274" y="294" width="60" height="40" rx="2" fill="#1a1a28"/>
+            <!-- Broken element badge -->
+            <text x="290" y="322" font-family="JetBrains Mono, monospace" font-size="6" fill="#ff4757" transform="rotate(-15, 290, 322)">broken</text>
+
+            <!-- BEFORE labels -->
+            <text x="190" y="248" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff4757">TEMPLATE — NOT MOBILE-READY</text>
+          </g>
+
+          <!-- Center arrow/transform indicator -->
+          <g id="transform-arrow" opacity="0">
+            <rect x="368" y="155" width="64" height="64" rx="32" fill="#0a0a12" stroke="rgba(255,193,59,0.3)" stroke-width="1"/>
+            <text x="400" y="192" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" fill="#ffc13b">&#x2192;</text>
+            <text x="400" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ffc13b">CUSTOM</text>
+            <text x="400" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ffc13b">BUILD</text>
+          </g>
+
+          <!-- AFTER: Custom Branded Site (right) -->
+          <g id="after-group" opacity="0">
+            <!-- Desktop frame: polished -->
+            <rect x="440" y="20" width="340" height="220" rx="6" fill="#141420" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+            <rect x="440" y="20" width="340" height="28" rx="6" fill="#1a1a28"/>
+            <rect x="440" y="36" width="340" height="12" rx="0" fill="#1a1a28"/>
+            <circle cx="456" cy="33" r="4" fill="#ff4757" opacity="0.7"/>
+            <circle cx="470" cy="33" r="4" fill="#ffc13b" opacity="0.7"/>
+            <circle cx="484" cy="33" r="4" fill="#00ff88" opacity="0.7"/>
+            <rect x="500" y="28" width="200" height="10" rx="2" fill="#1e1e2e"/>
+            <text x="600" y="36" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">yourbrand.com</text>
+
+            <!-- Nav: branded with gold accent -->
+            <rect x="440" y="48" width="340" height="30" fill="#0f0f1a"/>
+            <rect x="452" y="54" width="50" height="12" rx="2" fill="rgba(255,193,59,0.15)" stroke="rgba(255,193,59,0.3)" stroke-width="0.5"/>
+            <text x="477" y="63" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#ffc13b">BRAND</text>
+            <text x="580" y="63" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">Work</text>
+            <text x="615" y="63" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">About</text>
+            <text x="650" y="63" font-family="JetBrains Mono, monospace" font-size="7" fill="#a0a8bb">Contact</text>
+            <rect x="720" y="54" width="50" height="18" rx="3" fill="rgba(255,193,59,0.15)" stroke="rgba(255,193,59,0.4)" stroke-width="0.5"/>
+            <text x="745" y="66" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#ffc13b">Book Call</text>
+
+            <!-- Hero: premium layout -->
+            <rect x="440" y="78" width="340" height="90" fill="#0a0a12"/>
+            <!-- Gradient orb (subtle) -->
+            <ellipse cx="730" cy="100" rx="80" ry="50" fill="rgba(0,229,255,0.04)"/>
+            <ellipse cx="550" cy="130" rx="60" ry="35" fill="rgba(255,193,59,0.03)"/>
+
+            <rect x="452" y="88" width="120" height="14" rx="2" fill="rgba(255,193,59,0.2)"/>
+            <text x="512" y="99" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ffc13b">YOUR BRAND TAGLINE</text>
+            <rect x="452" y="108" width="200" height="10" rx="2" fill="#222233"/>
+            <rect x="452" y="124" width="160" height="8" rx="2" fill="#1e1e2e"/>
+            <rect x="452" y="140" width="70" height="20" rx="4" fill="rgba(255,193,59,0.2)" stroke="rgba(255,193,59,0.5)" stroke-width="0.5"/>
+            <text x="487" y="153" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ffc13b">Get Started</text>
+            <rect x="530" y="140" width="70" height="20" rx="4" stroke="rgba(0,229,255,0.4)" stroke-width="0.5" fill="transparent"/>
+            <text x="565" y="153" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00e5ff">See Work</text>
+
+            <!-- Premium service cards -->
+            <rect x="445" y="178" width="102" height="50" rx="4" fill="#141420" stroke="rgba(255,193,59,0.15)" stroke-width="0.5"/>
+            <rect x="555" y="178" width="102" height="50" rx="4" fill="#141420" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+            <rect x="665" y="178" width="102" height="50" rx="4" fill="#141420" stroke="rgba(0,255,136,0.15)" stroke-width="0.5"/>
+            <text x="496" y="200" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ffc13b">Automation</text>
+            <text x="606" y="200" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00e5ff">Websites</text>
+            <text x="716" y="200" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">Platforms</text>
+            <text x="496" y="214" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">from $350</text>
+            <text x="606" y="214" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">from $4,200</text>
+            <text x="716" y="214" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#6b7280">from $10,500</text>
+
+            <!-- Mobile: perfect responsive -->
+            <rect x="470" y="252" width="80" height="110" rx="6" fill="#141420" stroke="rgba(0,229,255,0.2)" stroke-width="0.75"/>
+            <rect x="470" y="252" width="80" height="20" rx="6" fill="#0f0f1a"/>
+            <rect x="470" y="262" width="80" height="10" rx="0" fill="#0f0f1a"/>
+            <text x="510" y="269" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#ffc13b">BRAND</text>
+            <rect x="476" y="280" width="68" height="8" rx="2" fill="rgba(255,193,59,0.15)"/>
+            <rect x="476" y="293" width="68" height="6" rx="1" fill="#1a1a28"/>
+            <rect x="476" y="304" width="55" height="6" rx="1" fill="#1a1a28"/>
+            <rect x="476" y="318" width="40" height="14" rx="3" fill="rgba(255,193,59,0.2)"/>
+            <text x="496" y="328" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#ffc13b">Book</text>
+
+            <!-- Tablet: perfect responsive -->
+            <rect x="580" y="252" width="160" height="110" rx="6" fill="#141420" stroke="rgba(0,229,255,0.2)" stroke-width="0.75"/>
+            <rect x="580" y="252" width="160" height="20" rx="6" fill="#0f0f1a"/>
+            <rect x="580" y="262" width="160" height="10" rx="0" fill="#0f0f1a"/>
+            <text x="660" y="269" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#a0a8bb">BRAND   Work   About</text>
+            <rect x="586" y="278" width="148" height="12" rx="2" fill="rgba(255,193,59,0.1)"/>
+            <rect x="586" y="295" width="148" height="8" rx="1" fill="#1a1a28"/>
+            <rect x="586" y="308" width="120" height="6" rx="1" fill="#1a1a28"/>
+            <rect x="586" y="318" width="65" height="16" rx="3" fill="rgba(255,193,59,0.15)" stroke="rgba(255,193,59,0.4)" stroke-width="0.5"/>
+            <rect x="659" y="318" width="75" height="16" rx="3" stroke="rgba(0,229,255,0.3)" stroke-width="0.5" fill="transparent"/>
+            <text x="618" y="329" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#ffc13b">Get Started</text>
+            <text x="696" y="329" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#00e5ff">See Work</text>
+
+            <!-- AFTER labels -->
+            <text x="610" y="248" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#00e5ff">CUSTOM — PIXEL-PERFECT ON ALL DEVICES</text>
+          </g>
+        </svg>
+
+        <div class="animation-labels">
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--red);"></span>
+            <span class="font-mono">Generic Template</span>
+          </div>
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--cyan);"></span>
+            <span class="font-mono">Custom Build — Every Device</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem: Why templates fail (D16 loss aversion, D22 before/after) -->
+  <section class="section-lg problem-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Real Cost" />
+        <h2 class="text-heading reveal">
+          What a bad website<br /><span class="text-red">actually costs you</span>
+        </h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          You're not just paying for a site. You're betting on whether people trust you enough to become customers. A cheap site costs money every day it exists.
+        </p>
+      </div>
+
+      <div class="problems-grid">
+        <div class="problem-card card reveal" data-delay="0">
+          <div class="problem-before">Template / DIY</div>
+          <h4 class="problem-title">Looks like 10,000 other sites</h4>
+          <p class="problem-desc">Page builders pull from the same theme libraries. Your "unique" site is visually identical to your competitors'. There is no design differentiation at all.</p>
+          <div class="problem-loss">
+            <span class="font-mono text-dim">Outcome:</span>
+            <span class="font-mono text-red"> Forgettable. Next.</span>
+          </div>
+        </div>
+        <div class="problem-card card reveal" data-delay="0.08">
+          <div class="problem-before">Template / DIY</div>
+          <h4 class="problem-title">Breaks on mobile</h4>
+          <p class="problem-desc">Over 60% of web traffic is mobile. Templates "responsive" mode means stacked columns and tiny buttons. That's not mobile-first — it's mobile-tolerated.</p>
+          <div class="problem-loss">
+            <span class="font-mono text-dim">Outcome:</span>
+            <span class="font-mono text-red"> 60% of visitors leave immediately</span>
+          </div>
+        </div>
+        <div class="problem-card card reveal" data-delay="0.16">
+          <div class="problem-before">Template / DIY</div>
+          <h4 class="problem-title">Loads in 4+ seconds</h4>
+          <p class="problem-desc">Page builders load every plugin, every font, every unoptimized image. Google's ranking algorithm penalizes slow sites. You're paying in rankings every month.</p>
+          <div class="problem-loss">
+            <span class="font-mono text-dim">Outcome:</span>
+            <span class="font-mono text-red"> Page 2 on Google — invisible</span>
+          </div>
+        </div>
+        <div class="problem-card card reveal" data-delay="0.24">
+          <div class="problem-before">Template / DIY</div>
+          <h4 class="problem-title">No conversion path</h4>
+          <p class="problem-desc">Templates are designed to look complete, not to convert. There's no CTA hierarchy, no trust-building flow, no persona-appropriate message. Just content in boxes.</p>
+          <div class="problem-loss">
+            <span class="font-mono text-dim">Outcome:</span>
+            <span class="font-mono text-red"> Visitors leave without acting</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -58,8 +298,8 @@ const processSteps = [
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Style Presets" color="cyan" />
-        <h2 class="text-heading reveal" style="text-align: center;">Pick a Style. I'll Build It for You.</h2>
-        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+        <h2 class="text-heading reveal">Pick a Style. I'll Build It for You.</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 650px;">
           Nine real, working style demos you can browse right now. Find the vibe that fits your brand — or use them as a starting point for something entirely yours.
         </p>
       </div>
@@ -101,13 +341,89 @@ const processSteps = [
 
   <div class="section-divider container"></div>
 
+  <!-- Tiers -->
+  <section class="section-lg" id="tiers">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Pricing" color="gold" />
+        <h2 class="text-heading reveal">Transparent pricing. No surprises.</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          Custom sites shouldn't be a mystery. Here's exactly what each tier includes and what it costs. Market rate shown for context.
+        </p>
+      </div>
+
+      <div class="website-tiers-grid">
+        <div class="website-tier card reveal" data-delay="0">
+          <div class="tier-label tag tag-cyan font-mono">Growth Build</div>
+          <h3 class="tier-name">Custom Website</h3>
+          <div class="tier-pricing">
+            <span class="tier-price font-mono text-gold">$4,200 – $5,600</span>
+            <span class="tier-market font-mono text-dim">Market: $6,000 – $8,000</span>
+          </div>
+          <p class="tier-desc text-body">A fully custom-designed, mobile-first website. No templates, no page builders. Built to rank, built to convert.</p>
+          <ul class="tier-features">
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Custom design (no templates)</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Mobile-first, pixel-perfect</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>SEO foundation built in</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Performance optimized</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Deployment + DNS + SSL handled</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>30-day support window</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Start This Project</a>
+        </div>
+
+        <div class="website-tier website-tier--featured card reveal" data-delay="0.1">
+          <div class="tier-label tag font-mono">Full System</div>
+          <h3 class="tier-name">Full Site + CMS</h3>
+          <div class="tier-pricing">
+            <span class="tier-price font-mono text-gold">$10,500 – $14,000</span>
+            <span class="tier-market font-mono text-dim">Market: $15,000 – $20,000</span>
+          </div>
+          <p class="tier-desc text-body">Everything in Growth Build plus a content management system, integrations, e-commerce, and ongoing support. A site you can run.</p>
+          <ul class="tier-features">
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>All Growth Build features</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Headless CMS (you update content)</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>E-commerce or booking integration</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Advanced SEO + structured data</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Analytics + conversion tracking</li>
+            <li class="tier-feature"><span class="feature-check text-gold">&#10003;</span>Ongoing maintenance retainer option</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Schedule Discovery</a>
+        </div>
+
+        <div class="website-tier card reveal" data-delay="0.2">
+          <div class="tier-label tag tag-green font-mono">Add-On</div>
+          <h3 class="tier-name">Monthly Retainer</h3>
+          <div class="tier-pricing">
+            <span class="tier-price font-mono text-green">$150 – $1,500/mo</span>
+            <span class="tier-market font-mono text-dim">Market: $250 – $2,500/mo</span>
+          </div>
+          <p class="tier-desc text-body">Keep your site fast, current, and converting. Content updates, performance monitoring, SEO tuning, and priority support.</p>
+          <ul class="tier-features">
+            <li class="tier-feature"><span class="feature-check text-green">&#10003;</span>Monthly content updates</li>
+            <li class="tier-feature"><span class="feature-check text-green">&#10003;</span>Performance monitoring</li>
+            <li class="tier-feature"><span class="feature-check text-green">&#10003;</span>SEO tuning & reporting</li>
+            <li class="tier-feature"><span class="feature-check text-green">&#10003;</span>Priority support response</li>
+            <li class="tier-feature"><span class="feature-check text-green">&#10003;</span>Cancel anytime</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-secondary" target="_blank" rel="noopener">Ask About Retainers</a>
+        </div>
+      </div>
+      <div class="launch-banner reveal" data-delay="0.3">
+        <span class="launch-banner__icon mono">◈</span>
+        <span>Pre-portfolio rates. Pricing increases with each completed case study.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
   <!-- Component / Animation Gallery (Coming Soon) -->
   <section class="section" id="components">
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Components" color="green" />
       </div>
-
       <ComingSoon
         title="Animation & Component Gallery"
         description="A curated collection of premium animations, scroll effects, and UI components. Pick exactly what you want for your site."
@@ -123,111 +439,113 @@ const processSteps = [
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="SEO Services" />
-        <h2 class="text-heading reveal" style="text-align: center;">Every Site Deserves to Be Found</h2>
-        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
+        <h2 class="text-heading reveal">Every Site Deserves to Be Found</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 650px;">
           SEO isn't an add-on. It's built into every site I deliver. Need a deeper dive? Choose your tier.
         </p>
       </div>
 
-      <div class="tiers-grid">
-        <!-- Free SEO Scan -->
-        <div class="tier-card card reveal">
-          <div class="tier-badge tag tag-green">Coming Soon</div>
-          <h3 class="tier-name">Free SEO Scan</h3>
-          <p class="tier-price font-mono text-green">$0</p>
-          <p class="tier-desc">Quick automated scan of your site's SEO health. Get a basic report in minutes.</p>
-          <ul class="tier-features">
-            <li class="tier-feature">
-              <span class="tier-check text-green">&#10003;</span>
-              Basic SEO health report
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-green">&#10003;</span>
-              1 scan per site
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-green">&#10003;</span>
-              Core vitals overview
-            </li>
+      <div class="seo-tiers-grid">
+        <div class="seo-tier card reveal">
+          <div class="seo-badge tag tag-green">Coming Soon</div>
+          <h3 class="seo-name">Free SEO Scan</h3>
+          <p class="seo-price font-mono text-green">$0</p>
+          <p class="seo-desc">Quick automated scan of your site's SEO health. Basic report in minutes.</p>
+          <ul class="seo-features">
+            <li class="seo-feature"><span class="text-green">&#10003;</span> Basic SEO health report</li>
+            <li class="seo-feature"><span class="text-green">&#10003;</span> Core vitals overview</li>
+            <li class="seo-feature"><span class="text-green">&#10003;</span> 1 scan per site</li>
           </ul>
-          <div class="tier-action">
-            <span class="btn btn-ghost font-mono" style="opacity: 0.5; cursor: default;">Coming Soon</span>
+          <span class="btn btn-ghost font-mono" style="opacity: 0.5; cursor: default; display: inline-block;">Coming Soon</span>
+        </div>
+
+        <div class="seo-tier seo-tier--featured card reveal" data-delay="0.1">
+          <div class="seo-badge tag">Recommended</div>
+          <h3 class="seo-name">130-Point Audit</h3>
+          <p class="seo-price font-mono text-gold">Contact for Pricing</p>
+          <p class="seo-desc">Comprehensive 130-point analysis across 13 categories with a full written report and prioritized action plan.</p>
+          <ul class="seo-features">
+            <li class="seo-feature"><span class="text-gold">&#10003;</span> 130 audit checkpoints</li>
+            <li class="seo-feature"><span class="text-gold">&#10003;</span> 13 category deep dive</li>
+            <li class="seo-feature"><span class="text-gold">&#10003;</span> Full written report</li>
+            <li class="seo-feature"><span class="text-gold">&#10003;</span> Prioritized action items</li>
+            <li class="seo-feature"><span class="text-gold">&#10003;</span> Executive summary</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Get Your Audit</a>
+        </div>
+
+        <div class="seo-tier card reveal" data-delay="0.2">
+          <div class="seo-badge tag tag-cyan">Enterprise</div>
+          <h3 class="seo-name">130-Plus Enterprise</h3>
+          <p class="seo-price font-mono text-cyan">Contact for Pricing</p>
+          <p class="seo-desc">Full 130-point audit plus 7 specialty modules: Local SEO, security, competitive intelligence, content quality, backlinks, and social signals.</p>
+          <ul class="seo-features">
+            <li class="seo-feature"><span class="text-cyan">&#10003;</span> Full 130-point audit</li>
+            <li class="seo-feature"><span class="text-cyan">&#10003;</span> Local SEO module</li>
+            <li class="seo-feature"><span class="text-cyan">&#10003;</span> Competitive intelligence</li>
+            <li class="seo-feature"><span class="text-cyan">&#10003;</span> Content quality audit</li>
+            <li class="seo-feature"><span class="text-cyan">&#10003;</span> Backlinks & authority</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-secondary" target="_blank" rel="noopener">Contact for Pricing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
+  <!-- Comparison Table -->
+  <section class="section-lg comparison-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Compare" color="gold" />
+        <h2 class="text-heading reveal">Freelancer vs Agency vs Ineffable</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          The market has two options: cheap and risky, or expensive and slow. There's a third way.
+        </p>
+      </div>
+
+      <div class="comparison-table reveal" data-delay="0.2">
+        <div class="comparison-header">
+          <div class="comparison-col comparison-col--label"></div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">Cheap Freelancer</span>
+            <span class="comparison-option-sub font-mono text-dim">Upwork / Fiverr</span>
+          </div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">Digital Agency</span>
+            <span class="comparison-option-sub font-mono text-dim">10+ person team</span>
+          </div>
+          <div class="comparison-col comparison-col--featured">
+            <span class="comparison-option-name font-mono text-gold">Ineffable</span>
+            <span class="comparison-option-sub font-mono text-dim">Founder-built</span>
           </div>
         </div>
 
-        <!-- 130-Point Audit -->
-        <div class="tier-card tier-card--featured card reveal" data-delay="0.1">
-          <div class="tier-badge tag">Recommended</div>
-          <h3 class="tier-name">130-Point Audit</h3>
-          <p class="tier-price font-mono text-gold">Contact</p>
-          <p class="tier-desc">Comprehensive 130-point analysis across 13 categories. Full report with prioritized recommendations.</p>
-          <ul class="tier-features">
-            <li class="tier-feature">
-              <span class="tier-check text-gold">&#10003;</span>
-              130 audit checkpoints
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-gold">&#10003;</span>
-              13 category deep dive
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-gold">&#10003;</span>
-              Full written report
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-gold">&#10003;</span>
-              Prioritized action items
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-gold">&#10003;</span>
-              Executive summary
-            </li>
-          </ul>
-          <div class="tier-action">
-            <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Get Your Audit</a>
+        {[
+          { label: 'Price', a: '$500–$2,000', b: '$10,000–$50,000+', c: '$4,200–$14,000' },
+          { label: 'Who designs it', a: 'Junior, no strategy', b: 'Account manager hands off', c: 'I design it. I build it.' },
+          { label: 'Communication', a: 'Inconsistent, time zone issues', b: 'PM layer, slow responses', c: 'Direct. Async-friendly.' },
+          { label: 'SEO included', a: 'No (extra cost)', b: 'Mostly (added markup)', c: 'Yes — built in' },
+          { label: 'Timeline', a: '2–8 weeks (variable)', b: '8–20 weeks', c: '3–8 weeks, predictable' },
+          { label: 'Revisions', a: 'Limited or extra cost', b: '2 rounds, then billable', c: 'Until it\'s right' },
+          { label: 'You own it', a: 'Usually (read the contract)', b: 'Often locked to their CMS', c: 'Yes — always' },
+        ].map((row, i) => (
+          <div class={`comparison-row ${i % 2 === 0 ? 'comparison-row--alt' : ''}`}>
+            <div class="comparison-col comparison-col--label">
+              <span class="comparison-label font-mono">{row.label}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.a}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.b}</span>
+            </div>
+            <div class="comparison-col comparison-col--featured">
+              <span class="comparison-value text-gold">{row.c}</span>
+            </div>
           </div>
-        </div>
-
-        <!-- 130-Plus Enterprise -->
-        <div class="tier-card card reveal" data-delay="0.2">
-          <div class="tier-badge tag tag-cyan">Enterprise</div>
-          <h3 class="tier-name">130-Plus Enterprise</h3>
-          <p class="tier-price font-mono text-cyan">Contact</p>
-          <p class="tier-desc">Everything in the 130-Point Audit plus 7 specialty modules for total SEO dominance.</p>
-          <ul class="tier-features">
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Full 130-point audit
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Local SEO module
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Security analysis
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Competitive intelligence
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Content quality audit
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Backlinks & authority
-            </li>
-            <li class="tier-feature">
-              <span class="tier-check text-cyan">&#10003;</span>
-              Social & brand signals
-            </li>
-          </ul>
-          <div class="tier-action">
-            <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">Contact for Pricing</a>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -239,7 +557,7 @@ const processSteps = [
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="The Process" color="cyan" />
-        <h2 class="text-heading reveal" style="text-align: center;">From Idea to Live in Six Steps</h2>
+        <h2 class="text-heading reveal">From Idea to Live in Six Steps</h2>
       </div>
 
       <div class="timeline">
@@ -257,19 +575,68 @@ const processSteps = [
 
   <div class="section-divider container"></div>
 
+  <!-- FAQ -->
+  <section class="section-lg faq-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="FAQ" color="cyan" />
+        <h2 class="text-heading reveal">Questions before you reach out</h2>
+      </div>
+
+      <div class="faq-list">
+        {[
+          {
+            q: 'How much does a custom website cost?',
+            a: 'Growth builds (custom site, mobile-first, SEO-ready) start at $4,200. Full systems with CMS and integrations start at $10,500. Both prices are 30% below standard agency rates — validated against WebFX, Lounge Lizard, and DesignRush. You\'ll always know the number before anything starts.',
+          },
+          {
+            q: 'How long does it take to build?',
+            a: 'A Growth build takes 3–5 weeks. A Full System takes 5–8 weeks. I don\'t outsource or hand off — the same person who designs it builds it, which means no waiting for handoffs and no miscommunication.',
+          },
+          {
+            q: 'Do you do e-commerce?',
+            a: 'Yes. Shopify, WooCommerce, or custom storefronts depending on what makes sense for your business. E-commerce is part of the Full System tier. We\'ll talk through the right approach during discovery.',
+          },
+          {
+            q: 'Can I update the content myself?',
+            a: 'In the Full System tier, yes — we set up a headless CMS (Contentful, Sanity, or similar) so you can update blog posts, service descriptions, and images without touching code. Growth builds are typically static with content updates handled via retainer.',
+          },
+          {
+            q: 'What if I just want SEO, not a new site?',
+            a: 'That\'s fine. The 130-point audit is a standalone service. I\'ll audit your current site, give you a full report, and you can implement the fixes yourself or hire me to do it.',
+          },
+          {
+            q: 'What technology do you use?',
+            a: 'I default to Astro + React for performance-first sites. Shopify for e-commerce. Tailwind CSS for styling. Netlify or Vercel for hosting. Everything I build gets sub-1-second load times as a standard, not a bonus.',
+          },
+        ].map((item, i) => (
+          <details class="faq-item reveal" data-delay={`${i * 0.06}`}>
+            <summary class="faq-question">
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-icon font-mono">+</span>
+            </summary>
+            <p class="faq-answer text-body">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider container"></div>
+
   <!-- You Show Us, We Build It -->
   <section class="section-lg" id="custom">
     <div class="container-narrow">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Truly Custom" />
-        <h2 class="text-heading reveal" style="text-align: center;">You Show Us, We Build It</h2>
+        <h2 class="text-heading reveal">You Show Me. I Build It.</h2>
       </div>
 
       <div class="custom-block card reveal" data-delay="0.1">
         <div class="custom-content">
           <p class="custom-text text-body">
             Style presets are a starting point, not a ceiling. Have a Figma file, a competitor's site, a napkin sketch, or a mood board?
-            Show us what you love and we'll transform it into a production-grade site that's unmistakably <strong class="text-gold">yours</strong>.
+            Show me what you love and I'll transform it into a production-grade site that's unmistakably <strong class="text-gold">yours</strong>.
           </p>
           <p class="custom-text text-body">
             Every site is hand-coded — no page builders, no WordPress themes, no compromises.
@@ -297,53 +664,170 @@ const processSteps = [
   <!-- CTA -->
   <CTA
     heading="Ready for a Website That Actually Works?"
-    subtext="Tell me about your project and I'll show you what's possible."
+    subtext="Tell me about your project and I'll show you what's possible. No pitch — just an honest conversation."
     secondaryText="Browse style presets"
     secondaryLink="#styles"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How much does a custom website cost?", "acceptedAnswer": { "@type": "Answer", "text": "Growth builds (custom site, mobile-first, SEO-ready) start at $4,200. Full systems with CMS and integrations start at $10,500. Both prices are 30% below standard agency rates." } },
+      { "@type": "Question", "name": "How long does it take to build?", "acceptedAnswer": { "@type": "Answer", "text": "A Growth build takes 3–5 weeks. A Full System takes 5–8 weeks. I don't outsource or hand off — the same person who designs it builds it." } },
+      { "@type": "Question", "name": "Do you do e-commerce?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Shopify, WooCommerce, or custom storefronts depending on what makes sense for your business. E-commerce is part of the Full System tier." } },
+      { "@type": "Question", "name": "Can I update the content myself?", "acceptedAnswer": { "@type": "Answer", "text": "In the Full System tier, yes — we set up a headless CMS so you can update blog posts, service descriptions, and images without touching code." } },
+      { "@type": "Question", "name": "What if I just want SEO, not a new site?", "acceptedAnswer": { "@type": "Answer", "text": "That's fine. The 130-point audit is a standalone service. I'll audit your current site, give you a full report, and you can implement the fixes yourself or hire me to do it." } },
+      { "@type": "Question", "name": "What technology do you use?", "acceptedAnswer": { "@type": "Answer", "text": "I default to Astro + React for performance-first sites. Shopify for e-commerce. Tailwind CSS for styling. Netlify or Vercel for hosting. Everything I build gets sub-1-second load times as a standard, not a bonus." } }
+    ]
+  })} />
 </BaseLayout>
 
 <style>
   /* ── Hero ─────────────────────────────────────────────────── */
   .hero {
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
-    padding-top: calc(var(--nav-height) + var(--space-lg));
-    text-align: center;
+    padding-top: calc(var(--nav-height) + var(--space-md));
+    padding-bottom: var(--space-lg);
   }
 
   .hero-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     max-width: 800px;
-    margin: 0 auto;
   }
 
   .hero-title {
     font-size: var(--text-3xl);
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
   }
 
   .hero-sub {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     color: var(--text-secondary);
     max-width: 600px;
-    margin-bottom: var(--space-md);
+    margin-bottom: 1.25rem;
     line-height: 1.7;
+    text-align: left;
   }
 
   .hero-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
-  /* ── Style Presets Gallery ────────────────────────────────── */
+  /* ── Launch Banner ────────────────────────────────────────── */
+  .launch-banner { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--gold-subtle); border: 1px solid var(--border-active); border-radius: var(--radius-pill); font-size: var(--text-sm); color: var(--gold); margin-top: var(--space-lg); }
+  .launch-banner__icon { font-size: var(--text-md); }
+
+  /* ── Narrative Section ────────────────────────────────────── */
+  .narrative-section {
+    background: var(--bg-surface);
+  }
+
+  .narrative-stage {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .narrative-svg {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    background: var(--bg-deep);
+    display: block;
+  }
+
+  .animation-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0.5rem 0;
+    gap: 1rem;
+  }
+
+  .anim-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .anim-label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Problem Section ──────────────────────────────────────── */
+  .problem-section {
+    background: var(--bg-deep);
+  }
+
+  .section-header { margin-bottom: var(--space-lg); }
+  .section-subtext { max-width: 700px; }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .problem-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-color: rgba(255, 71, 87, 0.1);
+  }
+
+  .problem-card:hover {
+    border-color: rgba(255, 71, 87, 0.25);
+  }
+
+  .problem-before {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(255, 71, 87, 0.2);
+    width: fit-content;
+  }
+
+  .problem-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .problem-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .problem-loss {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Style Presets ────────────────────────────────────────── */
   .presets-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -355,7 +839,6 @@ const processSteps = [
     flex-direction: column;
     padding: 0;
     text-decoration: none;
-    position: relative;
     cursor: pointer;
     transition: all var(--duration-base) var(--ease-out);
     overflow: hidden;
@@ -367,7 +850,6 @@ const processSteps = [
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 193, 59, 0.15);
   }
 
-  /* ── Preview iframe ─────────────────────────────────────── */
   .preset-preview {
     position: relative;
     width: 100%;
@@ -379,10 +861,8 @@ const processSteps = [
 
   .preset-iframe {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 1280px;
-    height: 800px;
+    top: 0; left: 0;
+    width: 1280px; height: 800px;
     transform: scale(var(--preview-scale, 0.334));
     transform-origin: top left;
     border: none;
@@ -402,7 +882,6 @@ const processSteps = [
     background: linear-gradient(180deg, transparent 40%, rgba(5, 5, 8, 0.3) 100%);
   }
 
-  /* ── Card info area ─────────────────────────────────────── */
   .preset-info {
     display: flex;
     flex-direction: column;
@@ -462,45 +941,49 @@ const processSteps = [
     transform: translateX(4px);
   }
 
-  /* ── SEO Tiers ───────────────────────────────────────────── */
-  .tiers-grid {
+  /* ── Website Tiers ────────────────────────────────────────── */
+  .website-tiers-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     align-items: start;
   }
 
-  .tier-card {
+  .website-tier {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 2.5rem 2rem;
-    text-align: center;
-    transition: all var(--duration-base) var(--ease-out);
   }
 
-  .tier-card--featured {
+  .website-tier--featured {
     border-color: rgba(255, 193, 59, 0.3);
     background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%);
-    position: relative;
   }
 
-  .tier-card--featured::before {
-    opacity: 1;
-  }
-
-  .tier-badge {
-    align-self: center;
-  }
+  .tier-label { align-self: flex-start; }
 
   .tier-name {
     font-size: var(--text-xl);
     font-weight: 700;
   }
 
+  .tier-pricing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .tier-price {
-    font-size: var(--text-2xl);
-    font-weight: 800;
+    font-size: var(--text-lg);
+    font-weight: 700;
+  }
+
+  .tier-market {
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    text-decoration: line-through;
+    opacity: 0.7;
   }
 
   .tier-desc {
@@ -513,8 +996,7 @@ const processSteps = [
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    text-align: left;
-    margin: 0.5rem 0;
+    flex: 1;
   }
 
   .tier-feature {
@@ -525,16 +1007,111 @@ const processSteps = [
     color: var(--text-secondary);
   }
 
-  .tier-check {
-    font-size: 0.9rem;
+  .feature-check {
     flex-shrink: 0;
     width: 1.25rem;
     text-align: center;
   }
 
-  .tier-action {
-    margin-top: auto;
-    padding-top: 1rem;
+  /* ── SEO Tiers ────────────────────────────────────────────── */
+  .seo-tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .seo-tier {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .seo-tier--featured {
+    border-color: rgba(255, 193, 59, 0.3);
+    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%);
+  }
+
+  .seo-badge { align-self: center; }
+  .seo-name { font-size: var(--text-xl); font-weight: 700; }
+  .seo-price { font-size: var(--text-xl); font-weight: 700; }
+  .seo-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; }
+
+  .seo-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: left;
+    margin: 0.5rem 0;
+    flex: 1;
+  }
+
+  .seo-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  /* ── Comparison Table ─────────────────────────────────────── */
+  .comparison-section {
+    background: var(--bg-surface);
+  }
+
+  .comparison-table {
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .comparison-header,
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-header { background: var(--bg-elevated); }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row--alt { background: var(--bg-surface); }
+
+  .comparison-col {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .comparison-col--featured {
+    background: rgba(255, 193, 59, 0.04);
+    border-left: 1px solid rgba(255, 193, 59, 0.2);
+  }
+
+  .comparison-option-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.03em;
+  }
+
+  .comparison-option-sub {
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .comparison-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .comparison-value {
+    font-size: var(--text-sm);
+    line-height: 1.5;
   }
 
   /* ── Process Timeline ────────────────────────────────────── */
@@ -578,25 +1155,66 @@ const processSteps = [
     background: linear-gradient(90deg, var(--border-hover), var(--border));
   }
 
-  .timeline-step:last-child .timeline-connector {
-    display: none;
+  .timeline-step:last-child .timeline-connector { display: none; }
+  .timeline-title { font-size: var(--text-base); font-weight: 700; }
+  .timeline-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.5; }
+
+  /* ── FAQ ──────────────────────────────────────────────────── */
+  .faq-section { background: var(--bg-surface); }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
   }
 
-  .timeline-title {
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    list-style: none;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question:hover { background: var(--bg-elevated); }
+
+  .faq-q-text {
     font-size: var(--text-base);
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
   }
 
-  .timeline-desc {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    line-height: 1.5;
+  .faq-icon {
+    font-size: var(--text-lg);
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform var(--duration-base) var(--ease-out);
+    line-height: 1;
   }
 
-  /* ── Custom / You Show Us ────────────────────────────────── */
-  .custom-block {
-    padding: var(--space-lg);
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+  .faq-answer {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: var(--text-base);
   }
+
+  /* ── Custom Block ─────────────────────────────────────────── */
+  .custom-block { padding: var(--space-lg); }
 
   .custom-content {
     max-width: 700px;
@@ -624,34 +1242,18 @@ const processSteps = [
     color: var(--text-secondary);
   }
 
-  .custom-method-icon {
-    font-size: 0.6rem;
-  }
+  .custom-method-icon { font-size: 0.6rem; }
 
   /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 1024px) {
-    .presets-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .tiers-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .tiers-grid .tier-card:first-child {
-      grid-column: 1 / -1;
-      max-width: 400px;
-      justify-self: center;
-    }
-
-    .timeline {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-
-    .timeline-connector {
-      display: none;
-    }
+    .presets-grid { grid-template-columns: repeat(2, 1fr); }
+    .website-tiers-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+    .seo-tiers-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+    .timeline { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .timeline-connector { display: none; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr 1fr; }
+    .comparison-col--label { display: none; }
   }
 
   @media (max-width: 768px) {
@@ -660,62 +1262,29 @@ const processSteps = [
       padding-top: calc(var(--nav-height) + 2rem);
       padding-bottom: 2rem;
     }
-
-    .presets-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .preset-preview {
-      height: 220px;
-    }
-
-    .tiers-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .tiers-grid .tier-card:first-child {
-      max-width: none;
-    }
-
-    .timeline {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .preset-hover-cta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .custom-methods {
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
+    .presets-grid { grid-template-columns: 1fr; }
+    .preset-preview { height: 220px; }
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .preset-hover-cta { opacity: 1; transform: translateY(0); }
+    .custom-methods { flex-direction: column; align-items: center; gap: 1rem; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr; }
+    .comparison-col--option:first-of-type { display: none; }
+    .faq-question { padding: 1.25rem 1.5rem; }
+    .faq-answer { padding: 0 1.5rem 1.25rem; }
   }
 
   @media (max-width: 480px) {
-    .hero-actions {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .hero-actions .btn {
-      width: 100%;
-    }
-
-    .timeline {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .preset-name-row {
-      flex-direction: column;
-      gap: 0.25rem;
-    }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .hero-actions .btn { width: 100%; }
+    .timeline { grid-template-columns: 1fr; gap: 1.5rem; }
+    .preset-name-row { flex-direction: column; gap: 0.25rem; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr; }
+    .comparison-col--option { display: none; }
   }
 </style>
 
 <script>
+  // Scale preset iframes
   function scalePreviewIframes() {
     document.querySelectorAll('.preset-preview').forEach((container) => {
       const width = container.clientWidth;
@@ -729,4 +1298,67 @@ const processSteps = [
   scalePreviewIframes();
   window.addEventListener('resize', scalePreviewIframes);
   document.addEventListener('astro:after-swap', scalePreviewIframes);
+
+  // Website transformation animation
+  (function() {
+    const stage = document.getElementById('website-animation');
+    if (!stage) return;
+
+    let animated = false;
+
+    function runAnimation() {
+      if (animated) return;
+      animated = true;
+
+      const gsap = (window as any).gsap;
+      if (!gsap) return;
+
+      const tl = gsap.timeline();
+
+      // Phase 1: Transform arrow appears
+      tl.to('#transform-arrow', {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+      }, 0.8);
+
+      // Phase 2: Before group dims
+      tl.to('#before-group', {
+        opacity: 0.4,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, 1.4);
+
+      // Phase 3: After group fades in
+      tl.to('#after-group', {
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, 1.8);
+
+      // Phase 4: Before completely fades
+      tl.to('#before-group', {
+        opacity: 0.15,
+        duration: 0.4,
+        ease: 'power2.in',
+      }, 2.4);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              runAnimation();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(stage);
+    } else {
+      setTimeout(runAnimation, 1000);
+    }
+  })();
 </script>

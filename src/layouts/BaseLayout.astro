@@ -3,6 +3,8 @@ import { ViewTransitions } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import BackgroundEffects from '../components/BackgroundEffects.astro';
+import IntroAnimation from '../components/IntroAnimation.astro';
+import CustomCursor from '../components/CustomCursor.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -14,10 +16,12 @@ interface Props {
 const {
   title,
   description = 'Ineffable — Custom Software. Tailored Websites. Zero Busywork.',
-  ogImage
+  ogImage = '/og-image.png'
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://ineffable.dev');
+const siteUrl = Astro.site || new URL('https://ineffablesolutions.net');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL(ogImage, siteUrl);
 ---
 
 <!DOCTYPE html>
@@ -41,26 +45,157 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://ineffabl
   <meta property="og:title" content={`${title} | Ineffable`}>
   <meta property="og:description" content={description}>
   <meta property="og:url" content={canonicalURL.toString()}>
-  {ogImage && <meta property="og:image" content={ogImage} />}
-  <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"}>
+  <meta property="og:image" content={ogImageURL.toString()} />
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Security -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <!-- Security (X-Frame-Options set via Netlify _headers, not meta) -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
-  <!-- Preconnect -->
+  <!-- Preconnect — fonts (must precede stylesheet links for benefit) -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://assets.calendly.com">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts: Cabinet Grotesk + Satoshi (Fontshare), JetBrains Mono (Google)
+       font-display:swap is passed via the ?display=swap query param.
+       JetBrains Mono loads non-blocking — only used for code/stats, not LCP text. -->
+  <link
+    href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=satoshi@300,400,500,700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=satoshi@300,400,500,700&display=swap"
+      rel="stylesheet"
+    >
+  </noscript>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    >
+  </noscript>
 
   <!-- View Transitions -->
   <ViewTransitions />
+
+  <!-- Plausible Analytics (privacy-first, cookieless, GDPR-compliant by design)
+       TODO: Create account at https://plausible.io — add site "ineffablesolutions.net"
+       No cookie consent banner needed — Plausible sets no cookies and collects no PII.
+       Custom events are fired via window.plausible(...) calls throughout the site.
+       This tag is safe to ship now — if the Plausible account doesn't exist yet, it's a no-op. -->
+  <!-- Plausible queue shim: ensures plausible('Event') calls before script loads are buffered -->
+  <script is:inline>
+    window.plausible = window.plausible || function() {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+  </script>
+  <script is:inline defer data-domain="ineffablesolutions.net" src="https://plausible.io/js/script.js"></script>
+
+  <!-- Structured Data — Organization + ProfessionalService (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ineffablesolutions.net/#organization",
+        "name": "Ineffable Solutions",
+        "url": "https://ineffablesolutions.net",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ineffablesolutions.net/favicon.svg"
+        },
+        "description": "Custom software development, web design, automation systems, and technology consulting for US businesses.",
+        "founder": {
+          "@type": "Person",
+          "name": "Luis Aviles",
+          "jobTitle": "Founder & Lead Developer"
+        },
+        "email": "luis@ineffablesolutions.net",
+        "sameAs": [
+          "https://www.linkedin.com/in/luis-aviles-0b969235a/"
+        ],
+        "serviceArea": {
+          "@type": "Place",
+          "name": "United States"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://ineffablesolutions.net/#service",
+        "name": "Ineffable Solutions",
+        "url": "https://ineffablesolutions.net",
+        "description": "Custom software, tailored websites, and automation systems. Zero busywork.",
+        "priceRange": "$200 - $100,000+",
+        "email": "luis@ineffablesolutions.net",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Digital Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Custom Automation",
+                "url": "https://ineffablesolutions.net/automation"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Tailored Websites",
+                "url": "https://ineffablesolutions.net/websites"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Custom Platforms",
+                "url": "https://ineffablesolutions.net/platforms"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Consulting",
+                "url": "https://ineffablesolutions.net/consulting"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <!-- Skip navigation link — WCAG 2.4.1 Level A.
+       Visible on focus for keyboard users, hidden otherwise. -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Custom cursor — rendered first so z-index stacking is correct.
+       Hidden during intro (data-theme="intro"), desktop only. -->
+  <CustomCursor />
+
+  <!-- IntroAnimation — blocking inline script checks localStorage before paint.
+       First visit: full animation. Return visits: zero flash skip. -->
+  <IntroAnimation />
+
   <BackgroundEffects />
   <Nav />
 
@@ -70,36 +205,64 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://ineffabl
 
   <Footer />
 
-  <!-- GSAP Core + ScrollTrigger (loaded globally) -->
+  <!-- GSAP + Lenis + ScrollTrigger (global init) -->
   <script>
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import Lenis from 'lenis';
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Make gsap available globally for components
+    // Expose globally for component scripts
     window.gsap = gsap;
     window.ScrollTrigger = ScrollTrigger;
 
-    // Global scroll reveal animation
+    let lenis: InstanceType<typeof Lenis> | null = null;
+
+    function initSmoothScroll() {
+      if (lenis) {
+        lenis.destroy();
+        lenis = null;
+      }
+
+      // Respect reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      lenis = new Lenis({
+        lerp: 0.1,
+        duration: 1.2,
+        smoothWheel: true,
+      });
+
+      // Sync Lenis ↔ GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis?.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+
+      (window as any).lenis = lenis;
+    }
+
     function initScrollReveal() {
-      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      const reveals = document.querySelectorAll(
+        '.reveal, .reveal-left, .reveal-right, .reveal-scale'
+      );
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      reveals.forEach((el, i) => {
+      reveals.forEach((el) => {
+        const htmlEl = el as HTMLElement;
         const isLeft = el.classList.contains('reveal-left');
         const isRight = el.classList.contains('reveal-right');
         const isScale = el.classList.contains('reveal-scale');
 
-        const from = {
+        gsap.fromTo(el, {
           opacity: 0,
           y: isLeft || isRight ? 0 : 40,
           x: isLeft ? -40 : isRight ? 40 : 0,
           scale: isScale ? 0.9 : 1,
-        };
-
-        gsap.fromTo(el, from, {
+        }, {
           opacity: 1,
           y: 0,
           x: 0,
@@ -111,15 +274,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://ineffabl
             start: 'top 85%',
             once: true,
           },
-          delay: el.dataset.delay ? parseFloat(el.dataset.delay) : 0,
+          delay: htmlEl.dataset.delay ? parseFloat(htmlEl.dataset.delay) : 0,
         });
       });
     }
 
-    // Run on initial load and after view transitions
+    // Initial setup
+    initSmoothScroll();
     initScrollReveal();
+
+    // Reinitialize after Astro View Transitions
     document.addEventListener('astro:after-swap', () => {
-      ScrollTrigger.refresh();
+      ScrollTrigger.getAll().forEach(t => t.kill());
+      initSmoothScroll();
       initScrollReveal();
     });
   </script>

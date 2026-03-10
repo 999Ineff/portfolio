@@ -11,6 +11,7 @@ const guides = [
     description: "The complete orchestration guide: CLAUDE.md architecture, 9-stage pipeline, session management, and parallel execution. The same system used to build this site.",
     link: "/freebies/landing-pages/01-ai-orchestrator-blueprint.html",
     features: ["CLAUDE.md template", "9-stage pipeline", "Session locking", "Parallel tasks"],
+    persona: "enterprise",
   },
   {
     title: "Build Tools, Don't Rent Them",
@@ -19,6 +20,7 @@ const guides = [
     description: "Why AI should build your tools, not be the tool. Real examples comparing custom-built solutions vs. SaaS subscriptions, with cost breakdowns.",
     link: "/freebies/landing-pages/02-build-tools-not-rent.html",
     features: ["Cost comparisons", "Real examples", "Build vs. buy framework", "ROI calculator"],
+    persona: "growth",
   },
   {
     title: "DIY Automation Starter Kit",
@@ -27,31 +29,173 @@ const guides = [
     description: "10 ready-to-use prompts that work with any AI. Copy-paste templates for common business tasks — no coding required.",
     link: "/freebies/landing-pages/03-diy-automation-starter-kit.html",
     features: ["10 prompt templates", "Zero coding", "Any AI platform", "Copy-paste ready"],
+    persona: "micro",
   },
 ];
+
+const personaTiers = [
+  {
+    id: "micro",
+    label: "Quick Wins",
+    color: "gold",
+    audience: "Employees & Solopreneurs",
+    description: "30-minute-per-day tasks that compound into weeks of saved time.",
+    items: [
+      { type: "guide", label: "Free Guide", title: "DIY Automation Starter Kit", link: "/freebies/landing-pages/03-diy-automation-starter-kit.html" },
+      { type: "post", label: "Blog Post", title: "Stop Automating the Wrong Things", link: "/blog/stop-automating-the-wrong-things" },
+      { type: "post", label: "Blog Post", title: "Why I Build Tools Instead of Buying Them", link: "/blog/why-i-build-tools-instead-of-buying-them" },
+      { type: "cta", label: "Free Consult", title: "Tell Me Your Most Annoying Task →", link: "https://calendly.com/luis-aviles-khn" },
+    ],
+  },
+  {
+    id: "growth",
+    label: "Website Planning",
+    color: "cyan",
+    audience: "Small Business Owners",
+    description: "Everything you need to know before spending a dollar on a website.",
+    items: [
+      { type: "guide", label: "Free Guide", title: "Build Tools, Don't Rent Them", link: "/freebies/landing-pages/02-build-tools-not-rent.html" },
+      { type: "post", label: "Blog Post", title: "Designing Dark: Lessons from Building a Premium Portfolio", link: "/blog/designing-dark" },
+      { type: "coming", label: "Coming Soon", title: "Website Cost Estimator", link: "#" },
+      { type: "cta", label: "Free 15-Min Call", title: "Get a Real Quote for Your Project →", link: "https://calendly.com/luis-aviles-khn" },
+    ],
+  },
+  {
+    id: "professional",
+    label: "Integration & Scaling",
+    color: "green",
+    audience: "Operations & Management",
+    description: "Connecting your stack, automating your ops, and building visibility.",
+    items: [
+      { type: "case-study", label: "Case Study", title: "CRM-to-Accounting Sync: Eliminating 10+ hrs/week", link: "/case-studies/workflow-automation" },
+      { type: "post", label: "Blog Post", title: "The AI Orchestrator Pattern That Changed Everything", link: "/blog/the-ai-orchestrator-pattern" },
+      { type: "coming", label: "Coming Soon", title: "Automation ROI Calculator", link: "#" },
+      { type: "cta", label: "Discovery Session", title: "Map Your Integration Opportunities →", link: "https://calendly.com/luis-aviles-khn" },
+    ],
+  },
+  {
+    id: "enterprise",
+    label: "Platform Building",
+    color: "gold",
+    audience: "Founders & Executives",
+    description: "From disconnected spreadsheets to unified platforms — the roadmap.",
+    items: [
+      { type: "case-study", label: "Case Study", title: "BCE Dashboard: 5 Systems → 1 Unified Platform", link: "/case-studies/bce-dashboard" },
+      { type: "guide", label: "Free Guide", title: "The AI Project Orchestrator Blueprint", link: "/freebies/landing-pages/01-ai-orchestrator-blueprint.html" },
+      { type: "coming", label: "Coming Soon", title: "Technology Audit Checklist (RFP Template)", link: "#" },
+      { type: "cta", label: "Strategy Session", title: "Audit Your Current Stack →", link: "https://calendly.com/luis-aviles-khn" },
+    ],
+  },
+];
+
+const itemTypeColors: Record<string, string> = {
+  guide: "gold",
+  post: "cyan",
+  "case-study": "green",
+  coming: "muted",
+  cta: "gold",
+};
 ---
 
 <BaseLayout
-  title="Free Resources"
-  description="Guides, templates, and tools to help you start automating — no strings attached."
+  title="Free Resources — Automation Guides & Templates"
+  description="Guides, case studies, and tools organized by what you're trying to solve — Quick Wins to Enterprise platforms. No email required."
 >
   <!-- Hero -->
+  <!-- D25: Framed for business owner audience, not developers -->
   <section class="hero section-lg">
     <div class="container hero-inner">
       <SectionLabel text="Resources" />
-      <h1 class="text-heading reveal">Free Resources</h1>
+      <h1 class="text-heading reveal">
+        Find what you need<br />
+        <span class="text-gold">by what you're solving</span>
+      </h1>
       <p class="hero-sub reveal" data-delay="0.1">
-        Guides, templates, and tools to help you start automating — no strings attached.
+        Guides, case studies, and tools organized by where you are right now —
+        Quick Wins to full platforms. No email required.
       </p>
+      <!-- D3: Above-fold credibility — answer "Is this for me?" and "Is this credible?" -->
+      <div class="hero-proof reveal" data-delay="0.2">
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-gold">3</span>
+          <span class="proof-label">free guides</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-cyan">0</span>
+          <span class="proof-label">email walls</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-green">4</span>
+          <span class="proof-label">skill levels covered</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Guide Cards -->
-  <section class="section" id="guides">
+  <!-- Persona-organized resource tiers -->
+  <section class="section resources-by-tier">
     <div class="container">
+      <div class="tier-grid">
+        {personaTiers.map((tier, i) => (
+          <div class={`tier-card card reveal`} data-delay={`${i * 0.1}`}>
+            <div class={`tier-bar tier-bar--${tier.color}`}></div>
+            <div class="tier-card-inner">
+              <div class="tier-header">
+                <div>
+                  <span class={`tag tag-${tier.color === 'gold' ? '' : tier.color} tier-tag`}>
+                    {tier.label}
+                  </span>
+                  <p class="tier-audience font-mono">{tier.audience}</p>
+                </div>
+              </div>
+              <p class="tier-desc">{tier.description}</p>
+              <ul class="tier-items">
+                {tier.items.map(item => (
+                  <li class={`tier-item tier-item--${item.type}`}>
+                    <span class={`item-type-badge font-mono item-badge--${itemTypeColors[item.type] || 'muted'}`}>
+                      {item.label}
+                    </span>
+                    {item.type === 'coming' ? (
+                      <span class="item-title item-title--muted">{item.title}</span>
+                    ) : item.type === 'cta' ? (
+                      <a href={item.link} target={item.link.startsWith('http') ? '_blank' : undefined} rel={item.link.startsWith('http') ? 'noopener' : undefined} class="item-title item-title--cta">
+                        {item.title}
+                      </a>
+                    ) : (
+                      <a href={item.link} class="item-title">
+                        {item.title}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Free Guides (original lead magnets, preserved) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Free Guides" color="gold" />
+        <h2 class="section-heading text-heading reveal">Download — no strings attached</h2>
+        <p class="section-desc reveal" data-delay="0.1">
+          Three standalone guides. Read online or download. No email wall.
+        </p>
+      </div>
+
       <div class="guides-grid">
         {guides.map((guide, i) => (
-          <a href={guide.link} class={`guide-card card guide-card--${guide.levelColor} reveal`} data-delay={`${i * 0.15}`}>
+          <a
+            href={guide.link}
+            class={`guide-card card guide-card--${guide.levelColor} reveal`}
+            data-delay={`${i * 0.12}`}
+          >
             <div class="guide-level-bar"></div>
             <div class="guide-card-inner">
               <span class={`guide-level tag tag-${guide.levelColor === 'gold' ? '' : guide.levelColor}`}>
@@ -68,7 +212,7 @@ const guides = [
                 ))}
               </ul>
               <span class="guide-link font-mono">
-                Get the guide <span class="guide-arrow">→</span>
+                Read the guide <span class="guide-arrow">→</span>
               </span>
             </div>
           </a>
@@ -85,7 +229,6 @@ const guides = [
         <h2 class="text-heading reveal" style="text-align: center;">Orchestrator Template Bundle</h2>
       </div>
 
-      <!-- TODO: Wire up Kit email capture for template bundle download (same as guide landing pages) -->
       <div class="bundle-card card reveal" data-delay="0.1">
         <div class="bundle-inner">
           <div class="bundle-info">
@@ -111,38 +254,252 @@ const guides = [
           </div>
           <div class="bundle-action">
             <span class="bundle-format font-mono tag">Free Download</span>
-            <a href="/freebies/AI-Orchestrator-Starter-Kit.zip" class="btn btn-primary bundle-btn" download>Get the Template</a>
-            <span class="bundle-note font-mono">Enter your email to download</span>
+            <a href="/freebies/AI-Orchestrator-Starter-Kit.zip" class="btn btn-primary bundle-btn" download>
+              Get the Template
+            </a>
+            <span class="bundle-note font-mono">No email required</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <CTA heading="Ready to Go Beyond the Guides?" />
+  <!-- Coming Soon Tools -->
+  <section class="section section-alt">
+    <div class="container-narrow">
+      <SectionLabel text="Coming Soon" color="cyan" />
+      <h2 class="section-heading text-heading reveal">Free tools in development</h2>
+      <p class="section-desc reveal" data-delay="0.1" style="max-width: 560px;">
+        These calculators and tools are built — they'll ship as standalone interactive pages. Get notified by following on LinkedIn.
+      </p>
+
+      <div class="coming-grid">
+        {[
+          {
+            iconLabel: "01",
+            title: "Time Savings Calculator",
+            desc: "Enter your most repetitive tasks. Get an estimate of annual hours saved and dollar value.",
+            tier: "Micro / Growth",
+            color: "gold",
+          },
+          {
+            iconLabel: "02",
+            title: "Website Cost Estimator",
+            desc: "Answer 8 questions about your site. Get a realistic price range and market comparison.",
+            tier: "Growth",
+            color: "cyan",
+          },
+          {
+            iconLabel: "03",
+            title: "Technology Audit Checklist",
+            desc: "A structured RFP template for evaluating custom development vs. off-the-shelf options.",
+            tier: "Enterprise",
+            color: "green",
+          },
+        ].map((tool, i) => (
+          <div class="coming-card card reveal" data-delay={`${i * 0.1}`}>
+            <div class={`coming-icon font-mono coming-icon--${tool.color}`} aria-hidden="true">{tool.iconLabel}</div>
+            <div class="coming-body">
+              <div class="coming-header">
+                <h3 class="coming-title">{tool.title}</h3>
+                <span class={`coming-tier tag tag-${tool.color === 'gold' ? '' : tool.color}`}>
+                  {tool.tier}
+                </span>
+              </div>
+              <p class="coming-desc">{tool.desc}</p>
+              <span class="coming-status font-mono">
+                <span class="coming-dot"></span>
+                Building soon
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- D22: Launch pricing urgency — authentic, not pushy -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="launch-pricing-note reveal">
+        <span class="launch-icon font-mono text-gold">→</span>
+        <p class="launch-text">
+          <strong>Pre-portfolio pricing in effect.</strong> Current rates are 30% below market
+          while the case study library grows. Each completed project moves pricing closer to
+          agency rates. Lock in current pricing now.
+        </p>
+        <a href="https://calendly.com/luis-aviles-khn" target="_blank" rel="noopener" class="launch-cta font-mono">
+          Check availability →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Ready to Go Beyond the Guides?"
+    subtext="The guides show what's possible. A call shows what's possible for you specifically."
+    secondaryText="See all work"
+    secondaryLink="/case-studies"
+  />
 </BaseLayout>
 
 <style>
+  /* Hero */
   .hero {
     min-height: auto;
     padding-top: calc(var(--nav-height) + var(--space-xl));
     padding-bottom: var(--space-lg);
-    text-align: center;
   }
 
   .hero-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-width: 750px;
-    margin: 0 auto;
+    max-width: 700px;
   }
 
   .hero-sub {
     font-size: var(--text-lg);
     color: var(--text-dim);
-    max-width: 600px;
+    max-width: 580px;
     line-height: 1.7;
+  }
+
+  /* Section Alt */
+  .section-alt {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Section Header */
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-heading {
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    font-size: var(--text-base);
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* Tier Grid — Persona-organized */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .tier-card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .tier-card::before {
+    display: none;
+  }
+
+  .tier-bar {
+    height: 2px;
+    width: 100%;
+  }
+
+  .tier-bar--gold { background: var(--gradient-gold); }
+  .tier-bar--cyan { background: var(--cyan); }
+  .tier-bar--green { background: var(--green); }
+
+  .tier-card-inner {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tier-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .tier-tag {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.65rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .tier-audience {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tier-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  /* Tier Items */
+  .tier-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tier-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .item-type-badge {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .item-badge--gold { color: var(--gold); border-color: rgba(255, 193, 59, 0.2); }
+  .item-badge--cyan { color: var(--cyan); border-color: rgba(0, 229, 255, 0.2); }
+  .item-badge--green { color: var(--green); border-color: rgba(0, 255, 136, 0.2); }
+  .item-badge--muted { color: var(--text-muted); }
+
+  .item-title {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+    transition: color var(--duration-fast);
+  }
+
+  .item-title:hover {
+    color: var(--gold);
+  }
+
+  .item-title--muted {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--border-hover);
+  }
+
+  .item-title--cta {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .item-title--cta:hover {
+    color: #ffcf5e;
   }
 
   /* Guide Cards */
@@ -164,17 +521,9 @@ const guides = [
     width: 100%;
   }
 
-  .guide-card--green .guide-level-bar {
-    background: var(--green);
-  }
-
-  .guide-card--cyan .guide-level-bar {
-    background: var(--cyan);
-  }
-
-  .guide-card--gold .guide-level-bar {
-    background: var(--gradient-gold);
-  }
+  .guide-card--green .guide-level-bar { background: var(--green); }
+  .guide-card--cyan .guide-level-bar { background: var(--cyan); }
+  .guide-card--gold .guide-level-bar { background: var(--gradient-gold); }
 
   .guide-card-inner {
     padding: var(--space-md);
@@ -186,8 +535,8 @@ const guides = [
 
   .guide-level {
     align-self: flex-start;
-    font-size: 0.65rem;
-    padding: 0.3rem 0.75rem;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.65rem;
   }
 
   .guide-title {
@@ -197,9 +546,7 @@ const guides = [
     transition: color var(--duration-fast) var(--ease-out);
   }
 
-  .guide-card:hover .guide-title {
-    color: var(--gold);
-  }
+  .guide-card:hover .guide-title { color: var(--gold); }
 
   .guide-desc {
     font-size: var(--text-sm);
@@ -237,7 +584,7 @@ const guides = [
   .guide-link {
     font-size: var(--text-xs);
     color: var(--text-muted);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     transition: color var(--duration-fast) var(--ease-out);
   }
@@ -247,18 +594,10 @@ const guides = [
     transition: transform 0.3s var(--ease-out);
   }
 
-  .guide-card:hover .guide-link {
-    color: var(--gold);
-  }
+  .guide-card:hover .guide-link { color: var(--gold); }
+  .guide-card:hover .guide-arrow { transform: translateX(4px); }
 
-  .guide-card:hover .guide-arrow {
-    transform: translateX(4px);
-  }
-
-  /* Override card::before for guide cards — we use the top bar instead */
-  .guide-card::before {
-    display: none;
-  }
+  .guide-card::before { display: none; }
 
   /* Bundle Card */
   .bundle-card {
@@ -304,9 +643,11 @@ const guides = [
     min-width: 80px;
   }
 
-  .bundle-item-desc {
-    color: var(--text-dim);
-  }
+  .bundle-item-desc { color: var(--text-dim); }
+
+  .text-gold { color: var(--gold); }
+  .text-cyan { color: var(--cyan); }
+  .text-green { color: var(--green); }
 
   .bundle-action {
     display: flex;
@@ -317,8 +658,8 @@ const guides = [
   }
 
   .bundle-format {
-    font-size: 0.65rem;
-    padding: 0.3rem 0.75rem;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.65rem;
   }
 
   .bundle-btn {
@@ -332,9 +673,99 @@ const guides = [
     letter-spacing: 0.05em;
   }
 
+  /* Coming Soon Tools */
+  .coming-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .coming-card {
+    padding: var(--space-md);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .coming-icon {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    padding-top: 0.2rem;
+  }
+
+  .coming-icon--gold { color: var(--gold); }
+  .coming-icon--cyan { color: var(--cyan); }
+  .coming-icon--green { color: var(--green); }
+
+  .coming-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .coming-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .coming-title {
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .coming-tier {
+    font-size: 0.55rem;
+    padding: 0.2rem 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .coming-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .coming-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .coming-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .guides-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .coming-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -344,7 +775,15 @@ const guides = [
       padding-top: calc(var(--nav-height) + var(--space-lg));
     }
 
+    .tier-grid {
+      grid-template-columns: 1fr;
+    }
+
     .guides-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .coming-grid {
       grid-template-columns: 1fr;
     }
 
@@ -375,6 +814,115 @@ const guides = [
 
     .bundle-icon {
       min-width: auto;
+    }
+  }
+
+  /* D3: Hero proof bar */
+  .hero-proof {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .proof-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .proof-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .proof-divider {
+    width: 1px;
+    height: 2rem;
+    background: var(--border-hover);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .hero-proof {
+      gap: 1.25rem;
+    }
+
+    .proof-divider {
+      display: none;
+    }
+  }
+
+  /* D22: Launch pricing note */
+  .launch-pricing-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem var(--space-md);
+    border: 1px dashed rgba(255, 193, 59, 0.3);
+    background: rgba(255, 193, 59, 0.03);
+  }
+
+  .launch-icon {
+    font-size: var(--text-sm);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .launch-text {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .launch-text strong {
+    color: var(--text-secondary);
+  }
+
+  .launch-cta {
+    font-size: var(--text-xs);
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+    transition: color var(--duration-fast);
+  }
+
+  .launch-cta:hover {
+    color: #ffcf5e;
+  }
+
+  @media (max-width: 640px) {
+    .launch-pricing-note {
+      flex-direction: column;
+    }
+
+    .launch-cta {
+      align-self: flex-start;
+    }
+  }
+
+  /* Accessibility: Show content when scripting is disabled */
+  @media (scripting: none) {
+    .reveal,
+    .reveal-left,
+    .reveal-right,
+    .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 </style>

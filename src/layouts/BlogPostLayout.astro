@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import SectionLabel from '../components/SectionLabel.astro';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
@@ -13,6 +14,8 @@ interface Props {
   linkedInUrl?: string;
   prevPost?: { slug: string; title: string } | null;
   nextPost?: { slug: string; title: string } | null;
+  readingTime?: number;
+  currentSlug?: string;
 }
 
 const {
@@ -26,7 +29,24 @@ const {
   linkedInUrl,
   prevPost,
   nextPost,
+  readingTime,
+  currentSlug,
 } = Astro.props;
+
+// Fetch related posts (same category, excluding current)
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(p => p.id !== currentSlug && p.data.category === category)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 2);
+
+// Fallback: if no same-category posts, grab most recent different posts
+const fallbackPosts = relatedPosts.length > 0
+  ? relatedPosts
+  : allPosts
+      .filter(p => p.id !== currentSlug)
+      .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+      .slice(0, 2);
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -35,12 +55,35 @@ function formatDate(dateStr: string) {
     year: 'numeric',
   });
 }
+
+// Social share URLs
+const canonicalURL = Astro.url.href;
+const encodedTitle = encodeURIComponent(title);
+const encodedURL = encodeURIComponent(canonicalURL);
+const linkedInShareURL = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedURL}`;
+const twitterShareURL = `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedURL}`;
 ---
 
 <BaseLayout title={title} description={excerpt}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": title,
+    "author": { "@type": "Person", "name": "Luis Aviles" },
+    "datePublished": date,
+    "description": excerpt,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ineffable",
+      "url": "https://ineffablesolutions.net"
+    }
+  })} />
   <article class="blog-post">
+
+    <!-- Post Header -->
     <header class="post-header section-lg">
       <div class="container post-header-inner">
+
         <a href="/blog" class="back-link reveal">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -53,32 +96,56 @@ function formatDate(dateStr: string) {
             {category}
           </span>
           <span class="post-date font-mono">{formatDate(date)}</span>
+          {readingTime && (
+            <span class="reading-time font-mono">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="vertical-align: middle; margin-right: 4px;">
+                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M6 3.5V6L7.5 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              {readingTime} min read
+            </span>
+          )}
         </div>
 
-        <h1 class="post-title reveal" data-delay="0.1" transition:name={`blog-title-${Astro.url.pathname.split('/').pop()}`}>
+        <h1 class="post-title reveal" data-delay="0.1" transition:name={`blog-title-${currentSlug}`}>
           {title}
         </h1>
 
-        {linkedIn && (
-          <p class="post-source reveal" data-delay="0.15">
-            <span class="source-dot"></span>
-            Originally posted on
-            {linkedInUrl ? (
-              <a href={linkedInUrl} target="_blank" rel="noopener" class="linkedin-link">LinkedIn</a>
-            ) : (
-              <a href="https://www.linkedin.com/in/luisaviles1" target="_blank" rel="noopener" class="linkedin-link">LinkedIn</a>
-            )}
-          </p>
-        )}
+        <p class="post-excerpt reveal" data-delay="0.12">{excerpt}</p>
+
+        <!-- Author byline -->
+        <div class="post-author reveal" data-delay="0.15">
+          <div class="author-avatar" aria-hidden="true">
+            <span class="author-initials font-mono">LA</span>
+          </div>
+          <div class="author-info">
+            <span class="author-name">Luis Aviles</span>
+            <span class="author-title font-mono">Founder, Ineffable</span>
+          </div>
+          {linkedIn && (
+            <p class="post-source">
+              <span class="source-dot" aria-hidden="true"></span>
+              Originally posted on
+              {linkedInUrl ? (
+                <a href={linkedInUrl} target="_blank" rel="noopener" class="linkedin-link">LinkedIn</a>
+              ) : (
+                <a href="https://www.linkedin.com/in/luisaviles1" target="_blank" rel="noopener" class="linkedin-link">LinkedIn</a>
+              )}
+            </p>
+          )}
+        </div>
+
       </div>
     </header>
 
+    <!-- Post Body -->
     <div class="post-body">
       <div class="container-reading">
         <div class="prose reveal" data-delay="0.2">
           <slot />
         </div>
 
+        <!-- Tags -->
         {tags.length > 0 && (
           <div class="post-tags reveal" data-delay="0.25">
             {tags.map(tag => (
@@ -86,33 +153,175 @@ function formatDate(dateStr: string) {
             ))}
           </div>
         )}
+
+        <!-- Social Share -->
+        <div class="social-share reveal" data-delay="0.3">
+          <span class="share-label font-mono">Share this post</span>
+          <div class="share-links">
+            <a
+              href={linkedInShareURL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="share-btn share-btn--linkedin"
+              aria-label="Share on LinkedIn"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <a
+              href={twitterShareURL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="share-btn share-btn--twitter"
+              aria-label="Share on X (Twitter)"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.261 5.636 5.903-5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Share on X
+            </a>
+            <button
+              class="share-btn share-btn--copy"
+              id="copy-link-btn"
+              aria-label="Copy link"
+              data-url={canonicalURL}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              <span id="copy-label">Copy link</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <nav class="post-nav">
+    <!-- Related Posts -->
+    {fallbackPosts.length > 0 && (
+      <section class="related-posts">
+        <div class="container-reading related-inner">
+          <SectionLabel text="Related Posts" color={categoryColor} />
+          <div class="related-grid">
+            {fallbackPosts.map(post => (
+              <a href={`/blog/${post.id}`} class="related-card card reveal">
+                <div class="related-card-inner">
+                  <div class="related-meta">
+                    <span class={`tag tag-${post.data.categoryColor === 'gold' ? '' : post.data.categoryColor} related-tag`}>
+                      {post.data.category}
+                    </span>
+                    <span class="related-date font-mono">
+                      {new Date(post.data.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                    </span>
+                  </div>
+                  <h3 class="related-title">{post.data.title}</h3>
+                  <p class="related-excerpt">{post.data.excerpt}</p>
+                  <span class="related-read font-mono">Read →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Post Nav -->
+    <nav class="post-nav" aria-label="Post navigation">
       <div class="container-reading post-nav-inner">
         {prevPost ? (
           <a href={`/blog/${prevPost.slug}`} class="post-nav-link post-nav-prev">
-            <span class="post-nav-label font-mono">Previous</span>
+            <span class="post-nav-label font-mono">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="transform: rotate(0deg)">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Previous
+            </span>
             <span class="post-nav-title">{prevPost.title}</span>
           </a>
         ) : <div />}
         {nextPost ? (
           <a href={`/blog/${nextPost.slug}`} class="post-nav-link post-nav-next">
-            <span class="post-nav-label font-mono">Next</span>
+            <span class="post-nav-label font-mono">
+              Next
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="transform: rotate(180deg)">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
             <span class="post-nav-title">{nextPost.title}</span>
           </a>
         ) : <div />}
       </div>
     </nav>
+
   </article>
 </BaseLayout>
+
+<script>
+  // Copy link button
+  function initCopyLink() {
+    const btn = document.getElementById('copy-link-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.url || window.location.href;
+      const label = document.getElementById('copy-label');
+
+      try {
+        await navigator.clipboard.writeText(url);
+        if (label) label.textContent = 'Copied!';
+        btn.classList.add('share-btn--copied');
+
+        setTimeout(() => {
+          if (label) label.textContent = 'Copy link';
+          btn.classList.remove('share-btn--copied');
+        }, 2000);
+      } catch {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        if (label) label.textContent = 'Copied!';
+        setTimeout(() => { if (label) label.textContent = 'Copy link'; }, 2000);
+      }
+    });
+  }
+
+  // Click outside to go back to blog
+  function initBlogClickOutside() {
+    const article = document.querySelector('.blog-post');
+    if (!article) return;
+
+    const contentZones = ['.post-header-inner', '.container-reading', '.post-nav-inner', '.related-inner', 'a', 'button'];
+
+    article.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const isContent = contentZones.some(sel => target.closest(sel));
+      if (!isContent) {
+        window.location.href = '/blog';
+      }
+    });
+  }
+
+  initCopyLink();
+  initBlogClickOutside();
+  document.addEventListener('astro:after-swap', () => {
+    initCopyLink();
+    initBlogClickOutside();
+  });
+</script>
 
 <style>
   .blog-post {
     min-height: 100vh;
+    cursor: pointer;
   }
 
+  /* Header */
   .post-header {
     min-height: auto;
     padding-top: calc(var(--nav-height) + var(--space-xl));
@@ -125,6 +334,7 @@ function formatDate(dateStr: string) {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    cursor: auto;
   }
 
   .back-link {
@@ -143,10 +353,12 @@ function formatDate(dateStr: string) {
     color: var(--gold);
   }
 
+  /* Post Meta */
   .post-meta {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .post-date {
@@ -155,11 +367,76 @@ function formatDate(dateStr: string) {
     letter-spacing: 0.05em;
   }
 
+  .reading-time {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  /* Title + Excerpt */
   .post-title {
     font-size: var(--text-3xl);
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.01em;
+  }
+
+  .post-excerpt {
+    font-size: var(--text-lg);
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* Author Byline */
+  .post-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .author-initials {
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+  }
+
+  .author-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .author-title {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
   }
 
   .post-source {
@@ -168,6 +445,7 @@ function formatDate(dateStr: string) {
     gap: 0.5rem;
     font-size: var(--text-sm);
     color: var(--text-dim);
+    margin-left: auto;
   }
 
   .source-dot {
@@ -191,32 +469,38 @@ function formatDate(dateStr: string) {
 
   /* Post Body */
   .post-body {
-    padding-bottom: var(--space-xl);
+    padding: var(--space-xl) 0 var(--space-2xl);
+    cursor: auto;
   }
 
   .container-reading {
     max-width: 720px;
     margin: 0 auto;
     padding: 0 var(--space-md);
+    cursor: auto;
   }
 
   /* Prose Typography */
   .prose {
     font-size: var(--text-base);
     color: var(--text-secondary);
-    line-height: 1.8;
+    line-height: 1.85;
+    font-family: var(--font-body);
   }
 
   .prose :global(h2) {
+    font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 700;
     color: var(--text);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     line-height: 1.3;
+    letter-spacing: -0.01em;
   }
 
   .prose :global(h3) {
+    font-family: var(--font-display);
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--text);
@@ -226,7 +510,7 @@ function formatDate(dateStr: string) {
   }
 
   .prose :global(p) {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.35rem;
   }
 
   .prose :global(strong) {
@@ -252,20 +536,15 @@ function formatDate(dateStr: string) {
 
   .prose :global(ul),
   .prose :global(ol) {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.35rem;
     padding-left: 1.5rem;
   }
 
-  .prose :global(ul) {
-    list-style: disc;
-  }
-
-  .prose :global(ol) {
-    list-style: decimal;
-  }
+  .prose :global(ul) { list-style: disc; }
+  .prose :global(ol) { list-style: decimal; }
 
   .prose :global(li) {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     line-height: 1.7;
   }
 
@@ -276,13 +555,13 @@ function formatDate(dateStr: string) {
   .prose :global(blockquote) {
     border-left: 2px solid var(--gold);
     padding-left: 1.25rem;
-    margin: 1.5rem 0;
+    margin: 1.75rem 0;
     color: var(--text-dim);
     font-style: italic;
   }
 
   .prose :global(code) {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.85em;
     background: var(--bg-elevated);
     padding: 0.15rem 0.4rem;
@@ -295,11 +574,11 @@ function formatDate(dateStr: string) {
     background: var(--bg-card);
     border: 1px solid var(--border);
     padding: 1.25rem;
-    margin: 1.5rem 0;
+    margin: 1.75rem 0;
     overflow-x: auto;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .prose :global(pre code) {
@@ -313,7 +592,7 @@ function formatDate(dateStr: string) {
     border: none;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
-    margin: 2rem 0;
+    margin: 2.5rem 0;
   }
 
   /* Tags */
@@ -332,16 +611,163 @@ function formatDate(dateStr: string) {
     letter-spacing: 0.05em;
   }
 
+  /* Social Share */
+  .social-share {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .share-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .share-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    color: var(--text-dim);
+  }
+
+  .share-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+  }
+
+  .share-btn--linkedin:hover {
+    border-color: #0a66c2;
+    color: #0a66c2;
+  }
+
+  .share-btn--twitter:hover {
+    border-color: var(--text-dim);
+    color: var(--text);
+  }
+
+  .share-btn--copy:hover,
+  .share-btn--copied {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Related Posts */
+  .related-posts {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border);
+    cursor: auto;
+  }
+
+  .related-inner {
+    cursor: auto;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .related-card {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .related-card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    padding: var(--space-md);
+  }
+
+  .related-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .related-tag {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .related-date {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .related-title {
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.3;
+    transition: color var(--duration-fast);
+  }
+
+  .related-card:hover .related-title {
+    color: var(--gold);
+  }
+
+  .related-excerpt {
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    line-height: 1.65;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .related-read {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    transition: color var(--duration-fast);
+  }
+
+  .related-card:hover .related-read {
+    color: var(--gold);
+  }
+
   /* Post Navigation */
   .post-nav {
     border-top: 1px solid var(--border);
     padding: var(--space-md) 0;
+    cursor: auto;
   }
 
   .post-nav-inner {
     display: flex;
     justify-content: space-between;
     gap: var(--space-md);
+    cursor: auto;
   }
 
   .post-nav-link {
@@ -353,6 +779,7 @@ function formatDate(dateStr: string) {
     background: var(--bg-card);
     transition: all var(--duration-fast) var(--ease-out);
     max-width: 48%;
+    cursor: pointer;
   }
 
   .post-nav-link:hover {
@@ -366,10 +793,17 @@ function formatDate(dateStr: string) {
   }
 
   .post-nav-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-size: var(--text-xs);
     color: var(--text-muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  .post-nav-next .post-nav-label {
+    justify-content: flex-end;
   }
 
   .post-nav-title {
@@ -377,17 +811,6 @@ function formatDate(dateStr: string) {
     font-weight: 600;
     color: var(--text);
     line-height: 1.4;
-  }
-
-  /* Click-outside areas */
-  .blog-post {
-    cursor: pointer;
-  }
-
-  .post-header-inner,
-  .container-reading,
-  .post-nav-inner {
-    cursor: auto;
   }
 
   /* Responsive */
@@ -398,6 +821,18 @@ function formatDate(dateStr: string) {
 
     .post-title {
       font-size: var(--text-2xl);
+    }
+
+    .post-source {
+      margin-left: 0;
+    }
+
+    .post-author {
+      flex-wrap: wrap;
+    }
+
+    .related-grid {
+      grid-template-columns: 1fr;
     }
 
     .post-nav-inner {
@@ -411,26 +846,16 @@ function formatDate(dateStr: string) {
     .post-nav-next {
       text-align: left;
     }
+
+    .post-nav-next .post-nav-label {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .social-share {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>
-
-<script>
-  function initBlogClickOutside() {
-    const article = document.querySelector('.blog-post');
-    if (!article) return;
-
-    const contentZones = ['.post-header-inner', '.container-reading', '.post-nav-inner', 'a', 'button'];
-
-    article.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      // Only navigate if clicking the empty background areas, not content
-      const isContent = contentZones.some(sel => target.closest(sel));
-      if (!isContent) {
-        window.location.href = '/blog';
-      }
-    });
-  }
-
-  initBlogClickOutside();
-  document.addEventListener('astro:after-swap', initBlogClickOutside);
-</script>

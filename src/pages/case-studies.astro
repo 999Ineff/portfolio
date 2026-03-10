@@ -1,0 +1,655 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const tierLabels: Record<string, string> = {
+  micro: 'Quick Win',
+  growth: 'Growth Build',
+  professional: 'Full System',
+  enterprise: 'Custom Platform',
+};
+
+const tierColors: Record<string, string> = {
+  micro: 'gold',
+  growth: 'cyan',
+  professional: 'green',
+  enterprise: 'gold',
+};
+
+const serviceLabels: Record<string, string> = {
+  automation: 'Automation',
+  website: 'Website',
+  platform: 'Platform',
+  consulting: 'Consulting',
+};
+---
+
+<BaseLayout
+  title="Work — Real Projects, Real Results"
+  description="Real projects. Real results. Custom software, automation, and platforms built for businesses that needed something their off-the-shelf tools couldn't deliver."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Case Studies" />
+      <h1 class="text-heading reveal">
+        What gets built<br />
+        <span class="text-gold">when I show up</span>
+      </h1>
+      <p class="hero-sub reveal" data-delay="0.1">
+        Every project here started with a real problem — manual work eating hours,
+        disconnected tools causing errors, or a website failing to convert.
+        Here's what happened after.
+      </p>
+      <!-- D3: Above-fold credibility signal -->
+      <div class="hero-proof reveal" data-delay="0.2">
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-gold">10+</span>
+          <span class="proof-label">hrs/week saved per client</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-cyan">$350</span>
+          <span class="proof-label">Quick Win starting price</span>
+        </div>
+        <div class="proof-divider" aria-hidden="true"></div>
+        <div class="proof-stat">
+          <span class="proof-value font-mono text-green">30%</span>
+          <span class="proof-label">below agency rates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Bar -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar reveal">
+        <button class="filter-btn filter-btn--active" data-filter="all">All Work</button>
+        <button class="filter-btn" data-filter="automation">Automation</button>
+        <button class="filter-btn" data-filter="platform">Platforms</button>
+        <button class="filter-btn" data-filter="website">Websites</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Grid -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="work-grid" id="work-grid">
+        {allProjects.map((project, i) => {
+          const tierColor = tierColors[project.data.tier];
+          const tierLabel = tierLabels[project.data.tier];
+          return (
+            <a
+              href={`/case-studies/${project.id}`}
+              class="work-card card reveal"
+              data-delay={`${i * 0.1}`}
+              data-service={project.data.serviceType}
+            >
+              <!-- Top accent bar (replaces card::before) -->
+              <div class={`work-card-bar work-card-bar--${tierColor}`}></div>
+
+              <div class="work-card-inner">
+                <!-- Badges row -->
+                <div class="work-card-badges">
+                  <span class={`tag tag-${tierColor === 'gold' ? '' : tierColor} tier-badge`}>
+                    {tierLabel}
+                  </span>
+                  <span class="service-badge font-mono">
+                    {serviceLabels[project.data.serviceType]}
+                  </span>
+                </div>
+
+                <!-- Client + Title -->
+                <div class="work-card-title-group">
+                  <p class="work-card-client font-mono">{project.data.client}</p>
+                  <h3 class="work-card-title">{project.data.title}</h3>
+                </div>
+
+                <!-- One-line result -->
+                <p class="work-card-result">{project.data.result}</p>
+
+                <!-- Key metrics (max 2) -->
+                <div class="work-card-metrics">
+                  {project.data.metrics.slice(0, 2).map(m => (
+                    <div class="work-metric">
+                      <span class={`work-metric-value font-mono text-${tierColor === 'gold' ? 'gold' : tierColor}`}>
+                        {m.prefix}{m.value}
+                      </span>
+                      <span class="work-metric-label">{m.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <!-- Tags -->
+                {project.data.tags && (
+                  <div class="work-card-tags">
+                    {project.data.tags.slice(0, 4).map(tag => (
+                      <span class="work-tag font-mono">#{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                <span class="work-card-cta font-mono">
+                  Read case study <span class="cta-arrow">→</span>
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- Empty state (hidden by default) -->
+      <div class="empty-state" id="empty-state" aria-hidden="true">
+        <p class="empty-state-text">No projects in this category yet. More coming soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- More Coming -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="more-banner reveal">
+        <div class="more-banner-inner">
+          <div class="more-banner-text">
+            <SectionLabel text="Currently Building" color="cyan" />
+            <h2 class="more-heading">More case studies in progress</h2>
+            <p class="more-desc">
+              Several projects are wrapping up. Detailed write-ups ship as each one closes.
+              Want results like these for your business?
+            </p>
+          </div>
+          <div class="more-banner-action">
+            <!-- D6: Primary = gold, Secondary = cyan outline. D8: Never on same row -->
+            <a href="https://calendly.com/luis-aviles-khn" target="_blank" rel="noopener" class="btn btn-primary">
+              Book a Free Call
+            </a>
+            <a href="/resources" class="btn btn-secondary">Browse Free Resources</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- D22: Launch pricing urgency — authentic, not manufactured -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="launch-pricing-note reveal">
+        <span class="launch-icon font-mono text-gold">→</span>
+        <p class="launch-text">
+          <strong>Pre-portfolio pricing in effect.</strong> Current rates are 30% below market
+          while the case study library grows. Each completed project moves pricing closer to
+          agency rates. Lock in current pricing now.
+        </p>
+        <a href="https://calendly.com/luis-aviles-khn" target="_blank" rel="noopener" class="launch-cta font-mono">
+          Check availability →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    heading="Ready to become the next case study?"
+    subtext="Tell me your biggest operational headache. I'll tell you what it would take to fix it."
+    secondaryText="See all services"
+    secondaryLink="/automation"
+  />
+</BaseLayout>
+
+<!-- Filter script — simple JS, no React needed -->
+<script>
+  function initFilter() {
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.work-card');
+    const emptyState = document.getElementById('empty-state');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter!;
+
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('filter-btn--active'));
+        btn.classList.add('filter-btn--active');
+
+        // Filter cards
+        let visible = 0;
+        cards.forEach(card => {
+          const service = card.dataset.service;
+          const show = filter === 'all' || service === filter;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        // Show empty state if no results
+        if (emptyState) {
+          emptyState.style.display = visible === 0 ? 'block' : 'none';
+          emptyState.setAttribute('aria-hidden', visible === 0 ? 'false' : 'true');
+        }
+      });
+    });
+  }
+
+  initFilter();
+  document.addEventListener('astro:after-swap', initFilter);
+</script>
+
+<style>
+  /* Hero */
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + var(--space-xl));
+    padding-bottom: var(--space-lg);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px; /* D1: constrained width, not full viewport */
+  }
+
+  .hero-sub {
+    font-size: var(--text-lg);
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* D3: Above-fold credibility proof bar */
+  .hero-proof {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--gold);
+    flex-wrap: wrap;
+  }
+
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .proof-value {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .proof-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .proof-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--border-hover);
+    flex-shrink: 0;
+  }
+
+  /* D22: Launch pricing note */
+  .launch-pricing-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 193, 59, 0.04);
+    border: 1px solid rgba(255, 193, 59, 0.12);
+    border-left: 2px solid var(--gold);
+  }
+
+  .launch-icon {
+    font-size: var(--text-sm);
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+
+  .launch-text {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .launch-text strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .launch-cta {
+    font-size: var(--text-xs);
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    transition: color var(--duration-fast);
+  }
+
+  .launch-cta:hover {
+    color: #ffcf5e;
+  }
+
+  /* Filter Bar */
+  .filter-section {
+    padding-bottom: var(--space-md);
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+  }
+
+  .filter-btn--active {
+    border-color: rgba(255, 193, 59, 0.4);
+    color: var(--gold);
+    background: var(--gold-subtle);
+  }
+
+  /* Work Grid */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  /* Work Card */
+  .work-card {
+    display: block;
+    text-decoration: none;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  /* Override default card::before — use explicit top bar instead */
+  .work-card::before {
+    display: none;
+  }
+
+  .work-card-bar {
+    height: 2px;
+    width: 100%;
+    transition: opacity var(--duration-fast) var(--ease-out);
+  }
+
+  .work-card-bar--gold { background: var(--gradient-gold); }
+  .work-card-bar--cyan { background: var(--cyan); }
+  .work-card-bar--green { background: var(--green); }
+
+  .work-card:hover .work-card-bar {
+    opacity: 0.8;
+  }
+
+  .work-card-inner {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  /* Badges */
+  .work-card-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tier-badge {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .service-badge {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Title Group */
+  .work-card-client {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .work-card-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1.25;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .work-card:hover .work-card-title {
+    color: var(--gold);
+  }
+
+  /* Result */
+  .work-card-result {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* Metrics */
+  .work-card-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+  }
+
+  .work-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .work-metric-value {
+    font-size: var(--text-md);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .text-gold { color: var(--gold); }
+  .text-cyan { color: var(--cyan); }
+  .text-green { color: var(--green); }
+
+  .work-metric-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  /* Tags */
+  .work-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .work-tag {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* CTA arrow */
+  .work-card-cta {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .work-card:hover .work-card-cta {
+    color: var(--gold);
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .work-card:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Empty State */
+  .empty-state {
+    display: none;
+    text-align: center;
+    padding: var(--space-xl) 0;
+  }
+
+  .empty-state-text {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+  }
+
+  /* More Banner */
+  .more-banner {
+    border: 1px solid var(--border-hover);
+    background: var(--bg-card);
+    padding: var(--space-lg);
+  }
+
+  .more-banner-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .more-heading {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .more-desc {
+    font-size: var(--text-sm);
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .more-banner-action {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding-top: calc(var(--nav-height) + var(--space-lg));
+    }
+
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .more-banner-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .more-banner-action {
+      flex-direction: row;
+      white-space: normal;
+    }
+
+    .more-desc {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .work-card-metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .more-banner-action {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-proof {
+      gap: 1rem;
+    }
+
+    .proof-divider {
+      display: none;
+    }
+
+    .launch-pricing-note {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .launch-cta {
+      align-self: flex-start;
+    }
+  }
+
+  /* D3/Accessibility: Show content when scripting is disabled */
+  @media (scripting: none) {
+    .reveal,
+    .reveal-left,
+    .reveal-right,
+    .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>

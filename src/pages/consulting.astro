@@ -2,29 +2,175 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import CTA from '../components/CTA.astro';
-import ComingSoon from '../components/ComingSoon.astro';
 ---
 
 <BaseLayout
   title="Consulting"
-  description="Operations consulting from someone who's been in the trenches. AI strategy, automation roadmapping, and process design."
+  description="Not sure what you need? Let's figure it out together — no commitment, no pitch. AI strategy, operations optimization, and automation roadmapping from someone who builds."
 >
   <!-- Hero -->
   <section class="hero section-lg">
     <div class="container hero-inner">
       <SectionLabel text="Consulting" />
       <h1 class="hero-title reveal" data-delay="0.1">
-        I've Sat in <span class="gradient-text-gold">Your Seat.</span>
+        Not Sure What You Need?<br />
+        <span class="text-gold">Let's Figure It Out Together.</span>
       </h1>
       <p class="hero-sub reveal" data-delay="0.2">
         Nine years of operations leadership means I don't just understand the tech —
         I understand the pain points, the politics, and the real reason things don't get fixed.
+        No commitment. No pitch. Just clarity.
       </p>
       <div class="hero-actions reveal" data-delay="0.3">
         <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
           Book a Discovery Call
         </a>
-        <a href="#who-its-for" class="btn btn-outline">Is This for Me?</a>
+        <a href="#who-its-for" class="btn btn-secondary">Is This for Me?</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative Animation: Tangled Process → Clear Decision Tree -->
+  <section class="section narrative-section" id="animation">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="The Clarity Process" color="cyan" />
+        <h2 class="text-heading reveal">From "I don't know where to start" to a clear path forward</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 600px;">
+          Most operations problems look complicated. They're usually not. Watch the tangle become a decision tree.
+        </p>
+      </div>
+
+      <div class="narrative-stage reveal" data-delay="0.2" id="consulting-animation">
+        <svg
+          class="narrative-svg"
+          viewBox="0 0 800 360"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="Animation showing a tangled process flowchart transforming into a clear decision tree"
+          role="img"
+        >
+          <rect width="800" height="360" fill="#0a0a12"/>
+
+          <!-- BEFORE: Tangled mess of connections -->
+          <g id="tangled">
+            <!-- Scattered nodes with chaotic connections -->
+            <circle cx="80" cy="80" r="22" fill="#141420" stroke="rgba(255,71,87,0.4)" stroke-width="1"/>
+            <text x="80" y="84" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="200" cy="60" r="22" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <text x="200" y="64" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="120" cy="160" r="22" fill="#141420" stroke="rgba(255,71,87,0.4)" stroke-width="1"/>
+            <text x="120" y="164" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="260" cy="140" r="22" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <text x="260" y="144" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="60" cy="240" r="22" fill="#141420" stroke="rgba(255,71,87,0.4)" stroke-width="1"/>
+            <text x="60" y="244" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="190" cy="260" r="22" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <text x="190" y="264" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="300" cy="220" r="22" fill="#141420" stroke="rgba(255,71,87,0.4)" stroke-width="1"/>
+            <text x="300" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <circle cx="150" cy="310" r="22" fill="#141420" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <text x="150" y="314" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ff4757">?</text>
+
+            <!-- Chaotic connections (spaghetti lines) -->
+            <line x1="80" y1="80" x2="200" y2="60" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="120" y2="160" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="260" y2="140" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <line x1="200" y1="60" x2="120" y2="160" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="200" y1="60" x2="300" y2="220" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <line x1="120" y1="160" x2="60" y2="240" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="120" y1="160" x2="190" y2="260" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="260" y1="140" x2="300" y2="220" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="260" y1="140" x2="60" y2="240" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <line x1="60" y1="240" x2="150" y2="310" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="190" y1="260" x2="150" y2="310" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+            <line x1="300" y1="220" x2="150" y2="310" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+            <line x1="190" y1="260" x2="300" y2="220" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+
+            <text x="185" y="340" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ff4757">Before: no clear path, no priority</text>
+          </g>
+
+          <!-- AFTER: Clear Decision Tree (hidden initially) -->
+          <g id="clear-tree" opacity="0">
+            <!-- Root node -->
+            <rect x="450" y="20" width="130" height="36" rx="4" fill="#141420" stroke="rgba(255,193,59,0.4)" stroke-width="1"/>
+            <text x="515" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#ffc13b">What's the pain?</text>
+
+            <!-- Branch lines from root -->
+            <line id="branch-l" x1="515" y1="56" x2="460" y2="110" stroke="#ffc13b" stroke-width="1" opacity="0" stroke-dasharray="100" stroke-dashoffset="100"/>
+            <line id="branch-r" x1="515" y1="56" x2="570" y2="110" stroke="#ffc13b" stroke-width="1" opacity="0" stroke-dasharray="100" stroke-dashoffset="100"/>
+
+            <!-- Level 2: Time vs Money vs Decisions -->
+            <rect x="395" y="110" width="110" height="32" rx="4" fill="#141420" stroke="rgba(0,229,255,0.3)" stroke-width="1" opacity="0" id="node-time"/>
+            <text x="450" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#00e5ff">Wasted time</text>
+
+            <rect x="515" y="110" width="110" height="32" rx="4" fill="#141420" stroke="rgba(0,229,255,0.3)" stroke-width="1" opacity="0" id="node-money"/>
+            <text x="570" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#00e5ff">Bad decisions</text>
+
+            <!-- Branch lines level 2 -->
+            <line id="bl2a" x1="450" y1="142" x2="430" y2="190" stroke="#00e5ff" stroke-width="1" opacity="0"/>
+            <line id="bl2b" x1="450" y1="142" x2="480" y2="190" stroke="#00e5ff" stroke-width="1" opacity="0"/>
+            <line id="bl2c" x1="570" y1="142" x2="550" y2="190" stroke="#00e5ff" stroke-width="1" opacity="0"/>
+            <line id="bl2d" x1="570" y1="142" x2="610" y2="190" stroke="#00e5ff" stroke-width="1" opacity="0"/>
+
+            <!-- Level 3: Solutions -->
+            <rect x="390" y="190" width="80" height="30" rx="4" fill="#0f0f1a" stroke="rgba(0,255,136,0.4)" stroke-width="1" opacity="0" id="sol1"/>
+            <text x="430" y="209" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">Automate</text>
+
+            <rect x="478" y="190" width="80" height="30" rx="4" fill="#0f0f1a" stroke="rgba(0,255,136,0.4)" stroke-width="1" opacity="0" id="sol2"/>
+            <text x="518" y="209" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">Redesign</text>
+
+            <rect x="508" y="190" width="80" height="30" rx="4" fill="#0f0f1a" stroke="rgba(0,255,136,0.4)" stroke-width="1" opacity="0" id="sol3"/>
+            <text x="548" y="209" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">Dashboard</text>
+
+            <rect x="570" y="190" width="80" height="30" rx="4" fill="#0f0f1a" stroke="rgba(0,255,136,0.4)" stroke-width="1" opacity="0" id="sol4"/>
+            <text x="610" y="209" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">Platform</text>
+
+            <!-- Priority indicators -->
+            <g id="priority-group" opacity="0">
+              <rect x="390" y="230" width="80" height="18" rx="2" fill="rgba(0,255,136,0.1)"/>
+              <text x="430" y="242" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#00ff88">DO FIRST</text>
+
+              <rect x="478" y="230" width="80" height="18" rx="2" fill="rgba(0,229,255,0.1)"/>
+              <text x="518" y="242" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#00e5ff">MONTH 2</text>
+
+              <rect x="508" y="230" width="80" height="18" rx="2" fill="rgba(255,193,59,0.1)"/>
+              <text x="548" y="242" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#ffc13b">MONTH 3</text>
+
+              <rect x="570" y="230" width="80" height="18" rx="2" fill="rgba(255,193,59,0.08)"/>
+              <text x="610" y="242" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#ffc13b">FUTURE</text>
+            </g>
+
+            <!-- ROI row -->
+            <g id="roi-group" opacity="0">
+              <text x="430" y="270" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00ff88">$350–$700</text>
+              <text x="518" y="270" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#00e5ff">$4.2K–$5.6K</text>
+              <text x="548" y="270" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ffc13b">$10.5K–$14K</text>
+              <text x="610" y="270" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ffc13b">$28K–$42K</text>
+
+              <!-- Roadmap label -->
+              <rect x="390" y="295" width="280" height="30" rx="4" fill="#0a0a12" stroke="rgba(255,193,59,0.2)" stroke-width="0.5"/>
+              <text x="530" y="315" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ffc13b">Your roadmap: clear priorities + real ROI</text>
+            </g>
+          </g>
+        </svg>
+
+        <div class="animation-labels">
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--red);"></span>
+            <span class="font-mono">Before: overwhelming, no priority</span>
+          </div>
+          <div class="anim-label">
+            <span class="anim-label-dot" style="background: var(--gold);"></span>
+            <span class="font-mono">After: clear path, priced and sequenced</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -35,57 +181,26 @@ import ComingSoon from '../components/ComingSoon.astro';
       <div class="section-header">
         <SectionLabel text="What I Cover" color="cyan" />
         <h2 class="text-heading reveal">Strategy meets execution</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 700px;">
+          Most consultants tell you what's possible. I tell you what's worth doing — and then I can build it.
+        </p>
       </div>
 
       <div class="consulting-grid">
-        <div class="consulting-card card reveal" data-delay="0">
-          <div class="consulting-icon text-gold">&#9670;</div>
-          <h3 class="consulting-card-title">AI Strategy</h3>
-          <p class="consulting-card-desc">
-            Where AI actually adds value in your operations — not where the hype says it should.
-            Practical implementation plans, not slide decks.
-          </p>
-        </div>
-        <div class="consulting-card card reveal" data-delay="0.05">
-          <div class="consulting-icon text-cyan">&#9881;</div>
-          <h3 class="consulting-card-title">Operations Optimization</h3>
-          <p class="consulting-card-desc">
-            Find the bottlenecks costing you the most time and money. Redesign workflows
-            so the same team produces more with less friction.
-          </p>
-        </div>
-        <div class="consulting-card card reveal" data-delay="0.1">
-          <div class="consulting-icon text-green">&#9776;</div>
-          <h3 class="consulting-card-title">Automation Roadmapping</h3>
-          <p class="consulting-card-desc">
-            Prioritized plan for what to automate first, second, and never. ROI-driven
-            sequencing so every dollar spent compounds.
-          </p>
-        </div>
-        <div class="consulting-card card reveal" data-delay="0.15">
-          <div class="consulting-icon text-gold">&#9733;</div>
-          <h3 class="consulting-card-title">Team Alignment</h3>
-          <p class="consulting-card-desc">
-            Get everyone building in the same direction. Translate between technical and
-            non-technical teams so nothing gets lost.
-          </p>
-        </div>
-        <div class="consulting-card card reveal" data-delay="0.2">
-          <div class="consulting-icon text-cyan">&#9874;</div>
-          <h3 class="consulting-card-title">Tool Selection</h3>
-          <p class="consulting-card-desc">
-            Cut through the noise. Pick the right platforms, vendors, and integrations
-            based on what your team will actually use.
-          </p>
-        </div>
-        <div class="consulting-card card reveal" data-delay="0.25">
-          <div class="consulting-icon text-green">&#9635;</div>
-          <h3 class="consulting-card-title">Process Design</h3>
-          <p class="consulting-card-desc">
-            Build processes that survive contact with reality. SOPs, handoff procedures,
-            and accountability structures that stick.
-          </p>
-        </div>
+        {[
+          { icon: '&#9670;', color: 'gold', title: 'AI Strategy', desc: 'Where AI actually adds value in your operations — not where the hype says it should. Practical implementation plans, not slide decks.' },
+          { icon: '&#9881;', color: 'cyan', title: 'Operations Optimization', desc: 'Find the bottlenecks costing you the most time and money. Redesign workflows so the same team produces more with less friction.' },
+          { icon: '&#9776;', color: 'green', title: 'Automation Roadmapping', desc: 'Prioritized plan for what to automate first, second, and never. ROI-driven sequencing so every dollar spent compounds.' },
+          { icon: '&#9733;', color: 'gold', title: 'Team Alignment', desc: 'Translate between technical and non-technical teams. Get everyone building in the same direction — before you invest.' },
+          { icon: '&#9874;', color: 'cyan', title: 'Tool Selection', desc: 'Cut through the noise. Pick the right platforms, vendors, and integrations based on what your team will actually use.' },
+          { icon: '&#9635;', color: 'green', title: 'Process Design', desc: 'Build processes that survive contact with reality. SOPs, handoff procedures, and accountability structures that stick.' },
+        ].map((item, i) => (
+          <div class="consulting-card card reveal" data-delay={`${i * 0.06}`}>
+            <div class={`consulting-icon text-${item.color}`} set:html={item.icon}></div>
+            <h3 class="consulting-card-title">{item.title}</h3>
+            <p class="consulting-card-desc">{item.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -95,81 +210,50 @@ import ComingSoon from '../components/ComingSoon.astro';
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Who It's For" color="gold" />
-        <h2 class="text-heading reveal" style="text-align: center;">Find yourself here?</h2>
+        <h2 class="text-heading reveal">Find yourself here?</h2>
       </div>
 
       <div class="persona-grid">
-        <div class="persona-card card reveal" data-delay="0">
-          <div class="persona-role">
-            <span class="persona-icon text-green">&#9632;</span>
-            <span class="persona-title font-mono">Employee</span>
+        {[
+          {
+            icon: '&#9632;', color: 'green', role: 'Employee',
+            pain: '"I waste hours on tasks that should take minutes."',
+            points: ['Copy-pasting between systems all day', 'Rebuilding the same reports every week', 'Manually tracking things that should update themselves'],
+            solution: 'I identify which tasks to eliminate and build the tools to do it.'
+          },
+          {
+            icon: '&#9632;', color: 'cyan', role: 'Manager',
+            pain: '"My team\'s output doesn\'t match their effort."',
+            points: ['Good people stuck in bad processes', 'Visibility gaps between teams', 'No way to measure what\'s actually working'],
+            solution: 'I redesign workflows so effort translates to results.'
+          },
+          {
+            icon: '&#9632;', color: 'gold', role: 'C-Suite',
+            pain: '"I know tech could help but I don\'t know where to start."',
+            points: ['Vendors pitch solutions to problems you\'re not sure you have', 'Every team wants different tools', 'Past investments haven\'t delivered promised ROI'],
+            solution: 'I translate business goals into a tech roadmap that actually delivers.'
+          },
+          {
+            icon: '&#9670;', color: 'gold', role: 'Owner',
+            pain: '"I\'m running everything and building nothing."',
+            points: ['Trapped in day-to-day operations you built', 'Can\'t step away without things breaking', 'Growth means more of your time, not less'],
+            solution: 'I build the systems that let you work on the business, not in it.'
+          },
+        ].map((persona, i) => (
+          <div class="persona-card card reveal" data-delay={`${i * 0.1}`}>
+            <div class="persona-role">
+              <span class={`persona-icon text-${persona.color}`} set:html={persona.icon}></span>
+              <span class="persona-title font-mono">{persona.role}</span>
+            </div>
+            <p class="persona-pain">{persona.pain}</p>
+            <ul class="persona-points">
+              {persona.points.map(pt => <li>{pt}</li>)}
+            </ul>
+            <p class="persona-solution">
+              <span class="text-gold font-mono">//</span> {persona.solution}
+            </p>
           </div>
-          <p class="persona-pain">
-            "I waste hours on tasks that should take minutes."
-          </p>
-          <ul class="persona-points">
-            <li>Copy-pasting between systems all day</li>
-            <li>Rebuilding the same reports every week</li>
-            <li>Manually tracking things that should update themselves</li>
-          </ul>
-          <p class="persona-solution">
-            <span class="text-gold font-mono">//</span> I identify which tasks to eliminate and build the tools to do it.
-          </p>
-        </div>
-
-        <div class="persona-card card reveal" data-delay="0.1">
-          <div class="persona-role">
-            <span class="persona-icon text-cyan">&#9632;</span>
-            <span class="persona-title font-mono">Manager</span>
-          </div>
-          <p class="persona-pain">
-            "My team's output doesn't match their effort."
-          </p>
-          <ul class="persona-points">
-            <li>Good people stuck in bad processes</li>
-            <li>Visibility gaps between teams</li>
-            <li>No way to measure what's actually working</li>
-          </ul>
-          <p class="persona-solution">
-            <span class="text-gold font-mono">//</span> I redesign workflows so effort translates to results.
-          </p>
-        </div>
-
-        <div class="persona-card card reveal" data-delay="0.2">
-          <div class="persona-role">
-            <span class="persona-icon text-gold">&#9632;</span>
-            <span class="persona-title font-mono">C-Suite</span>
-          </div>
-          <p class="persona-pain">
-            "I know tech could help but I don't know where to start."
-          </p>
-          <ul class="persona-points">
-            <li>Vendors pitch solutions to problems you're not sure you have</li>
-            <li>Every team wants different tools</li>
-            <li>Past investments haven't delivered the promised ROI</li>
-          </ul>
-          <p class="persona-solution">
-            <span class="text-gold font-mono">//</span> I translate business goals into a tech roadmap that actually delivers.
-          </p>
-        </div>
-
-        <div class="persona-card card reveal" data-delay="0.3">
-          <div class="persona-role">
-            <span class="persona-icon text-gold">&#9670;</span>
-            <span class="persona-title font-mono">Owner</span>
-          </div>
-          <p class="persona-pain">
-            "I'm running everything and building nothing."
-          </p>
-          <ul class="persona-points">
-            <li>Trapped in day-to-day operations you built</li>
-            <li>Can't step away without things breaking</li>
-            <li>Growth means more of your time, not less</li>
-          </ul>
-          <p class="persona-solution">
-            <span class="text-gold font-mono">//</span> I build the systems that let you work on the business, not in it.
-          </p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
@@ -179,77 +263,155 @@ import ComingSoon from '../components/ComingSoon.astro';
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="How It Works" color="cyan" />
-        <h2 class="text-heading reveal" style="text-align: center;">Four steps. No fluff.</h2>
+        <h2 class="text-heading reveal">Four steps. No fluff.</h2>
       </div>
 
       <div class="process-grid">
-        <div class="process-step reveal" data-delay="0">
-          <div class="process-number font-mono text-gold">01</div>
-          <div class="process-line"></div>
-          <h3 class="process-title">Discovery Call</h3>
-          <p class="process-desc">
-            30 minutes. You tell me where it hurts. I ask the questions
-            most consultants don't think to ask.
-          </p>
-        </div>
-        <div class="process-step reveal" data-delay="0.1">
-          <div class="process-number font-mono text-gold">02</div>
-          <div class="process-line"></div>
-          <h3 class="process-title">Assessment</h3>
-          <p class="process-desc">
-            I map your current workflows, data flow, and team structure.
-            Find the gaps between where you are and where you want to be.
-          </p>
-        </div>
-        <div class="process-step reveal" data-delay="0.2">
-          <div class="process-number font-mono text-gold">03</div>
-          <div class="process-line"></div>
-          <h3 class="process-title">Roadmap</h3>
-          <p class="process-desc">
-            Prioritized action plan with clear ROI projections. What to fix
-            first, what to defer, and what to skip entirely.
-          </p>
-        </div>
-        <div class="process-step reveal" data-delay="0.3">
-          <div class="process-number font-mono text-cyan">04</div>
-          <div class="process-line process-line-last"></div>
-          <h3 class="process-title">Build <span class="text-dim">(optional)</span></h3>
-          <p class="process-desc">
-            If the roadmap calls for custom software, I can build it too.
-            Strategy and execution from the same person — no handoff gaps.
-          </p>
-        </div>
+        {[
+          { num: '01', color: 'gold', title: 'Discovery Call', desc: '30 minutes. You tell me where it hurts. I ask the questions most consultants don\'t think to ask.' },
+          { num: '02', color: 'gold', title: 'Assessment', desc: 'I map your current workflows, data flow, and team structure. Find the gaps between where you are and where you want to be.' },
+          { num: '03', color: 'gold', title: 'Roadmap', desc: 'Prioritized action plan with clear ROI projections. What to fix first, what to defer, and what to skip entirely.' },
+          { num: '04', color: 'cyan', title: 'Build (optional)', desc: 'If the roadmap calls for custom software, I can build it too. Strategy and execution from the same person — no handoff gaps.' },
+        ].map((step, i) => (
+          <div class="process-step reveal" data-delay={`${i * 0.1}`}>
+            <div class={`process-number font-mono text-${step.color}`}>{step.num}</div>
+            <div class="process-line"></div>
+            <h3 class="process-title">{step.title}</h3>
+            <p class="process-desc">{step.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Tiers & Pricing (Coming Soon) -->
-  <section class="section-lg tiers-section">
-    <div class="container-narrow">
+  <!-- Tiers & Pricing -->
+  <section class="section-lg pricing-section" id="pricing">
+    <div class="container">
       <div class="section-header" style="text-align: center;">
-        <SectionLabel text="Packages" color="gold" />
-        <h2 class="text-heading reveal" style="text-align: center; margin-bottom: var(--space-md);">Consulting Tiers</h2>
+        <SectionLabel text="Pricing" color="gold" />
+        <h2 class="text-heading reveal">What consulting actually costs</h2>
+        <p class="text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          Structured engagements or hourly — whatever fits your situation. Transparent from the start.
+        </p>
       </div>
-      <ComingSoon
-        title="Consulting Tiers"
-        description="Structured advisory packages coming soon. From single sessions to ongoing strategic partnerships."
-        features={[
-          "One-time strategy sessions",
-          "Monthly advisory retainer",
-          "Full implementation partnership",
-        ]}
-      />
+
+      <div class="consulting-tiers">
+        <div class="consulting-tier card reveal" data-delay="0">
+          <div class="ctier-label tag font-mono">Strategy Session</div>
+          <h3 class="ctier-name">Single Session</h3>
+          <div class="ctier-price font-mono text-gold">$150 – $300</div>
+          <p class="ctier-desc">One focused session: 90 minutes. I audit your situation, answer your questions, give you a clear next step. No fluff, no upsell pressure.</p>
+          <ul class="ctier-features">
+            <li class="ctier-feature"><span class="text-gold">&#10003;</span> 90-minute working session</li>
+            <li class="ctier-feature"><span class="text-gold">&#10003;</span> Written summary + recommendations</li>
+            <li class="ctier-feature"><span class="text-gold">&#10003;</span> Honest assessment: build, buy, or skip</li>
+            <li class="ctier-feature"><span class="text-gold">&#10003;</span> No commitment beyond this session</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Book a Session</a>
+        </div>
+
+        <div class="consulting-tier consulting-tier--featured card reveal" data-delay="0.1">
+          <div class="ctier-label tag tag-cyan font-mono">Roadmap</div>
+          <h3 class="ctier-name">Technology Audit + Roadmap</h3>
+          <div class="ctier-price font-mono text-gold">$1,500 – $3,000</div>
+          <div class="ctier-billing font-mono text-dim">Project scoped</div>
+          <p class="ctier-desc">Full workflow audit, tool assessment, and a prioritized 90-day roadmap with ROI projections. Exactly what to do, in what order, and why.</p>
+          <ul class="ctier-features">
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> Workflow & tool audit (2–3 sessions)</li>
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> Bottleneck identification</li>
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> 90-day prioritized roadmap</li>
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> ROI projections for each initiative</li>
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> Vendor & tool recommendations</li>
+            <li class="ctier-feature"><span class="text-cyan">&#10003;</span> Presentation-ready deliverable</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">Schedule Discovery</a>
+        </div>
+
+        <div class="consulting-tier card reveal" data-delay="0.2">
+          <div class="ctier-label tag tag-green font-mono">Ongoing</div>
+          <h3 class="ctier-name">Monthly Advisory</h3>
+          <div class="ctier-price font-mono text-green">$500 – $1,500/mo</div>
+          <p class="ctier-desc">Ongoing strategic partner. Monthly check-ins, project oversight, team coaching, and decision support. Cancel anytime.</p>
+          <ul class="ctier-features">
+            <li class="ctier-feature"><span class="text-green">&#10003;</span> 2–4 sessions per month</li>
+            <li class="ctier-feature"><span class="text-green">&#10003;</span> Async support (Slack/email)</li>
+            <li class="ctier-feature"><span class="text-green">&#10003;</span> Project review & guidance</li>
+            <li class="ctier-feature"><span class="text-green">&#10003;</span> Team coaching support</li>
+            <li class="ctier-feature"><span class="text-green">&#10003;</span> Cancel anytime, no lock-in</li>
+          </ul>
+          <a href="https://calendly.com/luis-aviles-khn" class="btn btn-secondary" target="_blank" rel="noopener">Ask About Advisory</a>
+        </div>
+      </div>
+      <div class="launch-banner reveal" data-delay="0.3">
+        <span class="launch-banner__icon mono">◈</span>
+        <span>Pre-portfolio rates. Pricing increases with each completed case study.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="section-lg comparison-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="Compare" color="gold" />
+        <h2 class="text-heading reveal">Consulting firm vs in-house vs Ineffable</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1" style="max-width: 650px;">
+          The difference isn't just price. It's who's actually in the room with you.
+        </p>
+      </div>
+
+      <div class="comparison-table reveal" data-delay="0.2">
+        <div class="comparison-header">
+          <div class="comparison-col comparison-col--label"></div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">Consulting Firm</span>
+            <span class="comparison-option-sub font-mono text-dim">Big 4 / boutique</span>
+          </div>
+          <div class="comparison-col comparison-col--option">
+            <span class="comparison-option-name font-mono">In-House Hire</span>
+            <span class="comparison-option-sub font-mono text-dim">FTE hire</span>
+          </div>
+          <div class="comparison-col comparison-col--featured">
+            <span class="comparison-option-name font-mono text-gold">Ineffable</span>
+            <span class="comparison-option-sub font-mono text-dim">Founder-operator</span>
+          </div>
+        </div>
+
+        {[
+          { label: 'Cost', a: '$300–$600/hr billed', b: '$80K–$150K/year + benefits', c: '$150–$300/session or project' },
+          { label: 'Who advises you', a: 'Senior partner pitches, junior executes', b: 'One person, limited context', c: 'I advise and I build — same person' },
+          { label: 'Time to start', a: '4–8 weeks setup', b: '3–6 months to hire', c: 'This week' },
+          { label: 'Can execute the plan', a: 'Rarely (not their business)', b: 'Sometimes', c: 'Yes — strategy + execution together' },
+          { label: 'Industry context', a: 'Framework-heavy, generic', b: 'Deep but narrow', c: '9 years enterprise ops + tech' },
+          { label: 'Commitment required', a: 'Long-term retainer', b: 'Full employment', c: 'As much or little as needed' },
+        ].map((row, i) => (
+          <div class={`comparison-row ${i % 2 === 0 ? 'comparison-row--alt' : ''}`}>
+            <div class="comparison-col comparison-col--label">
+              <span class="comparison-label font-mono">{row.label}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.a}</span>
+            </div>
+            <div class="comparison-col comparison-col--option">
+              <span class="comparison-value text-dim">{row.b}</span>
+            </div>
+            <div class="comparison-col comparison-col--featured">
+              <span class="comparison-value text-gold">{row.c}</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Background / Credentials -->
-  <section class="section" id="background">
+  <section class="section credentials-section" id="background">
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <SectionLabel text="Background" color="green" />
-        <h2 class="text-heading reveal" style="text-align: center;">
-          Most directors manage.<br />
-          <span class="text-gold">I manage AND build.</span>
+        <h2 class="text-heading reveal">
+          Most advisors study operations.<br />
+          <span class="text-gold">I ran them — and built the systems that fixed them.</span>
         </h2>
       </div>
 
@@ -261,15 +423,34 @@ import ComingSoon from '../components/ComingSoon.astro';
           </div>
           <div class="credential">
             <span class="credential-value text-cyan font-mono">Director</span>
-            <span class="credential-label font-mono">Level Roles</span>
+            <span class="credential-label font-mono">Level Experience</span>
           </div>
           <div class="credential">
             <span class="credential-value text-green font-mono">Both</span>
             <span class="credential-label font-mono">Strategy + Execution</span>
           </div>
         </div>
+
+        <div class="credentials-timeline">
+          {[
+            { co: 'Windstream', role: 'Enterprise Operations', year: '2015–', color: 'gold' },
+            { co: 'LTC', role: 'Corporate Systems', year: '2018–', color: 'cyan' },
+            { co: 'BCE', role: 'Director of Operations + Tech', year: '2021–', color: 'green' },
+            { co: 'Ineffable', role: 'Founder', year: '2025–', color: 'gold' },
+          ].map((job, i) => (
+            <div class="timeline-entry reveal" data-delay={`${i * 0.08}`}>
+              <div class={`timeline-dot text-${job.color}`}>&#9670;</div>
+              <div class="timeline-details">
+                <span class={`timeline-company font-mono text-${job.color}`}>{job.co}</span>
+                <span class="timeline-role font-mono text-dim">{job.role}</span>
+              </div>
+              <span class="timeline-year font-mono text-muted">{job.year}</span>
+            </div>
+          ))}
+        </div>
+
         <div class="credentials-text">
-          <p class="text-body" style="text-align: center; max-width: 700px; margin: 0 auto;">
+          <p class="text-body" style="max-width: 700px;">
             I've managed teams, built SOPs, designed compensation structures, handled vendor
             negotiations, and sat in the meetings where "we should automate that" gets said
             and never done. The difference? <strong class="text-gold">I actually build the thing.</strong>
@@ -279,68 +460,168 @@ import ComingSoon from '../components/ComingSoon.astro';
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section-lg faq-section">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <SectionLabel text="FAQ" color="cyan" />
+        <h2 class="text-heading reveal">Questions before you reach out</h2>
+      </div>
+
+      <div class="faq-list">
+        {[
+          {
+            q: 'Do I need a big budget to get started?',
+            a: 'No. A single strategy session is $150–$300. If that session tells you to invest more, you\'ll know exactly what you\'re getting and why. There\'s no pressure to escalate — I\'ll tell you honestly if the investment makes sense for your situation.',
+          },
+          {
+            q: 'Is this just advice, or do you actually build things?',
+            a: 'Both. I\'m a builder first. The roadmap I give you is executable — because I built it knowing I might be the one executing it. When consulting leads to a build, you don\'t need to find another vendor. The strategy and the software come from the same person.',
+          },
+          {
+            q: 'What industries do you work in?',
+            a: 'Operations problems are universal. I\'ve worked in telecom, financial services, facility services, and service businesses. The common thread: people doing manual work that should be automated, or making decisions without real data. Industry knowledge helps, but systems thinking helps more.',
+          },
+          {
+            q: 'How do you handle confidential business information?',
+            a: 'I sign NDAs before discovery sessions when requested. Everything discussed stays confidential. I don\'t share client details, workflows, or data with anyone. You own everything we produce together.',
+          },
+          {
+            q: 'Will you tell me I don\'t need your help?',
+            a: 'Yes, if that\'s the honest answer. I\'ll tell you if your current tools are fine, if you just need to train your team better, or if a $50/month tool solves the problem I was about to build for $10K. Trust is the asset — I\'d rather lose a sale than give bad advice.',
+          },
+          {
+            q: 'How long is a typical engagement?',
+            a: 'A single session is 90 minutes. An audit + roadmap engagement takes 2–3 weeks. Monthly advisory is ongoing — most clients use it for 3–12 months, then scale down when they have internal capacity. It\'s your timeline, not mine.',
+          },
+        ].map((item, i) => (
+          <details class="faq-item reveal" data-delay={`${i * 0.06}`}>
+            <summary class="faq-question">
+              <span class="faq-q-text">{item.q}</span>
+              <span class="faq-icon font-mono">+</span>
+            </summary>
+            <p class="faq-answer text-body">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <CTA
     heading="Let's Talk About Your Operations"
-    subtext="30-minute discovery call. No pitch, no slides — just a conversation about what's costing you the most time."
+    subtext="30-minute discovery call. No pitch, no slides — just a conversation about what's costing you the most time and money."
     secondaryText="See what I build"
     secondaryLink="/platforms"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Do I need a big budget to get started?", "acceptedAnswer": { "@type": "Answer", "text": "No. A single strategy session is $150–$300. If that session tells you to invest more, you'll know exactly what you're getting and why. There's no pressure to escalate." } },
+      { "@type": "Question", "name": "Is this just advice, or do you actually build things?", "acceptedAnswer": { "@type": "Answer", "text": "Both. I'm a builder first. The roadmap I give you is executable — because I built it knowing I might be the one executing it. When consulting leads to a build, you don't need to find another vendor." } },
+      { "@type": "Question", "name": "What industries do you work in?", "acceptedAnswer": { "@type": "Answer", "text": "Operations problems are universal. I've worked in telecom, financial services, facility services, and service businesses. Industry knowledge helps, but systems thinking helps more." } },
+      { "@type": "Question", "name": "How do you handle confidential business information?", "acceptedAnswer": { "@type": "Answer", "text": "I sign NDAs before discovery sessions when requested. Everything discussed stays confidential. I don't share client details, workflows, or data with anyone." } },
+      { "@type": "Question", "name": "Will you tell me I don't need your help?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, if that's the honest answer. I'll tell you if your current tools are fine, if you just need to train your team better, or if a $50/month tool solves the problem. Trust is the asset." } },
+      { "@type": "Question", "name": "How long is a typical engagement?", "acceptedAnswer": { "@type": "Answer", "text": "A single session is 90 minutes. An audit + roadmap engagement takes 2–3 weeks. Monthly advisory is ongoing — most clients use it for 3–12 months, then scale down when they have internal capacity." } }
+    ]
+  })} />
 </BaseLayout>
 
 <style>
   /* ── Hero ─────────────────────────────────────────────────── */
   .hero {
-    min-height: 80vh;
+    min-height: 60vh;
     display: flex;
     align-items: center;
     padding-top: calc(var(--nav-height) + var(--space-lg));
-    text-align: center;
+    padding-bottom: var(--space-xl);
   }
 
   .hero-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     max-width: 850px;
-    margin: 0 auto;
   }
 
   .hero-title {
-    font-size: var(--text-4xl);
+    font-size: var(--text-3xl);
     font-weight: 900;
     line-height: 1.05;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left;
   }
 
   .hero-sub {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     color: var(--text-secondary);
     max-width: 650px;
-    margin-bottom: var(--space-md);
+    margin-bottom: 1.25rem;
     line-height: 1.7;
+    text-align: left;
   }
 
   .hero-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
   }
+
+  /* ── Launch Banner ────────────────────────────────────────── */
+  .launch-banner { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--gold-subtle); border: 1px solid var(--border-active); border-radius: var(--radius-pill); font-size: var(--text-sm); color: var(--gold); margin-top: var(--space-lg); }
+  .launch-banner__icon { font-size: var(--text-md); }
+
+  /* ── Narrative ────────────────────────────────────────────── */
+  .narrative-section { background: var(--bg-surface); }
+  .narrative-stage { max-width: 900px; margin: 0 auto; }
+
+  .narrative-svg {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    background: var(--bg-deep);
+    display: block;
+  }
+
+  .animation-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0.5rem 0;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .anim-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .anim-label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Section Header ───────────────────────────────────────── */
+  .section-header { margin-bottom: var(--space-lg); }
+  .section-subtext { max-width: 700px; }
 
   /* ── Consulting Grid ─────────────────────────────────────── */
-  .section-header {
-    margin-bottom: var(--space-lg);
-  }
-
   .consulting-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
-  .consulting-card {
-    padding: 2rem;
-  }
+  .consulting-card { padding: 2rem; }
 
   .consulting-icon {
     font-size: 1.5rem;
@@ -354,22 +635,11 @@ import ComingSoon from '../components/ComingSoon.astro';
     margin-bottom: 1rem;
   }
 
-  .consulting-card-title {
-    font-size: var(--text-lg);
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .consulting-card-desc {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    line-height: 1.7;
-  }
+  .consulting-card-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.5rem; }
+  .consulting-card-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.7; }
 
   /* ── Persona Cards ───────────────────────────────────────── */
-  .persona-section {
-    background: var(--bg-dark);
-  }
+  .persona-section { background: var(--bg-surface); }
 
   .persona-grid {
     display: grid;
@@ -377,68 +647,17 @@ import ComingSoon from '../components/ComingSoon.astro';
     gap: 1.5rem;
   }
 
-  .persona-card {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  .persona-card { padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .persona-role { display: flex; align-items: center; gap: 0.75rem; }
+  .persona-icon { font-size: 0.75rem; }
+  .persona-title { font-size: var(--text-sm); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); }
+  .persona-pain { font-size: var(--text-lg); font-weight: 600; color: var(--text); font-style: italic; line-height: 1.4; }
 
-  .persona-role {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
+  .persona-points { display: flex; flex-direction: column; gap: 0.5rem; }
+  .persona-points li { font-size: var(--text-sm); color: var(--text-dim); padding-left: 1rem; position: relative; line-height: 1.6; }
+  .persona-points li::before { content: '>'; position: absolute; left: 0; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: var(--text-xs); }
 
-  .persona-icon {
-    font-size: 0.75rem;
-  }
-
-  .persona-title {
-    font-size: var(--text-sm);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-
-  .persona-pain {
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: var(--text);
-    font-style: italic;
-    line-height: 1.4;
-  }
-
-  .persona-points {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .persona-points li {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    padding-left: 1rem;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .persona-points li::before {
-    content: '>';
-    position: absolute;
-    left: 0;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: var(--text-xs);
-  }
-
-  .persona-solution {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border);
-    line-height: 1.6;
-  }
+  .persona-solution { font-size: var(--text-sm); color: var(--text-secondary); padding-top: 0.75rem; border-top: 1px solid var(--border); line-height: 1.6; }
 
   /* ── Process Steps ───────────────────────────────────────── */
   .process-grid {
@@ -449,148 +668,239 @@ import ComingSoon from '../components/ComingSoon.astro';
     margin: 0 auto;
   }
 
-  .process-step {
-    text-align: center;
-    padding: 0 1.5rem;
-    position: relative;
+  .process-step { text-align: center; padding: 0 1.5rem; position: relative; }
+  .process-number { font-size: var(--text-2xl); font-weight: 800; margin-bottom: 1rem; }
+  .process-line { width: 100%; height: 1px; background: linear-gradient(90deg, var(--gold-dim), var(--border)); margin-bottom: 1.5rem; }
+  .process-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.75rem; }
+  .process-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.7; }
+
+  /* ── Consulting Tiers ─────────────────────────────────────── */
+  .pricing-section { background: var(--bg-surface); }
+
+  .consulting-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
   }
 
-  .process-number {
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    margin-bottom: 1rem;
-  }
+  .consulting-tier { display: flex; flex-direction: column; gap: 1rem; padding: 2.5rem 2rem; }
+  .consulting-tier--featured { border-color: rgba(255, 193, 59, 0.3); background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%); }
+  .ctier-label { align-self: flex-start; }
+  .ctier-name { font-size: var(--text-xl); font-weight: 700; }
+  .ctier-price { font-size: var(--text-lg); font-weight: 700; }
+  .ctier-billing { font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; margin-top: -0.5rem; }
+  .ctier-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; }
+  .ctier-features { display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+  .ctier-feature { display: flex; align-items: center; gap: 0.75rem; font-size: var(--text-sm); color: var(--text-secondary); }
 
-  .process-line {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--gold-dim), var(--border));
-    margin-bottom: 1.5rem;
-  }
-
-  .process-line-last {
-    background: linear-gradient(90deg, var(--cyan-dim), transparent);
-  }
-
-  .process-title {
-    font-size: var(--text-lg);
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .process-desc {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    line-height: 1.7;
-  }
-
-  /* ── Tiers Section ───────────────────────────────────────── */
-  .tiers-section {
-    background: var(--bg-dark);
-  }
+  /* ── Comparison Table ─────────────────────────────────────── */
+  .comparison-section { background: var(--bg-deep); }
+  .comparison-table { border: 1px solid var(--border); overflow: hidden; }
+  .comparison-header, .comparison-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .comparison-header { background: var(--bg-elevated); }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row--alt { background: var(--bg-surface); }
+  .comparison-col { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.25rem; }
+  .comparison-col--featured { background: rgba(255, 193, 59, 0.04); border-left: 1px solid rgba(255, 193, 59, 0.2); }
+  .comparison-option-name { font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); letter-spacing: 0.03em; }
+  .comparison-option-sub { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+  .comparison-label { font-size: var(--text-xs); color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase; }
+  .comparison-value { font-size: var(--text-sm); line-height: 1.5; }
 
   /* ── Credentials ─────────────────────────────────────────── */
+  .credentials-section { background: var(--bg-surface); }
+
   .credentials-card {
     padding: var(--space-lg);
     max-width: 900px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .credentials-grid {
     display: flex;
     justify-content: center;
     gap: 3rem;
-    margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
   }
 
-  .credential {
+  .credential { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+  .credential-value { font-size: var(--text-2xl); font-weight: 700; }
+  .credential-label { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+  .credentials-timeline {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline-entry {
+    display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 1.5rem;
   }
 
-  .credential-value {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-  }
+  .timeline-dot { font-size: 0.6rem; flex-shrink: 0; }
+  .timeline-details { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; }
+  .timeline-company { font-size: var(--text-base); font-weight: 600; letter-spacing: 0.03em; }
+  .timeline-role { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+  .timeline-year { font-size: var(--text-xs); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
 
-  .credential-label {
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
+  /* ── FAQ ──────────────────────────────────────────────────── */
+  .faq-section { background: var(--bg-deep); }
+  .faq-list { display: flex; flex-direction: column; border: 1px solid var(--border); }
+  .faq-item { border-bottom: 1px solid var(--border); cursor: pointer; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; list-style: none; cursor: pointer; transition: background var(--duration-fast) var(--ease-out); }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question:hover { background: var(--bg-surface); }
+  .faq-q-text { font-size: var(--text-base); font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+  .faq-icon { font-size: var(--text-lg); color: var(--gold); flex-shrink: 0; transition: transform var(--duration-base) var(--ease-out); line-height: 1; }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+  .faq-answer { padding: 0 2rem 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: var(--text-base); }
 
   /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 1024px) {
-    .consulting-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .process-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-    }
-
-    .process-line {
-      display: none;
-    }
-
-    .credentials-grid {
-      gap: 2rem;
-    }
+    .consulting-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .process-line { display: none; }
+    .credentials-grid { gap: 2rem; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .consulting-tiers { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr 1fr; }
+    .comparison-col--label { display: none; }
   }
 
   @media (max-width: 768px) {
-    .hero {
-      min-height: auto;
-      padding-top: calc(var(--nav-height) + 2rem);
-      padding-bottom: 2rem;
-    }
-
-    .persona-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .consulting-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .process-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .credentials-grid {
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .credentials-card {
-      padding: var(--space-md);
-    }
+    .hero { min-height: auto; padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 2rem; }
+    .consulting-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .credentials-grid { flex-wrap: wrap; gap: 1.5rem; }
+    .credentials-card { padding: var(--space-md); }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr 1fr; }
+    .comparison-col--option:first-of-type { display: none; }
+    .faq-question { padding: 1.25rem 1.5rem; }
+    .faq-answer { padding: 0 1.5rem 1.25rem; }
   }
 
   @media (max-width: 480px) {
-    .consulting-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .hero-actions {
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .hero-actions .btn {
-      width: 100%;
-    }
-
-    .credentials-grid {
-      flex-direction: column;
-      align-items: center;
-    }
+    .consulting-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .hero-actions .btn { width: 100%; }
+    .credentials-grid { flex-direction: column; align-items: center; }
+    .comparison-header, .comparison-row { grid-template-columns: 1fr; }
+    .comparison-col--option { display: none; }
   }
 </style>
+
+<script>
+  // Consulting animation: tangled → clear decision tree
+  (function() {
+    const stage = document.getElementById('consulting-animation');
+    if (!stage) return;
+
+    let animated = false;
+
+    function runAnimation() {
+      if (animated) return;
+      animated = true;
+
+      const gsap = (window as any).gsap;
+      if (!gsap) return;
+
+      const tl = gsap.timeline();
+
+      // Phase 1: Tangled mess dims
+      tl.to('#tangled', {
+        opacity: 0.3,
+        duration: 0.8,
+        ease: 'power2.out',
+      }, 0.5);
+
+      // Phase 2: Clear tree root appears
+      tl.to('#clear-tree', {
+        opacity: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+      }, 1.0);
+
+      // Phase 3: Branch lines draw
+      tl.to(['#branch-l', '#branch-r'], {
+        opacity: 0.8,
+        strokeDashoffset: 0,
+        duration: 0.4,
+        stagger: 0.1,
+        ease: 'power2.out',
+      }, 1.5);
+
+      // Phase 4: Level 2 nodes appear
+      tl.to(['#node-time', '#node-money'], {
+        opacity: 1,
+        duration: 0.3,
+        stagger: 0.1,
+        ease: 'power2.out',
+      }, 2.0);
+
+      // Phase 5: Branch lines level 2
+      tl.to(['#bl2a', '#bl2b', '#bl2c', '#bl2d'], {
+        opacity: 0.6,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: 'power2.out',
+      }, 2.4);
+
+      // Phase 6: Solution nodes appear
+      tl.to(['#sol1', '#sol2', '#sol3', '#sol4'], {
+        opacity: 1,
+        duration: 0.25,
+        stagger: 0.08,
+        ease: 'power2.out',
+      }, 2.8);
+
+      // Phase 7: Priority and ROI labels
+      tl.to('#priority-group', {
+        opacity: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+      }, 3.3);
+
+      tl.to('#roi-group', {
+        opacity: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+      }, 3.7);
+
+      // Phase 8: Tangled disappears
+      tl.to('#tangled', {
+        opacity: 0.08,
+        duration: 0.5,
+        ease: 'power2.in',
+      }, 3.5);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              runAnimation();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(stage);
+    } else {
+      setTimeout(runAnimation, 1000);
+    }
+  })();
+</script>

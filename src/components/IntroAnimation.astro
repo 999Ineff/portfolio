@@ -1,0 +1,588 @@
+---
+/**
+ * IntroAnimation — Phase 2, Track A, Sessions 2A-2 + 2A-3
+ * Device-tiered intro animation: Three.js desktop, GSAP tablet, CSS+GSAP mobile
+ *
+ * Architecture:
+ *   - Blocking inline script: synchronous localStorage check → zero flash on return visits
+ *   - Module script: async device tier detection (detect-gpu) → dynamic import of tier module
+ *   - Three tiers:
+ *     - Desktop (GPU tier 2+, ≥1200px): Three.js 3D scene — particles, laptop assembly, camera fly-through
+ *     - Tablet (GPU tier 1+, ≥768px): SVG laptop silhouette + GSAP stroke animations + progress bar
+ *     - Mobile (<768px or weak GPU): CSS gradient + logo + tagline text reveal
+ *   - Skip: timeScale(12) fast-forward — prevents intermediate Three.js state flash
+ *   - Lenis scroll locked during animation, started on completion
+ *   - data-theme="intro" on body during animation for cursor/nav suppression
+ *
+ * z-index: 9999 — above nav (100), above everything
+ */
+---
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     BLOCKING SCRIPT — runs synchronously before browser paints.
+     If user has visited before, hide the overlay immediately so there
+     is zero flash of intro content on return visits.
+     ─────────────────────────────────────────────────────────────────────── -->
+<script is:inline>
+  (function () {
+    var visited = localStorage.getItem('ineffable_visited');
+    if (visited) {
+      var style = document.createElement('style');
+      style.id = 'intro-hide-style';
+      style.textContent = '#intro-overlay { display: none !important; }';
+      document.head.appendChild(style);
+    }
+  })();
+</script>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     OVERLAY MARKUP
+     ─────────────────────────────────────────────────────────────────────── -->
+<div id="intro-overlay" class="intro-overlay" aria-hidden="true" role="presentation">
+
+  <!-- Skip button — shared across all tiers, visible from frame 0 -->
+  <button
+    id="intro-skip"
+    class="intro-skip"
+    aria-label="Skip intro animation"
+    tabindex="0"
+  >
+    Skip
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2.5 6H9.5M6.5 3L9.5 6L6.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- Mobile content — hidden by tablet/desktop tier modules via display:none -->
+  <div class="intro-content" id="intro-mobile-content" aria-hidden="true">
+
+    <!-- IS Monogram — golden "I" matching nav logo aesthetic -->
+    <div class="intro-logo" id="intro-logo">
+      <div class="intro-logo-mark"></div>
+      <span class="intro-logo-text">Ineffable</span>
+    </div>
+
+    <!-- Tagline — split into word spans for GSAP stagger -->
+    <p class="intro-tagline" id="intro-tagline">
+      Custom Software. Tailored Websites. Zero Busywork.
+    </p>
+
+    <!-- Gold shimmer bar — animates across tagline text -->
+    <div class="intro-shimmer" id="intro-shimmer" aria-hidden="true"></div>
+
+  </div>
+
+  <!-- Shared ambient layers (visible on mobile, hidden by tablet/desktop if needed) -->
+  <div class="intro-noise" aria-hidden="true"></div>
+  <div class="intro-glow" aria-hidden="true"></div>
+
+</div>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     SCOPED STYLES
+     ─────────────────────────────────────────────────────────────────────── -->
+<style>
+  /* ── Overlay Shell ────────────────────────────────────────────────────── */
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;           /* Above nav (100), above everything */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Subtle navy gradient — dark but not flat */
+    background:
+      radial-gradient(ellipse at 50% 60%, #0e0e1e 0%, var(--bg-deep) 70%);
+
+    /* GPU-accelerated from the start */
+    will-change: opacity, transform;
+
+    /* Prevent scroll bleed through */
+    overflow: hidden;
+  }
+
+  /* ── Noise Texture ───────────────────────────────────────────────────── */
+  .intro-noise {
+    position: absolute;
+    inset: 0;
+    background-image: var(--noise);
+    opacity: 0;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Center Ambient Glow ─────────────────────────────────────────────── */
+  .intro-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 40vw;
+    max-width: 400px;
+    max-height: 400px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 193, 59, 0.06) 0%,
+      rgba(0, 229, 255, 0.03) 40%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: introGlowBreathe 4s ease-in-out infinite;
+  }
+
+  @keyframes introGlowBreathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 0.7; }
+  }
+
+  /* ── Content Container (Mobile Tier) ───────────────────────────────── */
+  .intro-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+    padding: 0 var(--space-lg);
+  }
+
+  /* ── IS Monogram / Logo ──────────────────────────────────────────────── */
+  .intro-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .intro-logo-mark {
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px var(--gold-glow),
+      0 0 40px rgba(255, 193, 59, 0.15);
+    animation: logoPulseIntro 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes logoPulseIntro {
+    0%, 100% { box-shadow: 0 0 15px var(--gold-glow), 0 0 30px rgba(255, 193, 59, 0.1); }
+    50%       { box-shadow: 0 0 25px rgba(255, 193, 59, 0.5), 0 0 60px rgba(255, 193, 59, 0.2); }
+  }
+
+  .intro-logo-text {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Tagline ──────────────────────────────────────────────────────────── */
+  .intro-tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.8;
+    position: relative;
+    overflow: visible;
+  }
+
+  .intro-tagline .intro-word {
+    display: inline-block;
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  /* ── Gold Shimmer ─────────────────────────────────────────────────────── */
+  .intro-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 193, 59, 0.0) 30%,
+      rgba(255, 193, 59, 0.35) 50%,
+      rgba(255, 193, 59, 0.0) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+
+  /* ── Skip Button ──────────────────────────────────────────────────────── */
+  .intro-skip {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 10000;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1rem;
+
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out);
+  }
+
+  .intro-skip:hover {
+    color: var(--gold);
+    border-color: rgba(255, 193, 59, 0.3);
+    background: rgba(255, 193, 59, 0.05);
+  }
+
+  .intro-skip:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 3px;
+  }
+
+  .intro-skip svg {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .intro-skip:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* ── Reduced Motion Override ──────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .intro-overlay {
+      display: none !important;
+    }
+  }
+
+  /* ── Mobile Sizing Adjustments ────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    .intro-logo-text {
+      font-size: var(--text-lg);
+    }
+
+    .intro-skip {
+      bottom: var(--space-md);
+      right: var(--space-md);
+    }
+  }
+</style>
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     MODULE SCRIPT — device-tiered animation with dynamic imports
+     2A-3: detect-gpu integration, Three.js desktop, GSAP tablet, skip upgrade
+     ─────────────────────────────────────────────────────────────────────── -->
+<script>
+  // ── Module-level state ────────────────────────────────────────────────
+  // Accessible by skip handler regardless of which tier is active
+  let currentTimeline: any = null;
+  let currentCleanup: (() => void) | null = null;
+  let skipLocked = false;
+
+  // ── Device tier detection (async — uses detect-gpu) ──────────────────
+  async function getDeviceTier(): Promise<'desktop' | 'tablet' | 'mobile'> {
+    const width = window.innerWidth;
+    // Mobile screen → always mobile tier (even if GPU is capable)
+    if (width < 768) return 'mobile';
+
+    try {
+      const { getGPUTier } = await import('detect-gpu');
+      const gpuTier = await getGPUTier();
+
+      // Desktop: wide screen + capable GPU (tier 2+)
+      if (width >= 1200 && gpuTier.tier >= 2) return 'desktop';
+      // Tablet: medium screen + any GPU (tier 1+), OR wide with weak GPU
+      if (gpuTier.tier >= 1) return 'tablet';
+      // Weak GPU on any screen → mobile animation
+      return 'mobile';
+    } catch {
+      // detect-gpu failed — fall back to screen width only
+      if (width >= 1200) return 'desktop';
+      if (width >= 768) return 'tablet';
+      return 'mobile';
+    }
+  }
+
+  // ── Lightweight text splitter ─────────────────────────────────────────
+  function splitIntoWords(el: HTMLElement): HTMLElement[] {
+    const raw = el.textContent || '';
+    const words = raw.trim().split(/\s+/);
+    el.textContent = '';
+
+    const spans: HTMLElement[] = [];
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'intro-word';
+      span.textContent = word;
+      el.appendChild(span);
+      if (i < words.length - 1) {
+        el.appendChild(document.createTextNode(' '));
+      }
+      spans.push(span);
+    });
+    return spans;
+  }
+
+  // ── Logo text: wrap first char in gradient span ───────────────────────
+  function wrapLogoFirstChar(el: HTMLElement): void {
+    const text = el.textContent || '';
+    if (!text) return;
+    const first = text[0];
+    const rest = text.slice(1);
+    el.innerHTML = '';
+    const goldSpan = document.createElement('span');
+    goldSpan.className = 'gradient-text-gold';
+    goldSpan.textContent = first;
+    el.appendChild(goldSpan);
+    el.appendChild(document.createTextNode(rest));
+  }
+
+  // ── Mobile tier animation ─────────────────────────────────────────────
+  // Extracted from 2A-2 — the simplest tier, runs inline (no dynamic import)
+  function initMobileIntro(overlay: HTMLElement, gsap: any): void {
+    const logo = document.getElementById('intro-logo');
+    const taglineEl = document.getElementById('intro-tagline') as HTMLElement | null;
+    const shimmer = document.getElementById('intro-shimmer');
+    const noise = overlay.querySelector('.intro-noise') as HTMLElement | null;
+
+    const logoText = overlay.querySelector('.intro-logo-text') as HTMLElement | null;
+    if (logoText) wrapLogoFirstChar(logoText);
+
+    let wordSpans: HTMLElement[] = [];
+    if (taglineEl) wordSpans = splitIntoWords(taglineEl);
+
+    // Set initial states
+    gsap.set(logo, { opacity: 0, scale: 1.05 });
+    gsap.set(wordSpans, { opacity: 0, y: 16 });
+    gsap.set(shimmer, { x: '-100%' });
+    if (noise) gsap.set(noise, { opacity: 0 });
+
+    // Build timeline (~3.5s)
+    const tl = gsap.timeline({ onComplete: finishIntro });
+
+    if (noise) {
+      tl.to(noise, { opacity: 0.04, duration: 0.6, ease: 'power2.out' }, 0.3);
+    }
+    tl.to(logo, { opacity: 1, scale: 1, duration: 0.9, ease: 'power4.out' }, 0.8);
+    tl.to(wordSpans, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06 }, 1.5);
+    tl.to(shimmer, { x: '200%', duration: 0.7, ease: 'power2.inOut' }, 2.5);
+    tl.to(overlay, { opacity: 0, y: -12, duration: 0.5, ease: 'power3.in' }, 3.0);
+
+    currentTimeline = tl;
+  }
+
+  // ── Main init (async — device detection + dynamic imports) ───────────
+  async function initIntroAnimation(): Promise<void> {
+    const overlay = document.getElementById('intro-overlay');
+    const skipBtn = document.getElementById('intro-skip');
+
+    // Guard: overlay hidden/removed by blocking script
+    if (!overlay || overlay.style.display === 'none') {
+      cleanup();
+      return;
+    }
+
+    const hideStyle = document.getElementById('intro-hide-style');
+    if (hideStyle) {
+      hideStyle.remove();
+      overlay.remove();
+      return;
+    }
+
+    // Guard: reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      overlay.remove();
+      setVisitedFlag();
+      return;
+    }
+
+    // Guard: already visited (belt-and-suspenders with blocking script)
+    if (localStorage.getItem('ineffable_visited')) {
+      overlay.remove();
+      return;
+    }
+
+    // Get GSAP
+    const gsap = (window as any).gsap;
+    if (!gsap) {
+      setTimeout(() => finishIntro(), 800);
+      return;
+    }
+
+    // ── Lock scroll + set intro theme ────────────────────────────────
+    document.body.style.overflow = 'hidden';
+    document.body.setAttribute('data-theme', 'intro');
+
+    // Stop Lenis smooth scroll during intro
+    const lenis = (window as any).lenis;
+    if (lenis) lenis.stop();
+
+    // ── Detect device tier ───────────────────────────────────────────
+    const tier = await getDeviceTier();
+
+    // ── Branch by tier ───────────────────────────────────────────────
+    switch (tier) {
+      case 'desktop': {
+        try {
+          const { initDesktopIntro } = await import('./intro-desktop');
+          const result = initDesktopIntro({
+            container: overlay,
+            onComplete: finishIntro,
+            gsap,
+          });
+          currentTimeline = result.timeline;
+          currentCleanup = result.cleanup;
+        } catch (err) {
+          console.warn('[Intro] Desktop tier failed, falling back to mobile:', err);
+          initMobileIntro(overlay, gsap);
+        }
+        break;
+      }
+      case 'tablet': {
+        try {
+          const { initTabletIntro } = await import('./intro-tablet');
+          const result = initTabletIntro({
+            container: overlay,
+            onComplete: finishIntro,
+            gsap,
+          });
+          currentTimeline = result.timeline;
+          currentCleanup = result.cleanup;
+        } catch (err) {
+          console.warn('[Intro] Tablet tier failed, falling back to mobile:', err);
+          initMobileIntro(overlay, gsap);
+        }
+        break;
+      }
+      default: {
+        initMobileIntro(overlay, gsap);
+      }
+    }
+
+    // ── Skip button (shared — works for all tiers) ───────────────────
+    // Uses timeScale(12) instead of kill+fade — timeline plays to correct
+    // final state at 12x speed, preventing intermediate Three.js state flash
+    const handleSkip = () => {
+      if (skipLocked || !currentTimeline) return;
+      skipLocked = true;
+      gsap.to(currentTimeline, {
+        timeScale: 12,
+        duration: 0.3,
+        ease: 'power2.in',
+      });
+    };
+
+    skipBtn?.addEventListener('click', handleSkip);
+    skipBtn?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleSkip();
+      }
+    });
+  }
+
+  // ── Finish + cleanup ─────────────────────────────────────────────────
+  function finishIntro(): void {
+    setVisitedFlag();
+
+    // Call tier-specific cleanup (Three.js dispose, SVG removal, etc.)
+    if (currentCleanup) {
+      currentCleanup();
+      currentCleanup = null;
+    }
+    currentTimeline = null;
+    skipLocked = false;
+
+    // Restore Lenis smooth scroll
+    const lenis = (window as any).lenis;
+    if (lenis) lenis.start();
+
+    // Remove intro theme — enables custom cursor, restores nav behavior
+    document.body.removeAttribute('data-theme');
+
+    cleanup();
+  }
+
+  function setVisitedFlag(): void {
+    try {
+      localStorage.setItem('ineffable_visited', '1');
+    } catch {
+      // localStorage unavailable (private browsing edge case) — ignore
+    }
+  }
+
+  function cleanup(): void {
+    document.body.style.overflow = '';
+
+    const overlay = document.getElementById('intro-overlay');
+    if (overlay) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay.remove();
+        });
+      });
+    }
+
+    document.getElementById('intro-hide-style')?.remove();
+  }
+
+  // ── Entry point ──────────────────────────────────────────────────────
+  function waitForGsap(callback: () => void, attempts = 0): void {
+    if ((window as any).gsap) {
+      callback();
+    } else if (attempts < 20) {
+      setTimeout(() => waitForGsap(callback, attempts + 1), 50);
+    } else {
+      callback();
+    }
+  }
+
+  function run(): void {
+    waitForGsap(() => {
+      initIntroAnimation();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+
+  // ── View Transition cleanup ──────────────────────────────────────────
+  // Intro is first-visit only. On subsequent navigations, Astro swaps in
+  // fresh overlay markup but the module script doesn't re-run — so the
+  // overlay sits at z-index 9999 with no skip listener and scroll locked.
+  // Fix: remove overlay + restore scroll on every page swap.
+  document.addEventListener('astro:after-swap', () => {
+    const overlay = document.getElementById('intro-overlay');
+    if (overlay) overlay.remove();
+    document.getElementById('intro-hide-style')?.remove();
+    document.body.style.overflow = '';
+    document.body.removeAttribute('data-theme');
+  });
+</script>

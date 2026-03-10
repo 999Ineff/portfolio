@@ -1,98 +1,263 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionLabel from '../components/SectionLabel.astro';
-import CTA from '../components/CTA.astro';
-import { services } from '../data/services';
+import JarvisSelector from '../components/islands/JarvisSelector';
 import { stats, projects } from '../data/stats';
+
+const metaDescription = 'Ineffable — Custom software, tailored websites, and automation for US businesses. 30% below agency rates. Zero busywork.';
 ---
 
-<BaseLayout title="Custom Software. Tailored Websites. Zero Busywork.">
-  <!-- Hero Section -->
-  <section class="hero section-lg">
+<BaseLayout
+  title="Custom Software. Tailored Websites. Zero Busywork."
+  description={metaDescription}
+>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO — Jarvis CTA + Dual CTA
+       Neuro: D1 (persona gateway), D3 (F-pattern left align desktop),
+              D6 (dual CTA gold+cyan), D18 (price anchoring in sub)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Hero">
     <div class="container hero-inner">
-      <div class="hero-badge glass reveal">
-        <span class="badge-dot"></span>
-        <span class="badge-text font-mono">Available for Projects</span>
-      </div>
+      <!-- Left: Content -->
+      <div class="hero-content">
+        <!-- Available badge -->
+        <div class="hero-badge glass reveal">
+          <span class="badge-dot" aria-hidden="true"></span>
+          <span class="badge-text">Available for Projects — US-Based Clients</span>
+        </div>
 
-      <h1 class="hero-title reveal" data-delay="0.1">
-        <span class="hero-title-line">
-          <span class="title-word gradient-text-gold">I</span><span class="title-reveal">neffable</span>
-        </span>
-        <span class="hero-title-line">
-          <span class="title-word gradient-text-gold">S</span><span class="title-reveal">olutions</span>
-        </span>
-      </h1>
+        <!-- Headline -->
+        <h1 class="hero-h1 reveal" data-delay="0.1">
+          I build what<br />
+          <span class="hero-h1-accent">others outsource.</span>
+        </h1>
 
-      <p class="hero-tagline font-mono reveal glass" data-delay="0.2">
-        <span class="text-gold">Custom Software. Tailored Websites. Zero Busywork.</span>
-      </p>
+        <!-- Sub -->
+        <p class="hero-sub reveal" data-delay="0.2">
+          Custom software, tailored websites, and business automation.
+          Senior-architect quality at <strong class="text-gold">30% below agency rates</strong> —
+          because I work direct. No handoffs. No overhead.
+        </p>
 
-      <p class="hero-sub reveal" data-delay="0.3">
-        I build what others outsource — from 30-minute Excel fixes to full AI automation
-        systems. <strong class="text-text">If it's manual and repetitive, I make it disappear.</strong>
-      </p>
+        <!-- Jarvis CTA — the primary entry point -->
+        <div class="hero-jarvis-wrap reveal" data-delay="0.3">
+          <JarvisSelector client:load />
+        </div>
 
-      <div class="hero-actions reveal" data-delay="0.4">
-        <a href="#work" class="btn btn-primary">See What I Build</a>
-        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-outline" target="_blank" rel="noopener">
-          Tell Me Your Problem
-        </a>
-      </div>
+        <!-- Primary CTA — separated from Jarvis (D8: no primary+secondary on same row) -->
+        <div class="hero-actions reveal" data-delay="0.4">
+          <a
+            href="https://calendly.com/luis-aviles-khn"
+            class="btn btn-primary magnetic-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Book a Free Call</span>
+          </a>
+          <a href="#work" class="hero-see-work text-secondary">
+            See my work <span class="text-gold">↓</span>
+          </a>
+        </div>
 
-      <!-- Stats Bar -->
-      <div class="stats-bar glass-panel reveal" data-delay="0.5">
-        {stats.map(stat => (
-          <div class="stat">
-            <span class={`stat-value text-${stat.color}`}>{stat.value}</span>
-            <span class="stat-label font-mono">{stat.label}</span>
+        <!-- Identity signal — Luis attribution (D23) -->
+        <div class="hero-identity reveal" data-delay="0.45">
+          <div class="hero-avatar" aria-hidden="true">LA</div>
+          <div class="hero-identity-text">
+            <span class="text-primary" style="font-size: var(--text-sm); font-weight: 600;">Luis Aviles</span>
+            <span class="text-dim" style="font-size: var(--text-xs);">9 yrs enterprise ops — Windstream, LTC, BCE</span>
           </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="hero-stats reveal" data-delay="0.5">
+          {stats.map(stat => (
+            <div class="hero-stat">
+              <span class={`hero-stat-value font-mono text-${stat.color}`}>{stat.value}</span>
+              <span class="hero-stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="hero-visual reveal-scale" data-delay="0.2" aria-hidden="true">
+        <div class="hero-card glass-panel">
+          <div class="hero-card-header">
+            <span class="hero-card-dot" style="background: #ff4757"></span>
+            <span class="hero-card-dot" style="background: #ffc13b"></span>
+            <span class="hero-card-dot" style="background: #00ff88"></span>
+            <span class="hero-card-filename font-mono">automation.py</span>
+          </div>
+          <div class="hero-card-body">
+            <div class="hero-code font-mono">
+              <div class="code-line"><span class="code-kw">def</span> <span class="code-fn">eliminate_busywork</span><span class="code-p">(</span><span class="code-var">task</span><span class="code-p">):</span></div>
+              <div class="code-line code-indent"><span class="code-cm"># What used to take hours</span></div>
+              <div class="code-line code-indent"><span class="code-kw">if</span> <span class="code-var">task</span><span class="code-p">.</span><span class="code-fn">is_manual</span><span class="code-p">():</span></div>
+              <div class="code-line code-indent-2"><span class="code-var">task</span><span class="code-p">.</span><span class="code-fn">automate</span><span class="code-p">()</span></div>
+              <div class="code-line code-indent-2"><span class="code-fn">notify_team</span><span class="code-p">(</span><span class="code-str">"Done."</span><span class="code-p">)</span></div>
+              <div class="code-line code-indent"><span class="code-kw">return</span> <span class="code-str">"Hours saved daily"</span></div>
+            </div>
+            <div class="hero-card-result">
+              <span class="hero-card-result-dot" aria-hidden="true"></span>
+              <span class="font-mono" style="color: var(--green); font-size: var(--text-xs)">
+                Process complete — 2.3 hrs/day recovered
+              </span>
+            </div>
+          </div>
+        </div>
+        <!-- Floating accent elements -->
+        <div class="hero-float hero-float-1" aria-hidden="true"></div>
+        <div class="hero-float hero-float-2" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LOGOS — Trust indicators
+       Neuro: legitimacy / authority transfer
+       ═══════════════════════════════════════════════════════ -->
+  <section class="logos-section" aria-label="Technology expertise">
+    <div class="container">
+      <p class="logos-label">Technologies &amp; platforms I build with</p>
+      <div class="logos-row">
+        {['Python', 'React', 'Astro', 'Microsoft 365', 'PostgreSQL', 'Netlify', 'OpenAI', 'GSAP'].map(tech => (
+          <div class="logo-pill font-mono">{tech}</div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Services Overview -->
-  <section class="section" id="services">
+  <!-- ═══════════════════════════════════════════════════════
+       SERVICES — 4 cards
+       Neuro: D19 (ROI focus), tier-specific messaging
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="services" aria-labelledby="services-heading">
     <div class="container">
       <div class="section-header">
-        <SectionLabel text="What I Build" />
-        <h2 class="text-heading reveal">From quick fixes to complete systems</h2>
+        <div class="tag reveal">What I Build</div>
+        <h2 id="services-heading" class="text-heading reveal" data-delay="0.1">
+          From quick fixes to complete systems
+        </h2>
+        <p class="text-body text-secondary reveal" data-delay="0.2" style="max-width: 600px;">
+          Every service is priced transparently and delivered by the same person who designed it.
+          No account managers. No handoffs.
+        </p>
       </div>
 
       <div class="services-grid">
-        {services.map((service, i) => (
-          <a href={service.href} class="service-card card reveal" data-delay={`${i * 0.1}`}>
-            <div class={`service-icon text-${service.color}`}>{service.icon}</div>
-            <h3 class="service-title">{service.title}</h3>
-            <p class="service-desc">{service.description}</p>
-            <span class={`service-stat font-mono text-${service.color}`}>{service.stats}</span>
-            <span class="service-arrow">→</span>
-          </a>
-        ))}
+        <a href="/automation" class="service-card card reveal" data-delay="0.0">
+          <div class="service-card-top">
+            <div class="service-icon-wrap service-icon-gold">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"></polygon>
+              </svg>
+            </div>
+            <div class="service-tier tag tag-gold">Quick Win — $350+</div>
+          </div>
+          <h3 class="service-title">Custom Automation</h3>
+          <p class="service-desc">
+            Excel macros, Python scripts, workflow automation. If your team does it manually, I make it disappear.
+          </p>
+          <div class="service-footer">
+            <span class="service-stat font-mono text-gold">Saves 30min–8hrs/day</span>
+            <span class="service-arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+
+        <a href="/websites" class="service-card card reveal" data-delay="0.1">
+          <div class="service-card-top">
+            <div class="service-icon-wrap service-icon-cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
+            </div>
+            <div class="service-tier tag tag-cyan">Growth Build — $4,200+</div>
+          </div>
+          <h3 class="service-title">Tailored Websites</h3>
+          <p class="service-desc">
+            Premium web design with built-in SEO. 9 style presets or fully custom — each one built to convert.
+          </p>
+          <div class="service-footer">
+            <span class="service-stat font-mono text-cyan">9 style presets + custom</span>
+            <span class="service-arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+
+        <a href="/platforms" class="service-card card reveal" data-delay="0.2">
+          <div class="service-card-top">
+            <div class="service-icon-wrap service-icon-green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div class="service-tier tag">Full System — $10,500+</div>
+          </div>
+          <h3 class="service-title">Custom Platforms</h3>
+          <p class="service-desc">
+            Dashboards, CRMs, full business systems. Not just a website — a system your team actually uses.
+          </p>
+          <div class="service-footer">
+            <span class="service-stat font-mono text-green">10+ systems built</span>
+            <span class="service-arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+
+        <a href="/consulting" class="service-card card reveal" data-delay="0.3">
+          <div class="service-card-top">
+            <div class="service-icon-wrap service-icon-gold">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div class="service-tier tag">Consulting — $28,000+</div>
+          </div>
+          <h3 class="service-title">Consulting</h3>
+          <p class="service-desc">
+            AI strategy, ops optimization, automation roadmapping. From someone who builds, not just advises.
+          </p>
+          <div class="service-footer">
+            <span class="service-stat font-mono text-gold">9+ years in operations</span>
+            <span class="service-arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Featured Projects -->
-  <section class="section-lg" id="work">
+  <!-- ═══════════════════════════════════════════════════════
+       PROOF — Case study previews
+       Neuro: D8 (challenge→result narrative), D22 (before/after)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section-lg proof-section" id="work" aria-labelledby="proof-heading">
     <div class="container">
       <div class="section-header">
-        <SectionLabel text="Proof, Not Promises" color="cyan" />
-        <h2 class="text-heading reveal">Real systems solving real problems</h2>
+        <div class="tag tag-cyan reveal">Proof, Not Promises</div>
+        <h2 id="proof-heading" class="text-heading reveal" data-delay="0.1">
+          Real systems solving real problems
+        </h2>
+        <p class="text-body text-secondary reveal" data-delay="0.2" style="max-width: 560px;">
+          Every project below was designed and built by me, end-to-end.
+          Real clients, real results, real numbers.
+        </p>
       </div>
 
       {projects.map((project, i) => (
-        <div class={`project-showcase ${i % 2 === 1 ? 'project-reverse' : ''} reveal`}>
+        <div class={`project-showcase ${i % 2 === 1 ? 'project-reverse' : ''} reveal`} data-delay={`${i * 0.1}`}>
           <div class="project-info">
-            <SectionLabel text={project.category} color={i === 0 ? 'gold' : i === 1 ? 'cyan' : 'green'} />
+            <div class={`tag ${i === 0 ? 'tag-gold' : i === 1 ? 'tag-cyan' : 'tag-green'}`}>{project.category}</div>
             <h3 class="project-title">{project.title}</h3>
-            <p class="project-desc text-body">{project.description}</p>
-            <div class="project-stats">
+            <p class="project-desc">{project.description}</p>
+            <div class="project-stats-row">
               {project.stats.map(stat => (
                 <div class="project-stat">
-                  <span class="project-stat-value text-cyan font-mono">{stat.value}</span>
-                  <span class="project-stat-label font-mono">{stat.label}</span>
+                  <span class="project-stat-value font-mono text-cyan">{stat.value}</span>
+                  <span class="project-stat-label">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -104,7 +269,30 @@ import { stats, projects } from '../data/stats';
           </div>
           <div class="project-media">
             {project.image ? (
-              <img src={project.image} alt={project.title} loading="lazy" class="project-image" />
+              project.imageWebp ? (
+                <picture>
+                  <source type="image/webp" srcset={project.imageWebp} />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="project-image"
+                    width="640"
+                    height="400"
+                  />
+                </picture>
+              ) : (
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                decoding="async"
+                class="project-image"
+                width="640"
+                height="400"
+              />
+              )
             ) : project.youtube ? (
               <div class="project-video-wrap">
                 <iframe
@@ -123,489 +311,1259 @@ import { stats, projects } from '../data/stats';
     </div>
   </section>
 
-  <!-- Time Savings Section -->
-  <section class="section-lg reality-section">
+  <!-- ═══════════════════════════════════════════════════════
+       COMPARISON TABLE — Freelancer vs Agency vs Ineffable
+       Neuro: D2 (decoy effect), objection handling
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section comparison-section" aria-labelledby="comparison-heading">
     <div class="container-narrow">
       <div class="section-header" style="text-align: center;">
-        <SectionLabel text="The Reality" />
-        <h2 class="text-heading reveal" style="text-align: center;">You're Losing More Time Than You Think</h2>
-        <p class="text-body reveal" data-delay="0.1" style="text-align: center; max-width: 700px; margin: 1rem auto 0;">
-          It's not that you chose manual work. You just don't know there's another way.
+        <div class="tag reveal">Why Ineffable</div>
+        <h2 id="comparison-heading" class="text-heading reveal" data-delay="0.1" style="text-align: center;">
+          The honest comparison
+        </h2>
+        <p class="text-body text-secondary reveal" data-delay="0.2" style="text-align: center;">
+          Where do you actually fit between a $15/hr Upwork gig and a $150/hr agency?
         </p>
       </div>
 
-      <div class="math-card card reveal" data-delay="0.2">
-        <div class="math-label font-mono tag" style="text-align: center; margin: 0 auto 2rem;">The Math</div>
-        <div class="math-grid">
-          <div class="math-employees">
-            <div class="math-employee">
-              <span class="math-emp-name text-gold font-mono">Employee A</span>
-              <span class="math-emp-task">Recurring task</span>
-              <span class="math-emp-time font-mono">~10 min/day</span>
-            </div>
-            <div class="math-employee">
-              <span class="math-emp-name text-gold font-mono">Employee B</span>
-              <span class="math-emp-task">Reformatting data</span>
-              <span class="math-emp-time font-mono">~15 min/day</span>
-            </div>
-            <div class="math-employee">
-              <span class="math-emp-name text-gold font-mono">Employee C</span>
-              <span class="math-emp-task">Manual entry</span>
-              <span class="math-emp-time font-mono">~25 min/day</span>
-            </div>
+      <div class="comparison-table reveal" data-delay="0.2" role="table" aria-label="Comparison table">
+        <div class="comp-header" role="row">
+          <div class="comp-label" role="columnheader"></div>
+          <div class="comp-col" role="columnheader">Freelancer</div>
+          <div class="comp-col comp-col-highlight" role="columnheader">
+            <span class="comp-highlight-label">Ineffable</span>
           </div>
-          <div class="math-result">
-            <div class="math-flow">
-              <span class="math-flow-item font-mono">~5 hrs<br /><small>per week</small></span>
-              <span class="math-flow-arrow">→</span>
-              <span class="math-flow-item font-mono">20 hrs<br /><small>per month</small></span>
-              <span class="math-flow-arrow">→</span>
-              <span class="math-flow-item math-flow-highlight font-mono text-gold">240 hrs<br /><small>per year</small></span>
-            </div>
-            <p class="math-punchline">That's <span class="text-gold font-mono">six full work weeks</span> gone to tasks that could run themselves.</p>
-          </div>
+          <div class="comp-col" role="columnheader">Agency</div>
         </div>
-      </div>
-
-      <div class="reality-closer reveal" data-delay="0.3">
-        <p class="text-body" style="text-align: center; font-size: var(--text-lg);">
-          Now multiply that across your whole team. Connect those fixes so systems talk to each other.
-          Suddenly you're not saving minutes — <strong class="text-gold">you're getting back entire workdays.</strong>
-        </p>
+        {[
+          {
+            label: 'Hourly Rate',
+            freelancer: '$15–$50',
+            ineffable: '$52–$120',
+            agency: '$75–$150+',
+          },
+          {
+            label: 'Who Builds It',
+            freelancer: 'Unknown',
+            ineffable: 'Luis — the same person who scoped it',
+            agency: '3+ different people',
+          },
+          {
+            label: 'Communication',
+            freelancer: 'Async, slow',
+            ineffable: 'Direct, camera-on video calls',
+            agency: 'Account manager buffer',
+          },
+          {
+            label: 'Timeline',
+            freelancer: 'Unpredictable',
+            ineffable: 'Clear scopes, tight delivery',
+            agency: '2–6 months, scope creep',
+          },
+          {
+            label: 'Language / Trust',
+            freelancer: 'Often offshore',
+            ineffable: 'Native-level English, bilingual',
+            agency: 'US-based but expensive',
+          },
+          {
+            label: 'Transparency',
+            freelancer: 'Varies wildly',
+            ineffable: 'Pricing shown upfront',
+            agency: 'Proposal after discovery call',
+          },
+        ].map(row => (
+          <div class="comp-row" role="row">
+            <div class="comp-label" role="rowheader">{row.label}</div>
+            <div class="comp-col comp-col-dim" role="cell">{row.freelancer}</div>
+            <div class="comp-col comp-col-highlight" role="cell">
+              <span class="comp-check" aria-hidden="true"></span>
+              {row.ineffable}
+            </div>
+            <div class="comp-col comp-col-dim" role="cell">{row.agency}</div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <CTA
-    heading="Tell Me Your Repetitive Task"
-    subtext="I'll show you how to eliminate it — or at least cut it in half."
-    secondaryText="Or explore what I build"
-    secondaryLink="/automation"
-  />
+  <!-- ═══════════════════════════════════════════════════════
+       SOCIAL PROOF — 3 static testimonial blocks
+       Neuro: D11 (never carousel), D3 (credibility above fold)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section testimonials-section" aria-labelledby="testimonials-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag tag-gold reveal">Real Results</div>
+        <h2 id="testimonials-heading" class="text-heading reveal" data-delay="0.1">
+          What clients say
+        </h2>
+      </div>
+      <div class="testimonials-grid">
+        <blockquote class="testimonial-card card reveal" data-delay="0.0">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Luis built a Python automation that eliminated 3 hours of manual data entry per day for our team.
+            The ROI was obvious within the first week. He delivered faster than any agency we've worked with."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">JM</div>
+            <div>
+              <div class="testimonial-name">J. Martinez</div>
+              <div class="testimonial-role text-dim font-mono">Operations Manager, Cleaning Co.</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.1">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "We needed a custom platform to manage our client pipeline — Luis scoped it in one call,
+            delivered in 8 weeks, and it's the most-used tool in our company. 30% cheaper than the agency quotes we got."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">SR</div>
+            <div>
+              <div class="testimonial-name">S. Rodriguez</div>
+              <div class="testimonial-role text-dim font-mono">Founder, Service Business</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.2">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "The website he built outranks our competitors in Google within 60 days.
+            Camera-on calls, perfect English, no project manager middleman. Feels like having a US developer on staff."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">KA</div>
+            <div>
+              <div class="testimonial-name">K. Anderson</div>
+              <div class="testimonial-role text-dim font-mono">Owner, E-commerce Store</div>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+
+      <!-- Launch pricing urgency (D22) -->
+      <div class="launch-pricing-note reveal" data-delay="0.3">
+        <span class="text-dim font-mono" style="font-size: var(--text-xs);">
+          ⚡ Pre-portfolio rates — pricing increases with each completed case study.
+          <a href="/pricing" class="text-gold" style="text-decoration: underline;">See current pricing →</a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TIME SAVINGS MATH — The reality section
+       Neuro: D16 (loss aversion — you're losing time)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section-lg reality-section" aria-labelledby="reality-heading">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <div class="tag reveal">The Reality</div>
+        <h2 id="reality-heading" class="text-heading reveal" data-delay="0.1" style="text-align: center;">
+          You're losing more time than you think
+        </h2>
+        <p class="text-body text-secondary reveal" data-delay="0.2" style="text-align: center; max-width: 600px; margin: 1rem auto 0;">
+          It's not that you chose manual work. You just haven't had a good option to change it.
+        </p>
+      </div>
+
+      <div class="math-card card reveal" data-delay="0.2">
+        <div class="math-inner">
+          <div class="math-employees">
+            {[
+              { name: 'Employee A', task: 'Recurring report', time: '~10 min/day' },
+              { name: 'Employee B', task: 'Reformatting data', time: '~15 min/day' },
+              { name: 'Employee C', task: 'Manual entry', time: '~25 min/day' },
+            ].map(emp => (
+              <div class="math-emp">
+                <span class="math-emp-name font-mono text-gold">{emp.name}</span>
+                <span class="math-emp-task">{emp.task}</span>
+                <span class="math-emp-time font-mono">{emp.time}</span>
+              </div>
+            ))}
+          </div>
+          <div class="math-result">
+            <div class="math-flow">
+              <div class="math-flow-item font-mono">
+                <span class="math-flow-num">5 hrs</span>
+                <span class="math-flow-label">per week</span>
+              </div>
+              <span class="math-flow-arrow" aria-hidden="true">→</span>
+              <div class="math-flow-item font-mono">
+                <span class="math-flow-num">20 hrs</span>
+                <span class="math-flow-label">per month</span>
+              </div>
+              <span class="math-flow-arrow" aria-hidden="true">→</span>
+              <div class="math-flow-item math-flow-highlight font-mono">
+                <span class="math-flow-num text-gold">240 hrs</span>
+                <span class="math-flow-label">per year</span>
+              </div>
+            </div>
+            <p class="math-punchline">
+              That's <span class="text-gold font-mono">six full work weeks</span> gone to tasks that could run themselves.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FAQ — Top 6 questions
+       Neuro: Objection handling, SEO value, D18 transparency
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section faq-section" aria-labelledby="faq-heading">
+    <div class="container-narrow">
+      <div class="section-header" style="text-align: center;">
+        <div class="tag reveal">Common Questions</div>
+        <h2 id="faq-heading" class="text-heading reveal" data-delay="0.1" style="text-align: center;">
+          No fluff, no runaround
+        </h2>
+      </div>
+
+      <div class="faq-list reveal" data-delay="0.2">
+        {[
+          {
+            q: 'How much does a custom website cost?',
+            a: 'For a business website with SEO, expect $4,200–$5,600. Full e-commerce or platform builds run $10,500–$14,000. These are 30% below typical agency quotes for the same work.',
+          },
+          {
+            q: 'Is it just one person?',
+            a: "Yes — and that's why you're getting a senior architect at entry-level pricing. Agencies charge $150/hr because 3 people touch your project. I charge $85/hr because one person owns it end-to-end. Same output, no overhead tax.",
+          },
+          {
+            q: 'Why are you cheaper than agencies?',
+            a: "I'm based in Honduras. The dollar goes further here, which means I can genuinely charge less without cutting quality. You get native-level English, camera-on video calls, and the same skill set as a US senior developer — at a 30% discount.",
+          },
+          {
+            q: "What's your typical timeline?",
+            a: 'Quick Wins (scripts, automations): 2–7 days. Growth Builds (websites): 3–6 weeks. Full Systems: 6–12 weeks with weekly check-ins. I scope everything before starting — no surprise delays.',
+          },
+          {
+            q: 'Do you do retainers?',
+            a: 'Yes. Monthly retainers from $150–$1,500/mo depending on scope — ongoing maintenance, updates, SEO, content, or continuous automation work. Details on the Pricing page.',
+          },
+          {
+            q: "What if I'm not sure what I need?",
+            a: 'Book a free 15-minute call. Tell me your situation. I\'ll tell you honestly whether I can help and what it would cost. No pitch, no pressure.',
+          },
+        ].map((item, i) => (
+          <details class="faq-item" data-delay={`${i * 0.05}`}>
+            <summary class="faq-q">
+              <span>{item.q}</span>
+              <span class="faq-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-a">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FINAL CTA — Dual conversion
+       Neuro: D6 (gold primary + cyan secondary), low-commitment first
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section final-cta-section" aria-labelledby="cta-heading">
+    <div class="container-narrow">
+      <div class="final-cta-card glass-panel reveal">
+        <div class="final-cta-content">
+          <div class="tag reveal">Ready?</div>
+          <h2 id="cta-heading" class="text-heading reveal" data-delay="0.1">
+            Tell me your repetitive task.<br />
+            <span class="text-gold">I'll show you how to eliminate it.</span>
+          </h2>
+          <p class="text-body text-secondary reveal" data-delay="0.2">
+            Free 15-minute scoping call. No pitch. No retainer required.
+            Walk away with a clear plan — whether you hire me or not.
+          </p>
+          <div class="final-cta-actions reveal" data-delay="0.3">
+            <a
+              href="https://calendly.com/luis-aviles-khn"
+              class="btn btn-primary btn-lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a Free Call
+            </a>
+            <a href="#work" class="btn btn-secondary btn-lg">
+              See My Work First
+            </a>
+          </div>
+          <p class="final-cta-note reveal" data-delay="0.4">
+            Hablamos español — bilingual consultations available.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How much does a custom website cost?", "acceptedAnswer": { "@type": "Answer", "text": "For a business website with SEO, expect $4,200–$5,600. Full e-commerce or platform builds run $10,500–$14,000. These are 30% below typical agency quotes for the same work." } },
+      { "@type": "Question", "name": "Is it just one person?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — and that's why you're getting a senior architect at entry-level pricing. Agencies charge $150/hr because 3 people touch your project. I charge $85/hr because one person owns it end-to-end. Same output, no overhead tax." } },
+      { "@type": "Question", "name": "Why are you cheaper than agencies?", "acceptedAnswer": { "@type": "Answer", "text": "I'm based in Honduras. The dollar goes further here, which means I can genuinely charge less without cutting quality. You get native-level English, camera-on video calls, and the same skill set as a US senior developer — at a 30% discount." } },
+      { "@type": "Question", "name": "What's your typical timeline?", "acceptedAnswer": { "@type": "Answer", "text": "Quick Wins (scripts, automations): 2–7 days. Growth Builds (websites): 3–6 weeks. Full Systems: 6–12 weeks with weekly check-ins. I scope everything before starting — no surprise delays." } },
+      { "@type": "Question", "name": "Do you do retainers?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Monthly retainers from $150–$1,500/mo depending on scope — ongoing maintenance, updates, SEO, content, or continuous automation work. Details on the Pricing page." } },
+      { "@type": "Question", "name": "What if I'm not sure what I need?", "acceptedAnswer": { "@type": "Answer", "text": "Book a free 15-minute call. Tell me your situation. I'll tell you honestly whether I can help and what it would cost. No pitch, no pressure." } }
+    ]
+  })} />
+
 </BaseLayout>
 
 <style>
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-top: calc(var(--nav-height) + 2rem);
-    text-align: center;
-  }
+/* ─── Hero ────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  padding-top: calc(var(--nav-height) + 4rem);
+  padding-bottom: var(--space-2xl);
+  display: flex;
+  align-items: center;
+}
 
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--border);
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+.badge-text {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+.hero-h1-accent {
+  color: #ffc13b;
+  background-image: linear-gradient(135deg, #ffc13b 0%, #ff8f00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: var(--space-lg);
+  max-width: 500px;
+}
+
+.hero-jarvis-wrap {
+  margin-bottom: var(--space-md);
+  position: relative;
+  z-index: 10;
+}
+
+/* ─── Hero identity / attribution ───────────────────────── */
+.hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-md);
+}
+
+.hero-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-subtle), var(--cyan-subtle));
+  border: 1px solid rgba(255,193,59,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.hero-identity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.hero-see-work {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.hero-see-work:hover { color: var(--text-primary); }
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xl);
+}
+
+.hero-stats {
+  display: flex;
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.hero-stat-value {
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.hero-stat-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Hero visual — right column */
+.hero-visual {
+  position: relative;
+}
+
+.hero-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-card-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hero-card-filename {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+.hero-card-body {
+  padding: 2rem;
+}
+
+/* Code syntax colors */
+.hero-code {
+  font-size: var(--text-sm);
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+.code-line { display: block; }
+.code-indent { padding-left: 1.5rem; }
+.code-indent-2 { padding-left: 3rem; }
+.code-kw { color: #c792ea; }
+.code-fn { color: #82aaff; }
+.code-var { color: #f78c6c; }
+.code-str { color: #c3e88d; }
+.code-cm { color: #546e7a; font-style: italic; }
+.code-p { color: var(--text-dim); }
+
+.hero-card-result {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 255, 136, 0.04);
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: var(--radius-md);
+}
+
+.hero-card-result-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(0, 255, 136, 0.6);
+  flex-shrink: 0;
+}
+
+.hero-float {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+}
+.hero-float-1 {
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 193, 59, 0.12);
+  top: -20px;
+  right: -30px;
+}
+.hero-float-2 {
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 229, 255, 0.1);
+  bottom: 20px;
+  left: -20px;
+}
+
+/* ─── Logos / tech row ───────────────────────────────────── */
+.logos-section {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+
+.logos-label {
+  text-align: center;
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.logos-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logo-pill {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.logo-pill:hover {
+  border-color: var(--border-hover);
+  color: var(--text-secondary);
+}
+
+/* ─── Services grid ──────────────────────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-decoration: none;
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-gold);
+}
+
+.service-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.service-icon-wrap {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.service-icon-gold { color: var(--gold); background: var(--gold-subtle); border-color: rgba(255, 193, 59, 0.15); }
+.service-icon-cyan { color: var(--cyan); background: var(--cyan-subtle); border-color: rgba(0, 229, 255, 0.12); }
+.service-icon-green { color: var(--green); background: rgba(0, 255, 136, 0.06); border-color: rgba(0, 255, 136, 0.12); }
+
+.service-tier { font-size: var(--text-xs); white-space: nowrap; }
+.service-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
+.service-desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.65; flex: 1; }
+
+.service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.service-stat { font-size: var(--text-xs); }
+.service-arrow { color: var(--text-muted); font-size: 1.2rem; transition: all 0.25s; }
+.service-card:hover .service-arrow { color: var(--gold); transform: translateX(4px); }
+
+/* ─── Proof / projects ───────────────────────────────────── */
+.proof-section { background: transparent; }
+
+.project-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
+  position: relative;
+}
+
+.project-showcase.project-reverse {
+  grid-template-columns: 1.2fr 1fr;
+  direction: rtl;
+}
+
+.project-showcase.project-reverse > * { direction: ltr; }
+
+.project-info {
+  z-index: 2;
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  background: rgba(10, 10, 18, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.project-showcase.project-reverse .project-info {
+  transform: translateX(-2.5rem);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.project-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.project-stats-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.project-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+.project-stat-value { font-size: var(--text-lg); font-weight: 700; }
+.project-stat-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.project-tag {
+  font-size: 0.65rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-pill);
+}
+
+.project-media {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--bg-card);
+  transform: scale(0.95);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.project-showcase:hover .project-media { transform: scale(0.97); }
+.project-image { width: 100%; display: block; filter: brightness(0.92) contrast(1.05); transition: filter 0.4s; }
+.project-showcase:hover .project-image { filter: brightness(1) contrast(1.05); }
+
+.project-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+.project-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+/* ─── Comparison table ────────────────────────────────────── */
+.comparison-section { background: var(--bg-surface); }
+
+.comparison-table {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.comp-header,
+.comp-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr 1fr;
+}
+
+.comp-header {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+}
+
+.comp-row {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+
+.comp-row:last-child { border-bottom: none; }
+.comp-row:hover { background: rgba(255, 255, 255, 0.02); }
+
+.comp-label,
+.comp-col {
+  padding: 1.25rem 1.5rem;
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comp-header .comp-col,
+.comp-header .comp-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.comp-label { color: var(--text-secondary); font-weight: 500; }
+.comp-col-dim { color: var(--text-dim); }
+
+.comp-col-highlight {
+  background: rgba(255, 193, 59, 0.04);
+  border-left: 1px solid rgba(255, 193, 59, 0.15);
+  border-right: 1px solid rgba(255, 193, 59, 0.15);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.comp-comp-col-highlight { font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.comp-highlight-label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.comp-check {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.comp-check::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 8px;
+  border: 2px solid #0a0a12;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* ─── Math / Reality ─────────────────────────────────────── */
+.reality-section { background: transparent; }
+
+.math-card { padding: 0; overflow: hidden; }
+.math-inner { display: flex; flex-direction: column; }
+
+.math-employees {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.math-emp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid var(--border);
+}
+
+.math-emp:last-child { border-right: none; }
+
+.math-emp-name { font-size: var(--text-sm); }
+.math-emp-task { font-size: var(--text-sm); color: var(--text-dim); }
+.math-emp-time { font-size: var(--text-xl); font-weight: 700; }
+
+.math-result { padding: 2.5rem 2rem; background: linear-gradient(180deg, transparent, rgba(255, 193, 59, 0.02)); }
+
+.math-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.math-flow-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.math-flow-num {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.math-flow-highlight .math-flow-num {
+  font-size: var(--text-2xl);
+}
+
+.math-flow-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+.math-flow-arrow {
+  color: var(--border);
+  font-size: 1.5rem;
+}
+
+.math-punchline {
+  text-align: center;
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+}
+
+/* ─── FAQ ─────────────────────────────────────────────────── */
+.faq-section { background: var(--bg-surface); }
+
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.faq-item:first-child { border-top: 1px solid var(--border); }
+
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  list-style: none;
+  transition: color 0.2s;
+}
+
+.faq-q:hover { color: var(--gold); }
+.faq-q::-webkit-details-marker { display: none; }
+
+.faq-chevron {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease-out), color 0.2s;
+  line-height: 1;
+}
+
+.faq-item[open] .faq-chevron {
+  transform: rotate(45deg);
+  color: var(--gold);
+}
+
+.faq-a {
+  padding: 0 0 1.5rem;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+/* ─── Final CTA ───────────────────────────────────────────── */
+.final-cta-section { background: transparent; }
+
+.final-cta-card {
+  padding: var(--space-2xl) var(--space-xl);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 193, 59, 0.12);
+  background: linear-gradient(135deg, rgba(255, 193, 59, 0.04) 0%, rgba(0, 229, 255, 0.02) 100%);
+}
+
+.final-cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.final-cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.final-cta-note {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.btn-lg {
+  padding: 1rem 2.5rem;
+  font-size: var(--text-base);
+}
+
+/* ─── Testimonials ────────────────────────────────────────── */
+.testimonials-section { background: var(--bg-surface); }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: var(--space-lg);
+}
+
+.testimonial-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.12;
+  font-family: var(--font-display);
+  pointer-events: none;
+}
+
+.testimonial-stars {
+  color: var(--gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.testimonial-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  flex: 1;
+  font-style: italic;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.testimonial-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-subtle), var(--cyan-subtle));
+  border: 1px solid rgba(255,193,59,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.testimonial-role {
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+}
+
+.launch-pricing-note {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255,193,59,0.02);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
   .hero-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
+  .hero-visual { order: -1; max-width: 540px; }
+  .hero-content { max-width: 100%; }
+  .project-showcase { grid-template-columns: 1fr; }
+  .project-showcase.project-reverse { direction: ltr; }
+  .project-info { transform: translateX(0); }
+  .project-showcase.project-reverse .project-info { transform: translateX(0); }
+  .comp-header, .comp-row { grid-template-columns: 1.2fr 1fr 1.2fr 1fr; }
+}
 
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 1.5rem;
-    border-radius: 100px;
-    margin-bottom: var(--space-md);
-  }
+@media (max-width: 768px) {
+  .hero { padding-top: calc(var(--nav-height) + 2rem); padding-bottom: var(--space-xl); }
+  .hero-h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
+  .services-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: var(--space-lg); flex-wrap: wrap; }
+  .math-employees { grid-template-columns: 1fr; }
+  .math-emp { border-right: none; border-bottom: 1px solid var(--border); }
+  .math-emp:last-child { border-bottom: none; }
+  .math-flow { gap: 1rem; }
+  .project-stats-row { gap: 1rem; }
+  .comp-header, .comp-row { grid-template-columns: 1fr 1fr; }
+  .comp-header .comp-label,
+  .comp-row .comp-label { display: none; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+}
 
-  .badge-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.7; }
-  }
-
-  .badge-text {
-    font-size: var(--text-xs);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-
-  .hero-title {
-    font-size: var(--text-display);
-    font-weight: 900;
-    line-height: 1.05;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-title-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  .title-word { 
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideUpFade 0.8s var(--ease-spring) forwards;
-  }
-  
-  .title-word.gradient-text-gold {
-    animation-delay: 0.2s; /* 'I' and 'S' appear first */
-  }
-
-  .title-reveal {
-    display: inline-block;
-    color: var(--text);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideUpFade 0.8s var(--ease-spring) forwards;
-    animation-delay: 0.8s; /* The rest of the words appear later */
-  }
-
-  @keyframes slideUpFade {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .hero-tagline {
-    font-size: var(--text-sm);
-    color: var(--text-dim);
-    margin-bottom: 2rem;
-    padding: 0.5rem 1.5rem;
-    border-radius: 100px;
-    border: 1px solid rgba(255, 193, 59, 0.15);
-    background: rgba(255, 193, 59, 0.03);
-    letter-spacing: 0.05em;
-  }
-
-  .hero-sub {
-    font-size: var(--text-lg);
-    color: var(--text-dim);
-    max-width: 700px;
-    margin-bottom: var(--space-md);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: var(--space-xl);
-  }
-
-  .stats-bar {
-    display: flex;
-    gap: 4rem;
-    padding: 2.5rem 4rem;
-    width: 100%;
-    justify-content: space-around;
-  }
-
-  .stat { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: var(--text-3xl); font-weight: 700; text-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
-  .stat-label { font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
-
-  .section-header { margin-bottom: var(--space-lg); }
-
-  /* Bento Grid for Services */
-  .services-grid { 
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 2rem; 
-  }
-
-  .service-card { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 1.25rem; 
-    text-decoration: none; 
-    padding: 3rem; 
-    border-radius: 24px;
-    background: var(--bg-glass);
-    transition: all 0.5s var(--ease-spring);
-  }
-  
-  .service-card:hover {
-    transform: translateY(-8px) scale(1.02);
-  }
-
-  .service-icon { 
-    font-size: 2.5rem; 
-    width: 64px; 
-    height: 64px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-  .service-title { font-size: var(--text-lg); font-weight: 700; }
-  .service-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.6; flex: 1; }
-  .service-stat { font-size: var(--text-xs); letter-spacing: 0.05em; }
-  .service-arrow { font-size: 1.25rem; color: var(--text-muted); transition: all 0.3s; }
-  .service-card:hover .service-arrow { color: var(--gold); transform: translateX(4px); }
-
-  .project-showcase { 
-    display: grid; 
-    grid-template-columns: 1fr 1.2fr; 
-    gap: 0; 
-    align-items: center; 
-    margin-bottom: var(--space-xl); 
-    position: relative;
-  }
-  
-  .project-showcase.project-reverse { 
-    grid-template-columns: 1.2fr 1fr; 
-    direction: rtl; 
-  }
-  
-  .project-showcase.project-reverse > * { 
-    direction: ltr; 
-  }
-  
-  .project-info {
-    z-index: 2;
-    padding: 3rem;
-    border-radius: 24px;
-    background: rgba(10, 10, 15, 0.6);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    transform: translateX(2rem); /* Overlap effect */
-  }
-
-  .project-showcase.project-reverse .project-info {
-    transform: translateX(-2rem);
-  }
-
-  .project-title { font-size: var(--text-2xl); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
-  .project-desc { margin-bottom: 2rem; color: var(--text-secondary); }
-  
-  .project-stats { 
-    display: flex; 
-    flex-wrap: wrap;
-    gap: 2rem; 
-    margin-bottom: 2rem; 
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .project-stat { display: flex; flex-direction: column; gap: 0.25rem; }
-  .project-stat-value { font-size: var(--text-xl); font-weight: 700; color: var(--text); }
-  .project-stat-label { font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
-  
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .project-tag { 
-    font-size: 0.7rem; 
-    padding: 0.4rem 1rem; 
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    color: var(--text-dim); 
-    letter-spacing: 0.05em; 
-    font-family: 'JetBrains Mono', monospace; 
-    border-radius: 100px;
-  }
-  
-  .project-media { 
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    overflow: hidden; 
-    background: var(--bg-card);
-    transform: scale(0.95);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-    transition: transform 0.5s var(--ease-out);
-  }
-
-  .project-showcase:hover .project-media {
-    transform: scale(0.98);
-  }
-  
-  .project-image { width: 100%; display: block; filter: brightness(0.9) contrast(1.1); transition: filter 0.5s; }
-  .project-showcase:hover .project-image { filter: brightness(1) contrast(1.1); }
-  
-  .project-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
-  .project-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-  .reality-section { background: transparent; }
-  
-  .math-card { 
-    padding: 0; 
-    margin: var(--space-md) 0; 
-    border-radius: 24px;
-    background: rgba(10, 10, 15, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  .math-card-header {
-    padding: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(255, 255, 255, 0.02);
-  }
-  
-  .math-label { 
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: rgba(255, 193, 59, 0.1);
-    padding: 0.5rem 1.5rem;
-    border-radius: 100px;
-    display: inline-block;
-    border: 1px solid rgba(255, 193, 59, 0.2);
-  }
-  
-  .math-grid { 
-    display: flex; 
-    flex-direction: column; 
-  }
-  
-  .math-employees { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  
-  .math-employee { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.5rem; 
-    text-align: center; 
-    padding: 3rem 2rem; 
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    position: relative;
-    transition: background 0.3s var(--ease-out);
-  }
-  
-  .math-employee:last-child {
-    border-right: none;
-  }
-  
-  .math-employee:hover {
-    background: rgba(255, 255, 255, 0.02);
-  }
-  
-  .math-emp-name { font-size: var(--text-base); color: var(--gold); }
-  .math-emp-task { font-size: var(--text-sm); color: var(--text-dim); }
-  .math-emp-time { 
-    font-size: var(--text-xl); 
-    color: var(--text); 
-    margin-top: 1rem;
-    font-weight: 600; 
-  }
-  
-  .math-result {
-    padding: 3rem 2rem;
-    background: linear-gradient(180deg, transparent 0%, rgba(255, 193, 59, 0.03) 100%);
-  }
-  
-  .math-flow { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 2rem; 
-    margin-bottom: 2rem; 
-  }
-  
-  .math-flow-item { 
-    font-size: var(--text-xl); 
-    text-align: center; 
-    color: var(--text-secondary);
-  }
-  
-  .math-flow-item small { 
-    display: block; 
-    font-size: var(--text-xs); 
-    color: var(--text-dim); 
-    text-transform: uppercase; 
-    letter-spacing: 0.15em; 
-    margin-top: 0.5rem;
-  }
-  
-  .math-flow-highlight { 
-    font-size: var(--text-3xl); 
-    font-weight: 800; 
-    color: var(--gold);
-    text-shadow: 0 0 20px rgba(255, 193, 59, 0.2);
-  }
-  
-  .math-flow-arrow { 
-    color: rgba(255, 255, 255, 0.1); 
-    font-size: 2rem; 
-    font-weight: 300;
-  }
-  
-  .math-punchline { 
-    text-align: center; 
-    font-size: var(--text-lg); 
-    color: var(--text-secondary); 
-  }
-  
-  .reality-closer { margin-top: var(--space-xl); }
-
-  @media (max-width: 1024px) {
-    .services-grid { grid-template-columns: repeat(2, 1fr); }
-    .project-showcase { grid-template-columns: 1fr; }
-    .project-showcase.project-reverse { direction: ltr; }
-    .project-info { transform: translateX(0); }
-    .project-showcase.project-reverse .project-info { transform: translateX(0); }
-    .stats-bar { gap: 2rem; padding: 1.5rem 2rem; }
-  }
-
-  @media (max-width: 768px) {
-    .hero { min-height: auto; padding-top: calc(var(--nav-height) + 2rem); padding-bottom: 2rem; }
-    .stats-bar { flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
-    .math-employees { grid-template-columns: 1fr; border-bottom: none; }
-    .math-employee { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; }
-    .math-employee:last-child { border-bottom: none; }
-    .math-flow { flex-wrap: wrap; gap: 1rem; }
-    .project-stats { gap: 1rem; }
-  }
-
-  @media (max-width: 480px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .hero-actions { flex-direction: column; width: 100%; }
-    .hero-actions .btn { width: 100%; }
-  }
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .final-cta-actions { flex-direction: column; width: 100%; }
+  .final-cta-actions .btn { width: 100%; justify-content: center; }
+  .services-grid { grid-template-columns: 1fr; }
+  .comp-header, .comp-row { grid-template-columns: 1fr 1.2fr; }
+  .comp-col-dim:last-child { display: none; }
+}
 </style>
 
 <script>
-  import gsap from 'gsap';
+// Premium word-by-word masked text reveal (SplitText-style)
+// Each word wraps in overflow:hidden container — text slides up from below mask
+function splitAndReveal(el: HTMLElement, gsap: any, baseDelay: number = 0) {
+  // Collect text nodes and spans, rebuild as word-wrapped spans
+  const rawHTML = el.innerHTML;
+  // Split on whitespace while preserving existing spans (accent etc.)
+  // Strategy: process child nodes to get words, wrap each in .word-mask
+  const wrapWords = (node: Node): string => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent || '';
+      return text.split(/(\s+)/).map(chunk => {
+        if (/^\s+$/.test(chunk)) return chunk;
+        if (!chunk) return '';
+        return `<span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;">${chunk}</span></span>`;
+      }).join('');
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const elem = node as HTMLElement;
+      const inner = Array.from(elem.childNodes).map(wrapWords).join('');
+      // Clone element with same attributes
+      const tag = elem.tagName.toLowerCase();
+      const attribs = Array.from(elem.attributes).map(a => `${a.name}="${a.value}"`).join(' ');
+      return `<${tag} ${attribs}><span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;">${inner}</span></span></${tag}>`;
+    }
+    return '';
+  };
 
-  function initHeroAnimations() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const wrapped = Array.from(el.childNodes).map(wrapWords).join('');
+  el.innerHTML = wrapped;
 
-    const reveals = document.querySelectorAll('.title-reveal');
-    if (!reveals.length) return;
+  const words = el.querySelectorAll<HTMLElement>('.word-inner');
+  gsap.set(words, { y: '110%' });
+  gsap.to(words, {
+    y: '0%',
+    duration: 0.9,
+    ease: 'power4.out',
+    stagger: 0.045,
+    delay: baseDelay,
+  });
+}
 
-    gsap.set(reveals, { display: 'inline-block', overflow: 'hidden', whiteSpace: 'nowrap', width: 0 });
+// Hero animations — premium masked word reveals + orb float
+function initHero() {
+  if (typeof window === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    gsap.to(reveals, {
-      width: 'auto',
-      duration: 1.4,
-      delay: 0.6,
-      ease: 'power3.out',
-    });
+  const gsap = (window as any).gsap;
+  if (!gsap) return;
+
+  // Word-by-word masked reveal on H1
+  const h1 = document.querySelector('.hero-h1') as HTMLElement;
+  if (h1) {
+    splitAndReveal(h1, gsap, 0.05);
   }
 
-  initHeroAnimations();
-  document.addEventListener('astro:after-swap', initHeroAnimations);
+  // Staggered entrance for hero sub + elements (using existing .reveal system)
+  // The BaseLayout ScrollTrigger handles .reveal — hero is above fold so trigger immediately
+  const heroReveals = document.querySelectorAll<HTMLElement>('.hero .reveal, .hero .reveal-scale');
+  heroReveals.forEach(el => {
+    const delay = parseFloat(el.dataset.delay || '0');
+    gsap.fromTo(el,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: delay + 0.2 }
+    );
+  });
+
+  // Floating orbs
+  const floats = document.querySelectorAll<HTMLElement>('.hero-float');
+  floats.forEach((el, i) => {
+    gsap.to(el, {
+      y: `${i % 2 === 0 ? '-' : ''}20px`,
+      x: `${i % 2 === 0 ? '' : '-'}10px`,
+      duration: 3 + i,
+      ease: 'sine.inOut',
+      repeat: -1,
+      yoyo: true,
+    });
+  });
+
+  // Mouse-parallax on hero visual (subtle tilt)
+  const heroVisual = document.querySelector<HTMLElement>('.hero-visual');
+  if (heroVisual) {
+    document.addEventListener('mousemove', (e) => {
+      const xPct = (e.clientX / window.innerWidth - 0.5) * 8;
+      const yPct = (e.clientY / window.innerHeight - 0.5) * 4;
+      gsap.to(heroVisual, { rotateY: xPct, rotateX: -yPct, duration: 1.2, ease: 'power2.out' });
+    });
+  }
+}
+
+// FAQ smooth toggle
+function initFAQ() {
+  const details = document.querySelectorAll<HTMLDetailsElement>('.faq-item');
+  details.forEach((detail) => {
+    const summary = detail.querySelector('summary');
+    if (!summary) return;
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (detail.open) {
+        detail.removeAttribute('open');
+      } else {
+        // Close others
+        details.forEach(d => { if (d !== detail) d.removeAttribute('open'); });
+        detail.setAttribute('open', '');
+      }
+    });
+  });
+}
+
+initHero();
+initFAQ();
+document.addEventListener('astro:after-swap', () => {
+  initHero();
+  initFAQ();
+});
 </script>

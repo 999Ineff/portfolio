@@ -28,3 +28,19 @@ Site Idea.txt
 *.mov
 *.avi
 *.mkv
+.firecrawl/
+
+# Work folders - not for deployment
+Gemini/
+Pre Rebuild March 3rd 2026/
+Luis Pictures/
+.claude/
+
+# Temp/test files
+color-test.html
+screenshots/
+QA_REPORT.md
+ineffable_linkedin_thumbnail_*.png
+homepage-*.png
+e1-*.jpeg
+.playwright-mcp/

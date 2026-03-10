@@ -1,0 +1,725 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Pricing';
+const description = 'Transparent pricing for every project size. 30% below agency rates — no surprise invoices, no scope creep, no hand-waving. See what you get for every budget.';
+
+// D17: Vertical stack Enterprise → Professional → Growth → Micro (D18: Micro = last)
+const tiers = [
+  {
+    id: 'enterprise',
+    name: 'Custom Platform',
+    audience: 'For large organizations building full custom platforms',
+    priceRange: '$28,000 – $42,000',
+    marketRate: '$40,000 – $60,000',
+    billing: 'per project',
+    badge: null,
+    color: 'cyan' as const,
+    description: 'Full custom software — SaaS MVPs, CRMs, dashboards, digital transformation. You have a complex system problem; I build the solution.',
+    includes: [
+      'Full-stack SaaS MVP or enterprise platform',
+      'Custom database architecture + API design',
+      'Admin dashboard + reporting suite',
+      'User authentication + role-based access',
+      'Third-party integrations (CRM, ERP, payment processors)',
+      'Deployment + infrastructure setup (AWS/GCP/Netlify)',
+      '90 days post-launch support + documentation',
+    ],
+    cta: 'Schedule a Discovery Session',
+    ctaHref: 'https://calendly.com/luis-aviles-khn',
+  },
+  {
+    id: 'professional',
+    name: 'Full System',
+    audience: 'For growing businesses ready to replace their toolstack',
+    priceRange: '$10,500 – $14,000',
+    marketRate: '$15,000 – $20,000',
+    billing: 'per project',
+    badge: 'Most Popular',
+    color: 'gold' as const,
+    description: 'Full website + CMS + integrations + 3 months of support. For businesses that need a complete system, not a brochure.',
+    includes: [
+      'Custom website design + development (8–15 pages)',
+      'Headless CMS or Astro content collections',
+      'E-commerce, booking, or lead capture integration',
+      'Full on-page SEO (technical + content)',
+      'Performance budget: 90+ Lighthouse score',
+      '2 automation scripts included',
+      '90 days priority support retainer',
+    ],
+    cta: 'Schedule a Discovery Session',
+    ctaHref: 'https://calendly.com/luis-aviles-khn',
+  },
+  {
+    id: 'growth',
+    name: 'Growth Build',
+    audience: 'For established businesses refreshing their web presence',
+    priceRange: '$4,200 – $5,600',
+    marketRate: '$6,000 – $8,000',
+    billing: 'per project',
+    badge: null,
+    color: 'cyan' as const,
+    description: 'Custom-designed website with built-in SEO, mobile-first, and a CTA architecture that converts. Not a template with your logo on it.',
+    includes: [
+      'Custom website design + development (4–8 pages)',
+      'Mobile-first, responsive at all breakpoints',
+      'On-page SEO + meta tags + structured data',
+      'Contact form + Calendly or booking integration',
+      'Google Analytics / Plausible setup',
+      '30 days post-launch support',
+    ],
+    cta: 'Book a 15-Minute Call',
+    ctaHref: 'https://calendly.com/luis-aviles-khn',
+  },
+  {
+    id: 'micro',
+    name: 'Quick Win',
+    audience: 'For anyone with a repetitive task they hate',
+    priceRange: '$350 – $700',
+    marketRate: '$500 – $1,000',
+    billing: 'per script',
+    badge: null,
+    color: 'green' as const,
+    description: '30-minute daily tasks, eliminated. Python scripts, Excel macros, web scrapers, API connectors. Scoped, built, delivered in 3–5 business days.',
+    includes: [
+      'Single automation script or macro',
+      'Scoped to one specific repeatable task',
+      'Plain-English documentation included',
+      '1 round of revisions',
+      '2-week bug-fix warranty',
+    ],
+    cta: 'Tell Me Your Task',
+    ctaHref: '/contact',
+  },
+];
+
+const retainers = [
+  { name: 'Maintenance', price: '$150/mo', includes: 'Uptime monitoring, monthly updates, security patches, 1 hour changes/mo' },
+  { name: 'Growth', price: '$500/mo', includes: '4 hours development, monthly SEO report + improvements, 1 content update' },
+  { name: 'Partner', price: '$1,500/mo', includes: '16 hours development, priority response, bi-weekly strategy calls, full analytics reporting' },
+];
+
+const comparison = [
+  { category: 'Price', freelance: '$15–$50/hr', agency: '$75–$150/hr', ineffable: '$52–$120/hr' },
+  { category: 'Who builds it', freelance: 'Unknown, varies', agency: '3–5 people, often offshore', ineffable: 'Luis — same person, every time' },
+  { category: 'Communication', freelance: 'Inconsistent', agency: 'Account manager layer', ineffable: 'Direct, same-day' },
+  { category: 'Revisions', freelance: 'Usually unclear', agency: '2 rounds, metered', ineffable: '2 full rounds included' },
+  { category: 'Timeline', freelance: '1–12 weeks', agency: '6–16 weeks', ineffable: '1–6 weeks by tier' },
+  { category: 'Post-launch support', freelance: 'Rarely included', agency: 'Hourly after launch', ineffable: '30–90 days included' },
+];
+
+const faqs = [
+  {
+    q: 'How much does a custom website cost?',
+    a: 'A Growth Build (4–8 pages, custom design, SEO) runs $4,200–$5,600. A Full System with CMS, integrations, and 3 months of support runs $10,500–$14,000. Both are 30% below what a comparable US agency charges.',
+  },
+  {
+    q: 'Why are you cheaper than agencies?',
+    a: 'No overhead. No account managers, no project coordinators, no senior-reviewing-junior layers. I operate out of Honduras where cost of living doesn\'t require $200/hr billables. That savings passes to you — not subsidized, actually profitable.',
+  },
+  {
+    q: 'Is it really just one person?',
+    a: 'Yes. And that\'s the point. The person who scopes your project is the person who designs it, builds it, tests it, and launches it. No handoffs. No "let me check with the team." If you need to change something at 11pm before launch, I know exactly where it lives.',
+  },
+  {
+    q: 'What\'s the typical timeline?',
+    a: 'Quick Win (automation scripts): 3–5 business days. Growth Build: 3–4 weeks. Full System: 5–7 weeks. Custom Platform: 8–16 weeks depending on scope. All timelines include revision rounds.',
+  },
+  {
+    q: 'Do you do retainers?',
+    a: 'Yes — starting at $150/mo for maintenance and up to $1,500/mo for a full development partnership with 16 hours/month, strategy calls, and priority support.',
+  },
+  {
+    q: 'What if I\'m not sure what I need?',
+    a: 'Book a free 15-minute discovery call. I\'ll ask the right questions and tell you exactly what tier fits your problem — even if that means recommending something simpler (and cheaper) than what you thought you needed.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- HERO -->
+  <section class="pricing-hero">
+    <div class="container">
+      <p class="label reveal">Pricing</p>
+      <h1 class="pricing-hero__heading reveal" data-delay="0.1">
+        Transparent pricing.<br />
+        No surprises.
+      </h1>
+      <p class="pricing-hero__sub reveal" data-delay="0.2">
+        30% below US agency rates across every tier.
+        Real numbers — not "contact us for a quote."
+      </p>
+      <div class="launch-banner reveal" data-delay="0.35">
+        <span class="launch-banner__icon mono">◈</span>
+        <span>Pre-portfolio rates. Pricing increases with each completed case study.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIER CARDS — D17: Vertical Enterprise→Micro -->
+  <section class="tiers-section">
+    <div class="container">
+      {tiers.map((tier, i) => (
+        <div class={`tier-card reveal tier-card--${tier.color} ${tier.badge ? 'tier-card--featured' : ''}`} data-delay={i * 0.1}>
+          {tier.badge && <div class="tier-badge">{tier.badge}</div>}
+          <div class="tier-card__left">
+            <div class="tier-card__audience">{tier.audience}</div>
+            <h2 class="tier-card__name">{tier.name}</h2>
+            <p class="tier-card__description">{tier.description}</p>
+            <div class="tier-card__pricing">
+              <div class="tier-card__price mono">{tier.priceRange}</div>
+              <div class="tier-card__market">
+                <span class="market-label">vs. agency: </span>
+                <span class="market-rate">{tier.marketRate}</span>
+              </div>
+              <div class="tier-card__billing">{tier.billing}</div>
+            </div>
+            <a
+              href={tier.ctaHref}
+              class={`btn ${tier.badge ? 'btn-primary' : 'btn-secondary-' + tier.color}`}
+              target={tier.ctaHref.startsWith('http') ? '_blank' : undefined}
+              rel={tier.ctaHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {tier.cta}
+            </a>
+          </div>
+          <div class="tier-card__right">
+            <div class="tier-includes-label">What's included</div>
+            <ul class="tier-includes">
+              {tier.includes.map(item => (
+                <li class="tier-includes__item">
+                  <span class="tier-check" aria-hidden="true">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- RETAINERS -->
+  <section class="retainers-section">
+    <div class="container">
+      <p class="label reveal">Ongoing</p>
+      <h2 class="section-heading reveal" data-delay="0.1">Monthly retainer packages.</h2>
+      <p class="retainers-sub reveal" data-delay="0.2">
+        After launch, most clients stay on a retainer. Site maintenance, SEO improvements,
+        analytics, and ongoing development — covered.
+      </p>
+      <div class="retainers-grid">
+        {retainers.map((r, i) => (
+          <div class="retainer-card reveal" data-delay={0.1 + i * 0.1}>
+            <div class="retainer-card__price mono">{r.price}</div>
+            <div class="retainer-card__name">{r.name}</div>
+            <p class="retainer-card__includes">{r.includes}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="comparison-section">
+    <div class="container">
+      <p class="label reveal">Comparison</p>
+      <h2 class="section-heading reveal" data-delay="0.1">Freelancer vs. Agency vs. Ineffable.</h2>
+      <div class="comparison-table-wrapper reveal" data-delay="0.2">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th class="col-category"></th>
+              <th class="col-freelance">Freelancer</th>
+              <th class="col-agency">Agency</th>
+              <th class="col-ineffable">
+                <span class="ineffable-col-label">Ineffable</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map(row => (
+              <tr>
+                <td class="col-category">{row.category}</td>
+                <td class="col-freelance">{row.freelance}</td>
+                <td class="col-agency">{row.agency}</td>
+                <td class="col-ineffable highlight-cell">{row.ineffable}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container narrow">
+      <p class="label reveal">FAQ</p>
+      <h2 class="section-heading reveal" data-delay="0.1">Common questions.</h2>
+      <div class="faq-list" id="faq-list">
+        {faqs.map((item, i) => (
+          <div class="faq-item reveal" data-delay={i * 0.08} data-faq={i}>
+            <button class="faq-question" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+              <span>{item.q}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id={`faq-answer-${i}`} role="region">
+              <p>{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="pricing-cta">
+    <div class="container narrow">
+      <h2 class="pricing-cta__heading reveal">
+        Not sure which tier fits?
+      </h2>
+      <p class="pricing-cta__sub reveal" data-delay="0.1">
+        Book a 15-minute call. I'll tell you exactly what you need —
+        and what you don't. No upsell pressure.
+      </p>
+      <div class="pricing-cta__actions reveal" data-delay="0.2">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          Book a Free Call
+        </a>
+        <a href="/contact" class="btn btn-secondary">Send a Message</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a }
+    }))
+  })} />
+
+</BaseLayout>
+
+<style>
+/* ── Layout Tokens ────────────────────────────────────────── */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg); }
+.container.narrow { max-width: var(--narrow-width); }
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+  line-height: 1.1;
+}
+.mono { font-family: var(--font-mono); }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.pricing-hero {
+  padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-2xl);
+}
+.pricing-hero__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.pricing-hero__sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 52ch;
+  margin-bottom: var(--space-xl);
+}
+.launch-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--gold-subtle);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  color: var(--gold);
+}
+.launch-banner__icon { font-size: 0.75rem; }
+
+/* ── Tier Cards ───────────────────────────────────────────── */
+.tiers-section {
+  padding: var(--space-xl) 0 var(--space-section);
+}
+.tier-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-lg);
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.tier-card--gold { border-color: rgba(255,193,59,0.15); }
+.tier-card--gold:hover { border-color: var(--border-active); box-shadow: var(--shadow-glow-gold); }
+.tier-card--cyan { border-color: rgba(0,229,255,0.08); }
+.tier-card--cyan:hover { border-color: var(--border-focus); box-shadow: var(--shadow-glow-cyan); }
+.tier-card--green:hover { border-color: rgba(0,255,136,0.25); }
+.tier-card--featured { border-color: rgba(255,193,59,0.4); background: var(--bg-elevated); }
+
+.tier-badge {
+  position: absolute;
+  top: -1px;
+  left: var(--space-2xl);
+  padding: var(--space-2xs) var(--space-md);
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+/* Left column */
+.tier-card__audience {
+  font-size: var(--text-sm);
+  color: var(--text-dim);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.tier-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+.tier-card__description {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--text-base);
+  margin-bottom: var(--space-xl);
+  max-width: 48ch;
+}
+.tier-card__pricing { margin-bottom: var(--space-xl); }
+.tier-card__price {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-xs);
+}
+.tier-card--gold .tier-card__price { color: var(--gold); }
+.tier-card--cyan .tier-card__price { color: var(--cyan); }
+.tier-card--green .tier-card__price { color: var(--green); }
+.tier-card--featured .tier-card__price { color: var(--gold); }
+.tier-card__market {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-2xs);
+}
+.market-label { color: var(--text-dim); }
+.market-rate {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,0.25);
+}
+.tier-card__billing {
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* Right column */
+.tier-card__right { padding-top: 0.5rem; }
+.tier-includes-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+.tier-includes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.tier-includes__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tier-check {
+  color: var(--green);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  text-decoration: none;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg-deep);
+  box-shadow: 0 4px 24px var(--gold-glow);
+}
+.btn-primary:hover { box-shadow: 0 8px 32px var(--gold-glow); }
+.btn-secondary {
+  background: transparent; color: var(--cyan);
+  border: 1.5px solid var(--cyan);
+}
+.btn-secondary:hover { box-shadow: 0 0 16px var(--cyan-glow); }
+.btn-secondary-gold { background: transparent; color: var(--gold); border: 1.5px solid var(--gold); }
+.btn-secondary-gold:hover { box-shadow: var(--shadow-glow-gold); }
+.btn-secondary-cyan { background: transparent; color: var(--cyan); border: 1.5px solid var(--cyan); }
+.btn-secondary-cyan:hover { box-shadow: var(--shadow-glow-cyan); }
+.btn-secondary-green { background: transparent; color: var(--green); border: 1.5px solid var(--green); }
+.btn-secondary-green:hover { box-shadow: 0 0 16px rgba(0,255,136,0.2); }
+
+/* ── Retainers ────────────────────────────────────────────── */
+.retainers-section {
+  padding: var(--space-section) 0;
+  background: var(--bg-surface);
+}
+.retainers-sub {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 56ch;
+  margin-bottom: var(--space-2xl);
+}
+.retainers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+.retainer-card {
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.retainer-card:hover { border-color: var(--border-active); }
+.retainer-card__price {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: var(--space-xs);
+}
+.retainer-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+.retainer-card__includes {
+  color: var(--text-secondary);
+  line-height: 1.65;
+  font-size: var(--text-sm);
+}
+
+/* ── Comparison Table ─────────────────────────────────────── */
+.comparison-section { padding: var(--space-section) 0; }
+.comparison-table-wrapper { overflow-x: auto; }
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.comparison-table th,
+.comparison-table td {
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+.comparison-table tr:last-child td { border-bottom: none; }
+.comparison-table thead th {
+  background: var(--bg-elevated);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+.comparison-table tbody tr { background: var(--bg-card); }
+.comparison-table tbody tr:nth-child(odd) { background: var(--bg-surface); }
+.col-category { color: var(--text-secondary); font-weight: 600; min-width: 120px; }
+.col-freelance, .col-agency { color: var(--text-dim); }
+.col-ineffable { min-width: 220px; }
+.ineffable-col-label {
+  color: var(--gold);
+  font-weight: 800;
+}
+.highlight-cell { color: var(--text-primary); font-weight: 600; }
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+.faq-section { padding: var(--space-section) 0; }
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background: var(--bg-card);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+.faq-question:hover { background: var(--bg-elevated); color: var(--gold); }
+.faq-question[aria-expanded="true"] { color: var(--gold); background: var(--bg-elevated); }
+.faq-icon {
+  font-size: 1.25rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: transform var(--duration-base) var(--ease-spring);
+  display: inline-block;
+  line-height: 1;
+  font-weight: 300;
+  font-family: var(--font-mono);
+}
+.faq-question[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+.faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s var(--ease-out);
+  background: var(--bg-surface);
+}
+.faq-answer p {
+  padding: var(--space-lg) var(--space-xl) var(--space-xl);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-size: var(--text-base);
+}
+.faq-answer.open { max-height: 400px; }
+
+/* ── CTA ──────────────────────────────────────────────────── */
+.pricing-cta {
+  padding: var(--space-section) 0;
+  text-align: center;
+}
+.pricing-cta__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.pricing-cta__sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 52ch;
+  margin: 0 auto var(--space-xl);
+}
+.pricing-cta__actions { display: flex; flex-direction: column; align-items: center; gap: var(--space-md); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .tier-card { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .retainers-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .pricing-hero { padding-top: calc(var(--nav-height) + var(--space-xl)); }
+  .pricing-hero__heading { font-size: clamp(2rem, 7vw, 3rem); }
+  .section-heading { font-size: var(--text-xl); }
+  .tier-card { padding: var(--space-xl); }
+  .comparison-table th,
+  .comparison-table td { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
+  .faq-question { font-size: var(--text-sm); padding: var(--space-lg); }
+  .pricing-cta__actions { flex-direction: column; align-items: center; }
+}
+
+/* GSAP fallback */
+@media (scripting: none) {
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
+}
+</style>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const answer = btn.nextElementSibling as HTMLElement;
+
+      // Close all
+      document.querySelectorAll<HTMLButtonElement>('.faq-question').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        const a = b.nextElementSibling as HTMLElement;
+        if (a) a.classList.remove('open');
+      });
+
+      // Open clicked if it was closed
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        if (answer) answer.classList.add('open');
+      }
+    });
+  });
+</script>
