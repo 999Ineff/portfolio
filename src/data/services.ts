@@ -24,6 +24,14 @@ export const services = [
     stats: '10+ systems built',
   },
   {
+    title: 'Digital Marketing',
+    description: 'Google Ads management, SEO retainers, and data-driven campaign strategy backed by real market research — not guesswork.',
+    href: '/marketing',
+    icon: '◉',
+    color: 'cyan' as const,
+    stats: 'Research-first campaigns',
+  },
+  {
     title: 'Consulting',
     description: 'I\'ve sat in your seat. AI strategy, ops optimization, and automation roadmapping from someone who builds.',
     href: '/consulting',

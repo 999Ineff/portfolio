@@ -46,9 +46,16 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
             </div>
             <div class="email-alt reveal" data-delay="0.3">
               <span class="email-alt__label">Prefer email?</span>
-              <a href="mailto:luis@ineffablesolutions.net" class="email-alt__link">
-                luis@ineffablesolutions.net
+              <a href="mailto:luisaviles@ineffablesolutions.net" class="email-alt__link">
+                luisaviles@ineffablesolutions.net
               </a>
+            </div>
+            <div class="contact-address reveal" data-delay="0.35">
+              <span class="address-label">Office</span>
+              <address class="address-text">
+                Tegucigalpa, Col. San Ignacio<br>
+                Honduras 11101
+              </address>
             </div>
             <div class="bilingual-note reveal" data-delay="0.4">
               <span class="bilingual-icon mono">◈</span>
@@ -136,6 +143,7 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
                     <option value="automation">Custom Automation (scripts, macros, workflows)</option>
                     <option value="website">Tailored Website (custom design + SEO)</option>
                     <option value="platform">Custom Platform (SaaS, dashboard, CRM)</option>
+                    <option value="marketing">Digital Marketing (Google Ads, SEO)</option>
                     <option value="consulting">Consulting (strategy, audit, roadmap)</option>
                     <option value="unsure">Not sure yet — need to talk it through</option>
                   </select>
@@ -353,6 +361,24 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
   transition: color var(--duration-fast) var(--ease-out);
 }
 .email-alt__link:hover { color: var(--text-primary); }
+.contact-address {
+  margin-bottom: var(--space-lg);
+}
+.address-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+.address-text {
+  font-style: normal;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
 .bilingual-note {
   display: flex;
   align-items: center;
@@ -596,7 +622,7 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
           submitBtn.disabled = false;
           submitBtn.innerHTML = 'Send Message <span class="btn-arrow" aria-hidden="true">→</span>';
         }
-        alert('Something went wrong. Please email luis@ineffablesolutions.net directly.');
+        alert('Something went wrong. Please email luisaviles@ineffablesolutions.net directly.');
       }
     });
   }

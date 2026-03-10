@@ -5,6 +5,7 @@ const serviceLinks = [
   { label: 'Custom Automation', href: '/automation' },
   { label: 'Tailored Websites', href: '/websites' },
   { label: 'Custom Platforms', href: '/platforms' },
+  { label: 'Digital Marketing', href: '/marketing' },
   { label: 'Consulting', href: '/consulting' },
 ];
 
@@ -90,8 +91,16 @@ const legalLinks = [
         <div class="footer-col">
           <h4 class="footer-col-title">Connect</h4>
           <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" class="footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="mailto:luis@ineffablesolutions.net" class="footer-link">Email Luis</a>
+          <a href="mailto:luisaviles@ineffablesolutions.net" class="footer-link">Email Luis</a>
           <span class="footer-bilingual">🌎 Hablamos español</span>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Location</h4>
+          <address class="footer-address">
+            Ineffable Solutions<br>
+            Tegucigalpa, Col. San Ignacio<br>
+            Honduras 11101
+          </address>
         </div>
       </nav>
     </div>
@@ -334,6 +343,14 @@ const legalLinks = [
 
   .footer-legal-link:hover {
     color: var(--text-secondary);
+  }
+
+  /* ── Address ────────────────────────────────────────────── */
+  .footer-address {
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.7;
   }
 
   /* ── Bilingual badge ─────────────────────────────────────── */

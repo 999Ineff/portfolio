@@ -1,0 +1,484 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import CTA from '../components/CTA.astro';
+---
+
+<BaseLayout
+  title="Digital Marketing — Google Ads & SEO Management"
+  description="Data-driven Google Ads campaign management and SEO retainers. Market research, keyword validation, competitive intelligence, and campaign optimization — backed by real data, not guesswork."
+>
+  <!-- Hero -->
+  <section class="hero section-lg">
+    <div class="container hero-inner">
+      <SectionLabel text="Digital Marketing" />
+      <h1 class="hero-title reveal" data-delay="0.1">
+        Campaigns Built on<br />
+        <span class="text-gold">Real Data, Not Guesswork.</span>
+      </h1>
+      <p class="hero-sub reveal" data-delay="0.2">
+        Google Ads management and SEO retainers powered by an enterprise-grade research arsenal.
+        We validate every keyword, every CPC, and every market assumption with live API data
+        before a single dollar is spent.
+      </p>
+      <div class="hero-actions reveal" data-delay="0.3">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener">
+          Get a Free Campaign Audit
+        </a>
+        <a href="#process" class="btn btn-secondary">See the Process</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="The Problem" color="red" />
+        <h2 class="text-heading reveal">Most agencies guess. You pay for their education.</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1">
+          The average marketing agency sets up a campaign based on experience and intuition.
+          We run real market intelligence first — then build.
+        </p>
+      </div>
+      <div class="problem-grid reveal" data-delay="0.2">
+        {[
+          { label: 'Typical Agency', problem: 'Estimates keyword volume from training data', cost: 'Wastes budget on low-volume terms' },
+          { label: 'Typical Agency', problem: 'Guesses CPCs from "industry averages"', cost: 'Budget runs out 3x faster than projected' },
+          { label: 'Typical Agency', problem: 'Skips competitive SERP analysis', cost: 'Bids against competitors they didn\'t know existed' },
+          { label: 'Typical Agency', problem: 'No market sizing or TAM analysis', cost: 'Can\'t tell you if the market justifies the spend' },
+        ].map(item => (
+          <div class="problem-card">
+            <span class="problem-label">{item.label}</span>
+            <p class="problem-text">{item.problem}</p>
+            <p class="problem-cost">{item.cost}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section bg-surface" id="services">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Services" />
+        <h2 class="text-heading reveal">What we manage.</h2>
+      </div>
+      <div class="services-grid reveal" data-delay="0.1">
+        <div class="service-block">
+          <span class="service-icon">◎</span>
+          <h3 class="service-title">Google Ads Management</h3>
+          <p class="service-desc">
+            Full campaign lifecycle — from market research and keyword validation through campaign
+            creation, bid optimization, and ongoing performance reporting. Search, Display, and
+            Performance Max campaigns managed under our MCC.
+          </p>
+          <ul class="service-features">
+            <li>Campaign creation and STAG architecture</li>
+            <li>Keyword research with live API validation</li>
+            <li>Bid strategy and budget optimization</li>
+            <li>Monthly performance reports</li>
+            <li>Negative keyword management</li>
+            <li>Ad copy testing and RSA optimization</li>
+          </ul>
+        </div>
+        <div class="service-block">
+          <span class="service-icon">◆</span>
+          <h3 class="service-title">SEO Retainers</h3>
+          <p class="service-desc">
+            Ongoing search engine optimization — technical audits, on-page optimization,
+            content strategy, and performance tracking. We start with a 130-point audit
+            and build a roadmap from the data.
+          </p>
+          <ul class="service-features">
+            <li>130-point technical SEO audit</li>
+            <li>On-page optimization and schema markup</li>
+            <li>Keyword tracking and rank monitoring</li>
+            <li>Content calendar and topic clusters</li>
+            <li>Backlink analysis and authority building</li>
+            <li>Monthly SEO performance reports</li>
+          </ul>
+        </div>
+        <div class="service-block">
+          <span class="service-icon">⬡</span>
+          <h3 class="service-title">Market Intelligence</h3>
+          <p class="service-desc">
+            Before any campaign launches, we run a full market analysis. TAM/SAM sizing,
+            Census demographics, competitive SERP analysis, and real keyword validation —
+            so every dollar is backed by data.
+          </p>
+          <ul class="service-features">
+            <li>Total Addressable Market (TAM) analysis</li>
+            <li>Census Bureau demographic profiling</li>
+            <li>FRED economic indicator tracking</li>
+            <li>Live SERP competitive analysis</li>
+            <li>Keyword validation with real search volumes</li>
+            <li>Budget modeling with unit economics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Our Process" color="cyan" />
+        <h2 class="text-heading reveal">7 phases. Every decision backed by data.</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1">
+          This is the same research-first methodology we use for every client engagement.
+          No shortcuts, no assumptions — just validated strategy.
+        </p>
+      </div>
+      <div class="process-timeline reveal" data-delay="0.2">
+        {[
+          { step: '01', title: 'Market Intelligence', desc: 'TAM/SAM analysis using Census Bureau, FRED economic data, and industry benchmarks. We size the market before entering it.' },
+          { step: '02', title: 'Keyword Research', desc: 'Comprehensive keyword database built from seed terms, then validated against live DataForSEO API data — real volumes, real CPCs, real competition scores.' },
+          { step: '03', title: 'Competitive Intelligence', desc: 'Full competitor profiling — domain authority, review counts, ad presence, keyword ownership. We map every player in your space.' },
+          { step: '04', title: 'SEO Roadmap', desc: 'Technical audit, content gap analysis, and E-E-A-T assessment. A prioritized 12-week action plan.' },
+          { step: '05', title: 'Campaign Architecture', desc: 'STAG structure, budget tiers with unit economics (CPC → CVR → close rate → ROAS), geographic targeting, and launch sequencing.' },
+          { step: '06', title: 'Content & Creative', desc: 'Landing pages, RSA ad copy, blog content, FAQ schema — everything needed to support campaigns.' },
+          { step: '07', title: 'Launch & Optimize', desc: 'Wave launch with daily monitoring for 30 days. Bid adjustments, negative keyword pruning, and weekly performance reports.' },
+        ].map((item, i) => (
+          <div class="process-step reveal" data-delay={`${i * 0.05}`}>
+            <div class="step-number mono">{item.step}</div>
+            <div class="step-content">
+              <h3 class="step-title">{item.title}</h3>
+              <p class="step-desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Arsenal / Tools -->
+  <section class="section bg-surface" id="arsenal">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="The Arsenal" />
+        <h2 class="text-heading reveal">Enterprise tools. Independent pricing.</h2>
+        <p class="section-subtext text-body reveal" data-delay="0.1">
+          We don't guess — we query. Every recommendation is backed by live data from
+          the same tools used by agencies charging 5x more.
+        </p>
+      </div>
+      <div class="arsenal-grid reveal" data-delay="0.2">
+        {[
+          { name: 'DataForSEO', use: 'Live keyword volumes, CPCs, SERP analysis, keyword difficulty scores' },
+          { name: 'Census Bureau API', use: 'Demographics, homeownership rates, household income by geography' },
+          { name: 'FRED (Federal Reserve)', use: 'Mortgage rates, construction spending, employment trends' },
+          { name: 'Google Ads API', use: 'Campaign management, bid optimization, performance reporting' },
+          { name: 'Keyword Planner', use: 'Keyword ideas, search volume forecasts, competition data' },
+          { name: 'SERP Analysis', use: 'Real-time search results, local pack monitoring, paid ad detection' },
+        ].map(tool => (
+          <div class="arsenal-card">
+            <h4 class="arsenal-name">{tool.name}</h4>
+            <p class="arsenal-use">{tool.use}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Campaign Types -->
+  <section class="section" id="campaigns">
+    <div class="container">
+      <div class="section-header">
+        <SectionLabel text="Campaign Types" color="green" />
+        <h2 class="text-heading reveal">What we run.</h2>
+      </div>
+      <div class="campaign-grid reveal" data-delay="0.1">
+        <div class="campaign-card">
+          <h3 class="campaign-type">Search Campaigns</h3>
+          <p class="campaign-desc">
+            Keyword-targeted text ads on Google Search results. Our primary focus —
+            highest intent, highest conversion rate, most measurable ROI.
+          </p>
+        </div>
+        <div class="campaign-card">
+          <h3 class="campaign-type">Performance Max</h3>
+          <p class="campaign-desc">
+            AI-driven cross-channel campaigns that reach customers across Search, Display,
+            YouTube, Gmail, and Maps — all from a single campaign.
+          </p>
+        </div>
+        <div class="campaign-card">
+          <h3 class="campaign-type">Display Campaigns</h3>
+          <p class="campaign-desc">
+            Visual banner and responsive display ads across the Google Display Network.
+            Brand awareness and remarketing at scale.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-surface" id="faq">
+    <div class="container narrow">
+      <div class="section-header">
+        <SectionLabel text="FAQ" />
+        <h2 class="text-heading reveal">Common questions.</h2>
+      </div>
+      <div class="faq-list reveal" data-delay="0.1">
+        {[
+          {
+            q: 'What makes your approach different from other agencies?',
+            a: 'We validate every keyword, CPC, and market assumption with live API data before spending a dollar. Most agencies estimate from experience — we query real databases: Census Bureau demographics, FRED economic indicators, DataForSEO keyword volumes, and live SERP snapshots.',
+          },
+          {
+            q: 'What does a typical Google Ads retainer include?',
+            a: 'Full campaign management: keyword research and validation, campaign creation, bid optimization, negative keyword management, ad copy testing, and monthly performance reporting. We manage everything through our MCC so your account stays in your name.',
+          },
+          {
+            q: 'Do I need a website before running ads?',
+            a: 'You need landing pages that convert. If your current site isn\'t optimized, we can build dedicated landing pages as part of the campaign setup. We also offer full website builds if needed.',
+          },
+          {
+            q: 'How do you report on performance?',
+            a: 'Monthly reports with aggregated metrics: impressions, clicks, CTR, CPC, conversions, cost per lead, and ROAS. We pull data programmatically via the Google Ads API — no manual screenshots or vague summaries.',
+          },
+          {
+            q: 'What\'s the minimum budget for Google Ads?',
+            a: 'We recommend a minimum of $1,500/month in ad spend for meaningful results. Our management fee is separate. During the market intelligence phase, we model exact budget tiers with projected leads, jobs, and ROAS so you know what to expect before committing.',
+          },
+          {
+            q: 'Can you manage ads for multiple locations?',
+            a: 'Yes. We manage campaigns across your entire service area with geographic bid modifiers based on real Census data — adjusting spend by city based on homeownership rates, household income, and market density.',
+          },
+        ].map((item, i) => (
+          <details class="faq-item" data-delay={`${i * 0.05}`}>
+            <summary class="faq-q">
+              <span>{item.q}</span>
+              <span class="faq-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-a">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA heading="Ready to Stop Guessing?" subtext="Free 15-minute campaign audit. We'll review your current setup and show you exactly where the opportunities are." />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What makes your approach different from other agencies?", "acceptedAnswer": { "@type": "Answer", "text": "We validate every keyword, CPC, and market assumption with live API data before spending a dollar. Most agencies estimate from experience — we query real databases: Census Bureau demographics, FRED economic indicators, DataForSEO keyword volumes, and live SERP snapshots." } },
+      { "@type": "Question", "name": "What does a typical Google Ads retainer include?", "acceptedAnswer": { "@type": "Answer", "text": "Full campaign management: keyword research and validation, campaign creation, bid optimization, negative keyword management, ad copy testing, and monthly performance reporting. We manage everything through our MCC so your account stays in your name." } },
+      { "@type": "Question", "name": "What's the minimum budget for Google Ads?", "acceptedAnswer": { "@type": "Answer", "text": "We recommend a minimum of $1,500/month in ad spend for meaningful results. Our management fee is separate. During the market intelligence phase, we model exact budget tiers with projected leads, jobs, and ROAS so you know what to expect before committing." } },
+    ]
+  })} />
+
+</BaseLayout>
+
+<style>
+/* ── Layout ───────────────────────────────────────────────── */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg); }
+.container.narrow { max-width: var(--narrow-width); }
+.section { padding: var(--space-section) 0; }
+.section-lg { padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-section); }
+.bg-surface { background: var(--bg-surface); }
+.section-header { margin-bottom: var(--space-2xl); }
+.section-subtext { color: var(--text-secondary); line-height: 1.7; max-width: 60ch; }
+.text-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+}
+.text-body { font-size: var(--text-base); }
+.text-gold { color: var(--gold); }
+.mono { font-family: var(--font-mono); }
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero-inner { max-width: 800px; }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+}
+.hero-sub {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 60ch;
+  margin-bottom: var(--space-xl);
+}
+.hero-actions { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: var(--space-xs);
+  padding: 0.875rem 1.75rem; border-radius: var(--radius-pill);
+  font-family: var(--font-display); font-weight: 700; font-size: var(--text-base);
+  letter-spacing: -0.01em; cursor: pointer; text-decoration: none; border: none;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--gold); color: var(--bg-deep); box-shadow: 0 4px 24px var(--gold-glow); }
+.btn-primary:hover { box-shadow: 0 8px 32px var(--gold-glow); }
+.btn-secondary {
+  background: transparent; color: var(--text-secondary);
+  border: 1px solid var(--border); padding: 0.875rem 1.75rem;
+}
+.btn-secondary:hover { color: var(--text-primary); border-color: var(--border-hover); }
+
+/* ── Problem Grid ─────────────────────────────────────────── */
+.problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+.problem-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+}
+.problem-label {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--red, #ff4757); margin-bottom: var(--space-sm); display: block;
+}
+.problem-text { color: var(--text-primary); font-weight: 600; margin-bottom: var(--space-sm); line-height: 1.5; }
+.problem-cost { color: var(--text-dim); font-size: var(--text-sm); line-height: 1.6; }
+
+/* ── Services Grid ────────────────────────────────────────── */
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+.service-block {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+}
+.service-icon { font-size: 1.5rem; display: block; margin-bottom: var(--space-md); }
+.service-title {
+  font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
+  color: var(--text-primary); margin-bottom: var(--space-sm); letter-spacing: -0.02em;
+}
+.service-desc { color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-lg); font-size: var(--text-sm); }
+.service-features { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-xs); }
+.service-features li {
+  font-size: var(--text-sm); color: var(--text-secondary); padding-left: 1.25rem;
+  position: relative; line-height: 1.6;
+}
+.service-features li::before {
+  content: '✓'; position: absolute; left: 0; color: var(--green);
+  font-size: 0.75rem; top: 0.15em;
+}
+
+/* ── Process Timeline ─────────────────────────────────────── */
+.process-timeline {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+}
+.process-step {
+  display: grid; grid-template-columns: 4rem 1fr; gap: var(--space-xl);
+  padding: var(--space-xl); background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s var(--ease-out);
+}
+.process-step:last-child { border-bottom: none; }
+.process-step:hover { background: var(--bg-elevated); }
+.step-number { font-size: var(--text-sm); color: var(--gold); padding-top: 0.2rem; }
+.step-title {
+  font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: var(--space-xs);
+}
+.step-desc { color: var(--text-secondary); line-height: 1.7; font-size: var(--text-base); }
+
+/* ── Arsenal Grid ─────────────────────────────────────────── */
+.arsenal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.arsenal-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: var(--space-lg);
+}
+.arsenal-name {
+  font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600;
+  color: var(--cyan); margin-bottom: var(--space-xs);
+}
+.arsenal-use { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; }
+
+/* ── Campaign Grid ────────────────────────────────────────── */
+.campaign-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+.campaign-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+}
+.campaign-type {
+  font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
+  color: var(--text-primary); margin-bottom: var(--space-sm); letter-spacing: -0.02em;
+}
+.campaign-desc { color: var(--text-secondary); line-height: 1.7; font-size: var(--text-sm); }
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border); padding: var(--space-lg) 0;
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; list-style: none; gap: var(--space-md);
+  font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600;
+  color: var(--text-primary); letter-spacing: -0.02em;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-chevron {
+  font-size: 1.25rem; color: var(--gold); flex-shrink: 0;
+  transition: transform 0.3s var(--ease-out);
+}
+.faq-item[open] .faq-chevron { transform: rotate(45deg); }
+.faq-a {
+  color: var(--text-secondary); line-height: 1.7; padding-top: var(--space-md);
+  max-width: 60ch; font-size: var(--text-base);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .services-grid, .arsenal-grid, .campaign-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(2rem, 7vw, 3rem); }
+  .text-heading { font-size: var(--text-xl); }
+  .problem-grid, .services-grid, .arsenal-grid, .campaign-grid { grid-template-columns: 1fr; }
+  .process-step { grid-template-columns: 1fr; gap: var(--space-sm); }
+  .step-number { display: none; }
+  .hero-actions { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* GSAP fallback */
+@media (scripting: none) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+</style>
+
+<script>
+// FAQ smooth toggle
+function initFAQ() {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        const answer = item.querySelector('.faq-a') as HTMLElement;
+        if (answer) {
+          answer.style.maxHeight = '0';
+          answer.style.opacity = '0';
+          requestAnimationFrame(() => {
+            answer.style.transition = 'max-height 0.4s ease, opacity 0.3s ease';
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            answer.style.opacity = '1';
+          });
+        }
+      }
+    });
+  });
+}
+initFAQ();
+document.addEventListener('astro:after-swap', () => {
+  initFAQ();
+});
+</script>
