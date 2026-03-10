@@ -1477,8 +1477,10 @@ function splitAndReveal(el: HTMLElement, gsap: any, baseDelay: number = 0) {
       }).join('');
     } else if (node.nodeType === Node.ELEMENT_NODE) {
       const elem = node as HTMLElement;
-      const style = elem.getAttribute('style') || '';
       const tag = elem.tagName.toLowerCase();
+      // Void elements like <br> pass through untouched — wrapping them breaks layout
+      if (tag === 'br' || tag === 'hr' || tag === 'img') return `<${tag}>`;
+      const style = elem.getAttribute('style') || '';
       const attribs = Array.from(elem.attributes).map(a => `${a.name}="${a.value}"`).join(' ');
       // If element has gradient text styles, split words individually and copy
       // the gradient styles to each word-inner span. This preserves the gradient
