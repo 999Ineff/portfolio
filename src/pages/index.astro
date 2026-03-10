@@ -1480,9 +1480,16 @@ function splitAndReveal(el: HTMLElement, gsap: any, baseDelay: number = 0) {
       const style = elem.getAttribute('style') || '';
       const tag = elem.tagName.toLowerCase();
       const attribs = Array.from(elem.attributes).map(a => `${a.name}="${a.value}"`).join(' ');
-      // If element has gradient text styles, treat as atomic — don't restructure internals
+      // If element has gradient text styles, split words individually and copy
+      // the gradient styles to each word-inner span. This preserves the gradient
+      // rendering (no inline-block parent/child break) AND keeps word-level flow.
       if (style.includes('background-clip') || style.includes('text-fill-color')) {
-        return `<span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;"><${tag} ${attribs}>${elem.innerHTML}</${tag}></span></span>`;
+        const text = elem.textContent || '';
+        return text.split(/(\s+)/).map(chunk => {
+          if (/^\s+$/.test(chunk)) return chunk;
+          if (!chunk) return '';
+          return `<span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;${style}">${chunk}</span></span>`;
+        }).join('');
       }
       const inner = Array.from(elem.childNodes).map(wrapWords).join('');
       return `<${tag} ${attribs}><span class="word-mask" style="overflow:hidden;display:inline-block;vertical-align:bottom;"><span class="word-inner" style="display:inline-block;">${inner}</span></span></${tag}>`;
