@@ -41,90 +41,285 @@ const WHAT_OPTIONS: { id: WhatAnswer; label: string; sub: string }[] = [
   { id: 'strategy', label: 'Strategy / Consulting', sub: 'Roadmap, AI audit, ops optimization' },
 ];
 
+// ─── Full 16-Entry Content Matrix ─────────────────────────────────────────────
+
+const CONTENT_MATRIX: Record<`${WhoAnswer}-${WhatAnswer}`, OverlayContent> = {
+
+  // ── Employee × Automation ──────────────────────────────────────────────────
+  'employee-automation': {
+    tier: 'Quick Win',
+    headline: 'Kill the Task That Eats Your Morning',
+    subheadline: 'I write a script that handles it — you hit run once and walk away. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You describe the task', 'I scope it in 24 hrs', 'Built & delivered in days'],
+    services: [
+      { title: 'Excel & Spreadsheet Macros', desc: 'One button. 30 minutes of work disappears.', accent: 'gold' },
+      { title: 'Python Automation Scripts', desc: 'File sorting, data pulling, report generation — automated.', accent: 'cyan' },
+      { title: 'Email & Notification Triggers', desc: 'Automated alerts, summaries, and follow-ups on schedule.', accent: 'green' },
+    ],
+  },
+
+  // ── Employee × Website ─────────────────────────────────────────────────────
+  'employee-website': {
+    tier: 'Quick Win',
+    headline: 'A Page That Makes You Look Like the Expert You Are',
+    subheadline: 'Portfolio, department microsite, or internal tool — built fast, built clean. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You describe what you need', 'I design and scope in 24 hrs', 'Live in days'],
+    services: [
+      { title: 'Personal Portfolio Page', desc: 'Show your work, your skills, your story — professionally.', accent: 'gold' },
+      { title: 'Department Microsite', desc: 'A dedicated page for your team, project, or initiative.', accent: 'cyan' },
+      { title: 'Internal Link Hub', desc: 'One tidy page that replaces the "where is that link?" Slack message.', accent: 'green' },
+    ],
+  },
+
+  // ── Employee × Platform ────────────────────────────────────────────────────
+  'employee-platform': {
+    tier: 'Quick Win',
+    headline: 'A Dashboard That Shows You What Matters, Right Now',
+    subheadline: 'Custom reporting tool or team tracker — no spreadsheet archaeology required. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You describe what you track', 'I scope the tool in 24 hrs', 'Built & delivered in days'],
+    services: [
+      { title: 'Personal Reporting Dashboard', desc: 'Pull your numbers into one live view — no more digging.', accent: 'gold' },
+      { title: 'Team Task Tracker', desc: 'Lightweight internal tool your team will actually use.', accent: 'cyan' },
+      { title: 'Data Aggregation Script', desc: 'Combine data from multiple sources into one clean output.', accent: 'green' },
+    ],
+  },
+
+  // ── Employee × Strategy ────────────────────────────────────────────────────
+  'employee-strategy': {
+    tier: 'Quick Win',
+    headline: 'Find Out Exactly Which Tasks You Should Never Do Again',
+    subheadline: 'A focused audit of your workflow — I map what can be automated and hand you a priority list. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You walk me through your day', 'I audit and rank the wins', 'You get a clear action plan'],
+    services: [
+      { title: 'Workflow Audit', desc: 'Map every manual step — find the 20% that eats 80% of your time.', accent: 'gold' },
+      { title: 'Tool Recommendations', desc: 'What to add, what to drop, what to automate with what you have.', accent: 'cyan' },
+      { title: 'Quick Win Prioritization', desc: 'A ranked list of automations sorted by time saved vs. build effort.', accent: 'green' },
+    ],
+  },
+
+  // ── Owner × Automation ────────────────────────────────────────────────────
+  'owner-automation': {
+    tier: 'Growth Build',
+    headline: 'Systems That Replace Your Bottlenecks',
+    subheadline: 'I automate the operations holding your business hostage — without hiring another person. 30% below agency rates.',
+    price: '$4,200–$5,600',
+    marketPrice: '$6,000–$8,000',
+    cta: 'Book a 15-Minute Call',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery call (30 min)', 'Proposal in 48 hrs', 'Built in 2–4 weeks'],
+    services: [
+      { title: 'CRM & Lead Pipeline Automation', desc: 'Leads captured, scored, and followed up automatically.', accent: 'gold' },
+      { title: 'Email & Client Sequences', desc: 'Onboarding, follow-up, and re-engagement — on autopilot.', accent: 'cyan' },
+      { title: 'Business Process Integration', desc: 'Connect your tools so data stops living in 6 different places.', accent: 'green' },
+    ],
+  },
+
+  // ── Owner × Website ────────────────────────────────────────────────────────
+  'owner-website': {
+    tier: 'Growth Build',
+    headline: 'A Website That Sells While You Sleep',
+    subheadline: 'Conversion-optimized, SEO-ready, and built to grow — not just to exist. 30% below agency rates.',
+    price: '$4,200–$5,600',
+    marketPrice: '$6,000–$8,000',
+    cta: 'Book a 15-Minute Call',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery call (30 min)', 'Design + proposal in 48 hrs', 'Live in 3–5 weeks'],
+    services: [
+      { title: 'Custom Website Design', desc: 'Built to convert, not just look good. Every element earns its place.', accent: 'gold' },
+      { title: 'SEO From Day One', desc: 'Technical SEO, page speed, and content structure baked in — not bolted on.', accent: 'cyan' },
+      { title: 'Lead Capture & CTA System', desc: 'Forms, funnels, and CTAs engineered to turn visitors into contacts.', accent: 'green' },
+    ],
+  },
+
+  // ── Owner × Platform ──────────────────────────────────────────────────────
+  'owner-platform': {
+    tier: 'Growth Build',
+    headline: 'Run Your Business From One Dashboard',
+    subheadline: 'Custom CRM, operations dashboard, or client portal — built for how your business actually works. 30% below agency rates.',
+    price: '$4,200–$5,600',
+    marketPrice: '$6,000–$8,000',
+    cta: 'Book a 15-Minute Call',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery call (30 min)', 'Architecture scoped in 48 hrs', 'Built in 3–6 weeks'],
+    services: [
+      { title: 'Custom CRM', desc: 'Track leads, clients, and deals your way — not the way Salesforce wants you to.', accent: 'gold' },
+      { title: 'Operations Dashboard', desc: 'One screen. Every metric that matters. Updated in real time.', accent: 'cyan' },
+      { title: 'Client-Facing Portal', desc: 'Give clients a login to track projects, access deliverables, and pay invoices.', accent: 'green' },
+    ],
+  },
+
+  // ── Owner × Strategy ──────────────────────────────────────────────────────
+  'owner-strategy': {
+    tier: 'Growth Build',
+    headline: 'A Roadmap to Replace Chaos With Systems',
+    subheadline: 'I audit your entire digital operation — tools, workflows, gaps — and hand you a prioritized build plan. 30% below agency rates.',
+    price: '$4,200–$5,600',
+    marketPrice: '$6,000–$8,000',
+    cta: 'Book a 15-Minute Call',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery call (30 min)', 'Full audit delivered in 1 week', 'Roadmap walkthrough session'],
+    services: [
+      { title: 'Digital Operations Audit', desc: 'Every tool, every workflow, every gap — mapped and graded.', accent: 'gold' },
+      { title: 'AI & Automation Opportunity Map', desc: 'Where AI can replace labor in your specific business model.', accent: 'cyan' },
+      { title: 'Prioritized Build Roadmap', desc: 'Ranked by ROI — what to build first, what to defer, what to cut.', accent: 'green' },
+    ],
+  },
+
+  // ── Executive × Automation ────────────────────────────────────────────────
+  'executive-automation': {
+    tier: 'Full System',
+    headline: 'Enterprise Automation That Scales With Your Teams',
+    subheadline: 'I design and build the data pipelines and workflow integrations your ops team has been asking for. 30% below agency rates.',
+    price: '$10,500–$14,000',
+    marketPrice: '$15,000–$20,000',
+    cta: 'Schedule a Discovery Session',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery session (60 min)', 'Architecture & scope proposal', 'Phased delivery with stakeholder check-ins'],
+    services: [
+      { title: 'Cross-System Data Pipelines', desc: 'Automated data movement between your CRM, ERP, BI, and reporting tools.', accent: 'gold' },
+      { title: 'Enterprise Workflow Automation', desc: 'Multi-team approval flows, notifications, and handoffs — codified and reliable.', accent: 'cyan' },
+      { title: 'API & Middleware Integration', desc: 'Connect the systems your vendors say can\'t talk to each other.', accent: 'green' },
+    ],
+  },
+
+  // ── Executive × Website ───────────────────────────────────────────────────
+  'executive-website': {
+    tier: 'Full System',
+    headline: 'A Digital Presence That Matches the Scale of the Organization',
+    subheadline: 'Corporate site or multi-department portal — architected for performance, security, and brand authority. 30% below agency rates.',
+    price: '$10,500–$14,000',
+    marketPrice: '$15,000–$20,000',
+    cta: 'Schedule a Discovery Session',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery session (60 min)', 'Architecture & design proposal', 'Phased delivery with stakeholder review gates'],
+    services: [
+      { title: 'Corporate Website Architecture', desc: 'Scalable, CMS-ready structure built for multiple teams and departments.', accent: 'gold' },
+      { title: 'Multi-Department Portal', desc: 'Unified digital hub with role-based access, team sections, and shared resources.', accent: 'cyan' },
+      { title: 'Performance & Security Hardening', desc: 'Sub-2s load times, enterprise-grade security headers, and audit trails.', accent: 'green' },
+    ],
+  },
+
+  // ── Executive × Platform ──────────────────────────────────────────────────
+  'executive-platform': {
+    tier: 'Full System',
+    headline: 'The Custom Platform Your Vendors Can\'t Build',
+    subheadline: 'Full SaaS product, BI platform, or enterprise team tool — designed from your requirements, not from a template. 30% below agency rates.',
+    price: '$10,500–$14,000',
+    marketPrice: '$15,000–$20,000',
+    cta: 'Schedule a Discovery Session',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery session (60 min)', 'Technical architecture proposal', 'Phased delivery — MVP first, then full rollout'],
+    services: [
+      { title: 'Custom SaaS or BI Platform', desc: 'Built to your data model, your user roles, your business logic. Full ownership.', accent: 'gold' },
+      { title: 'Executive Dashboard Suite', desc: 'Real-time KPIs, drill-downs, and cross-department visibility in one view.', accent: 'cyan' },
+      { title: 'Team Collaboration Tools', desc: 'Internal tools that cut meeting overhead and make status updates automatic.', accent: 'green' },
+    ],
+  },
+
+  // ── Executive × Strategy ──────────────────────────────────────────────────
+  'executive-strategy': {
+    tier: 'Full System',
+    headline: 'The Technology Audit Your Leadership Team Needs',
+    subheadline: 'Build-vs-buy analysis, vendor evaluation, and a phased modernization roadmap — grounded in your actual stack. 30% below agency rates.',
+    price: '$10,500–$14,000',
+    marketPrice: '$15,000–$20,000',
+    cta: 'Schedule a Discovery Session',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Discovery session (60 min)', 'Full audit & analysis (1–2 weeks)', 'Executive briefing + written roadmap'],
+    services: [
+      { title: 'Technology Stack Audit', desc: 'Every tool evaluated: utilization, cost, redundancy, and strategic fit.', accent: 'gold' },
+      { title: 'Build-vs-Buy Analysis', desc: 'Rigorous comparison for your highest-cost software decisions.', accent: 'cyan' },
+      { title: 'Digital Transformation Roadmap', desc: 'A phased modernization plan your board can act on immediately.', accent: 'green' },
+    ],
+  },
+
+  // ── Solopreneur × Automation ──────────────────────────────────────────────
+  'solopreneur-automation': {
+    tier: 'Quick Win',
+    headline: 'Turn Your Repetitive Work Into a Button',
+    subheadline: 'I automate your content pipeline, client workflows, or lead follow-up — so you can focus on the work only you can do. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You describe the repetitive task', 'I scope it in 24 hrs', 'Delivered in days, not weeks'],
+    services: [
+      { title: 'Content & Publishing Pipeline', desc: 'From idea to scheduled post — drafted, formatted, queued automatically.', accent: 'gold' },
+      { title: 'Client Onboarding Automation', desc: 'Intake forms, welcome emails, and project kickoffs — without lifting a finger.', accent: 'cyan' },
+      { title: 'Lead Nurture Sequences', desc: 'Capture emails, send sequences, convert leads — no monthly SaaS required.', accent: 'green' },
+    ],
+  },
+
+  // ── Solopreneur × Website ─────────────────────────────────────────────────
+  'solopreneur-website': {
+    tier: 'Quick Win',
+    headline: 'A Website That Makes You Look Twice as Big',
+    subheadline: 'Portfolio, brand site, or landing page — custom-built to convert visitors into clients. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You share your brand & goals', 'Design scoped in 24 hrs', 'Live in days'],
+    services: [
+      { title: 'Personal Brand Site', desc: 'Your story, your work, your offer — built to convert.', accent: 'gold' },
+      { title: 'Service Landing Page', desc: 'One focused page that explains what you do and drives bookings.', accent: 'cyan' },
+      { title: 'SEO Foundations', desc: 'Show up when your ideal clients search. Built in from day one.', accent: 'green' },
+    ],
+  },
+
+  // ── Solopreneur × Platform ────────────────────────────────────────────────
+  'solopreneur-platform': {
+    tier: 'Quick Win',
+    headline: 'Your Own Client Portal — Without the SaaS Bill',
+    subheadline: 'Scheduling, client access, project tracking — one custom tool built exactly for how you work. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['You describe how you work with clients', 'I scope the tool in 24 hrs', 'Built & live in days'],
+    services: [
+      { title: 'Client Portal', desc: 'Clients log in to view progress, download deliverables, and pay invoices.', accent: 'gold' },
+      { title: 'Booking & Scheduling System', desc: 'Custom availability + calendar — no Calendly subscription required.', accent: 'cyan' },
+      { title: 'Personal Business Dashboard', desc: 'All your projects, clients, and revenue in one place you actually control.', accent: 'green' },
+    ],
+  },
+
+  // ── Solopreneur × Strategy ────────────────────────────────────────────────
+  'solopreneur-strategy': {
+    tier: 'Quick Win',
+    headline: 'Figure Out Which Tools and Systems Are Costing You Time',
+    subheadline: 'I audit your business stack and hand you a clear plan to consolidate, automate, and grow — without burning out. Starting at $350.',
+    price: '$350–$700',
+    marketPrice: '$500–$1,000',
+    cta: 'Tell Me Your Task',
+    ctaLink: 'https://calendly.com/luis-aviles-khn',
+    processSteps: ['Walk me through your business', 'I audit your tools & workflows', 'You get a prioritized action plan'],
+    services: [
+      { title: 'Business Systems Audit', desc: 'Every tool you pay for, mapped against what it actually does for your revenue.', accent: 'gold' },
+      { title: 'Tool Consolidation Plan', desc: 'Cut the subscriptions, keep the leverage. One streamlined stack.', accent: 'cyan' },
+      { title: 'Growth Systems Roadmap', desc: 'A ranked list of what to automate, build, and stop doing manually.', accent: 'green' },
+    ],
+  },
+};
+
 function buildOverlay(who: WhoAnswer, what: WhatAnswer): OverlayContent {
-  // Tier is driven by "who" — "what" reorders blocks
-  const tiers: Record<WhoAnswer, OverlayContent> = {
-    employee: {
-      tier: 'Quick Win',
-      headline: "Here's What I'd Build for You",
-      subheadline: 'Fast automations that give you back hours every week — starting at $350.',
-      price: '$350–$700',
-      marketPrice: '$500–$1,000',
-      cta: 'Tell Me Your Task',
-      ctaLink: 'https://calendly.com/luis-aviles-khn',
-      processSteps: ['You describe the task', 'I scope it in 24 hrs', 'Built & delivered in days'],
-      services: [
-        { title: 'Excel & Spreadsheet Macros', desc: 'One button. 30 minutes of work disappears.', accent: 'gold' },
-        { title: 'Python Automation Scripts', desc: 'File sorting, data pulling, report generation — automated.', accent: 'cyan' },
-        { title: 'Email & Notification Triggers', desc: 'Automated alerts, summaries, and follow-ups.', accent: 'green' },
-      ],
-    },
-    owner: {
-      tier: 'Growth Build',
-      headline: "Here's What I'd Build for You",
-      subheadline: 'A complete online presence or system that competes — 30% below agency rates.',
-      price: '$4,200–$5,600',
-      marketPrice: '$6,000–$8,000',
-      cta: 'Book a 15-Minute Call',
-      ctaLink: 'https://calendly.com/luis-aviles-khn',
-      processSteps: ['Discovery call (30 min)', 'Proposal in 48 hrs', 'Build in 3–6 weeks'],
-      services: [
-        { title: 'Custom Website Design', desc: 'Built to convert, not just look good. Real SEO from day one.', accent: 'gold' },
-        { title: 'Business Automation', desc: 'Systems that replace your manual bottlenecks.', accent: 'cyan' },
-        { title: 'SEO & Lead Generation', desc: 'Show up when buyers search. Traffic that compounds.', accent: 'green' },
-      ],
-    },
-    executive: {
-      tier: 'Full System',
-      headline: "Here's What I'd Build for You",
-      subheadline: 'Integration, consolidation, and custom tools that make your teams faster.',
-      price: '$10,500–$14,000',
-      marketPrice: '$15,000–$20,000',
-      cta: 'Schedule a Discovery Session',
-      ctaLink: 'https://calendly.com/luis-aviles-khn',
-      processSteps: ['Discovery session (60 min)', 'Architecture proposal', 'Phased delivery with check-ins'],
-      services: [
-        { title: 'System Integration', desc: 'Make your existing tools talk to each other. No more copy-paste.', accent: 'cyan' },
-        { title: 'Custom Dashboards', desc: 'Real-time visibility across operations. One source of truth.', accent: 'gold' },
-        { title: 'Team Workflow Automation', desc: 'Eliminate the manual coordination tax.', accent: 'green' },
-      ],
-    },
-    solopreneur: {
-      tier: 'Quick Win',
-      headline: "Here's What I'd Build for You",
-      subheadline: 'High-leverage automation and tools so you can do more with fewer hours.',
-      price: '$350–$700',
-      marketPrice: '$500–$1,000',
-      cta: 'Tell Me Your Task',
-      ctaLink: 'https://calendly.com/luis-aviles-khn',
-      processSteps: ['You describe the task', 'I scope it in 24 hrs', 'Delivered in days, not weeks'],
-      services: [
-        { title: 'Content & Publishing Pipelines', desc: 'From idea to scheduled post — automated.', accent: 'gold' },
-        { title: 'Client Workflow Tools', desc: 'Onboarding, invoicing, follow-ups on autopilot.', accent: 'cyan' },
-        { title: 'Lead Capture & Nurture', desc: 'Capture emails, send sequences, without a monthly SaaS bill.', accent: 'green' },
-      ],
-    },
-  };
-
-  const content = { ...tiers[who] };
-
-  // Reorder services based on "what"
-  if (what === 'automation') {
-    // Already ordered for automation — keep
-  } else if (what === 'website') {
-    // Promote website block
-    content.services = [
-      content.services.find(s => s.title.toLowerCase().includes('website') || s.title.toLowerCase().includes('content')) || content.services[0],
-      ...content.services.filter((_, i) => i !== 0),
-    ].slice(0, 3);
-  } else if (what === 'platform') {
-    content.services = [
-      content.services.find(s => s.title.toLowerCase().includes('dashboard') || s.title.toLowerCase().includes('system') || s.title.toLowerCase().includes('platform')) || content.services[0],
-      ...content.services.filter((_, i) => i !== 0),
-    ].slice(0, 3);
-  }
-
-  return content;
+  return CONTENT_MATRIX[`${who}-${what}`];
 }
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
@@ -231,10 +426,15 @@ export default function JarvisSelector() {
       setLoadingPhase(i);
       if (i >= phases.length) {
         clearInterval(interval);
-        // Trigger voice if available
+        // Trigger Jarvis voice line if available
         try {
-          const audio = new Audio('/assets/audio/jarvis-ready.mp3');
-          audio.play().catch(() => {}); // Silently ignore if file not found
+          const voicePref = localStorage.getItem('ineffable_jarvis_voice') || 'male';
+          const audioFile = voicePref === 'female'
+            ? '/assets/audio/jarvis-female.mp3'
+            : '/assets/audio/jarvis-male.mp3';
+          const audio = new Audio(audioFile);
+          audio.volume = 0.6;
+          audio.play().catch(() => {}); // Silently ignore if blocked by browser
         } catch {}
         setTimeout(() => {
           if (who && what) {

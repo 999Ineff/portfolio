@@ -730,7 +730,7 @@ const processSteps = [
 
   /* ── Narrative Section ────────────────────────────────────── */
   .narrative-section {
-    background: var(--bg-surface);
+    background: rgba(15, 15, 26, 0.4);
   }
 
   .narrative-stage {
@@ -958,7 +958,7 @@ const processSteps = [
 
   .website-tier--featured {
     border-color: rgba(255, 193, 59, 0.3);
-    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%);
+    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, rgba(20, 20, 32, 0.55) 100%);
   }
 
   .tier-label { align-self: flex-start; }
@@ -1031,7 +1031,7 @@ const processSteps = [
 
   .seo-tier--featured {
     border-color: rgba(255, 193, 59, 0.3);
-    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%);
+    background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, rgba(20, 20, 32, 0.55) 100%);
   }
 
   .seo-badge { align-self: center; }
@@ -1058,7 +1058,7 @@ const processSteps = [
 
   /* ── Comparison Table ─────────────────────────────────────── */
   .comparison-section {
-    background: var(--bg-surface);
+    background: rgba(15, 15, 26, 0.4);
   }
 
   .comparison-table {
@@ -1076,6 +1076,7 @@ const processSteps = [
   .comparison-header { background: var(--bg-elevated); }
   .comparison-row:last-child { border-bottom: none; }
   .comparison-row--alt { background: var(--bg-surface); }
+
 
   .comparison-col {
     padding: 1rem 1.5rem;
@@ -1138,7 +1139,9 @@ const processSteps = [
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border-hover);
-    background: var(--bg-elevated);
+    background: rgba(26, 26, 40, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--cyan);
@@ -1160,7 +1163,7 @@ const processSteps = [
   .timeline-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.5; }
 
   /* ── FAQ ──────────────────────────────────────────────────── */
-  .faq-section { background: var(--bg-surface); }
+  .faq-section { background: rgba(15, 15, 26, 0.4); }
 
   .faq-list {
     display: flex;
@@ -1187,7 +1190,7 @@ const processSteps = [
   }
 
   .faq-question::-webkit-details-marker { display: none; }
-  .faq-question:hover { background: var(--bg-elevated); }
+  .faq-question:hover { background: rgba(26, 26, 40, 0.65); }
 
   .faq-q-text {
     font-size: var(--text-base);

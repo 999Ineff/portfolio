@@ -386,7 +386,9 @@ const stats = [
   align-items: center;
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-sm);
-  background: var(--bg-card);
+  background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   font-size: var(--text-sm);
@@ -399,7 +401,7 @@ const stats = [
   padding: var(--space-xl) 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  background: var(--bg-surface);
+  background: rgba(15, 15, 26, 0.4);
 }
 .stats-bar__grid {
   display: grid;
@@ -467,7 +469,7 @@ const stats = [
 /* ── Timeline ─────────────────────────────────────────────── */
 .timeline-section {
   padding: var(--space-section) 0;
-  background: var(--bg-surface);
+  background: rgba(15, 15, 26, 0.4);
 }
 .timeline {
   display: flex;
@@ -547,11 +549,13 @@ const stats = [
   gap: var(--space-xl);
   padding: var(--space-xl);
   border-bottom: 1px solid var(--border);
-  background: var(--bg-card);
+  background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: background var(--duration-base) var(--ease-out);
 }
 .process-step:last-child { border-bottom: none; }
-.process-step:hover { background: var(--bg-elevated); }
+.process-step:hover { background: rgba(26, 26, 40, 0.65); }
 .process-step__number {
   font-size: var(--text-sm);
   color: var(--gold);
@@ -586,7 +590,7 @@ const stats = [
 /* ── Why One Person ───────────────────────────────────────── */
 .solo-section {
   padding: var(--space-section) 0;
-  background: var(--bg-surface);
+  background: rgba(15, 15, 26, 0.4);
 }
 .solo-section__lead {
   font-family: var(--font-display);
@@ -611,7 +615,9 @@ const stats = [
 }
 .why-card {
   padding: var(--space-xl);
-  background: var(--bg-card);
+  background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   display: flex;

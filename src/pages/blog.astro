@@ -395,7 +395,9 @@ const categories = [...new Set(posts.map(p => p.data.category))];
     text-align: center;
     padding: var(--space-lg) var(--space-md);
     border: 1px dashed var(--border-hover);
-    background: var(--bg-card);
+    background: rgba(20, 20, 32, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .more-coming-text {

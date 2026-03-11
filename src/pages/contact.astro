@@ -281,7 +281,9 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
 
 /* Shared block styles */
 .contact-block {
-  background: var(--bg-card);
+  background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: var(--space-2xl);
@@ -516,7 +518,7 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
 /* ── What to Expect ───────────────────────────────────────── */
 .expect-section {
   padding: var(--space-section) 0;
-  background: var(--bg-surface);
+  background: rgba(15, 15, 26, 0.4);
 }
 .expect-steps {
   display: flex;
@@ -531,12 +533,14 @@ const description = 'Book a free 15-minute discovery call, or send a message. No
   grid-template-columns: 3.5rem 1fr;
   gap: var(--space-xl);
   padding: var(--space-xl);
-  background: var(--bg-card);
+  background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   transition: background var(--duration-base) var(--ease-out);
 }
 .expect-step:last-child { border-bottom: none; }
-.expect-step:hover { background: var(--bg-elevated); }
+.expect-step:hover { background: rgba(26, 26, 40, 0.65); }
 .expect-step__number {
   font-size: var(--text-sm);
   color: var(--gold);

@@ -574,7 +574,7 @@ import CTA from '../components/CTA.astro';
   .launch-banner__icon { font-size: var(--text-md); }
 
   /* ── Narrative ────────────────────────────────────────────── */
-  .narrative-section { background: var(--bg-surface); }
+  .narrative-section { background: rgba(15, 15, 26, 0.4); }
   .narrative-stage { max-width: 900px; margin: 0 auto; }
 
   .narrative-svg {
@@ -631,7 +631,9 @@ import CTA from '../components/CTA.astro';
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border);
-    background: var(--bg-elevated);
+    background: rgba(26, 26, 40, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     margin-bottom: 1rem;
   }
 
@@ -639,7 +641,7 @@ import CTA from '../components/CTA.astro';
   .consulting-card-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.7; }
 
   /* ── Persona Cards ───────────────────────────────────────── */
-  .persona-section { background: var(--bg-surface); }
+  .persona-section { background: rgba(15, 15, 26, 0.4); }
 
   .persona-grid {
     display: grid;
@@ -675,7 +677,7 @@ import CTA from '../components/CTA.astro';
   .process-desc { font-size: var(--text-sm); color: var(--text-dim); line-height: 1.7; }
 
   /* ── Consulting Tiers ─────────────────────────────────────── */
-  .pricing-section { background: var(--bg-surface); }
+  .pricing-section { background: rgba(15, 15, 26, 0.4); }
 
   .consulting-tiers {
     display: grid;
@@ -685,7 +687,7 @@ import CTA from '../components/CTA.astro';
   }
 
   .consulting-tier { display: flex; flex-direction: column; gap: 1rem; padding: 2.5rem 2rem; }
-  .consulting-tier--featured { border-color: rgba(255, 193, 59, 0.3); background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, var(--bg-card) 100%); }
+  .consulting-tier--featured { border-color: rgba(255, 193, 59, 0.3); background: linear-gradient(180deg, rgba(255, 193, 59, 0.04) 0%, rgba(20, 20, 32, 0.55) 100%); }
   .ctier-label { align-self: flex-start; }
   .ctier-name { font-size: var(--text-xl); font-weight: 700; }
   .ctier-price { font-size: var(--text-lg); font-weight: 700; }
@@ -701,6 +703,7 @@ import CTA from '../components/CTA.astro';
   .comparison-header { background: var(--bg-elevated); }
   .comparison-row:last-child { border-bottom: none; }
   .comparison-row--alt { background: var(--bg-surface); }
+
   .comparison-col { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.25rem; }
   .comparison-col--featured { background: rgba(255, 193, 59, 0.04); border-left: 1px solid rgba(255, 193, 59, 0.2); }
   .comparison-option-name { font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); letter-spacing: 0.03em; }
@@ -709,7 +712,7 @@ import CTA from '../components/CTA.astro';
   .comparison-value { font-size: var(--text-sm); line-height: 1.5; }
 
   /* ── Credentials ─────────────────────────────────────────── */
-  .credentials-section { background: var(--bg-surface); }
+  .credentials-section { background: rgba(15, 15, 26, 0.4); }
 
   .credentials-card {
     padding: var(--space-lg);
@@ -761,7 +764,7 @@ import CTA from '../components/CTA.astro';
   .faq-item:last-child { border-bottom: none; }
   .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.5rem 2rem; list-style: none; cursor: pointer; transition: background var(--duration-fast) var(--ease-out); }
   .faq-question::-webkit-details-marker { display: none; }
-  .faq-question:hover { background: var(--bg-surface); }
+  .faq-question:hover { background: rgba(15, 15, 26, 0.4); }
   .faq-q-text { font-size: var(--text-base); font-weight: 600; color: var(--text-primary); line-height: 1.4; }
   .faq-icon { font-size: var(--text-lg); color: var(--gold); flex-shrink: 0; transition: transform var(--duration-base) var(--ease-out); line-height: 1; }
   .faq-item[open] .faq-icon { transform: rotate(45deg); }

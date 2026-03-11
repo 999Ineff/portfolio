@@ -337,7 +337,7 @@ import CTA from '../components/CTA.astro';
 /* ── Problem Grid ─────────────────────────────────────────── */
 .problem-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
 .problem-card {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(20, 20, 32, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: var(--space-xl);
 }
 .problem-label {
@@ -351,7 +351,7 @@ import CTA from '../components/CTA.astro';
 /* ── Services Grid ────────────────────────────────────────── */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
 .service-block {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(20, 20, 32, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: var(--space-xl);
 }
 .service-icon { font-size: 1.5rem; display: block; margin-bottom: var(--space-md); }
@@ -377,12 +377,13 @@ import CTA from '../components/CTA.astro';
 }
 .process-step {
   display: grid; grid-template-columns: 4rem 1fr; gap: var(--space-xl);
-  padding: var(--space-xl); background: var(--bg-card);
+  padding: var(--space-xl); background: rgba(20, 20, 32, 0.55);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   transition: background 0.2s var(--ease-out);
 }
 .process-step:last-child { border-bottom: none; }
-.process-step:hover { background: var(--bg-elevated); }
+.process-step:hover { background: rgba(26, 26, 40, 0.65); }
 .step-number { font-size: var(--text-sm); color: var(--gold); padding-top: 0.2rem; }
 .step-title {
   font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700;
@@ -393,7 +394,7 @@ import CTA from '../components/CTA.astro';
 /* ── Arsenal Grid ─────────────────────────────────────────── */
 .arsenal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
 .arsenal-card {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(20, 20, 32, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border);
   border-radius: var(--radius-md); padding: var(--space-lg);
 }
 .arsenal-name {
@@ -405,7 +406,7 @@ import CTA from '../components/CTA.astro';
 /* ── Campaign Grid ────────────────────────────────────────── */
 .campaign-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
 .campaign-card {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(20, 20, 32, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: var(--space-xl);
 }
 .campaign-type {

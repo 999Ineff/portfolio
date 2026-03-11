@@ -14,7 +14,7 @@
  *   - Large ring (40px)     — lagging follower (duration 0.6s)
  *   - Ring expands 3x on hover over a, button, [role="button"], .interactive
  *   - Dot shrinks 0.5x on the same hover targets (contrast punch)
- *   - mix-blend-mode: difference on ring for visual interest against backgrounds
+ *   - Ring border with gold tint for visual interest against backgrounds
  *   - Fades in on first mousemove — invisible until cursor moves
  *   - Desktop / pointer: fine only — hidden on touch, stylus, coarse pointer
  *   - Hidden during intro animation (body[data-theme="intro"])
@@ -50,6 +50,8 @@
     transition: opacity 0.3s ease;
     /* Subtle inner glow so dot reads on light sections */
     box-shadow: 0 0 6px rgba(255, 193, 59, 0.6);
+    /* Force own compositor layer so cursor paints above backdrop-filter elements (nav) */
+    will-change: transform;
   }
 
   .cursor-follower {
@@ -63,11 +65,11 @@
     pointer-events: none;
     z-index: 10000;
     transform: translate(-50%, -50%);
-    /* difference: ring inverts whatever is beneath it — creates natural
-       contrast so the ring stays visible against both dark and light sections */
-    mix-blend-mode: difference;
     opacity: 0;
     transition: opacity 0.3s ease;
+    /* Force own compositor layer — backdrop-filter on nav creates stacking
+       context that can visually obscure lower-layer fixed elements */
+    will-change: transform;
   }
 
   /* ── Active state — hide default cursor site-wide ────── */
@@ -124,6 +126,10 @@
     // Track cleanup so re-init on view transitions doesn't leak listeners
     let cleanupFns: Array<() => void> = [];
 
+    // Persist last known mouse position across re-inits so cursor survives page transitions
+    let lastMouseX = -1;
+    let lastMouseY = -1;
+
     function cleanup() {
       cleanupFns.forEach(fn => fn());
       cleanupFns = [];
@@ -148,6 +154,14 @@
         return;
       }
 
+      // Kill any stale GSAP tweens on cursor elements from previous page
+      gsap.killTweensOf(dot);
+      gsap.killTweensOf(ring);
+
+      // Reset transform state so quickTo starts clean
+      gsap.set(dot,  { x: lastMouseX >= 0 ? lastMouseX : 0, y: lastMouseY >= 0 ? lastMouseY : 0, scale: 1, opacity: 0 });
+      gsap.set(ring, { x: lastMouseX >= 0 ? lastMouseX : 0, y: lastMouseY >= 0 ? lastMouseY : 0, scale: 1, opacity: 0 });
+
       // ── quickTo: one tween allocation, cheaply updated on every mousemove ──
       // Dot follows cursor with minimal lag (precision)
       const dotX  = gsap.quickTo(dot,  'x', { duration: 0.15, ease: 'power3.out' });
@@ -158,7 +172,18 @@
 
       let visible = false;
 
+      // If we have a known mouse position from before the transition, immediately show cursor
+      if (lastMouseX >= 0 && lastMouseY >= 0) {
+        visible = true;
+        gsap.set(dot,  { opacity: 1 });
+        gsap.set(ring, { opacity: 1 });
+        document.body.classList.add('custom-cursor-active');
+      }
+
       function onMouseMove(e: MouseEvent) {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+
         dotX(e.clientX);
         dotY(e.clientY);
         ringX(e.clientX);
@@ -167,8 +192,8 @@
         // Fade in on first move — avoids flash in the corner on page load
         if (!visible) {
           visible = true;
-          dot.style.opacity  = '1';
-          ring.style.opacity = '1';
+          gsap.set(dot,  { opacity: 1 });
+          gsap.set(ring, { opacity: 1 });
           document.body.classList.add('custom-cursor-active');
         }
       }
@@ -188,9 +213,16 @@
       function onMouseLeave() {
         gsap.to([dot, ring], { opacity: 0, duration: 0.3, ease: 'power2.out' });
         visible = false;
+        lastMouseX = -1;
+        lastMouseY = -1;
       }
 
-      function onMouseEnter() {
+      function onMouseEnter(e: MouseEvent) {
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        // Position immediately so cursor doesn't flash from old location
+        gsap.set(dot,  { x: e.clientX, y: e.clientY });
+        gsap.set(ring, { x: e.clientX, y: e.clientY });
         if (!visible) return; // will fade in on next mousemove
         gsap.to([dot, ring], { opacity: 1, duration: 0.3, ease: 'power2.out' });
       }
@@ -228,11 +260,11 @@
         document.removeEventListener('mouseover', onDocMouseOver);
         document.removeEventListener('mouseout',  onDocMouseOut);
 
-        // Reset visual state — cursor elements persist in DOM across transitions
-        dot.style.opacity  = '0';
-        ring.style.opacity = '0';
-        gsap.set([dot, ring], { scale: 1 });
-        document.body.classList.remove('custom-cursor-active');
+        // Kill active tweens so they don't fight the next init
+        gsap.killTweensOf(dot);
+        gsap.killTweensOf(ring);
+
+        // Don't reset lastMouseX/Y — preserve position across page transitions
         visible = false;
       });
     }

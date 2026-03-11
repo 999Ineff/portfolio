@@ -267,7 +267,7 @@ const serviceLabels: Record<string, string> = {
     gap: 2rem;
     margin-top: 0.5rem;
     padding: 1.25rem 1.5rem;
-    background: var(--bg-surface);
+    background: rgba(15, 15, 26, 0.4);
     border: 1px solid var(--border);
     border-left: 2px solid var(--gold);
     flex-wrap: wrap;
@@ -558,7 +558,9 @@ const serviceLabels: Record<string, string> = {
   /* More Banner */
   .more-banner {
     border: 1px solid var(--border-hover);
-    background: var(--bg-card);
+    background: rgba(20, 20, 32, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: var(--space-lg);
   }
 
