@@ -764,62 +764,63 @@ function ResultOverlay({
           </button>
         </div>
 
-        {/* Scrollable content */}
-        <div className="jarvis-result-scroll" data-lenis-prevent>
-          {/* Section 1: Headline */}
-          <div className="jarvis-result-section jarvis-reveal">
-            <h2 className="jarvis-result-heading">{overlay.headline}</h2>
-            <p className="jarvis-result-sub">{overlay.subheadline}</p>
-          </div>
-
-          {/* Section 2: Services */}
-          <div className="jarvis-result-section jarvis-reveal">
-            <div className="jarvis-section-label">WHAT I BUILD FOR YOU</div>
-            <div className="jarvis-svc-grid">
-              {overlay.services.map((svc, i) => (
-                <ServiceCard key={i} svc={svc} />
-              ))}
+        {/* Two-column island layout — no scroll needed on desktop */}
+        <div className="jarvis-result-body" data-lenis-prevent>
+          {/* Left column: Headline + Services */}
+          <div className="jarvis-result-col-left">
+            <div className="jarvis-reveal">
+              <h2 className="jarvis-result-heading">{overlay.headline}</h2>
+              <p className="jarvis-result-sub">{overlay.subheadline}</p>
             </div>
-          </div>
 
-          {/* Section 3: Pricing */}
-          <div className="jarvis-result-section jarvis-reveal">
-            <div className="jarvis-section-label">INVESTMENT</div>
-            <div className="jarvis-pricing-block">
-              <div className="jarvis-price-main">{overlay.price}</div>
-              <div className="jarvis-price-compare">
-                vs. <span className="jarvis-price-strike">{overlay.marketPrice}</span> at agencies
-              </div>
-              <div className="jarvis-price-note">
-                30% below market — same quality, no agency overhead.
+            <div className="jarvis-reveal" style={{ marginTop: '1.25rem' }}>
+              <div className="jarvis-section-label">WHAT I BUILD FOR YOU</div>
+              <div className="jarvis-svc-grid">
+                {overlay.services.map((svc, i) => (
+                  <ServiceCard key={i} svc={svc} />
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Section 4: Process */}
-          <div className="jarvis-result-section jarvis-reveal">
-            <div className="jarvis-section-label">HOW IT WORKS</div>
-            <ProcessFlow steps={overlay.processSteps} />
-          </div>
+          {/* Right column: Pricing + Process + CTA */}
+          <div className="jarvis-result-col-right">
+            <div className="jarvis-reveal">
+              <div className="jarvis-section-label">INVESTMENT</div>
+              <div className="jarvis-pricing-block">
+                <div className="jarvis-price-main">{overlay.price}</div>
+                <div className="jarvis-price-compare">
+                  vs. <span className="jarvis-price-strike">{overlay.marketPrice}</span> at agencies
+                </div>
+                <div className="jarvis-price-note">
+                  30% below market — same quality, no agency overhead.
+                </div>
+              </div>
+            </div>
 
-          {/* Section 5: CTA */}
-          <div className="jarvis-result-section jarvis-result-cta-section jarvis-reveal">
-            <a
-              href={overlay.ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="jarvis-cta-primary"
-              onClick={handleClose}
-            >
-              {overlay.cta}
-              <span aria-hidden="true"> →</span>
-            </a>
-            <button className="jarvis-cta-secondary" onClick={handleClose}>
-              Explore Full Site →
-            </button>
-            <button className="jarvis-redo-btn" onClick={onReset}>
-              Start over
-            </button>
+            <div className="jarvis-reveal" style={{ marginTop: '1.25rem' }}>
+              <div className="jarvis-section-label">HOW IT WORKS</div>
+              <ProcessFlow steps={overlay.processSteps} />
+            </div>
+
+            <div className="jarvis-result-cta-section jarvis-reveal" style={{ marginTop: '1.5rem' }}>
+              <a
+                href={overlay.ctaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="jarvis-cta-primary"
+                onClick={handleClose}
+              >
+                {overlay.cta}
+                <span aria-hidden="true"> →</span>
+              </a>
+              <button className="jarvis-cta-secondary" onClick={handleClose}>
+                Explore Full Site →
+              </button>
+              <button className="jarvis-redo-btn" onClick={onReset}>
+                Start over
+              </button>
+            </div>
           </div>
         </div>
       </div>
