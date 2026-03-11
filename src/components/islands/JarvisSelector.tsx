@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -536,8 +537,8 @@ export default function JarvisSelector() {
         </div>
       )}
 
-      {/* ── Question Flow Modal ────────────────────────── */}
-      {(step === 'q1' || step === 'q2' || step === 'loading') && (
+      {/* ── Question Flow Modal (portaled to body to escape <main> containment) ── */}
+      {(step === 'q1' || step === 'q2' || step === 'loading') && createPortal(
         <div
           className="jarvis-modal-backdrop"
           role="dialog"
@@ -626,18 +627,20 @@ export default function JarvisSelector() {
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {/* ── Result Overlay ─────────────────────────────── */}
-      {step === 'result' && overlay && (
+      {/* ── Result Overlay (portaled to body to escape <main> containment) ── */}
+      {step === 'result' && overlay && createPortal(
         <ResultOverlay
           overlay={overlay}
           who={who!}
           what={what!}
           onClose={persistAndClose}
           onReset={handleReset}
-        />
+        />,
+        document.body
       )}
     </div>
   );

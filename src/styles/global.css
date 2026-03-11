@@ -608,7 +608,7 @@ ol {
   border-color: var(--gold);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 193, 59, 0.2);
-  color: var(--bg-deep);
+  color: #0a0a12;
 }
 
 .jarvis-customize-btn:hover::before {
@@ -1125,14 +1125,15 @@ ol {
 .jarvis-redo-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
-  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0.15rem 0;
+  padding: 0.35rem 0;
   transition: color var(--duration-fast);
 }
 
-.jarvis-redo-btn:hover { color: var(--text-dim); }
+.jarvis-redo-btn:hover { color: #fff; }
 
 /* ── Jarvis responsive ────────────────────────────────────── */
 @media (max-width: 768px) {
