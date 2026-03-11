@@ -438,27 +438,112 @@
             margin: 0;
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
+        /* ── Back to Resources ───────────────────────── */
+        .back-to-resources {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold, #ffc13b);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            margin-bottom: 2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .back-to-resources:hover {
+            color: #fff;
+            transform: translateX(-4px);
+        }
+
+        /* ── Site Footer ─────────────────────────────── */
+        .site-footer {
+            padding: 4rem 2rem 2rem;
+            background: #050508;
+            position: relative;
+            overflow: hidden;
+        }
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 193, 59, 0.3), transparent);
+        }
+        .site-footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .site-footer-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+        .site-footer-brand { max-width: 320px; flex-shrink: 0; }
+        .site-footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+        }
+        .site-footer-logo-mark {
+            width: 10px;
+            height: 10px;
+            background: var(--gold, #ffc13b);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(255, 193, 59, 0.4);
+            flex-shrink: 0;
+        }
+        .site-footer-tagline {
+            font-size: 0.875rem;
+            color: #a0a0b0;
+            line-height: 1.6;
+        }
+        .site-footer-nav {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .site-footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .site-footer-col-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold, #ffc13b);
+            margin-bottom: 0.4rem;
+        }
+        .site-footer-link {
+            font-size: 0.8125rem;
+            color: #a0a0b0;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .site-footer-link:hover {
+            color: #fff;
+            transform: translateX(4px);
+        }
+        .site-footer-divider {
+            height: 1px;
+            background: rgba(255, 193, 59, 0.1);
+            margin: 2.5rem 0 1.5rem;
+        }
+        .site-footer-bottom {
             text-align: center;
         }
-
-        .footer p {
-            font-size: 0.875rem;
-        }
-
-        /* Fix 7: Footer link focus/hover states */
-        .footer a {
-            color: var(--cyan);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .footer a:hover,
-        .footer a:focus {
-            color: var(--gold);
+        .site-footer-copy {
+            font-size: 0.7rem;
+            color: #666;
         }
 
         /* Fix 2: Mobile content padding + Fix 3: Hamburger + Fix 10: Nested padding */
@@ -470,6 +555,10 @@
             .site-nav-hamburger {
                 display: flex;
             }
+            .site-footer-top { flex-direction: column; gap: 2rem; }
+            .site-footer-brand { max-width: 100%; }
+            .site-footer-nav { gap: 2rem; }
+            .site-footer-col { min-width: 140px; }
         }
         @media (max-width: 600px) {
             h1 {
@@ -549,6 +638,7 @@
     <!-- Fix 5: main landmark -->
     <main id="main-content">
         <div class="container">
+            <a href="/resources" class="back-to-resources">&larr; Back to Resources</a>
             <div class="badge">Intermediate Guide</div>
 
             <h1>Build Tools,<br><span>Not Rent Them</span></h1>
@@ -602,11 +692,55 @@
                 </div>
             </div>
 
-            <div class="footer">
-                <p>Created by <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/">Luis Aviles</a> // Operations Architect</p>
-            </div>
         </div>
     </main>
+    <footer class="site-footer">
+      <div class="site-footer-content">
+        <div class="site-footer-top">
+          <div class="site-footer-brand">
+            <a href="/" class="site-footer-logo">
+              <span class="site-footer-logo-mark"></span>
+              <span>Ineffable</span>
+            </a>
+            <p class="site-footer-tagline">Custom Software. Tailored Websites. Zero Busywork.</p>
+          </div>
+          <nav class="site-footer-nav" aria-label="Footer navigation">
+            <div class="site-footer-col">
+              <h4 class="site-footer-col-title">Services</h4>
+              <a href="/automation" class="site-footer-link">Custom Automation</a>
+              <a href="/websites" class="site-footer-link">Tailored Websites</a>
+              <a href="/platforms" class="site-footer-link">Custom Platforms</a>
+              <a href="/marketing" class="site-footer-link">Digital Marketing</a>
+              <a href="/consulting" class="site-footer-link">Consulting</a>
+            </div>
+            <div class="site-footer-col">
+              <h4 class="site-footer-col-title">Company</h4>
+              <a href="/case-studies" class="site-footer-link">Work</a>
+              <a href="/pricing" class="site-footer-link">Pricing</a>
+              <a href="/about" class="site-footer-link">About</a>
+              <a href="/blog" class="site-footer-link">Blog</a>
+              <a href="/resources" class="site-footer-link">Resources</a>
+              <a href="https://calendly.com/luis-aviles-khn" class="site-footer-link" target="_blank" rel="noopener noreferrer">Book a Call</a>
+            </div>
+            <div class="site-footer-col">
+              <h4 class="site-footer-col-title">Connect</h4>
+              <a href="https://www.linkedin.com/in/luis-aviles-0b969235a/" class="site-footer-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="mailto:luisaviles@ineffablesolutions.net" class="site-footer-link">Email Luis</a>
+            </div>
+            <div class="site-footer-col">
+              <h4 class="site-footer-col-title">Legal</h4>
+              <a href="/privacy" class="site-footer-link">Privacy Policy</a>
+              <a href="/terms" class="site-footer-link">Terms of Service</a>
+              <a href="/accessibility" class="site-footer-link">Accessibility</a>
+            </div>
+          </nav>
+        </div>
+        <div class="site-footer-divider"></div>
+        <div class="site-footer-bottom">
+          <p class="site-footer-copy">&copy; 2026 Ineffable. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
     <script>
         (function () {
             var hamburger = document.getElementById('siteHamburger');
