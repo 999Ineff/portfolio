@@ -119,7 +119,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
        ═══════════════════════════════════════════════════════ -->
   <div class="tech-marquee-strip" aria-label="Technology expertise">
     <div class="tech-marquee-track">
-      {[...Array(2)].flatMap(() => ['Python', 'React', 'Astro', 'Node.js', 'PostgreSQL', 'Docker', 'OpenAI', 'GSAP', 'Selenium', 'Microsoft 365', 'Netlify', 'MCP'].map(tech => (
+      {[...Array(4)].flatMap(() => ['Python', 'React', 'Astro', 'Node.js', 'PostgreSQL', 'Docker', 'OpenAI', 'GSAP', 'Selenium', 'Microsoft 365', 'Netlify', 'MCP'].map(tech => (
         <span class="tech-marquee-item font-mono">{tech}</span>
       )))}
     </div>
@@ -898,16 +898,14 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: rgba(15, 15, 26, 0.4);
-  padding: 0.5rem 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  padding: 0.625rem 0;
 }
 
 .tech-marquee-track {
   display: flex;
-  gap: 2rem;
+  gap: 2.5rem;
   width: max-content;
-  animation: tech-scroll 30s linear infinite;
+  animation: tech-scroll 40s linear infinite;
 }
 
 .tech-marquee-strip:hover .tech-marquee-track {
@@ -915,21 +913,21 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
 }
 
 .tech-marquee-item {
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-dim);
   white-space: nowrap;
   transition: color 0.2s;
 }
 
 .tech-marquee-item:hover {
-  color: var(--text-secondary);
+  color: var(--gold);
 }
 
 @keyframes tech-scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }
 }
 
 /* ─── Services grid ──────────────────────────────────────── */
