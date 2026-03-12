@@ -327,7 +327,7 @@ function TimePeriodToggle({ value, onChange }: TimePeriodToggleProps) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function ROICalculator() {
+export default function ROICalculator({ compact = false }: { compact?: boolean }) {
   const uid = useId();
 
   const [selectedPreset, setSelectedPreset] = useState<string>('custom');
@@ -406,17 +406,19 @@ export default function ROICalculator() {
   const currentPeriodLabel = periodLabel[timePeriod];
 
   return (
-    <section className="roi-root" aria-label="ROI Calculator — estimate your automation savings">
+    <div className={`roi-root${compact ? ' roi-compact' : ''}`} role={compact ? undefined : 'region'} aria-label="ROI Calculator — estimate your automation savings">
       {/* Scoped styles — islands don't share global stylesheets */}
       <style>{SCOPED_CSS}</style>
 
       <div className="roi-container">
         {/* ── Header ──────────────────────────────────────────── */}
-        <div className="roi-header">
-          <span className="roi-eyebrow">ROI CALCULATOR</span>
-          <h2 className="roi-heading">What's your busywork costing you?</h2>
-          <p className="roi-subheading">Slide the numbers. See the math. No fluff.</p>
-        </div>
+        {!compact && (
+          <div className="roi-header">
+            <span className="roi-eyebrow">ROI CALCULATOR</span>
+            <h2 className="roi-heading">What's your busywork costing you?</h2>
+            <p className="roi-subheading">Slide the numbers. See the math. No fluff.</p>
+          </div>
+        )}
 
         {/* ── Two-column layout ───────────────────────────────── */}
         <div className="roi-layout">
@@ -579,7 +581,7 @@ export default function ROICalculator() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -1280,6 +1282,19 @@ const SCOPED_CSS = `
       flex: 1;
       text-align: center;
     }
+  }
+
+  /* ── Compact mode (embedded in merged section) ── */
+  .roi-compact {
+    padding: 0;
+  }
+  .roi-compact .roi-container {
+    max-width: 100%;
+    padding: 0;
+  }
+  .roi-compact .roi-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   /* ── Reduced motion ── */

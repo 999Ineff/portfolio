@@ -518,7 +518,7 @@ export default function JarvisSelector() {
                 onClick={() => setStep('q1')}
                 aria-label="Customize your experience again"
               >
-                Customize Again
+                <span className="jarvis-customize-inner">Customize Again</span>
               </button>
             </div>
           ) : (
