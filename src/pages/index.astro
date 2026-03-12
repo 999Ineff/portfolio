@@ -417,7 +417,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
           </footer>
         </blockquote>
 
-        <blockquote class="testimonial-card card reveal" data-delay="0.1">
+        <blockquote class="testimonial-card card reveal" data-delay="0.08">
           <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
           <p class="testimonial-text">
             "Wow man, thank you — this is so amazing. You're saving me money and getting me a better product."
@@ -431,7 +431,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
           </footer>
         </blockquote>
 
-        <blockquote class="testimonial-card card reveal" data-delay="0.2">
+        <blockquote class="testimonial-card card reveal" data-delay="0.16">
           <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
           <p class="testimonial-text">
             "Your speed, power, detailness is spectacular. This level of power is amazing."
@@ -441,6 +441,63 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
             <div>
               <div class="testimonial-name">Miguel Cardoza</div>
               <div class="testimonial-role text-dim font-mono">Entrepreneur — Finance & Real Estate</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.24">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "This website you made is beautiful. Interesting how it got so much detail."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">SO</div>
+            <div>
+              <div class="testimonial-name">Sam Oster</div>
+              <div class="testimonial-role text-dim font-mono">Owner & Founder, Sip Voice</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.32">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Hey, I loved your website — thank you."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">JF</div>
+            <div>
+              <div class="testimonial-name">Joel Frye</div>
+              <div class="testimonial-role text-dim font-mono">Director of Operations — Telecom</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.40">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "This site is really good — didn't imagine this could be so beautiful."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">NF</div>
+            <div>
+              <div class="testimonial-name">Nancy Figueroa</div>
+              <div class="testimonial-role text-dim font-mono">Owner, Seafood Shack — Restaurant</div>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card card reveal" data-delay="0.48">
+          <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Thank you for helping me create this site to support my project. This project means a lot
+            and this website really helps me execute on it."
+          </p>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar" aria-hidden="true">YD</div>
+            <div>
+              <div class="testimonial-name">Yedod</div>
+              <div class="testimonial-role text-dim font-mono">Owner, Tierra De Israel</div>
             </div>
           </footer>
         </blockquote>
@@ -1237,6 +1294,9 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-bottom: var(--space-lg);
+}
+.testimonials-grid .testimonial-card:last-child:nth-child(3n+1) {
+  grid-column: 2;
 }
 
 .testimonial-card {
