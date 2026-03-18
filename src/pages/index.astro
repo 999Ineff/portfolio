@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import JarvisSelector from '../components/islands/JarvisSelector';
-import ROICalculator from '../components/islands/ROICalculator';
 import { stats, projects } from '../data/stats';
 
 const metaDescription = 'Ineffable — Custom software, tailored websites, and automation for US businesses. 30% below agency rates. Zero busywork.';
@@ -310,101 +309,265 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   </section>
 
   <!-- ═══════════════════════════════════════════════════════
-       THE REALITY — Merged: Comparison + ROI Calculator + CTA
+       THE REALITY — 3D Carousel: Comparison + ROI Calculator
        Neuro: D2 (decoy), D16 (loss aversion), D19 (ROI focus)
        ═══════════════════════════════════════════════════════ -->
-  <section class="section-lg reality-merged" aria-labelledby="reality-heading">
+  <section class="section-lg reality-carousel-section" aria-labelledby="reality-heading">
     <div class="container">
       <div class="section-header" style="text-align: center;">
         <div class="tag reveal">The Reality</div>
         <h2 id="reality-heading" class="text-heading reveal" data-delay="0.1" style="text-align: center;">
           You're losing more time than you think
         </h2>
-        <p class="text-body text-secondary reveal" data-delay="0.2" style="text-align: center; max-width: 650px; margin: 1rem auto 0;">
-          See where your money goes — then see what changes when you stop doing it by hand.
+        <p class="text-body text-secondary reveal" data-delay="0.2" style="text-align: center; max-width: 550px; margin: 1rem auto 0;">
+          Two views, one truth. Click to explore — or let them rotate.
         </p>
       </div>
 
-      <div class="reality-columns reveal" data-delay="0.2">
-        <!-- LEFT: Comparison Table -->
-        <div class="reality-left">
-          <div class="comparison-table" role="table" aria-label="Comparison: Freelancer vs Ineffable vs Agency">
-            <div class="comp-header" role="row">
-              <div class="comp-label" role="columnheader"></div>
-              <div class="comp-col comp-col-free" role="columnheader">Freelancer</div>
-              <div class="comp-col comp-col-highlight" role="columnheader">
-                <span class="comp-highlight-label">Ineffable</span>
-              </div>
-              <div class="comp-col comp-col-agency" role="columnheader">Agency</div>
+      <div class="rc-stage reveal" id="rc-carousel" data-delay="0.2">
+        <div class="rc-glow" id="rc-glow"></div>
+
+        <!-- Panel 1: Comparison Table -->
+        <div class="rc-panel active" id="rc-panel-compare" data-index="0">
+          <div class="rc-panel-tab"><span>&#9878;</span> How We Compare</div>
+          <div class="rc-comp-body">
+            <div class="rc-comp-row rc-comp-header">
+              <div class="rc-comp-cell"></div>
+              <div class="rc-comp-cell rc-col-f">Freelancer</div>
+              <div class="rc-comp-cell rc-col-i">Ineffable</div>
+              <div class="rc-comp-cell rc-col-a">Agency</div>
             </div>
-            {[
-              {
-                label: 'Rate',
-                freelancer: '$15–$50/hr',
-                ineffable: '$52–$120/hr',
-                agency: '$75–$150+/hr',
-              },
-              {
-                label: 'Who Builds It',
-                freelancer: 'Unknown',
-                ineffable: 'Start to finish, one person',
-                agency: '3+ people',
-              },
-              {
-                label: 'Communication',
-                freelancer: 'Async, slow',
-                ineffable: 'Direct, camera-on calls',
-                agency: 'Account manager',
-              },
-              {
-                label: 'Timeline',
-                freelancer: 'Unpredictable',
-                ineffable: 'Scoped, tight delivery',
-                agency: '2–6 months',
-              },
-              {
-                label: 'Language',
-                freelancer: 'Often offshore',
-                ineffable: 'Native English, bilingual',
-                agency: 'US-based, expensive',
-              },
-              {
-                label: 'Pricing',
-                freelancer: 'Varies wildly',
-                ineffable: 'Shown upfront',
-                agency: 'After discovery call',
-              },
-            ].map(row => (
-              <div class="comp-row" role="row">
-                <div class="comp-label" role="rowheader">{row.label}</div>
-                <div class="comp-col comp-col-free comp-col-dim" role="cell">{row.freelancer}</div>
-                <div class="comp-col comp-col-highlight" role="cell">
-                  <span class="comp-check" aria-hidden="true"></span>
-                  {row.ineffable}
-                </div>
-                <div class="comp-col comp-col-agency comp-col-dim" role="cell">{row.agency}</div>
-              </div>
-            ))}
+            <div class="rc-comp-row">
+              <div class="rc-comp-cell rc-comp-label">Who builds it</div>
+              <div class="rc-comp-cell rc-col-f">Unknown</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-check"></span> One person, end to end</div>
+              <div class="rc-comp-cell rc-col-a">3+ people</div>
+            </div>
+            <div class="rc-comp-row">
+              <div class="rc-comp-cell rc-comp-label">Communication</div>
+              <div class="rc-comp-cell rc-col-f">Async, slow</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-check"></span> Direct, camera-on</div>
+              <div class="rc-comp-cell rc-col-a">Account manager</div>
+            </div>
+            <div class="rc-comp-row">
+              <div class="rc-comp-cell rc-comp-label">Timeline</div>
+              <div class="rc-comp-cell rc-col-f">Unpredictable</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-check"></span> Scoped, tight delivery</div>
+              <div class="rc-comp-cell rc-col-a">2–6 months</div>
+            </div>
+            <div class="rc-comp-row">
+              <div class="rc-comp-cell rc-comp-label">Pricing</div>
+              <div class="rc-comp-cell rc-col-f">Varies wildly</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-check"></span> Shown upfront</div>
+              <div class="rc-comp-cell rc-col-a">After discovery call</div>
+            </div>
+            <div class="rc-comp-row">
+              <div class="rc-comp-cell rc-comp-label">Language</div>
+              <div class="rc-comp-cell rc-col-f">Often offshore</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-check"></span> Native English, bilingual</div>
+              <div class="rc-comp-cell rc-col-a">US-based, expensive</div>
+            </div>
+            <div class="rc-comp-row rc-comp-savings">
+              <div class="rc-comp-cell rc-comp-label" style="color:var(--green);font-weight:700">Annual savings</div>
+              <div class="rc-comp-cell rc-col-f" style="font-size:0.68rem">Still paying hourly</div>
+              <div class="rc-comp-cell rc-col-i"><span class="rc-savings-num" id="rc-table-savings">$15.6k</span><span style="font-size:0.6rem;color:var(--green);margin-left:0.2rem">/yr</span></div>
+              <div class="rc-comp-cell rc-col-a" style="font-size:0.68rem">Similar, but 5–10x cost</div>
+            </div>
           </div>
+          <span class="rc-click-hint">Click to view</span>
         </div>
 
-        <!-- RIGHT: ROI Calculator (compact mode) -->
-        <div class="reality-right">
-          <ROICalculator compact client:load />
+        <!-- Panel 2: ROI Calculator -->
+        <div class="rc-panel behind" id="rc-panel-roi" data-index="1">
+          <div class="rc-panel-tab"><span>&#9881;</span> Calculate Your ROI</div>
+
+          <!-- CONDENSED VIEW -->
+          <div class="rc-roi-condensed" id="rc-roi-condensed">
+            <div class="rc-roi-c-slider-group">
+              <div class="rc-roi-c-slider-header">
+                <span class="rc-roi-c-slider-label">Hours wasted per week</span>
+                <span class="rc-roi-c-slider-val" id="rcc-hours-val">10 hrs</span>
+              </div>
+              <input type="range" class="rc-roi-c-range" id="rcc-hours" min="1" max="40" value="10" step="1">
+            </div>
+            <div class="rc-roi-c-slider-group">
+              <div class="rc-roi-c-slider-header">
+                <span class="rc-roi-c-slider-label">Effective hourly cost</span>
+                <span class="rc-roi-c-slider-val rc-cyan" id="rcc-cost-val">$50/hr</span>
+              </div>
+              <input type="range" class="rc-roi-c-range rc-cyan-slider" id="rcc-cost" min="15" max="200" value="50" step="5">
+            </div>
+            <div class="rc-roi-c-big-savings">
+              <div class="rc-roi-c-big-savings-label">Annual savings</div>
+              <div class="rc-roi-c-big-savings-value" id="rcc-annual">$15,600</div>
+              <div class="rc-roi-c-big-savings-sub">Payback in <span id="rcc-payback">2 weeks</span></div>
+            </div>
+            <div class="rc-roi-c-stats">
+              <div class="rc-roi-c-stat">
+                <div class="rc-roi-c-stat-value" id="rcc-hours-freed" style="color:var(--gold)">6 hrs</div>
+                <div class="rc-roi-c-stat-label">Freed / week</div>
+              </div>
+              <div class="rc-roi-c-stat">
+                <div class="rc-roi-c-stat-value" id="rcc-weekly" style="color:var(--cyan)">$300</div>
+                <div class="rc-roi-c-stat-label">Saved / week</div>
+              </div>
+              <div class="rc-roi-c-stat">
+                <div class="rc-roi-c-stat-value" id="rcc-roi-mult" style="color:var(--green)">30x</div>
+                <div class="rc-roi-c-stat-label">ROI</div>
+              </div>
+            </div>
+            <div class="rc-roi-c-explore" id="rc-roi-explore-btn">
+              Explore full calculator
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- EXPANDED VIEW -->
+          <div class="rc-roi-expanded" id="rc-roi-expanded">
+            <div class="rc-roi-e-layout">
+              <div class="rc-roi-e-input">
+                <div class="rc-roi-e-preset-group">
+                  <label class="rc-roi-e-preset-label">Task type</label>
+                  <select class="rc-roi-e-preset-select" id="rce-preset">
+                    <option value="custom">Custom (adjust manually)</option>
+                    <option value="data_entry">Data entry &amp; spreadsheets</option>
+                    <option value="report_gen">Report generation</option>
+                    <option value="email_followups">Email follow-ups</option>
+                    <option value="invoice">Invoice processing</option>
+                    <option value="file_org">File organization</option>
+                  </select>
+                </div>
+                <div class="rc-roi-e-slider-group">
+                  <div class="rc-roi-e-slider-header">
+                    <span class="rc-roi-e-slider-label">Manual hours per week</span>
+                    <span class="rc-roi-e-slider-val" id="rce-hours-val" style="color:var(--gold)">10 hrs</span>
+                  </div>
+                  <span class="rc-roi-e-slider-hint">Time on repetitive work you'd love to eliminate</span>
+                  <input type="range" class="rc-roi-e-range" id="rce-hours" min="1" max="40" value="10" step="1">
+                  <div class="rc-roi-e-bounds"><span>1 hr</span><span>40 hrs</span></div>
+                </div>
+                <div class="rc-roi-e-slider-group">
+                  <div class="rc-roi-e-slider-header">
+                    <span class="rc-roi-e-slider-label">Effective hourly cost</span>
+                    <span class="rc-roi-e-slider-val" id="rce-cost-val" style="color:var(--cyan)">$50</span>
+                  </div>
+                  <span class="rc-roi-e-slider-hint">Salary + overhead, or your billing rate</span>
+                  <input type="range" class="rc-roi-e-range rc-range-cyan" id="rce-cost" min="15" max="200" value="50" step="5">
+                  <div class="rc-roi-e-bounds"><span>$15</span><span>$200</span></div>
+                </div>
+                <div class="rc-roi-e-slider-group">
+                  <div class="rc-roi-e-slider-header">
+                    <span class="rc-roi-e-slider-label">Automatable percentage</span>
+                    <span class="rc-roi-e-slider-val" id="rce-pct-val" style="color:var(--green)">60%</span>
+                  </div>
+                  <span class="rc-roi-e-slider-hint">Most repetitive tasks: 50–80% can be eliminated</span>
+                  <input type="range" class="rc-roi-e-range rc-range-green" id="rce-pct" min="20" max="90" value="60" step="10">
+                  <div class="rc-roi-e-bounds"><span>20%</span><span>90%</span></div>
+                </div>
+                <div class="rc-roi-e-bar">
+                  <div class="rc-roi-e-bar-row">
+                    <span class="rc-roi-e-bar-label">Now</span>
+                    <div class="rc-roi-e-bar-track"><div class="rc-roi-e-bar-fill rc-bar-before"><span class="rc-bar-text" id="rce-bar-before">10 hrs/wk manual</span></div></div>
+                  </div>
+                  <div class="rc-roi-e-bar-row">
+                    <span class="rc-roi-e-bar-label">After</span>
+                    <div class="rc-roi-e-bar-track">
+                      <div class="rc-roi-e-bar-fill rc-bar-after" id="rce-bar-after" style="width:40%"><span class="rc-bar-text" id="rce-bar-after-text">4 hrs left</span></div>
+                      <div class="rc-roi-e-bar-fill rc-bar-saved" id="rce-bar-saved" style="width:60%"><span class="rc-bar-text rc-bar-text-green" id="rce-bar-saved-text">-6 hrs freed</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rc-roi-e-results">
+                <div class="rc-roi-e-time-toggle" id="rce-time-toggle">
+                  <button class="rc-roi-e-time-btn" data-period="daily">Daily</button>
+                  <button class="rc-roi-e-time-btn" data-period="weekly">Weekly</button>
+                  <button class="rc-roi-e-time-btn" data-period="monthly">Monthly</button>
+                  <button class="rc-roi-e-time-btn active" data-period="annual">Annual</button>
+                </div>
+                <div class="rc-roi-e-metrics">
+                  <div class="rc-roi-e-metric">
+                    <span class="rc-roi-e-metric-label">Hours recovered</span>
+                    <span class="rc-roi-e-metric-value" id="rce-m-hours" style="color:var(--gold)">6 hrs</span>
+                    <span class="rc-roi-e-metric-sub" id="rce-m-hours-sub">60% of 10 hrs/week</span>
+                  </div>
+                  <div class="rc-roi-e-metric">
+                    <span class="rc-roi-e-metric-label" id="rce-m-savings-label">Savings per year</span>
+                    <span class="rc-roi-e-metric-value" id="rce-m-savings" style="color:var(--cyan)">$15,600</span>
+                    <span class="rc-roi-e-metric-sub" id="rce-m-savings-sub">Conservative floor</span>
+                  </div>
+                  <div class="rc-roi-e-metric">
+                    <span class="rc-roi-e-metric-label">Annual impact</span>
+                    <span class="rc-roi-e-metric-value" id="rce-m-annual" style="color:var(--green)">$15,600</span>
+                    <span class="rc-roi-e-metric-sub">Conservative floor</span>
+                  </div>
+                  <div class="rc-roi-e-metric">
+                    <span class="rc-roi-e-metric-label">Payback period</span>
+                    <span class="rc-roi-e-metric-value" id="rce-m-payback" style="color:var(--gold)">2 wks</span>
+                    <span class="rc-roi-e-metric-sub">$350–$700 Quick Win</span>
+                  </div>
+                </div>
+                <div class="rc-roi-e-agency">
+                  <div class="rc-roi-e-agency-title">Cost comparison</div>
+                  <div class="rc-roi-e-agency-grid">
+                    <div class="rc-roi-e-agency-card rc-agency-dim">
+                      <span class="rc-roi-e-agency-card-label">Manual cost</span>
+                      <span class="rc-roi-e-agency-card-value" id="rce-a-manual" style="color:var(--red)">$15.6k<small>/yr</small></span>
+                      <span class="rc-roi-e-agency-card-sub">Current state</span>
+                    </div>
+                    <div class="rc-roi-e-agency-card rc-agency-gold">
+                      <span class="rc-roi-e-agency-card-label">Ineffable</span>
+                      <span class="rc-roi-e-agency-card-value" style="color:var(--gold)">$350–$700<small> once</small></span>
+                      <span class="rc-roi-e-agency-card-sub">Eliminates permanently</span>
+                    </div>
+                    <div class="rc-roi-e-agency-card rc-agency-dim">
+                      <span class="rc-roi-e-agency-card-label">Agency quote</span>
+                      <span class="rc-roi-e-agency-card-value" style="color:var(--text-dim)">$2k–$5k<small> once</small></span>
+                      <span class="rc-roi-e-agency-card-sub">Same work, marked up</span>
+                    </div>
+                    <div class="rc-roi-e-agency-card rc-agency-green">
+                      <span class="rc-roi-e-agency-card-label">Your ROI</span>
+                      <span class="rc-roi-e-agency-card-value" id="rce-a-roi" style="color:var(--green)">2,971%</span>
+                      <span class="rc-roi-e-agency-card-sub">Annual / $525 avg</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="rc-roi-e-callout">
+                  <span class="rc-roi-e-callout-bolt">&#9889;</span>
+                  <p class="rc-roi-e-callout-text">
+                    A Quick Win ($350–$700) that reclaims
+                    <strong class="rc-roi-e-callout-strong" id="rce-callout-hours">6 hrs/week</strong>
+                    returns
+                    <strong class="rc-roi-e-callout-strong" id="rce-callout-savings">$15,600/year</strong>.
+                    That's not a cost — it's an investment.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button class="rc-roi-e-collapse" id="rc-roi-collapse-btn">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Back to carousel view
+            </button>
+          </div>
+
+          <span class="rc-click-hint">Click to view</span>
         </div>
       </div>
 
-      <!-- Centered CTA below both columns -->
-      <div class="reality-cta reveal" data-delay="0.3">
-        <a
-          href="https://calendly.com/luis-aviles-khn"
-          class="btn btn-primary"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      <!-- Nav dots -->
+      <div class="rc-nav" id="rc-nav">
+        <span class="rc-nav-label rc-nav-label-left active" id="rc-label-compare">Compare</span>
+        <button class="rc-dot active" data-target="0" id="rc-dot-0" aria-label="Show comparison"></button>
+        <button class="rc-dot" data-target="1" id="rc-dot-1" aria-label="Show calculator"></button>
+        <span class="rc-nav-label rc-nav-label-right" id="rc-label-roi">Calculator</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="rc-cta reveal" data-delay="0.3">
+        <a href="https://calendly.com/luis-aviles-khn" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
           Book a Free 15-Min Call
         </a>
-        <span class="reality-cta-note text-dim font-mono">No pitch. Walk away with a clear plan.</span>
+        <span class="rc-cta-note text-dim font-mono">No pitch. Walk away with a clear plan.</span>
       </div>
     </div>
   </section>
@@ -1088,126 +1251,380 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
 .project-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
 .project-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* ─── The Reality — Merged Section ────────────────────────── */
-.reality-merged { background: rgba(15, 15, 26, 0.4); }
+/* ─── The Reality — 3D Carousel ──────────────────────────── */
+.reality-carousel-section { background: rgba(15, 15, 26, 0.4); }
 
-.reality-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: start;
-  margin-bottom: var(--space-xl);
+.rc-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  height: 520px;
 }
 
-.reality-cta {
+.rc-panel {
+  position: absolute;
+  width: 100%;
+  max-width: 780px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 0;
+  transform-style: preserve-3d;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--bg-card, #0f0f1a);
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition: box-shadow 0.4s ease;
+}
+.rc-panel.active {
+  z-index: 2;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,193,59,0.04);
+}
+.rc-panel.behind {
+  z-index: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.rc-panel.behind::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 18, 0.35);
+  border-radius: var(--radius-xl);
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.rc-panel.behind:hover::after { opacity: 0.15; }
+
+.rc-click-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(10, 10, 18, 0.85);
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 193, 59, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.rc-panel.behind:hover .rc-click-hint { opacity: 1; }
+
+.rc-panel-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.rc-panel.active .rc-panel-tab {
+  color: var(--gold);
+  background: rgba(255, 193, 59, 0.04);
+  border-bottom-color: rgba(255, 193, 59, 0.1);
+}
+
+/* Nav */
+.rc-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  position: relative;
+  z-index: 5;
+}
+.rc-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-dim);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.rc-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(255, 193, 59, 0.3);
+  transform: scale(1.15);
+}
+.rc-dot:hover:not(.active) { border-color: var(--gold); }
+.rc-nav-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  min-width: 100px;
+  cursor: pointer;
+}
+.rc-nav-label-left { text-align: right; }
+.rc-nav-label-right { text-align: left; }
+.rc-nav-label.active { color: var(--gold); }
+
+.rc-glow {
+  position: absolute;
+  width: 500px; height: 400px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--gold);
+  transition: background 0.8s ease, opacity 0.8s ease;
+}
+.rc-glow.panel-roi { background: var(--cyan); opacity: 0.04; }
+
+.rc-cta {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
   text-align: center;
+  position: relative;
+  z-index: 5;
 }
+.rc-cta-note { font-size: var(--text-xs); letter-spacing: 0.05em; }
 
-.reality-cta-note {
-  font-size: var(--text-xs);
-  letter-spacing: 0.05em;
-}
-
-/* ─── Comparison table (compact) ─────────────────────────── */
-.comparison-table {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  height: 100%;
-}
-
-.comp-header,
-.comp-row {
+/* ─── Comparison Table (carousel panel) ─────────────────── */
+.rc-comp-body { padding: 0; }
+.rc-comp-row {
   display: grid;
-  grid-template-columns: 1.1fr 0.85fr 1.1fr 0.95fr;
-}
-
-.comp-header {
-  background: var(--bg-elevated);
+  grid-template-columns: 1.3fr 1fr 1.2fr 1fr;
   border-bottom: 1px solid var(--border);
 }
-
-.comp-row {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
-}
-
-.comp-row:last-child { border-bottom: none; }
-.comp-row:hover { background: rgba(255, 255, 255, 0.02); }
-
-.comp-label,
-.comp-col {
-  padding: 0.875rem 1rem;
-  font-size: 0.8rem;
+.rc-comp-row:last-child { border-bottom: none; }
+.rc-comp-cell {
+  padding: 0.6rem 0.85rem;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
-
-.comp-header .comp-col,
-.comp-header .comp-label {
+.rc-comp-header .rc-comp-cell {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-dim);
-  font-weight: 500;
+  padding: 0.55rem 0.85rem;
+  background: rgba(255, 255, 255, 0.015);
 }
-
-.comp-label { color: var(--text-secondary); font-weight: 600; font-size: 0.75rem; }
-.comp-col-dim { color: var(--text-dim); }
-
-/* Subtle column tints */
-.comp-col-free {
-  background: rgba(100, 140, 200, 0.03);
-}
-
-.comp-col-highlight {
-  background: rgba(255, 193, 59, 0.05);
-  border-left: 1px solid rgba(255, 193, 59, 0.12);
-  border-right: 1px solid rgba(255, 193, 59, 0.12);
+.rc-comp-label { font-weight: 600; color: var(--text-secondary); font-size: 0.72rem; }
+.rc-col-f { background: rgba(100, 140, 200, 0.02); color: var(--text-dim); }
+.rc-col-i {
+  background: rgba(255, 193, 59, 0.035);
+  border-left: 1px solid rgba(255, 193, 59, 0.08);
+  border-right: 1px solid rgba(255, 193, 59, 0.08);
   color: var(--text-primary);
   font-weight: 500;
 }
-
-.comp-col-agency {
-  background: rgba(160, 120, 180, 0.03);
-}
-
-.comp-highlight-label {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
+.rc-col-a { background: rgba(160, 120, 180, 0.02); color: var(--text-dim); }
+.rc-comp-header .rc-col-i {
   color: var(--gold);
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
 }
-
-.comp-check {
+.rc-comp-savings {
+  background: rgba(0, 255, 136, 0.025);
+  border-top: 1px solid rgba(0, 255, 136, 0.08);
+}
+.rc-comp-savings .rc-col-i {
+  background: rgba(0, 255, 136, 0.04);
+  border-left-color: rgba(0, 255, 136, 0.1);
+  border-right-color: rgba(0, 255, 136, 0.1);
+}
+.rc-savings-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--green);
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.25);
+}
+.rc-check {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 12px; height: 12px;
   background: var(--gold);
   border-radius: 50%;
   flex-shrink: 0;
   position: relative;
 }
-
-.comp-check::after {
+.rc-check::after {
   content: '';
   position: absolute;
-  left: 4px;
-  top: 2px;
-  width: 4px;
-  height: 7px;
-  border: 2px solid #0a0a12;
-  border-top: none;
-  border-left: none;
+  left: 3.5px; top: 1.5px;
+  width: 3px; height: 6px;
+  border: 1.5px solid #0a0a12;
+  border-top: none; border-left: none;
   transform: rotate(45deg);
 }
+
+/* ─── ROI Condensed ─────────────────────────────────────── */
+.rc-roi-condensed { padding: 1rem 1.5rem 1.125rem; }
+.rc-roi-c-slider-group { margin-bottom: 0.625rem; }
+.rc-roi-c-slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+.rc-roi-c-slider-label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); }
+.rc-roi-c-slider-val { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--gold); }
+.rc-roi-c-slider-val.rc-cyan { color: var(--cyan); }
+.rc-roi-c-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 2px;
+  outline: none; cursor: pointer;
+}
+.rc-roi-c-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--gold);
+  border: 2.5px solid var(--bg);
+  box-shadow: 0 0 0 3px rgba(255, 193, 59, 0.2), 0 2px 6px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.rc-roi-c-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.rc-roi-c-range.rc-cyan-slider::-webkit-slider-thumb {
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2), 0 2px 6px rgba(0,0,0,0.4);
+}
+.rc-roi-c-big-savings { text-align: center; padding: 0.875rem 0 0.35rem; border-top: 1px solid var(--border); margin-top: 0.5rem; }
+.rc-roi-c-big-savings-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.25rem; }
+.rc-roi-c-big-savings-value { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; color: var(--green); text-shadow: 0 0 30px rgba(0, 255, 136, 0.3); line-height: 1; }
+.rc-roi-c-big-savings-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.25rem; }
+.rc-roi-c-stats { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.rc-roi-c-stat { flex: 1; text-align: center; padding: 0.5rem 0.25rem; background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 8px; }
+.rc-roi-c-stat-value { font-family: var(--font-mono); font-weight: 700; font-size: 0.95rem; line-height: 1; margin-bottom: 0.2rem; }
+.rc-roi-c-stat-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.rc-roi-c-explore {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  margin-top: 0.75rem; padding: 0.65rem;
+  background: rgba(255, 193, 59, 0.04);
+  border: 1px solid rgba(255, 193, 59, 0.1);
+  border-radius: 8px;
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 0.04em; cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.rc-roi-c-explore:hover { background: rgba(255, 193, 59, 0.08); border-color: rgba(255, 193, 59, 0.25); }
+
+/* ─── ROI Expanded ──────────────────────────────────────── */
+.rc-roi-expanded { display: none; padding: 1.5rem; }
+.rc-roi-expanded.visible { display: block; }
+.rc-roi-e-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+.rc-roi-e-input { display: flex; flex-direction: column; gap: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+.rc-roi-e-preset-group { display: flex; flex-direction: column; gap: 0.3rem; }
+.rc-roi-e-preset-label { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
+.rc-roi-e-preset-select {
+  -webkit-appearance: none; appearance: none; width: 100%;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; color: var(--text-primary);
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 500;
+  padding: 0.55rem 0.875rem; cursor: pointer; outline: none;
+  transition: border-color 0.2s;
+}
+.rc-roi-e-preset-select:hover { border-color: rgba(255, 193, 59, 0.3); }
+.rc-roi-e-preset-select:focus { border-color: var(--cyan); box-shadow: 0 0 0 2px rgba(0,229,255,0.15); }
+.rc-roi-e-preset-select option { background: #141420; }
+.rc-roi-e-slider-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.rc-roi-e-slider-header { display: flex; justify-content: space-between; align-items: baseline; }
+.rc-roi-e-slider-label { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); }
+.rc-roi-e-slider-hint { font-size: 0.68rem; color: var(--text-dim); }
+.rc-roi-e-slider-val { font-family: var(--font-mono); font-size: 0.88rem; font-weight: 700; }
+.rc-roi-e-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 2px; outline: none; cursor: pointer;
+}
+.rc-roi-e-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--gold); border: 2.5px solid var(--bg);
+  box-shadow: 0 0 0 3px rgba(255, 193, 59, 0.2), 0 2px 6px rgba(0,0,0,0.4);
+  cursor: pointer; transition: transform 0.15s ease;
+}
+.rc-roi-e-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.rc-roi-e-range.rc-range-cyan::-webkit-slider-thumb { background: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.2), 0 2px 6px rgba(0,0,0,0.4); }
+.rc-roi-e-range.rc-range-green::-webkit-slider-thumb { background: var(--green); box-shadow: 0 0 0 3px rgba(0,255,136,0.2), 0 2px 6px rgba(0,0,0,0.4); }
+.rc-roi-e-bounds { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); margin-top: 0.15rem; }
+.rc-roi-e-bar { display: flex; flex-direction: column; gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+.rc-roi-e-bar-row { display: flex; align-items: center; gap: 0.6rem; }
+.rc-roi-e-bar-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); width: 2.2rem; flex-shrink: 0; }
+.rc-roi-e-bar-track { flex: 1; height: 24px; background: rgba(255,255,255,0.04); border-radius: 5px; overflow: hidden; display: flex; }
+.rc-roi-e-bar-fill { display: flex; align-items: center; padding: 0 0.4rem; border-radius: 5px; transition: width 0.4s cubic-bezier(0.16,1,0.3,1); min-width: 0; overflow: hidden; }
+.rc-bar-before { background: rgba(255,71,87,0.22); border: 1px solid rgba(255,71,87,0.3); width: 100%; }
+.rc-bar-after { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.15); }
+.rc-bar-saved { background: rgba(0,255,136,0.12); border: 1px solid rgba(0,255,136,0.25); }
+.rc-bar-text { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-secondary); }
+.rc-bar-text-green { color: var(--green); }
+.rc-roi-e-results { display: flex; flex-direction: column; gap: 1rem; }
+.rc-roi-e-time-toggle { display: flex; gap: 0.2rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 100px; padding: 0.2rem; }
+.rc-roi-e-time-btn {
+  padding: 0.275rem 0.75rem; border-radius: 100px; border: none;
+  background: transparent; color: var(--text-dim);
+  font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
+}
+.rc-roi-e-time-btn:hover { color: var(--text-secondary); }
+.rc-roi-e-time-btn.active { background: rgba(255,193,59,0.12); color: var(--gold); box-shadow: 0 0 0 1px rgba(255,193,59,0.2); }
+.rc-roi-e-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.rc-roi-e-metric {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.875rem;
+  display: flex; flex-direction: column; gap: 0.25rem; transition: border-color 0.2s;
+}
+.rc-roi-e-metric:hover { border-color: rgba(255,255,255,0.1); }
+.rc-roi-e-metric-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+.rc-roi-e-metric-value { font-family: var(--font-mono); font-weight: 700; font-size: 1.35rem; line-height: 1; }
+.rc-roi-e-metric-sub { font-size: 0.62rem; color: var(--text-muted); }
+.rc-roi-e-agency { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+.rc-roi-e-agency-title { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem; }
+.rc-roi-e-agency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.rc-roi-e-agency-card { border-radius: 8px; padding: 0.625rem; display: flex; flex-direction: column; gap: 0.15rem; border: 1px solid transparent; }
+.rc-agency-dim { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.04); }
+.rc-agency-gold { background: rgba(255,193,59,0.05); border-color: rgba(255,193,59,0.15); }
+.rc-agency-green { background: rgba(0,255,136,0.04); border-color: rgba(0,255,136,0.12); }
+.rc-roi-e-agency-card-label { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); }
+.rc-roi-e-agency-card-value { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; line-height: 1.2; }
+.rc-roi-e-agency-card-sub { font-size: 0.6rem; color: var(--text-muted); }
+.rc-roi-e-callout {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  background: rgba(255,193,59,0.05); border: 1px solid rgba(255,193,59,0.15);
+  border-radius: 10px; padding: 0.875rem 1rem;
+}
+.rc-roi-e-callout-bolt { font-size: 1rem; flex-shrink: 0; }
+.rc-roi-e-callout-text { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+.rc-roi-e-callout-strong { color: var(--gold); font-weight: 700; }
+.rc-roi-e-collapse {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  margin-top: 0.5rem; padding: 0.5rem; width: 100%;
+  background: transparent; border: 1px solid var(--border); border-radius: 8px;
+  font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+  color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.rc-roi-e-collapse:hover { color: var(--gold); border-color: rgba(255,193,59,0.2); }
 
 
 /* ─── FAQ ─────────────────────────────────────────────────── */
@@ -1437,7 +1854,6 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   .project-showcase.project-reverse { direction: ltr; }
   .project-info { transform: translateX(0); }
   .project-showcase.project-reverse .project-info { transform: translateX(0); }
-  .reality-columns { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -1445,19 +1861,16 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   .hero-h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
   .services-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: var(--space-lg); flex-wrap: wrap; }
-
   .project-stats-row { gap: 1rem; }
-  .reality-columns { grid-template-columns: 1fr; }
-  .comp-header, .comp-row { grid-template-columns: 1.1fr 0.85fr 1.1fr 0.95fr; }
+  .rc-panel { max-width: 95vw; }
+  .rc-stage { height: 480px; }
+  .rc-comp-row { grid-template-columns: 1fr 1fr; }
+  .rc-comp-header .rc-comp-cell:first-child, .rc-comp-row .rc-comp-label, .rc-col-a { display: none; }
+  .rc-nav-label { display: none; }
+  .rc-roi-e-layout { grid-template-columns: 1fr; }
   .testimonial-card { width: 300px; }
   .marquee-left { animation-duration: 25s; }
   .marquee-right { animation-duration: 22s; }
-}
-
-@media (max-width: 640px) {
-  .comp-header, .comp-row { grid-template-columns: 1fr 1fr; }
-  .comp-header .comp-label,
-  .comp-row .comp-label { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -1466,9 +1879,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   .final-cta-actions { flex-direction: column; width: 100%; }
   .final-cta-actions .btn { width: 100%; justify-content: center; }
   .services-grid { grid-template-columns: 1fr; }
-  .comp-header, .comp-row { grid-template-columns: 1fr 1.2fr; }
-  .comp-col-dim:last-child { display: none; }
-  .reality-cta .btn { width: 100%; justify-content: center; }
+  .rc-cta .btn { width: 100%; justify-content: center; }
 }
 </style>
 
@@ -1606,10 +2017,262 @@ function initFAQ() {
   });
 }
 
+// ═══ 3D REALITY CAROUSEL ═══════════════════════════════════
+function initCarousel() {
+  const panels = [document.getElementById('rc-panel-compare'), document.getElementById('rc-panel-roi')];
+  const dots = [document.getElementById('rc-dot-0'), document.getElementById('rc-dot-1')];
+  const navLabels = [document.getElementById('rc-label-compare'), document.getElementById('rc-label-roi')];
+  const glowEl = document.getElementById('rc-glow');
+  const stageEl = document.getElementById('rc-carousel');
+  const roiCond = document.getElementById('rc-roi-condensed');
+  const roiExp = document.getElementById('rc-roi-expanded');
+  const exploreBtn = document.getElementById('rc-roi-explore-btn');
+  const collapseBtn = document.getElementById('rc-roi-collapse-btn');
+
+  if (!panels[0] || !panels[1] || !stageEl) return;
+
+  let activeIdx = 0;
+  let locked = false;
+  let expanded = false;
+  let autoT: ReturnType<typeof setInterval> | null = null;
+  let floatTw: gsap.core.Tween | null = null;
+  const COMPACT_H = 520;
+  const AUTO_MS = 8000;
+
+  function posPanel(idx: number, anim = true) {
+    if (expanded) return;
+    const act = panels[idx]!;
+    const beh = panels[1 - idx]!;
+    if (floatTw) { floatTw.kill(); floatTw = null; }
+    gsap.killTweensOf(panels);
+    const d = anim ? 0.8 : 0;
+    const e = 'power3.inOut';
+    gsap.to(stageEl, { height: COMPACT_H, duration: d, ease: e });
+    gsap.to(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, duration: d, ease: e,
+      onComplete: () => { if (!locked && !expanded) floatTw = gsap.to(act, { y: -8, rotateX: 0.5, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 }); }
+    });
+    const behX = idx === 0 ? 80 : -80;
+    gsap.to(beh, { x: behX, y: 20, rotateY: idx === 0 ? -12 : 12, rotateX: 1, scale: 0.88, opacity: 0.8, duration: d, ease: e });
+    act.classList.add('active'); act.classList.remove('behind');
+    beh.classList.add('behind'); beh.classList.remove('active');
+    dots.forEach((dd, i) => dd!.classList.toggle('active', i === idx));
+    navLabels.forEach((l, i) => l!.classList.toggle('active', i === idx));
+    glowEl!.classList.toggle('panel-roi', idx === 1);
+    activeIdx = idx;
+  }
+
+  function switchPanel(idx: number) {
+    if (idx === activeIdx && !expanded) return;
+    if (expanded) collapseROI(() => posPanel(idx, true));
+    else posPanel(idx, true);
+  }
+
+  function startAuto() { stopAuto(); autoT = setInterval(() => { if (!locked && !expanded) switchPanel(1 - activeIdx); }, AUTO_MS); }
+  function stopAuto() { if (autoT) { clearInterval(autoT); autoT = null; } }
+
+  function expandROI() {
+    if (expanded) return;
+    expanded = true; locked = true;
+    stopAuto();
+    if (floatTw) { floatTw.kill(); floatTw = null; }
+    gsap.killTweensOf(panels);
+    syncCondToExp();
+    roiCond!.style.display = 'none';
+    roiExp!.classList.add('visible');
+    const eh = panels[1]!.scrollHeight;
+    gsap.to(panels[1]!, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, duration: 0.7, ease: 'power3.inOut' });
+    gsap.to(stageEl, { height: eh, duration: 0.7, ease: 'power3.inOut' });
+    gsap.to(panels[0]!, { x: -100, scale: 0.92, opacity: 0.55, y: 10, rotateY: 12, rotateX: 1, duration: 0.7, ease: 'power3.inOut' });
+    panels[1]!.classList.add('active'); panels[1]!.classList.remove('behind');
+    panels[0]!.classList.add('behind'); panels[0]!.classList.remove('active');
+    dots[0]!.classList.remove('active'); dots[1]!.classList.add('active');
+    navLabels[0]!.classList.remove('active'); navLabels[1]!.classList.add('active');
+    glowEl!.classList.add('panel-roi');
+    activeIdx = 1;
+  }
+
+  function collapseROI(cb?: () => void) {
+    if (!expanded) { cb?.(); return; }
+    expanded = false;
+    syncExpToCond();
+    roiExp!.classList.remove('visible');
+    roiCond!.style.display = '';
+    posPanel(activeIdx, true);
+    setTimeout(() => { locked = false; startAuto(); cb?.(); }, 850);
+  }
+
+  // Click handlers
+  panels.forEach((p, i) => {
+    p!.addEventListener('click', (ev: MouseEvent) => {
+      const t = ev.target as HTMLElement;
+      if (p!.classList.contains('active') && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.closest('input') || t.closest('select') || t.closest('button'))) return;
+      if (p!.classList.contains('behind')) {
+        if (expanded) collapseROI(() => posPanel(i, true));
+        else { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) locked = false; }, 12000); }
+      }
+    });
+  });
+
+  exploreBtn!.addEventListener('click', (ev: MouseEvent) => {
+    ev.stopPropagation();
+    if (panels[1]!.classList.contains('behind')) { switchPanel(1); setTimeout(expandROI, 850); }
+    else expandROI();
+  });
+
+  collapseBtn!.addEventListener('click', (ev: MouseEvent) => { ev.stopPropagation(); collapseROI(); });
+
+  dots.forEach((d, i) => d!.addEventListener('click', () => { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) locked = false; }, 12000); }));
+  navLabels[0]!.addEventListener('click', () => switchPanel(0));
+  navLabels[1]!.addEventListener('click', () => switchPanel(1));
+
+  stageEl.addEventListener('mouseenter', () => { if (!expanded) locked = true; });
+  stageEl.addEventListener('mouseleave', () => { if (!expanded) { locked = false; startAuto(); } });
+
+  // Prevent click-through on inputs
+  stageEl.querySelectorAll('input[type="range"], select').forEach((el: Element) => {
+    el.addEventListener('click', (e: Event) => e.stopPropagation());
+    el.addEventListener('mousedown', (e: Event) => e.stopPropagation());
+  });
+
+  // ─── Calculator logic ───────────────────────────────────
+  const PRESETS: Record<string, {hours: number; cost: number; pct: number}> = {
+    custom: { hours: 10, cost: 50, pct: 60 },
+    data_entry: { hours: 8, cost: 45, pct: 75 },
+    report_gen: { hours: 6, cost: 55, pct: 80 },
+    email_followups: { hours: 5, cost: 50, pct: 70 },
+    invoice: { hours: 4, cost: 40, pct: 85 },
+    file_org: { hours: 3, cost: 35, pct: 90 },
+  };
+  let timePeriod = 'annual';
+
+  const $ = (id: string) => document.getElementById(id);
+
+  function fK(n: number) { return n >= 10000 ? '$' + (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : n >= 1000 ? '$' + Math.round(n).toLocaleString() : '$' + Math.round(n); }
+  function fH(n: number) { const r = Math.round(n * 10) / 10; return r === 1 ? '1 hr' : r.toFixed(1).replace(/\.0$/, '') + ' hrs'; }
+
+  function updateCond() {
+    const h = +($('rcc-hours') as HTMLInputElement).value;
+    const c = +($('rcc-cost') as HTMLInputElement).value;
+    const pct = 60;
+    const hP = ((h - 1) / 39) * 100;
+    ($('rcc-hours') as HTMLInputElement).style.background = `linear-gradient(90deg, #ffc13b ${hP}%, rgba(255,255,255,0.08) ${hP}%)`;
+    const cP = ((c - 15) / 185) * 100;
+    ($('rcc-cost') as HTMLInputElement).style.background = `linear-gradient(90deg, #00e5ff ${cP}%, rgba(255,255,255,0.08) ${cP}%)`;
+    $('rcc-hours-val')!.textContent = h + ' hrs';
+    $('rcc-cost-val')!.textContent = '$' + c + '/hr';
+    const hoursSaved = h * (pct / 100);
+    const weeklySaved = hoursSaved * c;
+    const annual = weeklySaved * 52;
+    $('rcc-annual')!.textContent = '$' + Math.round(annual).toLocaleString();
+    const pw = weeklySaved > 0 ? 525 / weeklySaved : 99;
+    $('rcc-payback')!.textContent = pw < 1 ? '< 1 week' : Math.ceil(pw) + ' week' + (Math.ceil(pw) === 1 ? '' : 's');
+    $('rcc-hours-freed')!.textContent = fH(hoursSaved);
+    $('rcc-weekly')!.textContent = fK(weeklySaved);
+    const mult = annual > 0 ? Math.round(annual / 525) : 0;
+    $('rcc-roi-mult')!.textContent = mult + 'x';
+    $('rc-table-savings')!.textContent = fK(annual);
+  }
+
+  function updateExp() {
+    const h = +($('rce-hours') as HTMLInputElement).value;
+    const c = +($('rce-cost') as HTMLInputElement).value;
+    const p = +($('rce-pct') as HTMLInputElement).value;
+    const f = p / 100;
+    const hP = ((h - 1) / 39) * 100;
+    ($('rce-hours') as HTMLInputElement).style.background = `linear-gradient(90deg, #ffc13b ${hP}%, rgba(255,255,255,0.08) ${hP}%)`;
+    const cP = ((c - 15) / 185) * 100;
+    ($('rce-cost') as HTMLInputElement).style.background = `linear-gradient(90deg, #00e5ff ${cP}%, rgba(255,255,255,0.08) ${cP}%)`;
+    const pP = ((p - 20) / 70) * 100;
+    ($('rce-pct') as HTMLInputElement).style.background = `linear-gradient(90deg, #00ff88 ${pP}%, rgba(255,255,255,0.08) ${pP}%)`;
+    $('rce-hours-val')!.textContent = h + ' hrs';
+    $('rce-cost-val')!.textContent = '$' + c;
+    $('rce-pct-val')!.textContent = p + '%';
+    const hs = h * f, hl = h - hs, wk = hs * c, dy = wk / 5, mo = wk * 4.33, yr = mo * 12;
+    const aP = h > 0 ? Math.round((hl / h) * 100) : 100;
+    const sP = 100 - aP;
+    $('rce-bar-before')!.textContent = h + ' hrs/wk manual';
+    ($('rce-bar-after') as HTMLElement).style.width = aP + '%';
+    ($('rce-bar-saved') as HTMLElement).style.width = sP + '%';
+    $('rce-bar-after-text')!.textContent = fH(hl) + ' left';
+    $('rce-bar-saved-text')!.textContent = '-' + fH(hs) + ' freed';
+    $('rce-m-hours')!.textContent = fH(hs);
+    ($('rce-m-hours-sub') as HTMLElement).textContent = p + '% of ' + h + ' hrs/week';
+    const pv: Record<string, number> = { daily: dy, weekly: wk, monthly: mo, annual: yr };
+    const pl: Record<string, string> = { daily: 'per day', weekly: 'per week', monthly: 'per month', annual: 'per year' };
+    const ps: Record<string, string> = { daily: '÷ 5 workdays', weekly: '4.33 wks/mo', monthly: '4.33 × weekly', annual: 'Conservative floor' };
+    $('rce-m-savings-label')!.textContent = 'Savings ' + pl[timePeriod];
+    $('rce-m-savings')!.textContent = fK(pv[timePeriod]);
+    $('rce-m-savings-sub')!.textContent = ps[timePeriod];
+    $('rce-m-annual')!.textContent = fK(yr);
+    const pbw = wk > 0 ? 525 / wk : 99;
+    $('rce-m-payback')!.textContent = pbw < 1 ? '< 1 wk' : Math.ceil(pbw) + ' wk' + (Math.ceil(pbw) === 1 ? '' : 's');
+    $('rce-a-manual')!.innerHTML = fK(yr) + '<small>/yr</small>';
+    const roi = yr > 0 ? Math.round((yr / 525) * 100) : 0;
+    $('rce-a-roi')!.textContent = roi.toLocaleString() + '%';
+    $('rce-callout-hours')!.textContent = fH(hs) + '/week';
+    const pw2: Record<string, string> = { daily: 'day', weekly: 'week', monthly: 'month', annual: 'year' };
+    $('rce-callout-savings')!.textContent = fK(pv[timePeriod]) + '/' + pw2[timePeriod];
+    $('rc-table-savings')!.textContent = fK(yr);
+    if (expanded) gsap.to(stageEl, { height: panels[1]!.scrollHeight, duration: 0.3, ease: 'power2.out' });
+  }
+
+  function syncCondToExp() {
+    ($('rce-hours') as HTMLInputElement).value = ($('rcc-hours') as HTMLInputElement).value;
+    ($('rce-cost') as HTMLInputElement).value = ($('rcc-cost') as HTMLInputElement).value;
+    ($('rce-pct') as HTMLInputElement).value = '60';
+    ($('rce-preset') as HTMLSelectElement).value = 'custom';
+    updateExp();
+  }
+
+  function syncExpToCond() {
+    ($('rcc-hours') as HTMLInputElement).value = ($('rce-hours') as HTMLInputElement).value;
+    ($('rcc-cost') as HTMLInputElement).value = ($('rce-cost') as HTMLInputElement).value;
+    updateCond();
+  }
+
+  // Condensed slider listeners
+  $('rcc-hours')!.addEventListener('input', (e: Event) => { e.stopPropagation(); updateCond(); });
+  $('rcc-cost')!.addEventListener('input', (e: Event) => { e.stopPropagation(); updateCond(); });
+
+  // Expanded slider listeners
+  $('rce-hours')!.addEventListener('input', (e: Event) => { e.stopPropagation(); ($('rce-preset') as HTMLSelectElement).value = 'custom'; updateExp(); });
+  $('rce-cost')!.addEventListener('input', (e: Event) => { e.stopPropagation(); ($('rce-preset') as HTMLSelectElement).value = 'custom'; updateExp(); });
+  $('rce-pct')!.addEventListener('input', (e: Event) => { e.stopPropagation(); ($('rce-preset') as HTMLSelectElement).value = 'custom'; updateExp(); });
+
+  $('rce-preset')!.addEventListener('change', (e: Event) => {
+    e.stopPropagation();
+    const key = ($('rce-preset') as HTMLSelectElement).value;
+    const pr = PRESETS[key];
+    if (pr) {
+      ($('rce-hours') as HTMLInputElement).value = String(pr.hours);
+      ($('rce-cost') as HTMLInputElement).value = String(pr.cost);
+      ($('rce-pct') as HTMLInputElement).value = String(pr.pct);
+      updateExp();
+    }
+  });
+
+  $('rce-time-toggle')!.addEventListener('click', (e: Event) => {
+    e.stopPropagation();
+    const btn = (e.target as HTMLElement).closest('.rc-roi-e-time-btn') as HTMLElement | null;
+    if (!btn) return;
+    timePeriod = btn.dataset.period || 'annual';
+    stageEl.querySelectorAll('.rc-roi-e-time-btn').forEach((b: Element) => b.classList.toggle('active', b === btn));
+    updateExp();
+  });
+
+  // Init
+  posPanel(0, false);
+  updateCond();
+  updateExp();
+  startAuto();
+}
+
 initHero();
 initFAQ();
+initCarousel();
 document.addEventListener('astro:after-swap', () => {
   initHero();
   initFAQ();
+  initCarousel();
 });
 </script>
