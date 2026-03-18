@@ -324,7 +324,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
         </p>
       </div>
 
-      <div class="rc-stage reveal" id="rc-carousel" data-delay="0.2">
+      <div class="rc-stage" id="rc-carousel">
         <div class="rc-glow" id="rc-glow"></div>
 
         <!-- Panel 1: Comparison Table -->
@@ -378,7 +378,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
         </div>
 
         <!-- Panel 2: ROI Calculator -->
-        <div class="rc-panel behind" id="rc-panel-roi" data-index="1">
+        <div class="rc-panel behind" id="rc-panel-roi" data-index="1" style="transform: translateX(260px) translateY(30px) rotateY(-18deg) rotateX(2deg) scale(0.82); opacity: 0.7;">
           <div class="rc-panel-tab"><span>&#9881;</span> Calculate Your ROI</div>
 
           <!-- CONDENSED VIEW -->
@@ -2019,6 +2019,18 @@ function initFAQ() {
 
 // ═══ 3D REALITY CAROUSEL ═══════════════════════════════════
 function initCarousel() {
+  const gsap = (window as any).gsap;
+  if (!gsap) {
+    // GSAP not loaded yet — poll until it's ready (BaseLayout sets window.gsap)
+    let attempts = 0;
+    const poll = setInterval(() => {
+      attempts++;
+      if ((window as any).gsap) { clearInterval(poll); initCarousel(); }
+      else if (attempts > 60) clearInterval(poll);
+    }, 50);
+    return;
+  }
+
   const panels = [document.getElementById('rc-panel-compare'), document.getElementById('rc-panel-roi')];
   const dots = [document.getElementById('rc-dot-0'), document.getElementById('rc-dot-1')];
   const navLabels = [document.getElementById('rc-label-compare'), document.getElementById('rc-label-roi')];
@@ -2034,10 +2046,13 @@ function initCarousel() {
   let activeIdx = 0;
   let locked = false;
   let expanded = false;
-  let autoT: ReturnType<typeof setInterval> | null = null;
-  let floatTw: gsap.core.Tween | null = null;
+  let autoT: any = null;
+  let floatTw: any = null;
   const COMPACT_H = 520;
   const AUTO_MS = 8000;
+
+  let focused = false; // true when user clicked the active panel to "lock in"
+  let tableExpanded = false; // true when comparison table is expanded for reading
 
   function posPanel(idx: number, anim = true) {
     if (expanded) return;
@@ -2045,14 +2060,23 @@ function initCarousel() {
     const beh = panels[1 - idx]!;
     if (floatTw) { floatTw.kill(); floatTw = null; }
     gsap.killTweensOf(panels);
-    const d = anim ? 0.8 : 0;
-    const e = 'power3.inOut';
+    focused = false;
+    tableExpanded = false;
+    const d = anim ? 1.1 : 0;
+    const e = 'power2.inOut';
     gsap.to(stageEl, { height: COMPACT_H, duration: d, ease: e });
-    gsap.to(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, duration: d, ease: e,
-      onComplete: () => { if (!locked && !expanded) floatTw = gsap.to(act, { y: -8, rotateX: 0.5, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: -1 }); }
+    // Active: centered, still, then start gentle float after settling
+    gsap.to(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, force3D: true, duration: d, ease: e,
+      onComplete: () => {
+        if (!locked && !expanded && !focused) {
+          // Gentle float — force3D:true keeps text on GPU layer = crisp
+          floatTw = gsap.to(act, { y: -6, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1, force3D: true });
+        }
+      }
     });
-    const behX = idx === 0 ? 80 : -80;
-    gsap.to(beh, { x: behX, y: 20, rotateY: idx === 0 ? -12 : 12, rotateX: 1, scale: 0.88, opacity: 0.8, duration: d, ease: e });
+    // Behind: pushed well to the side
+    const behX = idx === 0 ? 260 : -260;
+    gsap.to(beh, { x: behX, y: 30, rotateY: idx === 0 ? -18 : 18, rotateX: 2, scale: 0.82, opacity: 0.7, force3D: true, duration: d, ease: e });
     act.classList.add('active'); act.classList.remove('behind');
     beh.classList.add('behind'); beh.classList.remove('active');
     dots.forEach((dd, i) => dd!.classList.toggle('active', i === idx));
@@ -2061,13 +2085,43 @@ function initCarousel() {
     activeIdx = idx;
   }
 
+  // Initial position — set immediately with gsap.set so behind panel is offset from the start
+  function initPositions() {
+    const act = panels[0]!;
+    const beh = panels[1]!;
+    gsap.set(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, force3D: true });
+    gsap.set(beh, { x: 260, y: 30, rotateY: -18, rotateX: 2, scale: 0.82, opacity: 0.7, force3D: true });
+    gsap.set(stageEl, { height: COMPACT_H });
+    act.classList.add('active'); act.classList.remove('behind');
+    beh.classList.add('behind'); beh.classList.remove('active');
+    dots[0]!.classList.add('active'); dots[1]!.classList.remove('active');
+    navLabels[0]!.classList.add('active'); navLabels[1]!.classList.remove('active');
+    glowEl!.classList.remove('panel-roi');
+    activeIdx = 0;
+    // Start float after a beat
+    setTimeout(() => {
+      if (!locked && !expanded && !focused) {
+        floatTw = gsap.to(act, { y: -6, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1, force3D: true });
+      }
+    }, 500);
+  }
+
   function switchPanel(idx: number) {
     if (idx === activeIdx && !expanded) return;
     if (expanded) collapseROI(() => posPanel(idx, true));
     else posPanel(idx, true);
   }
 
-  function startAuto() { stopAuto(); autoT = setInterval(() => { if (!locked && !expanded) switchPanel(1 - activeIdx); }, AUTO_MS); }
+  function startAuto() {
+    stopAuto();
+    (window as any)._rcAutoStarted = true;
+    autoT = setInterval(() => {
+      (window as any)._rcTickCount = ((window as any)._rcTickCount || 0) + 1;
+      (window as any)._rcTickState = { locked, expanded, focused, tableExpanded, activeIdx };
+      if (!locked && !expanded && !focused && !tableExpanded) switchPanel(1 - activeIdx);
+    }, AUTO_MS);
+    (window as any)._rcAutoInterval = autoT;
+  }
   function stopAuto() { if (autoT) { clearInterval(autoT); autoT = null; } }
 
   function expandROI() {
@@ -2082,7 +2136,7 @@ function initCarousel() {
     const eh = panels[1]!.scrollHeight;
     gsap.to(panels[1]!, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, duration: 0.7, ease: 'power3.inOut' });
     gsap.to(stageEl, { height: eh, duration: 0.7, ease: 'power3.inOut' });
-    gsap.to(panels[0]!, { x: -100, scale: 0.92, opacity: 0.55, y: 10, rotateY: 12, rotateX: 1, duration: 0.7, ease: 'power3.inOut' });
+    gsap.to(panels[0]!, { x: -280, scale: 0.85, opacity: 0.5, y: 20, rotateY: 15, rotateX: 2, duration: 0.7, ease: 'power3.inOut' });
     panels[1]!.classList.add('active'); panels[1]!.classList.remove('behind');
     panels[0]!.classList.add('behind'); panels[0]!.classList.remove('active');
     dots[0]!.classList.remove('active'); dots[1]!.classList.add('active');
@@ -2098,7 +2152,7 @@ function initCarousel() {
     roiExp!.classList.remove('visible');
     roiCond!.style.display = '';
     posPanel(activeIdx, true);
-    setTimeout(() => { locked = false; startAuto(); cb?.(); }, 850);
+    setTimeout(() => { locked = false; focused = false; startAuto(); cb?.(); }, 850);
   }
 
   // Click handlers
@@ -2108,7 +2162,28 @@ function initCarousel() {
       if (p!.classList.contains('active') && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.closest('input') || t.closest('select') || t.closest('button'))) return;
       if (p!.classList.contains('behind')) {
         if (expanded) collapseROI(() => posPanel(i, true));
-        else { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) locked = false; }, 12000); }
+        else { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) { locked = false; startAuto(); } }, 10000); }
+      } else if (p!.classList.contains('active') && i === 0 && !tableExpanded) {
+        // Click on comparison table — expand for better reading
+        focused = true;
+        tableExpanded = true;
+        locked = true;
+        stopAuto();
+        if (floatTw) { floatTw.kill(); floatTw = null; }
+        gsap.killTweensOf(p!);
+        gsap.to(p!, { scale: 1.06, y: 0, duration: 0.4, ease: 'power2.out', force3D: true });
+        // Push behind panel further out
+        gsap.to(panels[1]!, { x: 320, scale: 0.78, opacity: 0.5, duration: 0.4, ease: 'power2.out', force3D: true });
+      } else if (p!.classList.contains('active') && i === 0 && tableExpanded) {
+        // Click again to un-expand comparison table
+        tableExpanded = false;
+        focused = false;
+        gsap.to(p!, { scale: 1, duration: 0.4, ease: 'power2.out', force3D: true });
+        gsap.to(panels[1]!, { x: 260, scale: 0.82, opacity: 0.7, duration: 0.4, ease: 'power2.out', force3D: true });
+        locked = false;
+        startAuto();
+        // Restart float
+        floatTw = gsap.to(p!, { y: -6, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1, force3D: true, delay: 0.5 });
       }
     });
   });
@@ -2121,12 +2196,11 @@ function initCarousel() {
 
   collapseBtn!.addEventListener('click', (ev: MouseEvent) => { ev.stopPropagation(); collapseROI(); });
 
-  dots.forEach((d, i) => d!.addEventListener('click', () => { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) locked = false; }, 12000); }));
+  dots.forEach((d, i) => d!.addEventListener('click', () => { switchPanel(i); locked = true; setTimeout(() => { if (!expanded) { locked = false; startAuto(); } }, 10000); }));
   navLabels[0]!.addEventListener('click', () => switchPanel(0));
   navLabels[1]!.addEventListener('click', () => switchPanel(1));
 
-  stageEl.addEventListener('mouseenter', () => { if (!expanded) locked = true; });
-  stageEl.addEventListener('mouseleave', () => { if (!expanded) { locked = false; startAuto(); } });
+  // No hover pause — auto-rotation runs until user clicks a panel
 
   // Prevent click-through on inputs
   stageEl.querySelectorAll('input[type="range"], select').forEach((el: Element) => {
@@ -2260,11 +2334,11 @@ function initCarousel() {
     updateExp();
   });
 
-  // Init
-  posPanel(0, false);
-  updateCond();
-  updateExp();
+  // Init — start auto-rotation FIRST, then update calculators
+  initPositions();
   startAuto();
+  try { updateCond(); } catch(_) {}
+  try { updateExp(); } catch(_) {}
 }
 
 initHero();
