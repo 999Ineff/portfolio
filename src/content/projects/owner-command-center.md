@@ -1,6 +1,6 @@
 ---
-title: "BCE Owner Dashboard"
-client: "BCE Restaurant Group"
+title: "Owner Command Center"
+client: "Multi-Location Restaurant Group"
 tier: "enterprise"
 industry: "Food & Beverage / Multi-Location Franchise"
 serviceType: "platform"
@@ -24,7 +24,7 @@ placeholder: false
 
 ## The Challenge
 
-BCE Restaurant Group ran a profitable multi-location franchise — but growth had outpaced its systems. With 5+ locations operating independently, ownership had no single view of the business.
+This multi-location restaurant group ran a profitable franchise — but growth had outpaced its systems. With 5+ locations operating independently, ownership had no single view of the business.
 
 Every Monday, a manager at each location would export data from the POS, manually compile it into a spreadsheet, and email it to ownership. By the time the numbers arrived, they were 3–7 days old. Decisions about staffing, menu pricing, and inventory were being made on stale data.
 
