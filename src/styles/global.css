@@ -83,6 +83,10 @@ body {
   min-height: 100vh;
 }
 
+main {
+  overflow-x: clip;
+}
+
 img,
 video {
   max-width: 100%;
@@ -497,9 +501,9 @@ ol {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -1139,7 +1143,7 @@ ol {
 @media (max-width: 768px) {
   .jarvis-options-grid { grid-template-columns: 1fr; }
   .jarvis-result-backdrop { padding: 1rem; }
-  .jarvis-result-panel { width: 100%; max-height: calc(100vh - 2rem); }
+  .jarvis-result-panel { width: 100%; max-height: calc(100dvh - 2rem); }
   .jarvis-result-body {
     grid-template-columns: 1fr;
     overflow-y: auto;
@@ -1151,5 +1155,5 @@ ol {
   }
   .jarvis-result-col-right { padding: 1.25rem; }
   .jarvis-svc-grid { grid-template-columns: 1fr; }
-  .jarvis-modal { border-radius: var(--radius-xl) var(--radius-xl) 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; }
+  .jarvis-modal { border-radius: var(--radius-xl) var(--radius-xl) 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; max-height: 85dvh; overflow-y: auto; }
 }

@@ -288,7 +288,8 @@ const isServicePage = serviceLinks.some(s =>
     top: calc(100% + 12px);
     left: 50%;
     transform: translateX(-50%) translateY(8px);
-    min-width: 280px;
+    min-width: min(280px, calc(100vw - 2rem));
+    max-width: min(320px, calc(100vw - 2rem));
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s var(--ease-out);
@@ -541,6 +542,18 @@ const isServicePage = serviceLinks.some(s =>
     .mobile-menu { display: block; }
   }
 
+  @media (min-width: 1025px) and (max-width: 1120px) {
+    .nav-dropdown {
+      left: 0;
+      transform: translateY(8px);
+    }
+
+    .nav-dropdown-wrap:hover .nav-dropdown,
+    .nav-dropdown-wrap.open .nav-dropdown {
+      transform: translateY(0);
+    }
+  }
+
   @media (max-width: 480px) {
     .nav {
       padding: 0.6rem 1rem;
@@ -593,6 +606,25 @@ const isServicePage = serviceLinks.some(s =>
     const mobileMenu = document.getElementById('mobileMenu');
     const dropdown = document.getElementById('servicesDropdown');
     const trigger = dropdown?.querySelector('.nav-dropdown-trigger');
+    const floatCta = document.querySelector<HTMLElement>('.mobile-float-cta');
+
+    // Hide float CTA during intro overlay to prevent z-index collision with Skip button
+    if (floatCta) {
+      const introOverlay = document.getElementById('intro-overlay');
+      if (introOverlay) {
+        floatCta.style.display = 'none';
+        const showAfterIntro = () => {
+          if (window.innerWidth <= 1024) floatCta.style.display = 'block';
+        };
+        // Watch for intro overlay removal
+        const obs = new MutationObserver(() => {
+          if (!document.getElementById('intro-overlay')) { showAfterIntro(); obs.disconnect(); }
+        });
+        obs.observe(document.body, { childList: true, subtree: true });
+        // Safety: show after 8s max
+        setTimeout(showAfterIntro, 8000);
+      }
+    }
 
     // Scroll behavior — shrink on scroll
     window.addEventListener('scroll', () => {

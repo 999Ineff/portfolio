@@ -380,7 +380,11 @@ const legalLinks = [
       max-width: 100%;
     }
     .footer-newsletter {
+      width: 100%;
       max-width: 100%;
+    }
+    .footer-email-input {
+      min-width: 0;
     }
     .footer-nav {
       flex-wrap: wrap;
@@ -398,6 +402,22 @@ const legalLinks = [
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-newsletter {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .footer-email-input {
+      border-right: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .footer-subscribe-btn {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-sm);
     }
   }
 </style>

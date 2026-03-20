@@ -1263,6 +1263,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   margin: 0 auto;
   transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   height: 520px;
+  overflow: hidden;
 }
 
 .rc-panel {
@@ -1322,6 +1323,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   transition: opacity 0.3s ease;
 }
 .rc-panel.behind:hover .rc-click-hint { opacity: 1; }
+@media (hover: none) { .rc-panel.behind .rc-click-hint { opacity: 0.85; } }
 
 .rc-panel-tab {
   display: flex;
@@ -1361,6 +1363,14 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
+  /* 44px touch target via transparent hit area */
+  position: relative;
+}
+.rc-dot::before {
+  content: '';
+  position: absolute;
+  inset: -17px;
+  border-radius: 50%;
 }
 .rc-dot.active {
   background: var(--gold);
@@ -1496,6 +1506,7 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   width: 100%; height: 4px; border-radius: 2px;
   outline: none; cursor: pointer;
 }
+.rc-roi-c-range, .rc-roi-e-range { touch-action: none; }
 .rc-roi-c-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 18px; height: 18px; border-radius: 50%;
@@ -1863,11 +1874,20 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   .hero-stats { gap: var(--space-lg); flex-wrap: wrap; }
   .project-stats-row { gap: 1rem; }
   .rc-panel { max-width: 95vw; }
-  .rc-stage { height: 480px; }
+  .rc-stage { height: auto; min-height: 420px; }
   .rc-comp-row { grid-template-columns: 1fr 1fr; }
   .rc-comp-header .rc-comp-cell:first-child, .rc-comp-row .rc-comp-label, .rc-col-a { display: none; }
+  /* Restore savings label on mobile via data-attr */
+  .rc-comp-savings .rc-col-f::before { content: 'Annual savings  '; font-weight: 600; color: var(--text-secondary); font-size: 0.68rem; }
   .rc-nav-label { display: none; }
   .rc-roi-e-layout { grid-template-columns: 1fr; }
+  /* Enlarge slider thumbs for touch (44px target) */
+  .rc-roi-c-range::-webkit-slider-thumb,
+  .rc-roi-e-range::-webkit-slider-thumb { width: 28px; height: 28px; }
+  .rc-roi-c-range, .rc-roi-e-range { height: 6px; }
+  /* Reduce 3D effects on mobile */
+  .rc-stage { perspective: none; }
+  .rc-panel { transform-style: flat; }
   .testimonial-card { width: 300px; }
   .marquee-left { animation-duration: 25s; }
   .marquee-right { animation-duration: 22s; }
@@ -1878,8 +1898,32 @@ const metaDescription = 'Ineffable — Custom software, tailored websites, and a
   .hero-actions .btn { width: 100%; justify-content: center; }
   .final-cta-actions { flex-direction: column; width: 100%; }
   .final-cta-actions .btn { width: 100%; justify-content: center; }
+  .hero-float { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .rc-cta .btn { width: 100%; justify-content: center; }
+  /* Carousel on small phones */
+  .rc-stage { min-height: 380px; }
+  .rc-panel { max-width: 100vw; }
+  .rc-roi-c-stats { flex-wrap: wrap; }
+  .rc-roi-c-stat { flex: 1 1 calc(50% - 0.25rem); }
+  .rc-roi-e-metrics { grid-template-columns: 1fr; }
+  .rc-roi-e-agency-grid { grid-template-columns: 1fr 1fr; gap: 0.375rem; }
+  .rc-roi-e-agency-card-value { font-size: 0.85rem; }
+  .rc-roi-c-big-savings-value { font-size: 1.5rem; }
+  .rc-roi-condensed { padding: 0.75rem 1rem; }
+  .rc-roi-expanded { padding: 1rem; }
+  .rc-roi-e-input { padding: 1rem; }
+  .rc-roi-e-time-toggle { flex-wrap: wrap; }
+  .project-info { padding: 1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee-track,
+  .marquee-left,
+  .marquee-right {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 </style>
 
@@ -1987,9 +2031,9 @@ function initHero() {
     });
   });
 
-  // Mouse-parallax on hero visual (subtle tilt)
+  // Mouse-parallax on hero visual (subtle tilt) — desktop only
   const heroVisual = document.querySelector<HTMLElement>('.hero-visual');
-  if (heroVisual) {
+  if (heroVisual && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.addEventListener('mousemove', (e) => {
       const xPct = (e.clientX / window.innerWidth - 0.5) * 8;
       const yPct = (e.clientY / window.innerHeight - 0.5) * 4;
@@ -2048,11 +2092,31 @@ function initCarousel() {
   let expanded = false;
   let autoT: any = null;
   let floatTw: any = null;
-  const COMPACT_H = 520;
   const AUTO_MS = 8000;
 
   let focused = false; // true when user clicked the active panel to "lock in"
   let tableExpanded = false; // true when comparison table is expanded for reading
+
+  // ─── Mobile-aware helpers ────────────────────────────────
+  const isMobile = () => window.innerWidth <= 768;
+  const getBehX = () => isMobile() ? Math.min(180, window.innerWidth * 0.35) : 260;
+  const getCompactH = () => {
+    if (isMobile()) {
+      // Measure actual active panel height + nav
+      const act = panels[activeIdx];
+      if (act) return Math.max(380, act.scrollHeight + 60);
+      return 420;
+    }
+    return 520;
+  };
+  const get3D = () => !isMobile(); // disable 3D rotation on mobile
+
+  // ─── IntersectionObserver for auto-rotation ───────────────
+  let carouselVisible = true;
+  const observer = new IntersectionObserver(([entry]) => {
+    carouselVisible = entry.isIntersecting;
+  }, { threshold: 0.3 });
+  observer.observe(stageEl);
 
   function posPanel(idx: number, anim = true) {
     if (expanded) return;
@@ -2064,7 +2128,8 @@ function initCarousel() {
     tableExpanded = false;
     const d = anim ? 1.1 : 0;
     const e = 'power2.inOut';
-    gsap.to(stageEl, { height: COMPACT_H, duration: d, ease: e });
+    const compactH = getCompactH();
+    gsap.to(stageEl, { height: compactH, duration: d, ease: e });
     // Active: centered, still, then start gentle float after settling
     gsap.to(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, force3D: true, duration: d, ease: e,
       onComplete: () => {
@@ -2074,9 +2139,10 @@ function initCarousel() {
         }
       }
     });
-    // Behind: pushed well to the side
-    const behX = idx === 0 ? 260 : -260;
-    gsap.to(beh, { x: behX, y: 30, rotateY: idx === 0 ? -18 : 18, rotateX: 2, scale: 0.82, opacity: 0.7, force3D: true, duration: d, ease: e });
+    // Behind: pushed to the side (responsive offset)
+    const behX = idx === 0 ? getBehX() : -getBehX();
+    const use3D = get3D();
+    gsap.to(beh, { x: behX, y: use3D ? 30 : 15, rotateY: use3D ? (idx === 0 ? -18 : 18) : 0, rotateX: use3D ? 2 : 0, scale: isMobile() ? 0.88 : 0.82, opacity: 0.7, force3D: true, duration: d, ease: e });
     act.classList.add('active'); act.classList.remove('behind');
     beh.classList.add('behind'); beh.classList.remove('active');
     dots.forEach((dd, i) => dd!.classList.toggle('active', i === idx));
@@ -2089,9 +2155,12 @@ function initCarousel() {
   function initPositions() {
     const act = panels[0]!;
     const beh = panels[1]!;
+    const compactH = getCompactH();
+    const behX = getBehX();
+    const use3D = get3D();
     gsap.set(act, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, force3D: true });
-    gsap.set(beh, { x: 260, y: 30, rotateY: -18, rotateX: 2, scale: 0.82, opacity: 0.7, force3D: true });
-    gsap.set(stageEl, { height: COMPACT_H });
+    gsap.set(beh, { x: behX, y: use3D ? 30 : 15, rotateY: use3D ? -18 : 0, rotateX: use3D ? 2 : 0, scale: isMobile() ? 0.88 : 0.82, opacity: 0.7, force3D: true });
+    gsap.set(stageEl, { height: compactH });
     act.classList.add('active'); act.classList.remove('behind');
     beh.classList.add('behind'); beh.classList.remove('active');
     dots[0]!.classList.add('active'); dots[1]!.classList.remove('active');
@@ -2118,7 +2187,7 @@ function initCarousel() {
     autoT = setInterval(() => {
       (window as any)._rcTickCount = ((window as any)._rcTickCount || 0) + 1;
       (window as any)._rcTickState = { locked, expanded, focused, tableExpanded, activeIdx };
-      if (!locked && !expanded && !focused && !tableExpanded) switchPanel(1 - activeIdx);
+      if (!locked && !expanded && !focused && !tableExpanded && carouselVisible) switchPanel(1 - activeIdx);
     }, AUTO_MS);
     (window as any)._rcAutoInterval = autoT;
   }
@@ -2136,7 +2205,9 @@ function initCarousel() {
     const eh = panels[1]!.scrollHeight;
     gsap.to(panels[1]!, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1, duration: 0.7, ease: 'power3.inOut' });
     gsap.to(stageEl, { height: eh, duration: 0.7, ease: 'power3.inOut' });
-    gsap.to(panels[0]!, { x: -280, scale: 0.85, opacity: 0.5, y: 20, rotateY: 15, rotateX: 2, duration: 0.7, ease: 'power3.inOut' });
+    const expandBehX = isMobile() ? -(getBehX() + 20) : -280;
+    const use3D = get3D();
+    gsap.to(panels[0]!, { x: expandBehX, scale: 0.85, opacity: 0.5, y: 20, rotateY: use3D ? 15 : 0, rotateX: use3D ? 2 : 0, duration: 0.7, ease: 'power3.inOut' });
     panels[1]!.classList.add('active'); panels[1]!.classList.remove('behind');
     panels[0]!.classList.add('behind'); panels[0]!.classList.remove('active');
     dots[0]!.classList.remove('active'); dots[1]!.classList.add('active');
@@ -2171,15 +2242,16 @@ function initCarousel() {
         stopAuto();
         if (floatTw) { floatTw.kill(); floatTw = null; }
         gsap.killTweensOf(p!);
-        gsap.to(p!, { scale: 1.06, y: 0, duration: 0.4, ease: 'power2.out', force3D: true });
-        // Push behind panel further out
-        gsap.to(panels[1]!, { x: 320, scale: 0.78, opacity: 0.5, duration: 0.4, ease: 'power2.out', force3D: true });
+        gsap.to(p!, { scale: isMobile() ? 1.02 : 1.06, y: 0, duration: 0.4, ease: 'power2.out', force3D: true });
+        // Push behind panel further out (responsive)
+        const tableExpandX = isMobile() ? getBehX() + 40 : 320;
+        gsap.to(panels[1]!, { x: tableExpandX, scale: 0.78, opacity: 0.5, duration: 0.4, ease: 'power2.out', force3D: true });
       } else if (p!.classList.contains('active') && i === 0 && tableExpanded) {
         // Click again to un-expand comparison table
         tableExpanded = false;
         focused = false;
         gsap.to(p!, { scale: 1, duration: 0.4, ease: 'power2.out', force3D: true });
-        gsap.to(panels[1]!, { x: 260, scale: 0.82, opacity: 0.7, duration: 0.4, ease: 'power2.out', force3D: true });
+        gsap.to(panels[1]!, { x: getBehX(), scale: isMobile() ? 0.88 : 0.82, opacity: 0.7, duration: 0.4, ease: 'power2.out', force3D: true });
         locked = false;
         startAuto();
         // Restart float
@@ -2332,6 +2404,41 @@ function initCarousel() {
     timePeriod = btn.dataset.period || 'annual';
     stageEl.querySelectorAll('.rc-roi-e-time-btn').forEach((b: Element) => b.classList.toggle('active', b === btn));
     updateExp();
+  });
+
+  // ─── Touch swipe support ──────────────────────────────────
+  let swipeStartX = 0;
+  let swipeStartY = 0;
+  let swiping = false;
+  stageEl.addEventListener('touchstart', (e: TouchEvent) => {
+    if (expanded) return;
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+    swiping = true;
+  }, { passive: true });
+  stageEl.addEventListener('touchend', (e: TouchEvent) => {
+    if (!swiping || expanded) return;
+    swiping = false;
+    const dx = e.changedTouches[0].clientX - swipeStartX;
+    const dy = e.changedTouches[0].clientY - swipeStartY;
+    // Only trigger if horizontal swipe > 50px and more horizontal than vertical
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      const nextIdx = dx < 0 ? 1 : 0; // swipe left = panel 1, swipe right = panel 0
+      if (nextIdx !== activeIdx) {
+        switchPanel(nextIdx);
+        locked = true;
+        setTimeout(() => { if (!expanded) { locked = false; startAuto(); } }, 10000);
+      }
+    }
+  }, { passive: true });
+
+  // ─── Resize handler — recalculate positions on orientation change ───
+  let resizeTimer: any = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!expanded) posPanel(activeIdx, false);
+    }, 200);
   });
 
   // Init — start auto-rotation FIRST, then update calculators
