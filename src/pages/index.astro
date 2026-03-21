@@ -2100,23 +2100,25 @@ function initCarousel() {
   // ─── Mobile-aware helpers ────────────────────────────────
   const isMobile = () => window.innerWidth <= 768;
   const getBehX = () => isMobile() ? Math.min(180, window.innerWidth * 0.35) : 260;
+  let cachedMobileH: number | null = null;
   const getCompactH = () => {
-    if (isMobile()) {
-      // Measure actual active panel height + nav
-      const act = panels[activeIdx];
-      if (act) return Math.max(380, act.scrollHeight + 60);
-      return 420;
-    }
-    return 520;
+    if (!isMobile()) return 520;
+    if (cachedMobileH !== null) return cachedMobileH;
+    const act = panels[activeIdx];
+    cachedMobileH = act ? Math.max(380, act.scrollHeight + 60) : 420;
+    return cachedMobileH;
   };
-  const get3D = () => !isMobile(); // disable 3D rotation on mobile
+  const get3D = () => !isMobile();
 
   // ─── IntersectionObserver for auto-rotation ───────────────
   let carouselVisible = true;
+  // Clean up previous observer if initCarousel runs again (View Transitions)
+  if ((window as any)._rcObserver) (window as any)._rcObserver.disconnect();
   const observer = new IntersectionObserver(([entry]) => {
     carouselVisible = entry.isIntersecting;
   }, { threshold: 0.3 });
   observer.observe(stageEl);
+  (window as any)._rcObserver = observer;
 
   function posPanel(idx: number, anim = true) {
     if (expanded) return;
@@ -2126,6 +2128,7 @@ function initCarousel() {
     gsap.killTweensOf(panels);
     focused = false;
     tableExpanded = false;
+    cachedMobileH = null; // invalidate — different panel may have different height
     const d = anim ? 1.1 : 0;
     const e = 'power2.inOut';
     const compactH = getCompactH();
@@ -2433,13 +2436,18 @@ function initCarousel() {
   }, { passive: true });
 
   // ─── Resize handler — recalculate positions on orientation change ───
+  // Clean up previous resize handler if initCarousel runs again (View Transitions)
+  if ((window as any)._rcResizeHandler) window.removeEventListener('resize', (window as any)._rcResizeHandler);
   let resizeTimer: any = null;
-  window.addEventListener('resize', () => {
+  const resizeHandler = () => {
     clearTimeout(resizeTimer);
+    cachedMobileH = null; // invalidate height cache
     resizeTimer = setTimeout(() => {
       if (!expanded) posPanel(activeIdx, false);
     }, 200);
-  });
+  };
+  window.addEventListener('resize', resizeHandler);
+  (window as any)._rcResizeHandler = resizeHandler;
 
   // Init — start auto-rotation FIRST, then update calculators
   initPositions();

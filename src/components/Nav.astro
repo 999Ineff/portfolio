@@ -597,6 +597,9 @@ const isServicePage = serviceLinks.some(s =>
   @media (min-width: 1025px) {
     .mobile-float-cta { display: none; }
   }
+
+  /* Hide during intro animation — class-based so CSS media queries still work after removal */
+  .mobile-float-cta.intro-hidden { display: none !important; }
 </style>
 
 <script>
@@ -612,15 +615,18 @@ const isServicePage = serviceLinks.some(s =>
     if (floatCta) {
       const introOverlay = document.getElementById('intro-overlay');
       if (introOverlay) {
-        floatCta.style.display = 'none';
+        floatCta.classList.add('intro-hidden');
+        let introResolved = false;
         const showAfterIntro = () => {
-          if (window.innerWidth <= 1024) floatCta.style.display = 'block';
+          if (introResolved) return;
+          introResolved = true;
+          floatCta.classList.remove('intro-hidden');
         };
-        // Watch for intro overlay removal
+        // Watch for intro overlay removal (childList only — intro-overlay is a direct child of body)
         const obs = new MutationObserver(() => {
           if (!document.getElementById('intro-overlay')) { showAfterIntro(); obs.disconnect(); }
         });
-        obs.observe(document.body, { childList: true, subtree: true });
+        obs.observe(document.body, { childList: true });
         // Safety: show after 8s max
         setTimeout(showAfterIntro, 8000);
       }
